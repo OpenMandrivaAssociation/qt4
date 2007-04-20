@@ -65,7 +65,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 0.beta1.2
+Release: %mkrel 0.beta1.3
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -472,7 +472,7 @@ toolkit.
 %{qtdir}/mkspecs
 %{qtdir}/%_lib/*.so
 %{qtdir}/%_lib/*.la
-%{qtdir}/%_lib/pkgconfig/*
+%_libdir/pkgconfig/*
 %{qtdir}/q3porting.xml
 
 #-------------------------------------------------------------------------
@@ -1032,8 +1032,9 @@ echo "%{qtdir}/%_lib" > qt4.conf
 popd
 
 # Move pkgconfig for proper place
-mkdir -p %buildroot/%_prefix/%_lib/pkgconfig
-#mv %buildroot/%{qtdir}/%_lib/*.pc %buildroot/%_prefix/%_lib/pkgconfig
+mkdir -p %buildroot/%_libdir/pkgconfig
+mv %buildroot/%{qtdir}/%_lib/pkgconfig/*.pc %buildroot/%_libdir/pkgconfig
+
 
 # Fix all buildroot paths
 find %buildroot/%qtdir/%_lib -type f -name '*prl' -exec perl -pi -e "s, -L%_builddir/\S+,,g" {} \;
