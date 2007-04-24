@@ -48,7 +48,7 @@
 
 # KDE development version date
 %define kde_copy 1
-%define kde_qtcopy_date 20070417
+%define kde_qtcopy_date 20070424
 
 %define qtversion %{qtmajor}.%{qtminor} 
 #.%{qtsubminor}
@@ -65,7 +65,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 0.beta1.4
+Release: %mkrel 0.beta1.5
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -82,7 +82,6 @@ Patch0: qt4-uitools-sharedlib.patch
 Patch2:	0142-uic3-wordWrapAttribute.diff
 Patch4:	qt-x11-opensource-src-4.2.2-pagesize.patch
 Patch5:	qt4.3-fix-compile.patch
-Patch6:	qt4-fix-miscompile-qlocale.patch
 
 BuildRequires: glibc-devel
 
@@ -787,7 +786,6 @@ Qt 4 Embedded Virtual Terminal
 %patch2 -p0 -b .fix_uic3_wordwrap
 %patch4 -p1 -b .fix_pagesize
 %patch5 -p1 -b .fix_link
-%patch6 -p1 -b .fix_miscompile_qlocale
 
 %build
 export QTDIR=`/bin/pwd`
