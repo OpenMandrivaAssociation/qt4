@@ -48,7 +48,7 @@
 
 # KDE development version date
 %define kde_copy 1
-%define kde_qtcopy_date 20070424
+%define kde_qtcopy_date 20070509
 
 %define qtversion %{qtmajor}.%{qtminor} 
 #.%{qtsubminor}
@@ -65,7 +65,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 0.beta1.5
+Release: %mkrel 0.rc1.1
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
