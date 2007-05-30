@@ -47,10 +47,10 @@
 %define qtsubminor 0
 
 # KDE development version date
-%define kde_copy 1
+%define kde_copy 0
 %define kde_qtcopy_date 20070509
 
-%define qtversion %{qtmajor}.%{qtminor} 
+%define qtversion %{qtmajor}.%{qtminor}.%{qtsubminor} 
 #.%{qtsubminor}
 
 %define qtlib qt4
@@ -65,38 +65,31 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 0.rc1.1
+Release: %mkrel 1
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
 License: GPL
 URL: http://www.trolltech.com/
-Source0: ftp://ftp.trolltech.com/qt/source/%{qttarballdir}.tar.bz2
-# Not ready yet
-#Source1: qt4.sh
-#Source2: qt4.csh
-Source3: qt4-designer-wrapper
-Source4: qt4-designer.desktop
-Source5: qt4.macros
+Source0: ftp://ftp.trolltech.com/qt/source/%{qttarballdir}.tar.gz
+Source1: qt4-designer-wrapper
+Source2: qt4.macros
+Source3: mandriva-designer-qt4.desktop 
+Source4: mandriva-assistant-qt4.desktop 
+Source5: mandriva-linguist-qt4.desktop
 Patch0: qt4-uitools-sharedlib.patch
-Patch2:	0142-uic3-wordWrapAttribute.diff
-Patch4:	qt-x11-opensource-src-4.2.2-pagesize.patch
-Patch5:	qt4.3-fix-compile.patch
-
-BuildRequires: glibc-devel
-
-%if %mdkversion <= 200600
+Patch1:	0142-uic3-wordWrapAttribute.diff
+Patch2:	qt4.3-fix-compile.patch
+# KDE qt-copy patches
+Patch100: 0163-fix-gcc43-support.diff
+Patch101: 0167-fix-group-reading.diff
+Patch102: 0175-fix-s390-qatomic.diff
+Patch103: 0176-coverity-fixes.diff
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
 %endif
-%else
-BuildRequires: libx11-devel
-%if %{enable_static}
-BuildRequires: libx11-static-devel
-%endif
-BuildRequires:  libxrandr-devel
-%endif
+BuildRequires: GL-devel
 BuildRequires: Mesa-common-devel
 BuildRequires: zlib-devel 
 BuildRequires: libpng-devel 
@@ -108,7 +101,6 @@ BuildRequires: freetype2-devel
 BuildRequires: libfontconfig-devel
 BuildRequires: expat-devel
 BuildRequires: libdbus-devel >= 0.92
-BuildRequires: GL-devel
 BuildRequires: perl
 Provides: %{qtlib}
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
@@ -135,6 +127,7 @@ This package contains all config file and language file
 %{_bindir}/qt4config
 %{qtdir}/bin/qtconfig*
 %_sysconfdir/ld.so.conf.d/*
+%_sysconfdir/profile.d/*
 %dir %{qtdir}
 %dir %{qtdir}/bin
 %dir %{qtdir}/%_lib
@@ -220,7 +213,6 @@ QT%{qtmajor} component library
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtScript.so.*
 %{qtdir}/%_lib/libQtScript.prl
-
 
 #-------------------------------------------------------------------------
 
@@ -472,7 +464,7 @@ toolkit.
 %{qtdir}/mkspecs
 %{qtdir}/%_lib/*.so
 %{qtdir}/%_lib/*.la
-%_libdir/pkgconfig/*
+%{qtdir}/%_lib/pkgconfig/*
 %{qtdir}/q3porting.xml
 
 #-------------------------------------------------------------------------
@@ -538,6 +530,7 @@ Summary: QT linguist translation utility
 Group: Books/Computer books
 Requires(post): desktop-file-utils
 Requires(postun): desktop-file-utils
+Conflicts: qt3-linguist
 
 %description linguist
 Qt Linguist provides easy translation of Qt GUIs to different
@@ -545,25 +538,18 @@ languages
 
 %post linguist
 %update_menus
-%if %mdkversion > 200600
 %{update_desktop_database}
-%endif
 
 %postun linguist
 %clean_menus
-%if %mdkversion > 200600
 %{clean_desktop_database}
-%endif
 
 %files linguist
 %defattr(-,root,root,-)
 %{qtdir}/bin/lingu*
 %{qtdir}/bin/lreleas*
 %{qtdir}/bin/lupdat*
-%_menudir/linguist
-%if %mdkversion > 200600
 %{_datadir}/applications/*linguist*.desktop
-%endif
 
 #-------------------------------------------------------------------------
 
@@ -572,29 +558,24 @@ Summary: QT assistantion doc utility
 Group: Books/Computer books
 Requires(post): desktop-file-utils
 Requires(postun): desktop-file-utils
+Conflicts: qt3-assistant
 
 %description assistant
 Qt Assistant provides a documentation Browser
 
 %post assistant
 %update_menus
-%if %mdkversion > 200600
 %{update_desktop_database}
-%endif
 
 %postun assistant
 %clean_menus
-%if %mdkversion > 200600
 %{clean_desktop_database}
-%endif
 
 %files assistant
 %defattr(-,root,root,-)
 %{qtdir}/bin/assistant*
-%_menudir/assistant
-%if %mdkversion > 200600
 %{_datadir}/applications/*assistant*.desktop
-%endif
+
 #-------------------------------------------------------------------------
 
 %package tutorial
@@ -757,13 +738,7 @@ implementing user interfaces a lot easier.
 %defattr(-,root,root,-)
 %{_bindir}/designer-qt%{qtmajor}
 %{qtdir}/bin/designer*
-%if %mdkversion <= 200600
-%_datadir/applnk/Development/designer4.desktop
-%endif
-%_menudir/%{libqt}-devel-designer
-%if %mdkversion > 200600
 %{_datadir}/applications/*designer*.desktop
-%endif
 
 #-------------------------------------------------------------------------
 
@@ -783,9 +758,13 @@ Qt 4 Embedded Virtual Terminal
 %prep
 %setup -q -n %{qttarballdir}
 %patch0 -p1 -b .uilib
-%patch2 -p0 -b .fix_uic3_wordwrap
-%patch4 -p1 -b .fix_pagesize
-%patch5 -p1 -b .fix_link
+%patch1 -p0 -b .fix_uic3_wordwrap
+%patch2 -p1 -b .fix_link
+# qt-copy patches
+%patch100 -p0 -b .qt-copy
+%patch101 -p0 -b .qt-copy
+%patch102 -p0 -b .qt-copy
+%patch103 -p0 -b .qt-copy
 
 %build
 export QTDIR=`/bin/pwd`
@@ -793,13 +772,8 @@ export PATH=$QTDIR/bin:$PATH
 export CFLAGS="${CFLAGS} %{optflags}"
 export CXXFLAGS="${CXXFLAGS} %{optflags}"
 export YACC='byacc -d'
-%if %{kde_copy}
-export LD_LIBRARY_PATH=%{_builddir}/qt-copy/lib:$LD_LIBRARY_PATH
-export PATH=%{_builddir}/qt-copy/bin:$PATH
-%else
 export LD_LIBRARY_PATH=%{_builddir}/%{qttarballdir}/lib:$LD_LIBRARY_PATH
 export PATH=%{_builddir}/%{qttarballdir}/bin:$PATH
-%endif
 
 #--------------------------------------------------------
 # function configure
@@ -829,10 +803,6 @@ echo "yes" |
    -platform linux-g++ \
    -confirm-license \
    -verbose \
-%if %mdkversion <= 200600   
-   -I%_prefix/X11R6/include/ \
-   -L%_prefix/X11R6/%_lib \
-%endif   
 	$*
 }
 
@@ -841,6 +811,7 @@ echo "yes" |
 	qt_configure \
    %if %{with_sqlite}
    -qt-sql-sqlite \
+   -no-sql-sqlite2 \
    %endif
    -static
 
@@ -871,8 +842,10 @@ qt_configure -shared -qdbus \
    %endif
    %if %{with_sqlite}
    -plugin-sql-sqlite \
+   -no-sql-sqlite2 \
    %else
    -no-sql-sqlite \
+   -no-sql-sqlite2 \
    %endif
    %if %{with_odbc}
    -plugin-sql-odbc
@@ -880,7 +853,7 @@ qt_configure -shared -qdbus \
    -no-sql-odbc 
    %endif
 
-make sub-src sub-tools
+%make sub-src sub-tools
 
 # Compile qvfb
 pushd tools/qvfb
@@ -894,8 +867,6 @@ install -d %buildroot%_docdir/%name
 install -d %buildroot%_sysconfdir
 install -d %buildroot%_sysconfdir/profile.d
 install -d %buildroot%_sysconfdir/ld.so.conf.d
-
-#cp -f %{SOURCE1} %{SOURCE2} %buildroot%_sysconfdir/profile.d
 
 make INSTALL_ROOT=%buildroot \
 	sub-tools-install_subtargets-ordered \
@@ -913,98 +884,14 @@ popd
 # Designer wrapper
 pushd  %buildroot%{qtdir}/bin
 mv designer designer-real
-cp %{SOURCE3} designer
+cp %SOURCE1 designer
 popd
 ln -s %{qtdir}/bin/designer %buildroot%{_bindir}/designer-qt%{qtmajor}
 
-# Desktop
-%if %mdkversion <=200600
-install -d -m 0755 %buildroot/%_datadir/applnk/Development/
-install -m 0644 %SOURCE4 %buildroot/%_datadir/applnk/Development/designer4.desktop
-%endif
-
-install -d -m 0755 %buildroot/%_menudir
-cat <<EOF > %buildroot/%_menudir/%{libqt}-devel-designer
-?package(%{libqt}-devel): needs=X11 \
-                        section="More Applications/Development/Development Environments" \
-			title="Qt4 Designer" \
-			longtitle="A graphical designer/dialog builder for Qt4" \
-			command="/usr/bin/designer-qt4" \
-			mimetypes="application/x-designer" \
-			icon="development_environment_section.png" \
-			xdg="true"
-EOF
-
-%if %mdkversion > 200600
-mkdir $RPM_BUILD_ROOT%{_datadir}/applications
-cat > $RPM_BUILD_ROOT%{_datadir}/applications/mandriva-designer-qt4.desktop << EOF
-[Desktop Entry]
-Encoding=UTF-8
-Name=Qt4 Designer
-Comment=A graphical designer/dialog builder for Qt4
-Exec=/usr/bin/designer-qt4
-Icon=development_environment_section.png
-Terminal=false
-Type=Application
-StartupNotify=true
-Categories=KDE;QT;Application;X-Mandrivalinux-MoreApplications-Development-DevelopmentEnvironments;
-EOF
-%endif
-
-cat <<EOF > %buildroot/%_menudir/linguist
-?package(qt4-linguist): needs=X11 \
-                        section="More Applications/Development/Development Environments" \
-			title="Qt Linguist" \
-			longtitle="A translation tool for Qt4" \
-			command="%qtdir/bin/linguist" \
-			mimeType="application/x-linguist" \
-			icon="development_environment_section.png" \
-			xdg="true"
-EOF
-
-%if %mdkversion > 200600
-cat > $RPM_BUILD_ROOT%{_datadir}/applications/mandriva-linguist-qt4.desktop << EOF
-[Desktop Entry]
-Encoding=UTF-8
-Name=Qt Linguist
-Comment=A translation tool for Qt4
-Exec=%qtdir/bin/linguist
-Icon=development_environment_section.png
-Terminal=false
-Type=Application
-StartupNotify=true
-MimeType=application/x-linguist
-Categories=KDE;QT;Application;X-MandrivaLinux-MoreApplications-Development-DevelopmentEnvironments;
-EOF
-%endif
-
-
-#Laurent rename binary program
-cat <<EOF > %buildroot/%_menudir/assistant
-?package(qt4-assistant): needs=X11 \
-			section="More Applications/Documentation" \
-			title="Qt4 Assistant" \
-			longtitle="A manual browser for Qt4 documentation" \
-			command="%{qtdir}/bin/assistant" \
-			icon="documentation_section.png" \
-			xdg="true"
-EOF
-%if %mdkversion > 200600
-cat > $RPM_BUILD_ROOT%{_datadir}/applications/mandriva-assistant-qt4.desktop << EOF
-[Desktop Entry]
-Encoding=UTF-8
-Name=Qt4 Assistant
-Comment=A manual browser for Qt4 documentation
-Exec=%{qtdir}/bin/assistant
-Icon=documentation_section.png
-Terminal=false
-Type=Application
-StartupNotify=true
-Categories=KDE;QT;Application;X-MandrivaLinux-MoreApplications-Documentation;
-EOF
-%endif
-
-
+mkdir -p %buildroot%_datadir/applications
+install -m 644 %SOURCE3 %buildroot%_datadir/applications
+install -m 644 %SOURCE4 %buildroot%_datadir/applications
+install -m 644 %SOURCE5 %buildroot%_datadir/applications
 
 # qtconfig
 ln -s %{qtdir}/bin/qtconfig %buildroot%{_bindir}/qt4config
@@ -1031,22 +918,37 @@ pushd %buildroot/%_sysconfdir/ld.so.conf.d
 echo "%{qtdir}/%_lib" > qt4.conf
 popd
 
-# Move pkgconfig for proper place
-mkdir -p %buildroot/%_libdir/pkgconfig
-mv %buildroot/%{qtdir}/%_lib/pkgconfig/*.pc %buildroot/%_libdir/pkgconfig
-
-
 # Fix all buildroot paths
 find %buildroot/%qtdir/%_lib -type f -name '*prl' -exec perl -pi -e "s, -L%_builddir/\S+,,g" {} \;
 find %buildroot/%qtdir/%_lib -type f -name '*prl' -exec sed -i -e "/^QMAKE_PRL_BUILD_DIR/d" {} \;
 find %buildroot/%qtdir/%_lib -type f -name '*la' -print -exec perl -pi -e "s, -L%_builddir/?\S+,,g" {} \;
-#find %buildroot/%_libdir/pkgconfig -type f -name '*pc' -print -exec perl -pi -e "s, -L%_builddir/?\S+,,g" {} \;
 find %buildroot/%qtdir/mkspecs -name 'qmake.conf' -exec chmod -x -- {} \;
 find %buildroot/%qtdir/mkspecs -name Info.plist.app -exec chmod -x -- {} \;
 
 # Install rpm macros
 mkdir -p %buildroot/%_sysconfdir/rpm/macros.d
 install -m 0644 %SOURCE5 %buildroot/%_sysconfdir/rpm/macros.d
+
+# Profiles
+cat > %buildroot%_sysconfdir/profile.d/qt4.sh << EOF
+#!/bin/bash
+
+if [ -z $PKG_CONFIG_PATH ]; then
+    PKG_CONFIG_PATH=%{qtdir}/%_lib/pkgconfig
+else
+    PKG_CONFIG_PATH=\${PKG_CONFIG_PATH}:%{qtdir}/%_lib/pkgconfig
+fi
+
+function qt4env {
+    QTDIR=%{qtdir}
+    PATH=%{qtdir}/bin:\${PATH}
+
+    export QTDIR PATH
+}
+
+export PKG_CONFIG_PATH
+EOF
+
 
 %clean
 rm -rf %buildroot
