@@ -853,7 +853,7 @@ qt_configure -shared -qdbus \
    -no-sql-odbc 
    %endif
 
-%make sub-src sub-tools
+make sub-src sub-tools
 
 # Compile qvfb
 pushd tools/qvfb
