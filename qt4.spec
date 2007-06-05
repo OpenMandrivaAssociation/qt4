@@ -65,7 +65,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 1
+Release: %mkrel 2
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -927,7 +927,7 @@ find %buildroot/%qtdir/mkspecs -name Info.plist.app -exec chmod -x -- {} \;
 
 # Install rpm macros
 mkdir -p %buildroot/%_sysconfdir/rpm/macros.d
-install -m 0644 %SOURCE5 %buildroot/%_sysconfdir/rpm/macros.d
+install -m 0644 %SOURCE2 %buildroot/%_sysconfdir/rpm/macros.d
 
 # Profiles
 cat > %buildroot%_sysconfdir/profile.d/qt4.sh << EOF
