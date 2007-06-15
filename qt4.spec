@@ -794,7 +794,7 @@ echo "yes" |
    -release \
 %endif
    -sysconfdir %_sysconfdir \
-   -libdir %_libdir \
+   -libdir %{qtdir}/%_lib \
    -docdir %_docdir/%name/doc \
    -plugindir %pluginsdir \
    -qvfb \
