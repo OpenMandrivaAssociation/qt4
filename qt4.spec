@@ -952,7 +952,7 @@ function qt4env {
 
 export PKG_CONFIG_PATH
 EOF
-
+chmod +x %buildroot%_sysconfdir/profile.d/qt4.sh
 
 %clean
 rm -rf %buildroot
