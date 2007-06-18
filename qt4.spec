@@ -65,7 +65,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 5
+Release: %mkrel 6
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -87,6 +87,8 @@ Patch102: 0175-fix-s390-qatomic.diff
 Patch103: 0176-coverity-fixes.diff
 Patch104: 0178-transparency-window-types.diff
 Patch105: 0179-transient-hack.diff
+Patch106: 0181-qdnd-x11-fix.diff 
+Patch107: 0180-window-role.diff
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -769,6 +771,8 @@ Qt 4 Embedded Virtual Terminal
 %patch103 -p0 -b .qt-copy
 %patch104 -p0 -b .qt-copy
 %patch105 -p0 -b .qt-copy
+%patch106 -p0 -b .qt-copy
+%patch107 -p0 -b .qt-copy
 
 %build
 export QTDIR=`/bin/pwd`
