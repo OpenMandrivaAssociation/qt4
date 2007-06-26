@@ -65,7 +65,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 6
+Release: %mkrel 7
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -78,17 +78,19 @@ Source3: mandriva-designer-qt4.desktop
 Source4: mandriva-assistant-qt4.desktop 
 Source5: mandriva-linguist-qt4.desktop
 Patch0: qt4-uitools-sharedlib.patch
-Patch1:	0142-uic3-wordWrapAttribute.diff
-Patch2:	qt4.3-fix-compile.patch
+Patch1:	qt4.3-fix-compile.patch
 # KDE qt-copy patches
-Patch100: 0163-fix-gcc43-support.diff
-Patch101: 0167-fix-group-reading.diff
-Patch102: 0175-fix-s390-qatomic.diff
-Patch103: 0176-coverity-fixes.diff
-Patch104: 0178-transparency-window-types.diff
-Patch105: 0179-transient-hack.diff
-Patch106: 0181-qdnd-x11-fix.diff 
-Patch107: 0180-window-role.diff
+Patch100: 0142-uic3-wordWrapAttribute.diff
+Patch101: 0163-fix-gcc43-support.diff
+Patch102: 0167-fix-group-reading.diff
+Patch103: 0172-prefer-xrandr-over-xinerama.diff
+Patch104: 0175-fix-s390-qatomic.diff
+Patch105: 0176-coverity-fixes.diff
+Patch106: 0178-transparency-window-types.diff
+Patch107: 0179-transient-hack.diff
+Patch108: 0180-window-role.diff
+Patch109: 0181-qdnd-x11-fix.diff 
+Patch110: 0182-argb-visuals-default.diff 
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -762,8 +764,7 @@ Qt 4 Embedded Virtual Terminal
 %prep
 %setup -q -n %{qttarballdir}
 %patch0 -p1 -b .uilib
-%patch1 -p0 -b .fix_uic3_wordwrap
-%patch2 -p1 -b .fix_link
+%patch1 -p1 -b .fix_link
 # qt-copy patches
 %patch100 -p0 -b .qt-copy
 %patch101 -p0 -b .qt-copy
@@ -773,6 +774,9 @@ Qt 4 Embedded Virtual Terminal
 %patch105 -p0 -b .qt-copy
 %patch106 -p0 -b .qt-copy
 %patch107 -p0 -b .qt-copy
+%patch108 -p0 -b .qt-copy
+%patch109 -p0 -b .qt-copy
+%patch110 -p0 -b .qt-copy
 
 %build
 export QTDIR=`/bin/pwd`
