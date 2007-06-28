@@ -16,6 +16,10 @@
 %define with_debug 0
 %{?_with_debug: %{expand: %%global with_debug 1}}
 
+%if %{with_debug}
+%define dont_strip 1
+%endif
+
 %define enable_static 0
 %{?_without_static: %{expand: %%global enable_static 0}}
 
@@ -65,7 +69,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 9
+Release: %mkrel 10
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -163,6 +167,7 @@ QT%{qtmajor} component library
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtXml.so.*
 %{qtdir}/%_lib/libQtXml.prl
+%exclude %{qtdir}/%_lib/lib*.debug
 
 #-------------------------------------------------------------------------
 
@@ -182,6 +187,7 @@ QT%{qtmajor} component library
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtSql.so.*
 %{qtdir}/%_lib/libQtSql.prl
+%exclude %{qtdir}/%_lib/lib*.debug
 
 #-------------------------------------------------------------------------
 
@@ -201,6 +207,7 @@ QT%{qtmajor} component library
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtNetwork.so.*
 %{qtdir}/%_lib/libQtNetwork.prl
+%exclude %{qtdir}/%_lib/lib*.debug
 
 #-------------------------------------------------------------------------
 
@@ -220,6 +227,8 @@ QT%{qtmajor} component library
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtScript.so.*
 %{qtdir}/%_lib/libQtScript.prl
+%exclude %{qtdir}/%_lib/lib*.debug
+
 
 #-------------------------------------------------------------------------
 
@@ -242,6 +251,8 @@ QT%{qtmajor} component library
 %{qtdir}/%_lib/libQtGui.prl
 %pluginsdir/imageformats
 %pluginsdir/inputmethods/libqimsw-multi.so*
+%exclude %{qtdir}/%_lib/lib*.debug
+
 
 #-------------------------------------------------------------------------
 
@@ -262,6 +273,7 @@ QT%{qtmajor} component library
 %{qtdir}/%_lib/libQtSvg.so.*
 %{qtdir}/%_lib/libQtSvg.prl
 %pluginsdir/iconengines/libqsvg.so*
+%exclude %{qtdir}/%_lib/lib*.debug
 
 #-------------------------------------------------------------------------
 
@@ -281,6 +293,7 @@ QT%{qtmajor} component library
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtTest.so.*
 %{qtdir}/%_lib/libQtTest.prl
+%exclude %{qtdir}/%_lib/lib*.debug
 
 #-------------------------------------------------------------------------
 
@@ -301,6 +314,7 @@ QT%{qtmajor} component library
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtCore.so.*
 %{qtdir}/%_lib/libQtCore.prl
+%exclude %{qtdir}/%_lib/lib*.debug
 
 #-------------------------------------------------------------------------
 
@@ -321,6 +335,7 @@ QT%{qtmajor} component library
 %{qtdir}/%_lib/libQt3Support.so.*
 %{qtdir}/%_lib/libQt3Support.prl
 %pluginsdir/designer/libqt3supportwidgets.so*
+%exclude %{qtdir}/%_lib/lib*.debug
 
 #-------------------------------------------------------------------------
 
@@ -340,6 +355,7 @@ QT%{qtmajor} component library
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtOpenGL.so.*
 %{qtdir}/%_lib/libQtOpenGL.prl
+%exclude %{qtdir}/%_lib/lib*.debug
 
 #-------------------------------------------------------------------------
 
@@ -364,6 +380,7 @@ Biblioteca componente da QT%{qtmajor}
 %{qtdir}/%_lib/libQtDesigner.prl
 %{qtdir}/%_lib/libQtDesignerComponents.so.*
 %{qtdir}/%_lib/libQtDesignerComponents.prl
+%exclude %{qtdir}/%_lib/lib*.debug
 
 #-------------------------------------------------------------------------
 
@@ -384,6 +401,7 @@ QT assistant lib
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtUiTools.so.*
 %{qtdir}/%_lib/libQtUiTools.prl
+%exclude %{qtdir}/%_lib/lib*.debug
 
 #-------------------------------------------------------------------------
 
@@ -406,6 +424,7 @@ QT dbus lib
 %{qtdir}/%_lib/libQtDBus.so.*
 %{qtdir}/%_lib/libQtDBus.prl
 %{qtdir}/bin/qdbus*
+%exclude %{qtdir}/%_lib/lib*.debug
 
 #-------------------------------------------------------------------------
 
@@ -426,6 +445,7 @@ QT assistant lib
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtAssistantClient.so.*
 %{qtdir}/%_lib/libQtAssistantClient.prl
+%exclude %{qtdir}/%_lib/lib*.debug
 
 #-------------------------------------------------------------------------
 
@@ -450,7 +470,6 @@ Requires: %{libqtxml} = %epoch:%version-%release
 Requires: %{libqtsvg} = %epoch:%version-%release
 Requires: %{libqttest} = %epoch:%version-%release
 Requires: %{libqdbus} = %epoch:%version-%release
-
 
 %description -n %{libqt}-devel
 The %{qtlib}-devel package contains the files necessary to develop
@@ -832,7 +851,7 @@ echo "yes" |
    %endif
    -static
 
-   make sub-src
+   %make sub-src
 
 	mkdir safelib
 	cp lib/*.a safelib
@@ -870,7 +889,8 @@ qt_configure -shared \
    -no-sql-odbc 
    %endif
 
-make sub-src sub-tools
+%make sub-src 
+make sub-tools
 
 # Compile qvfb
 pushd tools/qvfb
