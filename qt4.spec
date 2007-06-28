@@ -65,7 +65,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 7
+Release: %mkrel 8
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -91,6 +91,7 @@ Patch107: 0179-transient-hack.diff
 Patch108: 0180-window-role.diff
 Patch109: 0181-qdnd-x11-fix.diff 
 Patch110: 0182-argb-visuals-default.diff 
+Patch111: 0183-qprocess-corruption.diff
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -777,6 +778,7 @@ Qt 4 Embedded Virtual Terminal
 %patch108 -p0 -b .qt-copy
 %patch109 -p0 -b .qt-copy
 %patch110 -p0 -b .qt-copy
+%patch111 -p0 -b .qt-copy
 
 %build
 export QTDIR=`/bin/pwd`
