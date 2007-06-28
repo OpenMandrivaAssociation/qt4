@@ -65,7 +65,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 8
+Release: %mkrel 9
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -393,6 +393,7 @@ Summary(pt_BR): Biblioteca do dbus
 Group: System/Libraries
 Requires(pre): %{name}-common = %epoch:%version
 Provides: qdbuslib = %epoch:%version
+Conflicts: qt4-devel < %epoch:%version-%mkrel 9 
 
 %description -n %{libqdbus}
 QT dbus lib
@@ -404,6 +405,7 @@ QT dbus lib
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtDBus.so.*
 %{qtdir}/%_lib/libQtDBus.prl
+%{qtdir}/bin/qdbus*
 
 #-------------------------------------------------------------------------
 
@@ -433,6 +435,7 @@ Group: Development/KDE and Qt
 Requires: %{name}-common = %epoch:%version
 Provides: qt4-devel = %epoch:%version-%release
 Provides: libqt4-devel = %epoch:%version-%release
+Conflicts: %{libqdbus} < %epoch:%version-%mkrel 9 
 # There's symlinks to devel
 Requires: %{libqassistant} = %epoch:%version-%release
 Requires: %{libqtuitools} = %epoch:%version-%release
@@ -446,6 +449,7 @@ Requires: %{libqtsql} = %epoch:%version-%release
 Requires: %{libqtxml} = %epoch:%version-%release
 Requires: %{libqtsvg} = %epoch:%version-%release
 Requires: %{libqttest} = %epoch:%version-%release
+Requires: %{libqdbus} = %epoch:%version-%release
 
 
 %description -n %{libqt}-devel
@@ -464,7 +468,6 @@ toolkit.
 %{qtdir}/bin/uic*
 %{qtdir}/bin/rcc*
 %{qtdir}/bin/qt3to4*
-%{qtdir}/bin/qdbus*
 %{qtdir}/bin/pixeltool*
 %_sysconfdir/rpm/macros.d/*
 %{qtdir}/include
@@ -796,7 +799,7 @@ function qt_configure {
 echo "yes" |
 ./configure \
 	-prefix %{qtdir} \
-        -qdbus \
+	-qdbus \
 	-no-pch \
 %if %{with_debug}
    -debug-and-release \
@@ -836,7 +839,7 @@ echo "yes" |
 %endif
 
 # shared
-qt_configure -shared -qdbus \
+qt_configure -shared \
    %if %{with_postgres}
    -plugin-sql-psql \
         -no-pch \
