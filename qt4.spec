@@ -69,7 +69,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 10
+Release: %mkrel 11
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
