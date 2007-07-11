@@ -69,7 +69,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 11
+Release: %mkrel 12
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -138,7 +138,7 @@ This package contains all config file and language file
 %{_bindir}/qt4config
 %{qtdir}/bin/qtconfig*
 %_sysconfdir/ld.so.conf.d/*
-%_sysconfdir/profile.d/*
+%attr(0755,root,root) %_sysconfdir/profile.d/*
 %dir %{qtdir}
 %dir %{qtdir}/bin
 %dir %{qtdir}/%_lib
@@ -970,7 +970,7 @@ install -m 0644 %SOURCE2 %buildroot/%_sysconfdir/rpm/macros.d
 cat > %buildroot%_sysconfdir/profile.d/qt4.sh << EOF
 #!/bin/bash
 
-if [ -z $PKG_CONFIG_PATH ]; then
+if [ -z \$PKG_CONFIG_PATH ]; then
     PKG_CONFIG_PATH=%{qtdir}/%_lib/pkgconfig
 else
     PKG_CONFIG_PATH=\${PKG_CONFIG_PATH}:%{qtdir}/%_lib/pkgconfig
@@ -985,7 +985,6 @@ function qt4env {
 
 export PKG_CONFIG_PATH
 EOF
-chmod +x %buildroot%_sysconfdir/profile.d/qt4.sh
 
 %clean
 rm -rf %buildroot
