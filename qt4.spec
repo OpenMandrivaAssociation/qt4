@@ -69,7 +69,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 12
+Release: %mkrel 14
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -96,6 +96,7 @@ Patch108: 0180-window-role.diff
 Patch109: 0181-qdnd-x11-fix.diff 
 Patch110: 0182-argb-visuals-default.diff 
 Patch111: 0183-qprocess-corruption.diff
+Patch112: 0185-fix-format-strings.diff
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -424,6 +425,7 @@ QT dbus lib
 %{qtdir}/%_lib/libQtDBus.so.*
 %{qtdir}/%_lib/libQtDBus.prl
 %{qtdir}/bin/qdbus*
+%exclude %{qtdir}/bin/qdbus*.debug
 %exclude %{qtdir}/%_lib/lib*.debug
 
 #-------------------------------------------------------------------------
@@ -768,6 +770,7 @@ implementing user interfaces a lot easier.
 %{_bindir}/designer-qt%{qtmajor}
 %{qtdir}/bin/designer*
 %{_datadir}/applications/*designer*.desktop
+%exclude %{qtdir}/bin/*.debug
 
 #-------------------------------------------------------------------------
 
@@ -801,6 +804,7 @@ Qt 4 Embedded Virtual Terminal
 %patch109 -p0 -b .qt-copy
 %patch110 -p0 -b .qt-copy
 %patch111 -p0 -b .qt-copy
+%patch112 -p0 -b .qt-copy
 
 %build
 export QTDIR=`/bin/pwd`
@@ -821,7 +825,7 @@ echo "yes" |
 	-qdbus \
 	-no-pch \
 %if %{with_debug}
-   -debug-and-release \
+   -debug \
 %else
    -release \
 %endif
