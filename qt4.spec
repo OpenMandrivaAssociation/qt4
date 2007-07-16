@@ -647,7 +647,7 @@ Database plugin for ODBC Qt support
 Summary: Database plugin for mysql Qt support
 Group: Development/KDE and Qt
 Obsoletes: qt4-database-plugin-mysql
-BuildRequires: libmysql-devel
+BuildRequires: mysql-devel
 
 %description database-plugin-mysql-%_lib
 Database plugin for mysql Qt support
