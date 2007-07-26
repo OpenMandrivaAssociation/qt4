@@ -69,7 +69,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 14
+Release: %mkrel 15
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -97,6 +97,7 @@ Patch109: 0181-qdnd-x11-fix.diff
 Patch110: 0182-argb-visuals-default.diff 
 Patch111: 0183-qprocess-corruption.diff
 Patch112: 0185-fix-format-strings.diff
+Patch113: 0186-fix-component-alpha-text.diff 
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -629,6 +630,9 @@ Summary: Database plugin for ODBC Qt support
 Group: Development/KDE and Qt
 Obsoletes: qt4-database-plugin-odbc
 BuildRequires: unixODBC-devel
+%if %{enable_static}
+BuildRequires: unixODBC-static-devel
+%endif
 
 %description database-plugin-odbc-%_lib
 Database plugin for ODBC Qt support
@@ -805,6 +809,7 @@ Qt 4 Embedded Virtual Terminal
 %patch110 -p0 -b .qt-copy
 %patch111 -p0 -b .qt-copy
 %patch112 -p0 -b .qt-copy
+%patch113 -p0 -b .qt-copy
 
 %build
 export QTDIR=`/bin/pwd`
@@ -823,7 +828,6 @@ echo "yes" |
 ./configure \
 	-prefix %{qtdir} \
 	-qdbus \
-	-no-pch \
 %if %{with_debug}
    -debug \
 %else
@@ -849,13 +853,22 @@ echo "yes" |
 # static
 %if %{enable_static}
 	qt_configure \
+   %if %{with_odbc}
+   -qt-sql-odbc \
+   %endif
    %if %{with_sqlite}
    -qt-sql-sqlite \
    -no-sql-sqlite2 \
+   %else
+   -no-sql-sqlite \
+   -no-sql-sqlite2 \
    %endif
+   -nomake demos \
+   -nomake examples \
+   -nomake tools \
    -static
 
-   %make sub-src
+   %make
 
 	mkdir safelib
 	cp lib/*.a safelib
@@ -888,13 +901,14 @@ qt_configure -shared \
    -no-sql-sqlite2 \
    %endif
    %if %{with_odbc}
-   -plugin-sql-odbc
+   -plugin-sql-odbc \
    %else
-   -no-sql-odbc 
+   -no-sql-odbc \
    %endif
+   -nomake demos \
+   -nomake examples 
 
-%make sub-src 
-make sub-tools
+%make 
 
 # Compile qvfb
 pushd tools/qvfb
