@@ -20,7 +20,7 @@
 %define dont_strip 1
 %endif
 
-%define enable_static 0
+%define enable_static 1
 %{?_without_static: %{expand: %%global enable_static 0}}
 
 %define with_cups 1
@@ -69,7 +69,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 15
+Release: %mkrel 16
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -702,6 +702,7 @@ Database plugin for interbase Qt support
 %endif
 
 #-------------------------------------------------------------------------
+
 %if %{with_postgres}
 
 %package database-plugin-pgsql-%_lib
@@ -814,8 +815,8 @@ Qt 4 Embedded Virtual Terminal
 %build
 export QTDIR=`/bin/pwd`
 export PATH=$QTDIR/bin:$PATH
-export CFLAGS="${CFLAGS} %{optflags}"
-export CXXFLAGS="${CXXFLAGS} %{optflags}"
+export CPPFLAGS="${CFLAGS} %{optflags} -fPIC"
+export CXXFLAGS="${CXXFLAGS} %{optflags} -fPIC"
 export YACC='byacc -d'
 export LD_LIBRARY_PATH=%{_builddir}/%{qttarballdir}/lib:$LD_LIBRARY_PATH
 export PATH=%{_builddir}/%{qttarballdir}/bin:$PATH
