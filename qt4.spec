@@ -26,10 +26,6 @@
 %define with_cups 1
 %{?_without_cups %{expand: %%global with_cups 0}}
 
-# Laurent disable for the moment generate pch
-%define with_pch 0
-%{?_without_pch %{expand: %%global with_pch 0}}
-
 %define libqt %mklibname qt 4
 %define libqassistant %mklibname qassistant 1
 %define libqtuitools %mklibname qtuitools 4
@@ -48,28 +44,19 @@
 
 %define qtmajor 4
 %define qtminor 3
-%define qtsubminor 0
-
-# KDE development version date
-%define kde_copy 0
-%define kde_qtcopy_date 20070509
+%define qtsubminor 1
 
 %define qtversion %{qtmajor}.%{qtminor}.%{qtsubminor} 
-#.%{qtsubminor}
 
 %define qtlib qt4
 %define qtdir %_prefix/lib/%{qtlib}
 %define pluginsdir %qtdir/plugins/%_lib
 
-%if %{kde_copy}
-%define qttarballdir qt-x11-opensource-src-%{qtversion}-%{kde_qtcopy_date}
-%else
 %define qttarballdir qt-x11-opensource-src-%{qtversion}
-%endif
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 16
+Release: %mkrel 1
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -89,13 +76,10 @@ Patch101: 0163-fix-gcc43-support.diff
 Patch102: 0167-fix-group-reading.diff
 Patch103: 0172-prefer-xrandr-over-xinerama.diff
 Patch104: 0175-fix-s390-qatomic.diff
-Patch105: 0176-coverity-fixes.diff
 Patch106: 0178-transparency-window-types.diff
 Patch107: 0179-transient-hack.diff
 Patch108: 0180-window-role.diff
-Patch109: 0181-qdnd-x11-fix.diff 
 Patch110: 0182-argb-visuals-default.diff 
-Patch111: 0183-qprocess-corruption.diff
 Patch112: 0185-fix-format-strings.diff
 Patch113: 0186-fix-component-alpha-text.diff 
 BuildRequires: X11-devel
@@ -802,13 +786,10 @@ Qt 4 Embedded Virtual Terminal
 %patch102 -p0 -b .qt-copy
 %patch103 -p0 -b .qt-copy
 %patch104 -p0 -b .qt-copy
-%patch105 -p0 -b .qt-copy
 %patch106 -p0 -b .qt-copy
 %patch107 -p0 -b .qt-copy
 %patch108 -p0 -b .qt-copy
-%patch109 -p0 -b .qt-copy
 %patch110 -p0 -b .qt-copy
-%patch111 -p0 -b .qt-copy
 %patch112 -p0 -b .qt-copy
 %patch113 -p0 -b .qt-copy
 
