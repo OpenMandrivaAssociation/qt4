@@ -56,7 +56,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 1
+Release: %mkrel 2
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -419,7 +419,7 @@ Summary(pt_BR): Biblioteca do dbus
 Group: System/Libraries
 Requires(pre): %{name}-common = %epoch:%version
 Provides: qdbuslib = %epoch:%version
-Conflicts: qt4-devel < %epoch:%version-%mkrel 9 
+Conflicts: qt4-devel < 2:4.3.0 
 
 %description -n %{libqdbus}
 QT dbus lib
@@ -468,7 +468,7 @@ Group: Development/KDE and Qt
 Requires: %{name}-common = %epoch:%version
 Provides: qt4-devel = %epoch:%version-%release
 Provides: libqt4-devel = %epoch:%version-%release
-Conflicts: %{libqdbus} < %epoch:%version-%mkrel 9 
+Conflicts: %{libqdbus} < 2:4.3.0 
 # There's symlinks to devel
 Requires: %{libqassistant} = %epoch:%version-%release
 Requires: %{libqtuitools} = %epoch:%version-%release
@@ -535,7 +535,6 @@ applications, as well as the README files for Qt.
 %package doc
 Summary: HTML Documentation for Qt version %{version}
 Group: Books/Computer books
-Conflicts: %{name}-doc < %{qtversion}-1mdk
 
 %description doc
 HTML documentation for the Qt toolkit. To view the documentation,
