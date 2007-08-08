@@ -20,8 +20,8 @@
 %define dont_strip 1
 %endif
 
-%define enable_static 1
-%{?_without_static: %{expand: %%global enable_static 0}}
+%define enable_static 0
+%{?_with_static: %{expand: %%global enable_static 1}}
 
 %define with_cups 1
 %{?_without_cups %{expand: %%global with_cups 0}}
@@ -153,7 +153,9 @@ QT%{qtmajor} component library
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtXml.so.*
 %{qtdir}/%_lib/libQtXml.prl
+%if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
+%endif
 
 #-------------------------------------------------------------------------
 
@@ -173,7 +175,9 @@ QT%{qtmajor} component library
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtSql.so.*
 %{qtdir}/%_lib/libQtSql.prl
+%if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
+%endif
 
 #-------------------------------------------------------------------------
 
@@ -193,7 +197,9 @@ QT%{qtmajor} component library
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtNetwork.so.*
 %{qtdir}/%_lib/libQtNetwork.prl
+%if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
+%endif
 
 #-------------------------------------------------------------------------
 
@@ -213,8 +219,9 @@ QT%{qtmajor} component library
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtScript.so.*
 %{qtdir}/%_lib/libQtScript.prl
+%if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
-
+%endif
 
 #-------------------------------------------------------------------------
 
@@ -237,8 +244,9 @@ QT%{qtmajor} component library
 %{qtdir}/%_lib/libQtGui.prl
 %pluginsdir/imageformats
 %pluginsdir/inputmethods/libqimsw-multi.so*
+%if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
-
+%endif
 
 #-------------------------------------------------------------------------
 
@@ -259,7 +267,9 @@ QT%{qtmajor} component library
 %{qtdir}/%_lib/libQtSvg.so.*
 %{qtdir}/%_lib/libQtSvg.prl
 %pluginsdir/iconengines/libqsvg.so*
+%if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
+%endif
 
 #-------------------------------------------------------------------------
 
@@ -279,7 +289,9 @@ QT%{qtmajor} component library
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtTest.so.*
 %{qtdir}/%_lib/libQtTest.prl
+%if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
+%endif
 
 #-------------------------------------------------------------------------
 
@@ -300,7 +312,9 @@ QT%{qtmajor} component library
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtCore.so.*
 %{qtdir}/%_lib/libQtCore.prl
+%if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
+%endif
 
 #-------------------------------------------------------------------------
 
@@ -321,7 +335,9 @@ QT%{qtmajor} component library
 %{qtdir}/%_lib/libQt3Support.so.*
 %{qtdir}/%_lib/libQt3Support.prl
 %pluginsdir/designer/libqt3supportwidgets.so*
+%if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
+%endif
 
 #-------------------------------------------------------------------------
 
@@ -341,7 +357,9 @@ QT%{qtmajor} component library
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtOpenGL.so.*
 %{qtdir}/%_lib/libQtOpenGL.prl
+%if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
+%endif
 
 #-------------------------------------------------------------------------
 
@@ -366,7 +384,9 @@ Biblioteca componente da QT%{qtmajor}
 %{qtdir}/%_lib/libQtDesigner.prl
 %{qtdir}/%_lib/libQtDesignerComponents.so.*
 %{qtdir}/%_lib/libQtDesignerComponents.prl
+%if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
+%endif
 
 #-------------------------------------------------------------------------
 
@@ -387,7 +407,9 @@ QT assistant lib
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtUiTools.so.*
 %{qtdir}/%_lib/libQtUiTools.prl
+%if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
+%endif
 
 #-------------------------------------------------------------------------
 
@@ -410,8 +432,10 @@ QT dbus lib
 %{qtdir}/%_lib/libQtDBus.so.*
 %{qtdir}/%_lib/libQtDBus.prl
 %{qtdir}/bin/qdbus*
+%if ! %{with_debug}
 %exclude %{qtdir}/bin/qdbus*.debug
 %exclude %{qtdir}/%_lib/lib*.debug
+%endif
 
 #-------------------------------------------------------------------------
 
@@ -432,7 +456,9 @@ QT assistant lib
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtAssistantClient.so.*
 %{qtdir}/%_lib/libQtAssistantClient.prl
+%if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
+%endif
 
 #-------------------------------------------------------------------------
 
