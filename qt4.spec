@@ -56,7 +56,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 2
+Release: %mkrel 3
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -71,17 +71,11 @@ Source5: mandriva-linguist-qt4.desktop
 Patch0: qt4-uitools-sharedlib.patch
 Patch1:	qt4.3-fix-compile.patch
 # KDE qt-copy patches
-Patch100: 0142-uic3-wordWrapAttribute.diff
-Patch101: 0163-fix-gcc43-support.diff
-Patch102: 0167-fix-group-reading.diff
-Patch103: 0172-prefer-xrandr-over-xinerama.diff
-Patch104: 0175-fix-s390-qatomic.diff
-Patch106: 0178-transparency-window-types.diff
-Patch107: 0179-transient-hack.diff
-Patch108: 0180-window-role.diff
-Patch110: 0182-argb-visuals-default.diff 
-Patch112: 0185-fix-format-strings.diff
-Patch113: 0186-fix-component-alpha-text.diff 
+Patch100: 0118-qtcopy-define.diff
+Patch101: 0142-uic3-wordWrapAttribute.diff
+Patch102: 0172-prefer-xrandr-over-xinerama.diff
+Patch103: 0186-fix-component-alpha-text.diff 
+Patch104: 0188-fix-moc-parser-same-name-header.diff
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -811,12 +805,6 @@ Qt 4 Embedded Virtual Terminal
 %patch102 -p0 -b .qt-copy
 %patch103 -p0 -b .qt-copy
 %patch104 -p0 -b .qt-copy
-%patch106 -p0 -b .qt-copy
-%patch107 -p0 -b .qt-copy
-%patch108 -p0 -b .qt-copy
-%patch110 -p0 -b .qt-copy
-%patch112 -p0 -b .qt-copy
-%patch113 -p0 -b .qt-copy
 
 %build
 export QTDIR=`/bin/pwd`
