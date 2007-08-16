@@ -56,7 +56,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 4
+Release: %mkrel 5
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -74,8 +74,9 @@ Patch1:	qt4.3-fix-compile.patch
 Patch100: 0118-qtcopy-define.diff
 Patch101: 0142-uic3-wordWrapAttribute.diff
 Patch102: 0172-prefer-xrandr-over-xinerama.diff
-Patch103: 0186-fix-component-alpha-text.diff 
-Patch104: 0188-fix-moc-parser-same-name-header.diff
+Patch103: 0184-dlopen-defaults-to-local.diff
+Patch104: 0186-fix-component-alpha-text.diff 
+Patch105: 0188-fix-moc-parser-same-name-header.diff
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -457,7 +458,7 @@ QT assistant lib
 #-------------------------------------------------------------------------
 
 %package -n %{libqt}-devel
-Summary: Development files and documentation for the Qt GUI toolkit.
+Summary: Development files for the Qt GUI toolkit.
 Group: Development/KDE and Qt
 Requires: %{name}-common = %epoch:%version
 Provides: qt4-devel = %epoch:%version-%release
@@ -805,6 +806,7 @@ Qt 4 Embedded Virtual Terminal
 %patch102 -p0 -b .qt-copy
 %patch103 -p0 -b .qt-copy
 %patch104 -p0 -b .qt-copy
+%patch105 -p0 -b .qt-copy
 
 %build
 export QTDIR=`/bin/pwd`
