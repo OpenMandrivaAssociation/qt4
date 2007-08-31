@@ -56,7 +56,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 5
+Release: %mkrel 7
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -68,15 +68,21 @@ Source2: qt4.macros
 Source3: mandriva-designer-qt4.desktop 
 Source4: mandriva-assistant-qt4.desktop 
 Source5: mandriva-linguist-qt4.desktop
+Source6: Trolltech.conf
 Patch0: qt4-uitools-sharedlib.patch
 Patch1:	qt4.3-fix-compile.patch
 # KDE qt-copy patches
 Patch100: 0118-qtcopy-define.diff
 Patch101: 0142-uic3-wordWrapAttribute.diff
-Patch102: 0172-prefer-xrandr-over-xinerama.diff
-Patch103: 0184-dlopen-defaults-to-local.diff
-Patch104: 0186-fix-component-alpha-text.diff 
-Patch105: 0188-fix-moc-parser-same-name-header.diff
+Patch102: 0163-fix-gcc43-support.diff
+Patch103: 0172-prefer-xrandr-over-xinerama.diff
+Patch104: 0184-dlopen-defaults-to-local.diff
+Patch105: 0185-fix-format-strings.diff
+Patch106: 0186-fix-component-alpha-text.diff 
+Patch107: 0187-fix-font-fixed-pitch.diff
+Patch108: 0188-fix-moc-parser-same-name-header.diff
+Patch109: 0189-fix-q3toolbar-qcombobox-signal-slot.diff
+
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -120,6 +126,7 @@ This package contains all config file and language file
 %{qtdir}/bin/qtconfig*
 %_sysconfdir/ld.so.conf.d/*
 %attr(0755,root,root) %_sysconfdir/profile.d/*
+%attr(0644,root,root) %_sysconfdir/Trolltech.conf
 %dir %{qtdir}
 %dir %{qtdir}/bin
 %dir %{qtdir}/%_lib
@@ -807,6 +814,10 @@ Qt 4 Embedded Virtual Terminal
 %patch103 -p0 -b .qt-copy
 %patch104 -p0 -b .qt-copy
 %patch105 -p0 -b .qt-copy
+%patch106 -p0 -b .qt-copy
+%patch107 -p0 -b .qt-copy
+%patch108 -p0 -b .qt-copy
+%patch109 -p0 -b .qt-copy
 
 %build
 export QTDIR=`/bin/pwd`
@@ -991,6 +1002,8 @@ else
     PKG_CONFIG_PATH=\${PKG_CONFIG_PATH}:%{qtdir}/%_lib/pkgconfig
 fi
 
+QT4DOCDIR=%_docdir/qt4/doc
+
 function qt4env {
     QTDIR=%{qtdir}
     PATH=%{qtdir}/bin:\${PATH}
@@ -998,8 +1011,11 @@ function qt4env {
     export QTDIR PATH
 }
 
-export PKG_CONFIG_PATH
+export PKG_CONFIG_PATH QT4DOCDIR
 EOF
+
+# Conf
+cp %SOURCE6 %buildroot%_sysconfdir
 
 %clean
 rm -rf %buildroot
