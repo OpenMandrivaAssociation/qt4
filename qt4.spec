@@ -56,7 +56,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 7
+Release: %mkrel 8
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -420,6 +420,7 @@ Summary: QT dbus lib
 Summary(pt_BR): Biblioteca do dbus
 Group: System/Libraries
 Requires(pre): %{name}-common = %epoch:%version
+Requires: %{name}-qtdbus = %epoch:%version
 Provides: qdbuslib = %epoch:%version
 Conflicts: qt4-devel < 2:4.3.0 
 
@@ -433,10 +434,25 @@ QT dbus lib
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtDBus.so.*
 %{qtdir}/%_lib/libQtDBus.prl
+%if ! %{with_debug}
+%exclude %{qtdir}/%_lib/lib*.debug
+%endif
+
+#-------------------------------------------------------------------------
+
+%package qtdbus
+Summary: QT dbus binary
+Summary(pt_BR): Biblioteca do dbus
+Group: Development/KDE and Qt
+
+%description qtdbus
+QT dbus binary
+
+%files qtdbus
+%defattr(-,root,root,-)
 %{qtdir}/bin/qdbus*
 %if ! %{with_debug}
 %exclude %{qtdir}/bin/qdbus*.debug
-%exclude %{qtdir}/%_lib/lib*.debug
 %endif
 
 #-------------------------------------------------------------------------
