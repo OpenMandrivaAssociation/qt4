@@ -56,7 +56,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 10
+Release: %mkrel 11
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -83,6 +83,7 @@ Patch106: 0186-fix-component-alpha-text.diff
 Patch107: 0187-fix-font-fixed-pitch.diff
 Patch108: 0188-fix-moc-parser-same-name-header.diff
 Patch109: 0189-fix-q3toolbar-qcombobox-signal-slot.diff
+Patch110: 0190-off-by-one-utfdecoder.diff
 
 BuildRequires: X11-devel
 %if %{enable_static}
@@ -836,6 +837,7 @@ Qt 4 Embedded Virtual Terminal
 %patch107 -p0 -b .qt-copy
 %patch108 -p0 -b .qt-copy
 %patch109 -p0 -b .qt-copy
+%patch110 -p0 -b .qt-copy
 
 %build
 export QTDIR=`/bin/pwd`
