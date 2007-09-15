@@ -71,7 +71,7 @@ Source5: mandriva-linguist-qt4.desktop
 Source6: Trolltech.conf
 Patch0:  qt4-uitools-sharedlib.patch
 Patch1:	 qt4.3-fix-compile.patch
-Patch2:  qt4-4.3.1-fix-CVE-2007-4137.patch
+
 # KDE qt-copy patches
 Patch100: 0118-qtcopy-define.diff
 Patch101: 0142-uic3-wordWrapAttribute.diff
@@ -825,7 +825,7 @@ Qt 4 Embedded Virtual Terminal
 %setup -q -n %{qttarballdir}
 %patch0 -p1 -b .uilib
 %patch1 -p1 -b .fix_link
-%patch2 -p0 -b .CVE-2007-4137
+
 # qt-copy patches
 %patch100 -p0 -b .qt-copy
 %patch101 -p0 -b .qt-copy
