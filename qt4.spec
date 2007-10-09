@@ -483,7 +483,7 @@ QT assistant lib
 #-------------------------------------------------------------------------
 
 %package -n %{libqt}-devel
-Summary: Development files for the Qt GUI toolkit.
+Summary: Development files for the Qt GUI toolkit
 Group: Development/KDE and Qt
 Requires: %{name}-common = %epoch:%version
 Provides: qt4-devel = %epoch:%version-%release
