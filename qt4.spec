@@ -44,7 +44,7 @@
 
 %define qtmajor 4
 %define qtminor 3
-%define qtsubminor 1
+%define qtsubminor 2
 
 %define qtversion %{qtmajor}.%{qtminor}.%{qtsubminor} 
 
@@ -56,7 +56,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 12
+Release: %mkrel 1
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -74,16 +74,22 @@ Patch1:	 qt4.3-fix-compile.patch
 
 # KDE qt-copy patches
 Patch100: 0118-qtcopy-define.diff
-Patch101: 0142-uic3-wordWrapAttribute.diff
-Patch102: 0163-fix-gcc43-support.diff
-Patch103: 0172-prefer-xrandr-over-xinerama.diff
-Patch104: 0184-dlopen-defaults-to-local.diff
-Patch105: 0185-fix-format-strings.diff
-Patch106: 0186-fix-component-alpha-text.diff 
-Patch107: 0187-fix-font-fixed-pitch.diff
-Patch108: 0188-fix-moc-parser-same-name-header.diff
-Patch109: 0189-fix-q3toolbar-qcombobox-signal-slot.diff
-Patch110: 0190-off-by-one-utfdecoder.diff
+Patch101: 0167-fix-group-reading.diff
+Patch102: 0172-prefer-xrandr-over-xinerama.diff
+Patch103: 0176-coverity-fixes.diff
+Patch104: 0178-transparency-window-types.diff
+Patch105: 0179-transient-hack.diff
+Patch106: 0180-window-role.diff
+Patch107: 0184-dlopen-defaults-to-local.diff
+Patch108: 0187-fix-font-fixed-pitch.diff
+Patch109: 0188-fix-moc-parser-same-name-header.diff
+Patch110: 0189-fix-q3toolbar-qcombobox-signal-slot.diff
+Patch111: 0191-listview-alternate-row-colors.diff
+Patch112: 0192-itemdelegate-palette-state.diff
+Patch113: 0193-qtreeview-division-by-zero.diff
+Patch114: 0194-fix-moveonly-dnd-in-itemviews.diff
+Patch115: 0195-compositing-properties.diff
+Patch116: 0196-q3toolbar-clean-rebuild.diff
 
 BuildRequires: X11-devel
 %if %{enable_static}
@@ -838,6 +844,12 @@ Qt 4 Embedded Virtual Terminal
 %patch108 -p0 -b .qt-copy
 %patch109 -p0 -b .qt-copy
 %patch110 -p0 -b .qt-copy
+%patch111 -p0 -b .qt-copy
+%patch112 -p0 -b .qt-copy
+%patch113 -p0 -b .qt-copy
+%patch114 -p0 -b .qt-copy
+%patch115 -p0 -b .qt-copy
+%patch116 -p0 -b .qt-copy
 
 %build
 export QTDIR=`/bin/pwd`
