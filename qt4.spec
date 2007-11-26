@@ -49,21 +49,20 @@
 %define qtversion %{qtmajor}.%{qtminor}.%{qtsubminor} 
 
 %define qtlib qt4
-%define qtdir %_prefix/lib/%{qtlib}
+%define qtdir %_prefix/lib/qt4
 %define pluginsdir %qtdir/plugins/%_lib
 
 %define qttarballdir qt-x11-opensource-src-%{qtversion}
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 1
+Release: %mkrel 3
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
 License: GPL
 URL: http://www.trolltech.com/
 Source0: ftp://ftp.trolltech.com/qt/source/%{qttarballdir}.tar.gz
-Source1: qt4-designer-wrapper
 Source2: qt4.macros
 Source3: mandriva-designer-qt4.desktop 
 Source4: mandriva-assistant-qt4.desktop 
@@ -75,7 +74,7 @@ Patch1:	 qt4.3-fix-compile.patch
 # KDE qt-copy patches
 Patch100: 0118-qtcopy-define.diff
 Patch101: 0167-fix-group-reading.diff
-Patch102: 0172-prefer-xrandr-over-xinerama.diff
+Patch102: 0175-fix-s390-qatomic.diff
 Patch103: 0176-coverity-fixes.diff
 Patch104: 0178-transparency-window-types.diff
 Patch105: 0179-transient-hack.diff
@@ -90,7 +89,10 @@ Patch113: 0193-qtreeview-division-by-zero.diff
 Patch114: 0194-fix-moveonly-dnd-in-itemviews.diff
 Patch115: 0195-compositing-properties.diff
 Patch116: 0196-q3toolbar-clean-rebuild.diff
-
+Patch117: 0197-fix-qstylesheetstyle.diff
+Patch118: 0198-fix-qstylesheetstyle2.diff
+Patch119: 0199-fix-q3porting.diff
+Patch120: 0200-fix-qsslsocket-waitfor.diff
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -128,10 +130,17 @@ Summary: config, language file for Qt
 %description common
 This package contains all config file and language file
 
+%post common
+update-alternatives --install %_bindir/qtconfig qtconfig %qtdir/bin/qtconfig 20
+
+%postun common
+if ! [ -e %qtdir/bin/qtconfig ]; then
+  update-alternatives --remove qtconfig %qtdir/bin/qtconfig 
+fi
+
 %files common
 %defattr(-,root,root,-)
-%{_bindir}/qt4config
-%{qtdir}/bin/qtconfig*
+%{qtdir}/bin/qtconfig
 %_sysconfdir/ld.so.conf.d/*
 %attr(0755,root,root) %_sysconfdir/profile.d/*
 %attr(0644,root,root) %_sysconfdir/Trolltech.conf
@@ -495,6 +504,7 @@ Requires: %{name}-common = %epoch:%version
 Provides: qt4-devel = %epoch:%version-%release
 Provides: libqt4-devel = %epoch:%version-%release
 Conflicts: %{libqdbus} < 2:4.3.0 
+
 # There's symlinks to devel
 Requires: %{libqassistant} = %epoch:%version-%release
 Requires: %{libqtuitools} = %epoch:%version-%release
@@ -518,6 +528,14 @@ http://www.trolltech.com/products/qt.html for more information
 about Qt.
 Install qt-devel if you want to develop GUI applications using the Qt
 toolkit.
+
+%post -n %{libqt}-devel
+update-alternatives --install %_bindir/qmake qmake %qtdir/bin/qmake 20
+
+%postun -n %{libqt}-devel
+if ! [ -e %qtdir/bin/qmake ]; then
+  update-alternatives --remove qmake %qtdir/bin/qmake
+fi
 
 %files -n %{libqt}-devel
 %defattr(-,root,root,-)
@@ -597,7 +615,6 @@ Summary: QT linguist translation utility
 Group: Books/Computer books
 Requires(post): desktop-file-utils
 Requires(postun): desktop-file-utils
-Conflicts: qt3-linguist
 
 %description linguist
 Qt Linguist provides easy translation of Qt GUIs to different
@@ -625,7 +642,6 @@ Summary: QT assistantion doc utility
 Group: Books/Computer books
 Requires(post): desktop-file-utils
 Requires(postun): desktop-file-utils
-Conflicts: qt3-assistant
 
 %description assistant
 Qt Assistant provides a documentation Browser
@@ -807,8 +823,7 @@ implementing user interfaces a lot easier.
 
 %files designer
 %defattr(-,root,root,-)
-%{_bindir}/designer-qt%{qtmajor}
-%{qtdir}/bin/designer*
+%{qtdir}/bin/designer
 %{_datadir}/applications/*designer*.desktop
 %exclude %{qtdir}/bin/*.debug
 
@@ -850,6 +865,10 @@ Qt 4 Embedded Virtual Terminal
 %patch114 -p0 -b .qt-copy
 %patch115 -p0 -b .qt-copy
 %patch116 -p0 -b .qt-copy
+%patch117 -p0 -b .qt-copy
+%patch118 -p0 -b .qt-copy
+%patch119 -p0 -b .qt-copy
+%patch120 -p0 -b .qt-copy
 
 %build
 export QTDIR=`/bin/pwd`
@@ -976,20 +995,10 @@ pushd tools/qvfb
    make INSTALL_ROOT=%buildroot install
 popd
 
-# Designer wrapper
-pushd  %buildroot%{qtdir}/bin
-mv designer designer-real
-cp %SOURCE1 designer
-popd
-ln -s %{qtdir}/bin/designer %buildroot%{_bindir}/designer-qt%{qtmajor}
-
 mkdir -p %buildroot%_datadir/applications
 install -m 644 %SOURCE3 %buildroot%_datadir/applications
 install -m 644 %SOURCE4 %buildroot%_datadir/applications
 install -m 644 %SOURCE5 %buildroot%_datadir/applications
-
-# qtconfig
-ln -s %{qtdir}/bin/qtconfig %buildroot%{_bindir}/qt4config
 
 # Fix mkspec link
 pushd  %buildroot%{qtdir}/mkspecs
@@ -1025,7 +1034,7 @@ mkdir -p %buildroot/%_sysconfdir/rpm/macros.d
 install -m 0644 %SOURCE2 %buildroot/%_sysconfdir/rpm/macros.d
 
 # Profiles
-cat > %buildroot%_sysconfdir/profile.d/qt4.sh << EOF
+cat > %buildroot%_sysconfdir/profile.d/60qt4.sh << EOF
 #!/bin/bash
 
 if [ -z \$PKG_CONFIG_PATH ]; then
@@ -1036,14 +1045,14 @@ fi
 
 QT4DOCDIR=%_docdir/qt4/doc
 
+PATH=\${PATH}:%{qtdir}/bin
+
 function qt4env {
     QTDIR=%{qtdir}
-    PATH=%{qtdir}/bin:\${PATH}
-
-    export QTDIR PATH
+    export QTDIR
 }
 
-export PKG_CONFIG_PATH QT4DOCDIR
+export PKG_CONFIG_PATH QT4DOCDIR PATH
 EOF
 
 # Conf
