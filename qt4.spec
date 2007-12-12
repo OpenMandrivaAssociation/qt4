@@ -44,7 +44,7 @@
 
 %define qtmajor 4
 %define qtminor 3
-%define qtsubminor 2
+%define qtsubminor 3
 
 %define qtversion %{qtmajor}.%{qtminor}.%{qtsubminor} 
 
@@ -56,7 +56,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 3
+Release: %mkrel 1
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -72,27 +72,21 @@ Patch0:  qt4-uitools-sharedlib.patch
 Patch1:	 qt4.3-fix-compile.patch
 
 # KDE qt-copy patches
-Patch100: 0118-qtcopy-define.diff
-Patch101: 0167-fix-group-reading.diff
-Patch102: 0175-fix-s390-qatomic.diff
-Patch103: 0176-coverity-fixes.diff
-Patch104: 0178-transparency-window-types.diff
-Patch105: 0179-transient-hack.diff
-Patch106: 0180-window-role.diff
-Patch107: 0184-dlopen-defaults-to-local.diff
-Patch108: 0187-fix-font-fixed-pitch.diff
-Patch109: 0188-fix-moc-parser-same-name-header.diff
-Patch110: 0189-fix-q3toolbar-qcombobox-signal-slot.diff
-Patch111: 0191-listview-alternate-row-colors.diff
-Patch112: 0192-itemdelegate-palette-state.diff
-Patch113: 0193-qtreeview-division-by-zero.diff
-Patch114: 0194-fix-moveonly-dnd-in-itemviews.diff
-Patch115: 0195-compositing-properties.diff
-Patch116: 0196-q3toolbar-clean-rebuild.diff
-Patch117: 0197-fix-qstylesheetstyle.diff
-Patch118: 0198-fix-qstylesheetstyle2.diff
-Patch119: 0199-fix-q3porting.diff
-Patch120: 0200-fix-qsslsocket-waitfor.diff
+Patch100: 0167-fix-group-reading.diff
+Patch101: 0175-fix-s390-qatomic.diff
+Patch102: 0176-coverity-fixes.diff
+Patch103: 0178-transparency-window-types.diff
+Patch104: 0179-transient-hack.diff
+Patch105: 0180-window-role.diff
+Patch106: 0184-dlopen-defaults-to-local.diff
+Patch107: 0187-fix-font-fixed-pitch.diff
+Patch108: 0189-fix-q3toolbar-qcombobox-signal-slot.diff
+Patch109: 0191-listview-alternate-row-colors.diff
+Patch110: 0192-itemdelegate-palette-state.diff
+Patch111: 0194-fix-moveonly-dnd-in-itemviews.diff
+Patch112: 0195-compositing-properties.diff
+Patch113: 0200-fix-qsslsocket-waitfor.diff
+Patch114: 0204-fix-tulip-aliasing.diff
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -863,12 +857,6 @@ Qt 4 Embedded Virtual Terminal
 %patch112 -p0 -b .qt-copy
 %patch113 -p0 -b .qt-copy
 %patch114 -p0 -b .qt-copy
-%patch115 -p0 -b .qt-copy
-%patch116 -p0 -b .qt-copy
-%patch117 -p0 -b .qt-copy
-%patch118 -p0 -b .qt-copy
-%patch119 -p0 -b .qt-copy
-%patch120 -p0 -b .qt-copy
 
 %build
 export QTDIR=`/bin/pwd`
