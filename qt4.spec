@@ -105,7 +105,6 @@ BuildRequires: expat-devel
 BuildRequires: libdbus-devel >= 0.92
 BuildRequires: perl
 Provides: %{qtlib}
-BuildRoot: %{_tmppath}/%{name}-%{version}-root
 
 %description
 Qt is a GUI software toolkit which simplifies the task of writing and
