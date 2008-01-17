@@ -56,7 +56,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 1
+Release: %mkrel 2
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -72,7 +72,8 @@ Patch0:  qt4-uitools-sharedlib.patch
 Patch1:	 qt4.3-fix-compile.patch
 
 # KDE qt-copy patches
-Patch100: 0167-fix-group-reading.diff
+Patch99: 0167-fix-group-reading.diff
+Patch100: 0172-prefer-xrandr-over-xinerama.diff
 Patch101: 0175-fix-s390-qatomic.diff
 Patch102: 0176-coverity-fixes.diff
 Patch103: 0178-transparency-window-types.diff
@@ -87,6 +88,8 @@ Patch111: 0194-fix-moveonly-dnd-in-itemviews.diff
 Patch112: 0195-compositing-properties.diff
 Patch113: 0200-fix-qsslsocket-waitfor.diff
 Patch114: 0204-fix-tulip-aliasing.diff
+Patch115: 0206-fix-meta-modifier.patch
+Patch116: 0205-fast-qpixmap-fill.diff
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -842,6 +845,7 @@ Qt 4 Embedded Virtual Terminal
 %patch1 -p1 -b .fix_link
 
 # qt-copy patches
+%patch99 -p0 -b .qt-copy
 %patch100 -p0 -b .qt-copy
 %patch101 -p0 -b .qt-copy
 %patch102 -p0 -b .qt-copy
@@ -857,6 +861,8 @@ Qt 4 Embedded Virtual Terminal
 %patch112 -p0 -b .qt-copy
 %patch113 -p0 -b .qt-copy
 %patch114 -p0 -b .qt-copy
+%patch115 -p0 -b .qt-copy
+%patch116 -p0 -b .qt-copy
 
 %build
 export QTDIR=`/bin/pwd`
