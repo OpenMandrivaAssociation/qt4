@@ -56,7 +56,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 3
+Release: %mkrel 4
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -146,6 +146,7 @@ fi
 %dir %pluginsdir
 %dir %pluginsdir/sqldrivers
 %{qtdir}/phrasebooks
+%{qtdir}/translations
 %_docdir/%name/README
 
 #------------------------------------------------------------------------
@@ -978,6 +979,7 @@ make INSTALL_ROOT=%buildroot \
 	sub-tools-install_subtargets-ordered \
 	install_htmldocs \
 	install_qmake \
+	install_translations \
 	install_mkspecs
 
 install -m 0644 README %buildroot%_docdir/%name
