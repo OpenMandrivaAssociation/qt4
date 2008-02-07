@@ -56,7 +56,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 2
+Release: %mkrel 3
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -79,17 +79,16 @@ Patch102: 0176-coverity-fixes.diff
 Patch103: 0178-transparency-window-types.diff
 Patch104: 0179-transient-hack.diff
 Patch105: 0180-window-role.diff
-Patch106: 0184-dlopen-defaults-to-local.diff
-Patch107: 0187-fix-font-fixed-pitch.diff
-Patch108: 0189-fix-q3toolbar-qcombobox-signal-slot.diff
-Patch109: 0191-listview-alternate-row-colors.diff
-Patch110: 0192-itemdelegate-palette-state.diff
-Patch111: 0194-fix-moveonly-dnd-in-itemviews.diff
-Patch112: 0195-compositing-properties.diff
-Patch113: 0200-fix-qsslsocket-waitfor.diff
-Patch114: 0204-fix-tulip-aliasing.diff
-Patch115: 0206-fix-meta-modifier.patch
-Patch116: 0205-fast-qpixmap-fill.diff
+Patch106: 0187-fix-font-fixed-pitch.diff
+Patch107: 0191-listview-alternate-row-colors.diff
+Patch108: 0192-itemdelegate-palette-state.diff
+Patch109: 0194-fix-moveonly-dnd-in-itemviews.diff
+Patch110: 0195-compositing-properties.diff
+Patch111: 0200-fix-qsslsocket-waitfor.diff
+Patch112: 0204-fix-tulip-aliasing.diff
+Patch113: 0206-fix-meta-modifier.patch
+Patch114: 0208-fix-quitools-incompatibility.diff
+Patch115: 0209-prevent-qt-mixing.diff
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -862,7 +861,6 @@ Qt 4 Embedded Virtual Terminal
 %patch113 -p0 -b .qt-copy
 %patch114 -p0 -b .qt-copy
 %patch115 -p0 -b .qt-copy
-%patch116 -p0 -b .qt-copy
 
 %build
 export QTDIR=`/bin/pwd`
