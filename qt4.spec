@@ -146,7 +146,9 @@ fi
 %dir %pluginsdir
 %dir %pluginsdir/sqldrivers
 %{qtdir}/phrasebooks
-%{qtdir}/translations
+%dir %{qtdir}/translations
+%{qtdir}/translations/qt_*
+%{qtdir}/translations/qtconfig*
 %_docdir/%name/README
 
 #------------------------------------------------------------------------
@@ -612,6 +614,7 @@ Summary: QT linguist translation utility
 Group: Books/Computer books
 Requires(post): desktop-file-utils
 Requires(postun): desktop-file-utils
+Conflicts:  %name-common <= 4.3.3-4
 
 %description linguist
 Qt Linguist provides easy translation of Qt GUIs to different
@@ -631,7 +634,7 @@ languages
 %{qtdir}/bin/lreleas*
 %{qtdir}/bin/lupdat*
 %{_datadir}/applications/*linguist*.desktop
-
+%{qtdir}/translations/linguist*
 #-------------------------------------------------------------------------
 
 %package assistant
@@ -639,6 +642,7 @@ Summary: QT assistantion doc utility
 Group: Books/Computer books
 Requires(post): desktop-file-utils
 Requires(postun): desktop-file-utils
+Conflicts:  %name-common <= 4.3.3-4
 
 %description assistant
 Qt Assistant provides a documentation Browser
@@ -655,7 +659,7 @@ Qt Assistant provides a documentation Browser
 %defattr(-,root,root,-)
 %{qtdir}/bin/assistant*
 %{_datadir}/applications/*assistant*.desktop
-
+%{qtdir}/translations/assistant*
 #-------------------------------------------------------------------------
 
 %package tutorial
@@ -806,6 +810,7 @@ Acessibility plugins for Qt4
 Summary: %{qtlib} visual design tool
 Group: Development/KDE and Qt
 Requires: %{libqt}-devel = %epoch:%version
+Conflicts:  %name-common <= 4.3.3-4
 
 %description designer
 The Qt Designer is a visual design tool that makes designing and
@@ -822,6 +827,7 @@ implementing user interfaces a lot easier.
 %defattr(-,root,root,-)
 %{qtdir}/bin/designer
 %{_datadir}/applications/*designer*.desktop
+%{qtdir}/translations/designer_*
 %exclude %{qtdir}/bin/*.debug
 
 #-------------------------------------------------------------------------
@@ -829,6 +835,7 @@ implementing user interfaces a lot easier.
 %package qvfb
 Summary: %{qtlib} embedded virtual terminal
 Group: Development/KDE and Qt
+Conflicts:  %name-common <= 4.3.3-4
 
 %description qvfb
 Qt 4 Embedded Virtual Terminal
@@ -836,7 +843,7 @@ Qt 4 Embedded Virtual Terminal
 %files qvfb
 %defattr(-,root,root,-)
 %{qtdir}/bin/qvf*
-
+%{qtdir}/translations/qvfb*
 #-------------------------------------------------------------------------
 
 %prep
