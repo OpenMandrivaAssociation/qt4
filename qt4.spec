@@ -70,6 +70,7 @@ Source5: mandriva-linguist-qt4.desktop
 Source6: Trolltech.conf
 Patch0:  qt4-uitools-sharedlib.patch
 Patch1:	 qt4.3-fix-compile.patch
+Patch2:  qt-4.3.3-fix-wrong-ssl-library-hardcode.patch
 
 # KDE qt-copy patches
 Patch99: 0167-fix-group-reading.diff
