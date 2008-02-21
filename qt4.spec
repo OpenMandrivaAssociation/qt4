@@ -56,7 +56,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 5
+Release: %mkrel 6
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -851,6 +851,7 @@ Qt 4 Embedded Virtual Terminal
 %setup -q -n %{qttarballdir}
 %patch0 -p1 -b .uilib
 %patch1 -p1 -b .fix_link
+%patch2 -p1 -b .ssl
 
 # qt-copy patches
 %patch99 -p0 -b .qt-copy
@@ -1062,6 +1063,3 @@ cp %SOURCE6 %buildroot%_sysconfdir
 
 %clean
 rm -rf %buildroot
-
-
-
