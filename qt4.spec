@@ -44,7 +44,7 @@
 
 %define qtmajor 4
 %define qtminor 3
-%define qtsubminor 3
+%define qtsubminor 4
 
 %define qtversion %{qtmajor}.%{qtminor}.%{qtsubminor} 
 
@@ -56,7 +56,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 7
+Release: %mkrel 1
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -86,9 +86,6 @@ Patch108: 0192-itemdelegate-palette-state.diff
 Patch109: 0194-fix-moveonly-dnd-in-itemviews.diff
 Patch110: 0195-compositing-properties.diff
 Patch111: 0200-fix-qsslsocket-waitfor.diff
-Patch112: 0204-fix-tulip-aliasing.diff
-Patch113: 0206-fix-meta-modifier.patch
-Patch114: 0208-fix-quitools-incompatibility.diff
 Patch115: 0209-prevent-qt-mixing.diff
 BuildRequires: X11-devel
 %if %{enable_static}
@@ -414,6 +411,7 @@ Summary: QT assistant lib
 Summary(pt_BR): Biblioteca do qt-assistant
 Group: System/Libraries
 Requires(pre): %{name}-common = %epoch:%version
+Requires: qt4-doc
 Provides: qtuitoolslib = %epoch:%version
 
 %description -n %{libqtuitools}
@@ -867,9 +865,6 @@ Qt 4 Embedded Virtual Terminal
 %patch109 -p0 -b .qt-copy
 %patch110 -p0 -b .qt-copy
 %patch111 -p0 -b .qt-copy
-%patch112 -p0 -b .qt-copy
-%patch113 -p0 -b .qt-copy
-%patch114 -p0 -b .qt-copy
 %patch115 -p0 -b .qt-copy
 
 %build
