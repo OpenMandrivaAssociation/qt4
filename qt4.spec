@@ -124,17 +124,8 @@ Summary: config, language file for Qt
 %description common
 This package contains all config file and language file
 
-%post common
-update-alternatives --install %_bindir/qtconfig qtconfig %qtdir/bin/qtconfig 20
-
-%postun common
-if ! [ -e %qtdir/bin/qtconfig ]; then
-  update-alternatives --remove qtconfig %qtdir/bin/qtconfig 
-fi
-
 %files common
 %defattr(-,root,root,-)
-%{qtdir}/bin/qtconfig
 %_sysconfdir/ld.so.conf.d/*
 %attr(0755,root,root) %_sysconfdir/profile.d/*
 %attr(0644,root,root) %_sysconfdir/Trolltech.conf
@@ -146,7 +137,6 @@ fi
 %{qtdir}/phrasebooks
 %dir %{qtdir}/translations
 %{qtdir}/translations/qt_*
-%{qtdir}/translations/qtconfig*
 %_docdir/%name/README
 
 #------------------------------------------------------------------------
@@ -574,6 +564,29 @@ applications, as well as the README files for Qt.
 
 #-------------------------------------------------------------------------
 
+%package qtconfig
+Summary: Main Qt4 configuration utility
+Group: Development/KDE and Qt
+Conflicts: qt4-common <= 2:4.3.3
+
+%description qtconfig
+Main Qt 4.3 configuration utility.
+
+%post qtconfig
+update-alternatives --install %_bindir/qtconfig qtconfig %qtdir/bin/qtconfig 20
+
+%postun qtconfig
+if ! [ -e %qtdir/bin/qtconfig ]; then
+  update-alternatives --remove qtconfig %qtdir/bin/qtconfig 
+fi
+
+%files qtconfig
+%defattr(-,root,root,-)
+%{qtdir}/bin/qtconfig
+%{qtdir}/translations/qtconfig*
+
+#-------------------------------------------------------------------------
+
 %package doc
 Summary: HTML Documentation for Qt version %{version}
 Group: Books/Computer books
@@ -821,7 +834,6 @@ implementing user interfaces a lot easier.
 %postun designer
 %clean_menus
 
-
 %files designer
 %defattr(-,root,root,-)
 %{qtdir}/bin/designer
@@ -843,6 +855,7 @@ Qt 4 Embedded Virtual Terminal
 %defattr(-,root,root,-)
 %{qtdir}/bin/qvf*
 %{qtdir}/translations/qvfb*
+
 #-------------------------------------------------------------------------
 
 %prep
