@@ -28,7 +28,6 @@
 
 %define libqt %mklibname qt 4
 %define libqassistant %mklibname qassistant 1
-%define libqtuitools %mklibname qtuitools 4
 %define libqt3support %mklibname qt3support 4
 %define libqtcore %mklibname qtcore 4
 %define libqtdesigner %mklibname qtdesigner 1
@@ -56,7 +55,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 2
+Release: %mkrel 3
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -68,9 +67,8 @@ Source3: mandriva-designer-qt4.desktop
 Source4: mandriva-assistant-qt4.desktop 
 Source5: mandriva-linguist-qt4.desktop
 Source6: Trolltech.conf
-Patch0:  qt4-uitools-sharedlib.patch
-Patch1:	 qt4.3-fix-compile.patch
-Patch2:  qt-4.3.3-fix-wrong-ssl-library-hardcode.patch
+Patch0:	 qt4.3-fix-compile.patch
+Patch1:  qt-4.3.3-fix-wrong-ssl-library-hardcode.patch
 
 # KDE qt-copy patches
 Patch99: 0167-fix-group-reading.diff
@@ -158,7 +156,6 @@ QT%{qtmajor} component library
 %files -n %{libqtxml}
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtXml.so.*
-%{qtdir}/%_lib/libQtXml.prl
 %if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
 %endif
@@ -180,7 +177,6 @@ QT%{qtmajor} component library
 %files -n %{libqtsql}
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtSql.so.*
-%{qtdir}/%_lib/libQtSql.prl
 %if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
 %endif
@@ -202,7 +198,6 @@ QT%{qtmajor} component library
 %files -n %{libqtnetwork}
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtNetwork.so.*
-%{qtdir}/%_lib/libQtNetwork.prl
 %if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
 %endif
@@ -224,7 +219,6 @@ QT%{qtmajor} component library
 %files -n %{libqtscript}
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtScript.so.*
-%{qtdir}/%_lib/libQtScript.prl
 %if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
 %endif
@@ -247,7 +241,6 @@ QT%{qtmajor} component library
 %files -n %{libqtgui}
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtGui.so.*
-%{qtdir}/%_lib/libQtGui.prl
 %pluginsdir/imageformats
 %pluginsdir/inputmethods/libqimsw-multi.so*
 %if ! %{with_debug}
@@ -271,7 +264,6 @@ QT%{qtmajor} component library
 %files -n %{libqtsvg}
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtSvg.so.*
-%{qtdir}/%_lib/libQtSvg.prl
 %pluginsdir/iconengines/libqsvg.so*
 %if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
@@ -294,7 +286,6 @@ QT%{qtmajor} component library
 %files -n %{libqttest}
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtTest.so.*
-%{qtdir}/%_lib/libQtTest.prl
 %if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
 %endif
@@ -307,6 +298,7 @@ Group: System/Libraries
 Requires(pre): %{name}-common = %epoch:%version
 Conflicts: %{libqtgui} <= 2:4.2.2-%mkrel 2
 Provides: qtcorelib = %epoch:%version
+Obsoletes: %{_lib}qtuitools4
 
 %description -n %{libqtcore}
 QT%{qtmajor} component library
@@ -317,7 +309,6 @@ QT%{qtmajor} component library
 %files -n %{libqtcore}
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtCore.so.*
-%{qtdir}/%_lib/libQtCore.prl
 %if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
 %endif
@@ -339,7 +330,6 @@ QT%{qtmajor} component library
 %files -n %{libqt3support}
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQt3Support.so.*
-%{qtdir}/%_lib/libQt3Support.prl
 %pluginsdir/designer/libqt3supportwidgets.so*
 %if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
@@ -362,7 +352,6 @@ QT%{qtmajor} component library
 %files -n %{libqtopengl}
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtOpenGL.so.*
-%{qtdir}/%_lib/libQtOpenGL.prl
 %if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
 %endif
@@ -387,33 +376,7 @@ Biblioteca componente da QT%{qtmajor}
 %files -n %{libqtdesigner}
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtDesigner.so.*
-%{qtdir}/%_lib/libQtDesigner.prl
 %{qtdir}/%_lib/libQtDesignerComponents.so.*
-%{qtdir}/%_lib/libQtDesignerComponents.prl
-%if ! %{with_debug}
-%exclude %{qtdir}/%_lib/lib*.debug
-%endif
-
-#-------------------------------------------------------------------------
-
-%package -n %{libqtuitools}
-Summary: QT assistant lib
-Summary(pt_BR): Biblioteca do qt-assistant
-Group: System/Libraries
-Requires(pre): %{name}-common = %epoch:%version
-Requires: qt4-doc
-Provides: qtuitoolslib = %epoch:%version
-
-%description -n %{libqtuitools}
-QT assistant lib
-
-%post -n %{libqtuitools} -p /sbin/ldconfig
-%postun -n %{libqtuitools} -p /sbin/ldconfig
-
-%files -n %{libqtuitools}
-%defattr(-,root,root,-)
-%{qtdir}/%_lib/libQtUiTools.so.*
-%{qtdir}/%_lib/libQtUiTools.prl
 %if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
 %endif
@@ -438,7 +401,6 @@ QT dbus lib
 %files -n %{libqdbus}
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtDBus.so.*
-%{qtdir}/%_lib/libQtDBus.prl
 %if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
 %endif
@@ -478,7 +440,6 @@ QT assistant lib
 %files -n %{libqassistant}
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtAssistantClient.so.*
-%{qtdir}/%_lib/libQtAssistantClient.prl
 %if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
 %endif
@@ -495,7 +456,6 @@ Conflicts: %{libqdbus} < 2:4.3.0
 
 # There's symlinks to devel
 Requires: %{libqassistant} = %epoch:%version-%release
-Requires: %{libqtuitools} = %epoch:%version-%release
 Requires: %{libqt3support} = %epoch:%version-%release
 Requires: %{libqtcore} = %epoch:%version-%release
 Requires: %{libqtdesigner} = %epoch:%version-%release
@@ -538,6 +498,8 @@ fi
 %{qtdir}/mkspecs
 %{qtdir}/%_lib/*.so
 %{qtdir}/%_lib/*.la
+%{qtdir}/%_lib/*.a
+%{qtdir}/%_lib/*.prl
 %{qtdir}/%_lib/pkgconfig/*
 %{qtdir}/q3porting.xml
 
@@ -860,9 +822,8 @@ Qt 4 Embedded Virtual Terminal
 
 %prep
 %setup -q -n %{qttarballdir}
-%patch0 -p1 -b .uilib
-%patch1 -p1 -b .fix_link
-%patch2 -p1 -b .ssl
+%patch0 -p1 -b .fix_link
+%patch1 -p1 -b .ssl
 
 # qt-copy patches
 %patch99 -p0 -b .qt-copy
