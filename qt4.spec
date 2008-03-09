@@ -26,20 +26,20 @@
 %define with_cups 1
 %{?_without_cups %{expand: %%global with_cups 0}}
 
-%define libqt %mklibname qt 4
-%define libqassistant %mklibname qassistant 1
-%define libqt3support %mklibname qt3support 4
-%define libqtcore %mklibname qtcore 4
-%define libqtdesigner %mklibname qtdesigner 1
-%define libqtgui %mklibname qtgui 4
-%define libqtnetwork %mklibname qtnetwork 4
-%define libqtopengl %mklibname qtopengl 4
-%define libqtsql %mklibname qtsql 4
-%define libqtxml %mklibname qtxml 4
-%define libqtsvg %mklibname qtsvg 4
-%define libqttest %mklibname qttest 4
-%define libqdbus %mklibname qtdbus 4
-%define libqtscript %mklibname qtscript 4
+%define libqt %mklibname qt %qtmajor
+%define libqassistant %mklibname qassistant %qtmajor
+%define libqt3support %mklibname qt3support %qtmajor
+%define libqtcore %mklibname qtcore %qtmajor
+%define libqtdesigner %mklibname qtdesigner %qtmajor
+%define libqtgui %mklibname qtgui %qtmajor
+%define libqtnetwork %mklibname qtnetwork %qtmajor
+%define libqtopengl %mklibname qtopengl %qtmajor
+%define libqtsql %mklibname qtsql %qtmajor
+%define libqtxml %mklibname qtxml %qtmajor
+%define libqtsvg %mklibname qtsvg %qtmajor
+%define libqttest %mklibname qttest %qtmajor
+%define libqdbus %mklibname qtdbus %qtmajor
+%define libqtscript %mklibname qtscript %qtmajor
 
 %define qtmajor 4
 %define qtminor 3
@@ -55,7 +55,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 3
+Release: %mkrel 4
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -155,7 +155,7 @@ QT%{qtmajor} component library
 
 %files -n %{libqtxml}
 %defattr(-,root,root,-)
-%{qtdir}/%_lib/libQtXml.so.*
+%{qtdir}/%_lib/libQtXml.so.%{qtmajor}*
 %if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
 %endif
@@ -176,7 +176,7 @@ QT%{qtmajor} component library
 
 %files -n %{libqtsql}
 %defattr(-,root,root,-)
-%{qtdir}/%_lib/libQtSql.so.*
+%{qtdir}/%_lib/libQtSql.so.%{qtmajor}*
 %if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
 %endif
@@ -197,7 +197,7 @@ QT%{qtmajor} component library
 
 %files -n %{libqtnetwork}
 %defattr(-,root,root,-)
-%{qtdir}/%_lib/libQtNetwork.so.*
+%{qtdir}/%_lib/libQtNetwork.so.%{qtmajor}*
 %if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
 %endif
@@ -218,7 +218,7 @@ QT%{qtmajor} component library
 
 %files -n %{libqtscript}
 %defattr(-,root,root,-)
-%{qtdir}/%_lib/libQtScript.so.*
+%{qtdir}/%_lib/libQtScript.so.%{qtmajor}*
 %if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
 %endif
@@ -240,7 +240,7 @@ QT%{qtmajor} component library
 
 %files -n %{libqtgui}
 %defattr(-,root,root,-)
-%{qtdir}/%_lib/libQtGui.so.*
+%{qtdir}/%_lib/libQtGui.so.%{qtmajor}*
 %pluginsdir/imageformats
 %pluginsdir/inputmethods/libqimsw-multi.so*
 %if ! %{with_debug}
@@ -263,7 +263,7 @@ QT%{qtmajor} component library
 
 %files -n %{libqtsvg}
 %defattr(-,root,root,-)
-%{qtdir}/%_lib/libQtSvg.so.*
+%{qtdir}/%_lib/libQtSvg.so.%{qtmajor}*
 %pluginsdir/iconengines/libqsvg.so*
 %if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
@@ -285,7 +285,7 @@ QT%{qtmajor} component library
 
 %files -n %{libqttest}
 %defattr(-,root,root,-)
-%{qtdir}/%_lib/libQtTest.so.*
+%{qtdir}/%_lib/libQtTest.so.%{qtmajor}*
 %if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
 %endif
@@ -308,7 +308,7 @@ QT%{qtmajor} component library
 
 %files -n %{libqtcore}
 %defattr(-,root,root,-)
-%{qtdir}/%_lib/libQtCore.so.*
+%{qtdir}/%_lib/libQtCore.so.%{qtmajor}*
 %if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
 %endif
@@ -329,7 +329,7 @@ QT%{qtmajor} component library
 
 %files -n %{libqt3support}
 %defattr(-,root,root,-)
-%{qtdir}/%_lib/libQt3Support.so.*
+%{qtdir}/%_lib/libQt3Support.so.%{qtmajor}*
 %pluginsdir/designer/libqt3supportwidgets.so*
 %if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
@@ -351,7 +351,7 @@ QT%{qtmajor} component library
 
 %files -n %{libqtopengl}
 %defattr(-,root,root,-)
-%{qtdir}/%_lib/libQtOpenGL.so.*
+%{qtdir}/%_lib/libQtOpenGL.so.%{qtmajor}*
 %if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
 %endif
@@ -363,6 +363,8 @@ Summary: QT%{qtmajor} component library
 Group: System/Libraries
 Requires(pre): %{name}-common = %epoch:%version
 Provides: qtdesignerlib = %epoch:%version
+# Had wrong major:
+Obsoletes: %{_lib}qtdesigner1 < 2:4.3.4-4
 
 %description -n %{libqtdesigner}
 QT%{qtmajor} component library
@@ -375,8 +377,8 @@ Biblioteca componente da QT%{qtmajor}
 
 %files -n %{libqtdesigner}
 %defattr(-,root,root,-)
-%{qtdir}/%_lib/libQtDesigner.so.*
-%{qtdir}/%_lib/libQtDesignerComponents.so.*
+%{qtdir}/%_lib/libQtDesigner.so.%{qtmajor}*
+%{qtdir}/%_lib/libQtDesignerComponents.so.%{qtmajor}*
 %if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
 %endif
@@ -400,7 +402,7 @@ QT dbus lib
 
 %files -n %{libqdbus}
 %defattr(-,root,root,-)
-%{qtdir}/%_lib/libQtDBus.so.*
+%{qtdir}/%_lib/libQtDBus.so.%{qtmajor}*
 %if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
 %endif
@@ -430,6 +432,8 @@ Summary(pt_BR): Biblioteca do qt-assistant
 Group: System/Libraries
 Requires(pre): %{name}-common = %epoch:%version
 Provides: qassistantlib = %epoch:%version
+# Had wrong major:
+Obsoletes: %{_lib}qassistant1 < 2:4.3.4-4
 
 %description -n %{libqassistant}
 QT assistant lib
@@ -439,7 +443,7 @@ QT assistant lib
 
 %files -n %{libqassistant}
 %defattr(-,root,root,-)
-%{qtdir}/%_lib/libQtAssistantClient.so.*
+%{qtdir}/%_lib/libQtAssistantClient.so.%{qtmajor}*
 %if ! %{with_debug}
 %exclude %{qtdir}/%_lib/lib*.debug
 %endif
