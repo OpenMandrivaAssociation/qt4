@@ -992,6 +992,9 @@ done
 # Use the new ld.so.conf.d 
 pushd %buildroot/%_sysconfdir/ld.so.conf.d
 echo "%{qtdir}/%_lib" > qt4.conf
+%if "%{_lib}" != "lib"
+echo "%{qtdir}/lib" >> qt4.conf
+%endif
 popd
 
 # Fix all buildroot paths
