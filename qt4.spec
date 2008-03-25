@@ -55,7 +55,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 4
+Release: %mkrel 5
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -156,9 +156,6 @@ QT%{qtmajor} component library
 %files -n %{libqtxml}
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtXml.so.%{qtmajor}*
-%if ! %{with_debug}
-%exclude %{qtdir}/%_lib/lib*.debug
-%endif
 
 #-------------------------------------------------------------------------
 
@@ -177,9 +174,6 @@ QT%{qtmajor} component library
 %files -n %{libqtsql}
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtSql.so.%{qtmajor}*
-%if ! %{with_debug}
-%exclude %{qtdir}/%_lib/lib*.debug
-%endif
 
 #-------------------------------------------------------------------------
 
@@ -198,9 +192,6 @@ QT%{qtmajor} component library
 %files -n %{libqtnetwork}
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtNetwork.so.%{qtmajor}*
-%if ! %{with_debug}
-%exclude %{qtdir}/%_lib/lib*.debug
-%endif
 
 #-------------------------------------------------------------------------
 
@@ -219,9 +210,6 @@ QT%{qtmajor} component library
 %files -n %{libqtscript}
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtScript.so.%{qtmajor}*
-%if ! %{with_debug}
-%exclude %{qtdir}/%_lib/lib*.debug
-%endif
 
 #-------------------------------------------------------------------------
 
@@ -243,9 +231,6 @@ QT%{qtmajor} component library
 %{qtdir}/%_lib/libQtGui.so.%{qtmajor}*
 %pluginsdir/imageformats
 %pluginsdir/inputmethods/libqimsw-multi.so*
-%if ! %{with_debug}
-%exclude %{qtdir}/%_lib/lib*.debug
-%endif
 
 #-------------------------------------------------------------------------
 
@@ -265,9 +250,6 @@ QT%{qtmajor} component library
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtSvg.so.%{qtmajor}*
 %pluginsdir/iconengines/libqsvg.so*
-%if ! %{with_debug}
-%exclude %{qtdir}/%_lib/lib*.debug
-%endif
 
 #-------------------------------------------------------------------------
 
@@ -286,9 +268,6 @@ QT%{qtmajor} component library
 %files -n %{libqttest}
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtTest.so.%{qtmajor}*
-%if ! %{with_debug}
-%exclude %{qtdir}/%_lib/lib*.debug
-%endif
 
 #-------------------------------------------------------------------------
 
@@ -309,9 +288,6 @@ QT%{qtmajor} component library
 %files -n %{libqtcore}
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtCore.so.%{qtmajor}*
-%if ! %{with_debug}
-%exclude %{qtdir}/%_lib/lib*.debug
-%endif
 
 #-------------------------------------------------------------------------
 
@@ -331,9 +307,6 @@ QT%{qtmajor} component library
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQt3Support.so.%{qtmajor}*
 %pluginsdir/designer/libqt3supportwidgets.so*
-%if ! %{with_debug}
-%exclude %{qtdir}/%_lib/lib*.debug
-%endif
 
 #-------------------------------------------------------------------------
 
@@ -352,9 +325,6 @@ QT%{qtmajor} component library
 %files -n %{libqtopengl}
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtOpenGL.so.%{qtmajor}*
-%if ! %{with_debug}
-%exclude %{qtdir}/%_lib/lib*.debug
-%endif
 
 #-------------------------------------------------------------------------
 
@@ -379,9 +349,6 @@ Biblioteca componente da QT%{qtmajor}
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtDesigner.so.%{qtmajor}*
 %{qtdir}/%_lib/libQtDesignerComponents.so.%{qtmajor}*
-%if ! %{with_debug}
-%exclude %{qtdir}/%_lib/lib*.debug
-%endif
 
 #-------------------------------------------------------------------------
 
@@ -403,9 +370,6 @@ QT dbus lib
 %files -n %{libqdbus}
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtDBus.so.%{qtmajor}*
-%if ! %{with_debug}
-%exclude %{qtdir}/%_lib/lib*.debug
-%endif
 
 #-------------------------------------------------------------------------
 
@@ -420,9 +384,6 @@ QT dbus binary
 %files qtdbus
 %defattr(-,root,root,-)
 %{qtdir}/bin/qdbus*
-%if ! %{with_debug}
-%exclude %{qtdir}/bin/qdbus*.debug
-%endif
 
 #-------------------------------------------------------------------------
 
@@ -444,9 +405,6 @@ QT assistant lib
 %files -n %{libqassistant}
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtAssistantClient.so.%{qtmajor}*
-%if ! %{with_debug}
-%exclude %{qtdir}/%_lib/lib*.debug
-%endif
 
 #-------------------------------------------------------------------------
 
@@ -805,7 +763,6 @@ implementing user interfaces a lot easier.
 %{qtdir}/bin/designer
 %{_datadir}/applications/*designer*.desktop
 %{qtdir}/translations/designer_*
-%exclude %{qtdir}/bin/*.debug
 
 #-------------------------------------------------------------------------
 
@@ -865,6 +822,7 @@ echo "yes" |
 %if %{with_debug}
    -debug \
 %else
+   -no-separate-debug-info \
    -release \
 %endif
    -sysconfdir %_sysconfdir \
