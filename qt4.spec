@@ -55,7 +55,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 5
+Release: %mkrel 6
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -414,7 +414,23 @@ Group: Development/KDE and Qt
 Requires: %{name}-common = %epoch:%version
 Provides: qt4-devel = %epoch:%version-%release
 Provides: libqt4-devel = %epoch:%version-%release
-Conflicts: %{libqdbus} < 2:4.3.0 
+
+# (anssi) *.prl was moved to -devel
+Conflicts: %{_lib}qtxml4 < 2:4.3.4-3
+Conflicts: %{_lib}qtsql4 < 2:4.3.4-3
+Conflicts: %{_lib}qtnetwork4 < 2:4.3.4-3
+Conflicts: %{_lib}qtscript4 < 2:4.3.4-3
+Conflicts: %{_lib}qtgui4 < 2:4.3.4-3
+Conflicts: %{_lib}qtsvg4 < 2:4.3.4-3
+Conflicts: %{_lib}qttest4 < 2:4.3.4-3
+Conflicts: %{_lib}qtcore4 < 2:4.3.4-3
+Conflicts: %{_lib}qt3support4 < 2:4.3.4-3
+Conflicts: %{_lib}qtopengl4 < 2:4.3.4-3
+Conflicts: %{_lib}qtdesigner1 < 2:4.3.4-3
+Conflicts: %{_lib}qtdbus4 < 2:4.3.4-3
+Conflicts: %{_lib}qassistant1 < 2:4.3.4-3
+Conflicts: %{_lib}qttest4 < 2:4.3.4-3
+Conflicts: %{_lib}qtcore4 < 2:4.3.4-3
 
 # There's symlinks to devel
 Requires: %{libqassistant} = %epoch:%version-%release
