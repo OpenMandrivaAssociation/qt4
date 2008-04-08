@@ -40,10 +40,13 @@
 %define libqttest %mklibname qttest %qtmajor
 %define libqdbus %mklibname qtdbus %qtmajor
 %define libqtscript %mklibname qtscript %qtmajor
+%define libqtclucene %mklibname qtclucene %qtmajor
+%define libqthelp %mklibname qthelp %qtmajor
+%define libqtwebkit %mklibname qtwebkit %qtmajor
 
 %define qtmajor 4
-%define qtminor 3
-%define qtsubminor 4
+%define qtminor 4
+%define qtsubminor 0
 
 %define qtversion %{qtmajor}.%{qtminor}.%{qtsubminor} 
 
@@ -51,40 +54,22 @@
 %define qtdir %_prefix/lib/qt4
 %define pluginsdir %qtdir/plugins/%_lib
 
-%define qttarballdir qt-x11-opensource-src-%{qtversion}
+%define qttarballdir qt-x11-opensource-src-%{qtversion}-rc1
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 6
+Release: %mkrel 1
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
 License: GPL
 URL: http://www.trolltech.com/
-Source0: ftp://ftp.trolltech.com/qt/source/%{qttarballdir}.tar.gz
+Source0: ftp://ftp.trolltech.com/qt/source/%{qttarballdir}.tar.bz2
 Source2: qt4.macros
 Source3: mandriva-designer-qt4.desktop 
 Source4: mandriva-assistant-qt4.desktop 
 Source5: mandriva-linguist-qt4.desktop
 Source6: Trolltech.conf
-Patch0:	 qt4.3-fix-compile.patch
-Patch1:  qt-4.3.3-fix-wrong-ssl-library-hardcode.patch
-
-# KDE qt-copy patches
-Patch99: 0167-fix-group-reading.diff
-Patch100: 0172-prefer-xrandr-over-xinerama.diff
-Patch101: 0175-fix-s390-qatomic.diff
-Patch102: 0176-coverity-fixes.diff
-Patch103: 0178-transparency-window-types.diff
-Patch104: 0179-transient-hack.diff
-Patch105: 0180-window-role.diff
-Patch106: 0187-fix-font-fixed-pitch.diff
-Patch107: 0191-listview-alternate-row-colors.diff
-Patch108: 0192-itemdelegate-palette-state.diff
-Patch109: 0194-fix-moveonly-dnd-in-itemviews.diff
-Patch110: 0195-compositing-properties.diff
-Patch111: 0200-fix-qsslsocket-waitfor.diff
-Patch115: 0209-prevent-qt-mixing.diff
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -101,6 +86,7 @@ BuildRequires: freetype2-devel
 BuildRequires: libfontconfig-devel
 BuildRequires: expat-devel
 BuildRequires: libdbus-devel >= 0.92
+BuildRequires: termcap-devel
 BuildRequires: perl
 Provides: %{qtlib}
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
@@ -249,7 +235,7 @@ QT%{qtmajor} component library
 %files -n %{libqtsvg}
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtSvg.so.%{qtmajor}*
-%pluginsdir/iconengines/libqsvg.so*
+%pluginsdir/iconengines/libqsvgicon.so
 
 #-------------------------------------------------------------------------
 
@@ -268,6 +254,61 @@ QT%{qtmajor} component library
 %files -n %{libqttest}
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtTest.so.%{qtmajor}*
+
+#-------------------------------------------------------------------------
+
+%package -n %{libqtwebkit}
+Summary: QT%{qtmajor} component library
+Group: System/Libraries
+Requires(pre): %{name}-common = %epoch:%version
+Provides: qtwebkitlib = %epoch:%version
+
+%description -n %{libqtwebkit}
+QT%{qtmajor} component library
+
+%post -n %{libqtwebkit} -p /sbin/ldconfig
+%postun -n %{libqtwebkit} -p /sbin/ldconfig
+
+%files -n %{libqtwebkit}
+%defattr(-,root,root,-)
+%{qtdir}/%_lib/libQtWebKit.so.%{qtmajor}*
+%pluginsdir/designer/libqwebview.so
+
+#-------------------------------------------------------------------------
+
+%package -n %{libqthelp}
+Summary: QT%{qtmajor} component library
+Group: System/Libraries
+Requires(pre): %{name}-common = %epoch:%version
+Provides: qthelplib = %epoch:%version
+
+%description -n %{libqthelp}
+QT%{qtmajor} component library
+
+%post -n %{libqthelp} -p /sbin/ldconfig
+%postun -n %{libqthelp} -p /sbin/ldconfig
+
+%files -n %{libqthelp}
+%defattr(-,root,root,-)
+%{qtdir}/%_lib/libQtHelp.so.%{qtmajor}*
+
+#-------------------------------------------------------------------------
+
+%package -n %{libqtclucene}
+Summary: QT%{qtmajor} component library
+Group: System/Libraries
+Requires(pre): %{name}-common = %epoch:%version
+Provides: qtclucenelib = %epoch:%version
+
+%description -n %{libqtclucene}
+QT%{qtmajor} component library
+
+%post -n %{libqtclucene} -p /sbin/ldconfig
+%postun -n %{libqtclucene} -p /sbin/ldconfig
+
+%files -n %{libqtclucene}
+%defattr(-,root,root,-)
+%{qtdir}/%_lib/libQtCLucene.so.%{qtmajor}*
 
 #-------------------------------------------------------------------------
 
@@ -549,6 +590,7 @@ find %_docdir -maxdepth 1 -type d -name qt-4.\* -exec rm -rf {} \;
 %package examples
 Summary: Example programs made with Qt version %{version}
 Group: Books/Computer books
+Obsoletes: qt4-tutorial
 
 %description examples
 Example programs made with Qt version %{version}.
@@ -557,7 +599,6 @@ Example programs made with Qt version %{version}.
 %defattr(-,root,root,-)
 %{_docdir}/%name/examples
 %{_docdir}/%name/demos
-%exclude %{_docdir}/%name/examples/tutorial
 
 #-------------------------------------------------------------------------
 
@@ -610,20 +651,11 @@ Qt Assistant provides a documentation Browser
 %files assistant
 %defattr(-,root,root,-)
 %{qtdir}/bin/assistant*
+%{qtdir}/bin/qcollectiongenerator
+%{qtdir}/bin/qhelpconverter
+%{qtdir}/bin/qhelpgenerator
 %{_datadir}/applications/*assistant*.desktop
 %{qtdir}/translations/assistant*
-#-------------------------------------------------------------------------
-
-%package tutorial
-Summary: Tutorial programs for Qt version %{version}
-Group: Books/Computer books
-
-%description tutorial
-Tutorial programs for Qt version %{version}.
-
-%files tutorial
-%defattr(-,root,root,-)
-%{_docdir}/%name/examples/tutorial
 
 #-------------------------------------------------------------------------
 
@@ -799,33 +831,12 @@ Qt 4 Embedded Virtual Terminal
 
 %prep
 %setup -q -n %{qttarballdir}
-%patch0 -p1 -b .fix_link
-%patch1 -p1 -b .ssl
-
-# qt-copy patches
-%patch99 -p0 -b .qt-copy
-%patch100 -p0 -b .qt-copy
-%patch101 -p0 -b .qt-copy
-%patch102 -p0 -b .qt-copy
-%patch103 -p0 -b .qt-copy
-%patch104 -p0 -b .qt-copy
-%patch105 -p0 -b .qt-copy
-%patch106 -p0 -b .qt-copy
-%patch107 -p0 -b .qt-copy
-%patch108 -p0 -b .qt-copy
-%patch109 -p0 -b .qt-copy
-%patch110 -p0 -b .qt-copy
-%patch111 -p0 -b .qt-copy
-%patch115 -p0 -b .qt-copy
 
 %build
 export QTDIR=`/bin/pwd`
 export PATH=$QTDIR/bin:$PATH
 export CPPFLAGS="${CFLAGS} %{optflags} -fPIC"
-export CXXFLAGS="${CXXFLAGS} %{optflags} -fPIC"
 export YACC='byacc -d'
-export LD_LIBRARY_PATH=%{_builddir}/%{qttarballdir}/lib:$LD_LIBRARY_PATH
-export PATH=%{_builddir}/%{qttarballdir}/bin:$PATH
 
 #--------------------------------------------------------
 # function configure
@@ -846,6 +857,7 @@ echo "yes" |
    -docdir %_docdir/%name/doc \
    -plugindir %pluginsdir \
    -qvfb \
+   -no-phonon \
    -qt-gif \
 %if ! %{with_cups}
    -no-cups \
