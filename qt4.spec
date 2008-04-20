@@ -58,7 +58,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 1
+Release: %mkrel 3
 Epoch: 2
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -235,7 +235,7 @@ QT%{qtmajor} component library
 %files -n %{libqtsvg}
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtSvg.so.%{qtmajor}*
-%pluginsdir/iconengines/libqsvgicon.so
+%pluginsdir/iconengines/libqsvgicon.*
 
 #-------------------------------------------------------------------------
 
@@ -272,7 +272,7 @@ QT%{qtmajor} component library
 %files -n %{libqtwebkit}
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtWebKit.so.%{qtmajor}*
-%pluginsdir/designer/libqwebview.so
+%pluginsdir/designer/libqwebview.*
 
 #-------------------------------------------------------------------------
 
@@ -563,7 +563,7 @@ fi
 
 %files qtconfig
 %defattr(-,root,root,-)
-%{qtdir}/bin/qtconfig
+%{qtdir}/bin/qtconf*
 %{qtdir}/translations/qtconfig*
 
 #-------------------------------------------------------------------------
@@ -584,6 +584,7 @@ find %_docdir -maxdepth 1 -type d -name qt-4.\* -exec rm -rf {} \;
 %files doc
 %defattr(-,root,root,-)
 %_docdir/%name/doc/html
+%_docdir/%name/doc/qch
 
 #-------------------------------------------------------------------------
 
@@ -597,8 +598,8 @@ Example programs made with Qt version %{version}.
 
 %files examples
 %defattr(-,root,root,-)
-%{_docdir}/%name/examples
-%{_docdir}/%name/demos
+%{qtdir}/examples
+%{qtdir}/demos
 
 #-------------------------------------------------------------------------
 
@@ -651,9 +652,9 @@ Qt Assistant provides a documentation Browser
 %files assistant
 %defattr(-,root,root,-)
 %{qtdir}/bin/assistant*
-%{qtdir}/bin/qcollectiongenerator
-%{qtdir}/bin/qhelpconverter
-%{qtdir}/bin/qhelpgenerator
+%{qtdir}/bin/qcollectiongen*
+%{qtdir}/bin/qhelpconv*
+%{qtdir}/bin/qhelpgen*
 %{_datadir}/applications/*assistant*.desktop
 %{qtdir}/translations/assistant*
 
@@ -808,7 +809,7 @@ implementing user interfaces a lot easier.
 
 %files designer
 %defattr(-,root,root,-)
-%{qtdir}/bin/designer
+%{qtdir}/bin/design*
 %{_datadir}/applications/*designer*.desktop
 %{qtdir}/translations/designer_*
 
@@ -946,6 +947,7 @@ install -d %buildroot%_sysconfdir/ld.so.conf.d
 make INSTALL_ROOT=%buildroot \
 	sub-tools-install_subtargets-ordered \
 	install_htmldocs \
+	install_qchdocs \
 	install_qmake \
 	install_translations \
 	install_mkspecs
@@ -972,7 +974,7 @@ popd
 for subdir in examples demos; do
    for dir in `find $subdir -type d -name .obj`; do rm -rf $dir; done
    for dir in `find $subdir -type d -name .moc`; do rm -rf $dir; done
-   cp -a $subdir %buildroot/%_docdir/%name
+   cp -a $subdir %buildroot/%{qtdir}
 done
 
 %if %{enable_static}
