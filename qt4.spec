@@ -84,6 +84,7 @@ BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
 %endif
+BuildRequires: libxslt-devel
 BuildRequires: GL-devel
 BuildRequires: Mesa-common-devel
 BuildRequires: zlib-devel 
