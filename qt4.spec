@@ -98,6 +98,7 @@ BuildRequires: libfontconfig-devel
 BuildRequires: expat-devel
 BuildRequires: libdbus-devel >= 0.92
 BuildRequires: termcap-devel
+BuildRequires: libpam-devel
 BuildRequires: perl
 Provides: %{qtlib}
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
