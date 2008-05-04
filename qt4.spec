@@ -58,8 +58,8 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 3
-Epoch: 2
+Release: %mkrel 0.1.rc1
+Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
 License: GPL
@@ -70,6 +70,16 @@ Source3: mandriva-designer-qt4.desktop
 Source4: mandriva-assistant-qt4.desktop 
 Source5: mandriva-linguist-qt4.desktop
 Source6: Trolltech.conf
+# Qt-copy safe patches
+Patch100: 0195-compositing-properties.diff
+Patch101: 0167-fix-group-reading.diff
+Patch102: 0225-invalidate-tabbar-geometry-on-refresh.patch
+Patch103: 0220-no-x-recursion-in-xerrhandler.diff
+Patch104: 0180-window-role.diff
+Patch105: 0216-allow-isystem-for-headers.diff
+Patch106: 0203-qtexthtmlparser-link-color.diff
+Patch107: 0214-fix-qgraphicsproxywidget-tab-crash.diff
+Patch108: 0226-qtreeview-column_resize_when_needed.diff
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -832,12 +842,21 @@ Qt 4 Embedded Virtual Terminal
 
 %prep
 %setup -q -n %{qttarballdir}
+%patch100 -p0 -b .qt-copy
+%patch101 -p0 -b .qt-copy
+%patch102 -p0 -b .qt-copy
+%patch103 -p0 -b .qt-copy
+%patch104 -p0 -b .qt-copy
+%patch105 -p0 -b .qt-copy
+%patch106 -p0 -b .qt-copy
+%patch107 -p0 -b .qt-copy
+%patch108 -p0 -b .qt-copy
 
 %build
 export QTDIR=`/bin/pwd`
 export PATH=$QTDIR/bin:$PATH
-export CPPFLAGS="${CFLAGS} %{optflags} -fPIC"
-export YACC='byacc -d'
+export CXXFLAGS="${CXXFLAGS} %{optflags} -DPIC -fPIC"
+export CFLAGS="${CFLAGS} %{optflags} -DPIC -fPIC"
 
 #--------------------------------------------------------
 # function configure
