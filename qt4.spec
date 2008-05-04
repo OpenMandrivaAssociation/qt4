@@ -99,6 +99,7 @@ BuildRequires: expat-devel
 BuildRequires: libdbus-devel >= 0.92
 BuildRequires: termcap-devel
 BuildRequires: libpam-devel
+BuildRequires: readline-devel
 BuildRequires: perl
 Provides: %{qtlib}
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
@@ -759,6 +760,7 @@ Summary: Database plugin for pgsql Qt support
 Group: Development/KDE and Qt
 Obsoletes: %name-database-plugin-pgsql
 BuildRequires: postgresql-devel
+BuildRequires: libpq-devel
 
 %description database-plugin-pgsql-%_lib
 Database plugin for pgsql Qt support
