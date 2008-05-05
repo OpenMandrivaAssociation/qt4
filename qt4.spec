@@ -58,7 +58,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 0.rc1.2
+Release: %mkrel 0.2.rc1
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
