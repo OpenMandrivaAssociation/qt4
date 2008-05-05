@@ -13,12 +13,8 @@
 %define with_ibase 0
 %{?_with_ibase: %{expand: %%global with_ibase 1}}
 
-%define with_debug 0
+%define with_debug 1
 %{?_with_debug: %{expand: %%global with_debug 1}}
-
-%if %{with_debug}
-%define dont_strip 1
-%endif
 
 %define enable_static 0
 %{?_with_static: %{expand: %%global enable_static 1}}
@@ -130,7 +126,6 @@ This package contains all config file and language file
 %dir %{qtdir}/bin
 %dir %{qtdir}/%_lib
 %dir %pluginsdir
-%dir %pluginsdir/sqldrivers
 %{qtdir}/phrasebooks
 %dir %{qtdir}/translations
 %{qtdir}/translations/qt_*
@@ -209,6 +204,7 @@ QT%{qtmajor} component library
 %files -n %{libqtscript}
 %defattr(-,root,root,-)
 %{qtdir}/%_lib/libQtScript.so.%{qtmajor}*
+%pluginsdir/script
 
 #-------------------------------------------------------------------------
 
@@ -859,8 +855,8 @@ Qt 4 Embedded Virtual Terminal
 %build
 export QTDIR=`/bin/pwd`
 export PATH=$QTDIR/bin:$PATH
-export CXXFLAGS="${CXXFLAGS} %{optflags} -DPIC -fPIC -g"
-export CFLAGS="${CFLAGS} %{optflags} -DPIC -fPIC -g"
+export CXXFLAGS="${CXXFLAGS} %{optflags} -DPIC -fPIC"
+export CFLAGS="${CFLAGS} %{optflags} -DPIC -fPIC"
 
 #--------------------------------------------------------
 # function configure
