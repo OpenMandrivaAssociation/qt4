@@ -54,11 +54,11 @@
 %define qtdir %_prefix/lib/qt4
 %define pluginsdir %qtdir/plugins/%_lib
 
-%define qttarballdir qt-x11-opensource-src-%{qtversion}-rc1
+%define qttarballdir qt-x11-opensource-src-%{qtversion}
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 0.2.rc1
+Release: %mkrel 1
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -859,8 +859,8 @@ Qt 4 Embedded Virtual Terminal
 %build
 export QTDIR=`/bin/pwd`
 export PATH=$QTDIR/bin:$PATH
-export CXXFLAGS="${CXXFLAGS} %{optflags} -DPIC -fPIC"
-export CFLAGS="${CFLAGS} %{optflags} -DPIC -fPIC"
+export CXXFLAGS="${CXXFLAGS} %{optflags} -DPIC -fPIC -g"
+export CFLAGS="${CFLAGS} %{optflags} -DPIC -fPIC -g"
 
 #--------------------------------------------------------
 # function configure
