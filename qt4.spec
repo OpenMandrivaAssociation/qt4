@@ -97,6 +97,7 @@ BuildRequires: termcap-devel
 BuildRequires: libpam-devel
 BuildRequires: readline-devel
 BuildRequires: perl
+BuildRequires: glib2-devel
 Provides: %{qtlib}
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 
