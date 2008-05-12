@@ -54,7 +54,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 2
+Release: %mkrel 3
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -76,6 +76,9 @@ Patch105: 0216-allow-isystem-for-headers.diff
 Patch106: 0203-qtexthtmlparser-link-color.diff
 Patch107: 0214-fix-qgraphicsproxywidget-tab-crash.diff
 Patch108: 0226-qtreeview-column_resize_when_needed.diff
+Patch109: 0227-qdatastream-regression.diff
+Patch110: 0228-qsortfilterproxymodel-invalidate-noscroll.diff
+Patch111: 0229-fix-qgraphicsproxywidget-delete-crash.diff
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -853,6 +856,9 @@ Qt 4 Embedded Virtual Terminal
 %patch106 -p0 -b .qt-copy
 %patch107 -p0 -b .qt-copy
 %patch108 -p0 -b .qt-copy
+%patch109 -p0 -b .qt-copy
+%patch110 -p0 -b .qt-copy
+%patch111 -p0 -b .qt-copy
 
 %build
 export QTDIR=`/bin/pwd`
