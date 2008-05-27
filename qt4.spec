@@ -48,13 +48,13 @@
 
 %define qtlib qt4
 %define qtdir %_prefix/lib/qt4
-%define pluginsdir %qtdir/plugins/%_lib
+%define pluginsdir %_libdir/qt4/plugins
 
 %define qttarballdir qt-x11-opensource-src-%{qtversion}
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 3
+Release: %mkrel 4
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -123,12 +123,10 @@ This package contains all config file and language file
 
 %files common
 %defattr(-,root,root,-)
-%_sysconfdir/ld.so.conf.d/*
 %attr(0755,root,root) %_sysconfdir/profile.d/*
 %attr(0644,root,root) %_sysconfdir/Trolltech.conf
 %dir %{qtdir}
 %dir %{qtdir}/bin
-%dir %{qtdir}/%_lib
 %dir %pluginsdir
 %{qtdir}/phrasebooks
 %dir %{qtdir}/translations
@@ -153,7 +151,7 @@ QT%{qtmajor} component library
 
 %files -n %{libqtxml}
 %defattr(-,root,root,-)
-%{qtdir}/%_lib/libQtXml.so.%{qtmajor}*
+%_libdir/libQtXml.so.%{qtmajor}*
 
 #-------------------------------------------------------------------------
 
@@ -171,7 +169,7 @@ QT%{qtmajor} component library
 
 %files -n %{libqtsql}
 %defattr(-,root,root,-)
-%{qtdir}/%_lib/libQtSql.so.%{qtmajor}*
+%_libdir/libQtSql.so.%{qtmajor}*
 
 #-------------------------------------------------------------------------
 
@@ -189,7 +187,7 @@ QT%{qtmajor} component library
 
 %files -n %{libqtnetwork}
 %defattr(-,root,root,-)
-%{qtdir}/%_lib/libQtNetwork.so.%{qtmajor}*
+%_libdir/libQtNetwork.so.%{qtmajor}*
 
 #-------------------------------------------------------------------------
 
@@ -207,7 +205,7 @@ QT%{qtmajor} component library
 
 %files -n %{libqtscript}
 %defattr(-,root,root,-)
-%{qtdir}/%_lib/libQtScript.so.%{qtmajor}*
+%_libdir/libQtScript.so.%{qtmajor}*
 %pluginsdir/script
 
 #-------------------------------------------------------------------------
@@ -227,7 +225,7 @@ QT%{qtmajor} component library
 
 %files -n %{libqtgui}
 %defattr(-,root,root,-)
-%{qtdir}/%_lib/libQtGui.so.%{qtmajor}*
+%_libdir/libQtGui.so.%{qtmajor}*
 %pluginsdir/imageformats
 %pluginsdir/inputmethods/libqimsw-multi.so*
 
@@ -247,7 +245,7 @@ QT%{qtmajor} component library
 
 %files -n %{libqtsvg}
 %defattr(-,root,root,-)
-%{qtdir}/%_lib/libQtSvg.so.%{qtmajor}*
+%_libdir/libQtSvg.so.%{qtmajor}*
 %pluginsdir/iconengines/libqsvgicon.*
 
 #-------------------------------------------------------------------------
@@ -266,7 +264,7 @@ QT%{qtmajor} component library
 
 %files -n %{libqttest}
 %defattr(-,root,root,-)
-%{qtdir}/%_lib/libQtTest.so.%{qtmajor}*
+%_libdir/libQtTest.so.%{qtmajor}*
 
 #-------------------------------------------------------------------------
 
@@ -284,7 +282,7 @@ QT%{qtmajor} component library
 
 %files -n %{libqtwebkit}
 %defattr(-,root,root,-)
-%{qtdir}/%_lib/libQtWebKit.so.%{qtmajor}*
+%_libdir/libQtWebKit.so.%{qtmajor}*
 %pluginsdir/designer/libqwebview.*
 
 #-------------------------------------------------------------------------
@@ -303,7 +301,7 @@ QT%{qtmajor} component library
 
 %files -n %{libqthelp}
 %defattr(-,root,root,-)
-%{qtdir}/%_lib/libQtHelp.so.%{qtmajor}*
+%_libdir/libQtHelp.so.%{qtmajor}*
 
 #-------------------------------------------------------------------------
 
@@ -321,7 +319,7 @@ QT%{qtmajor} component library
 
 %files -n %{libqtclucene}
 %defattr(-,root,root,-)
-%{qtdir}/%_lib/libQtCLucene.so.%{qtmajor}*
+%_libdir/libQtCLucene.so.%{qtmajor}*
 
 #-------------------------------------------------------------------------
 
@@ -341,7 +339,7 @@ QT%{qtmajor} component library
 
 %files -n %{libqtcore}
 %defattr(-,root,root,-)
-%{qtdir}/%_lib/libQtCore.so.%{qtmajor}*
+%_libdir/libQtCore.so.%{qtmajor}*
 
 #-------------------------------------------------------------------------
 
@@ -359,7 +357,7 @@ QT%{qtmajor} component library
 
 %files -n %{libqt3support}
 %defattr(-,root,root,-)
-%{qtdir}/%_lib/libQt3Support.so.%{qtmajor}*
+%_libdir/libQt3Support.so.%{qtmajor}*
 %pluginsdir/designer/libqt3supportwidgets.so*
 
 #-------------------------------------------------------------------------
@@ -378,7 +376,7 @@ QT%{qtmajor} component library
 
 %files -n %{libqtopengl}
 %defattr(-,root,root,-)
-%{qtdir}/%_lib/libQtOpenGL.so.%{qtmajor}*
+%_libdir/libQtOpenGL.so.%{qtmajor}*
 
 #-------------------------------------------------------------------------
 
@@ -401,8 +399,8 @@ Biblioteca componente da QT%{qtmajor}
 
 %files -n %{libqtdesigner}
 %defattr(-,root,root,-)
-%{qtdir}/%_lib/libQtDesigner.so.%{qtmajor}*
-%{qtdir}/%_lib/libQtDesignerComponents.so.%{qtmajor}*
+%_libdir/libQtDesigner.so.%{qtmajor}*
+%_libdir/libQtDesignerComponents.so.%{qtmajor}*
 
 #-------------------------------------------------------------------------
 
@@ -423,7 +421,7 @@ QT dbus lib
 
 %files -n %{libqdbus}
 %defattr(-,root,root,-)
-%{qtdir}/%_lib/libQtDBus.so.%{qtmajor}*
+%_libdir/libQtDBus.so.%{qtmajor}*
 
 #-------------------------------------------------------------------------
 
@@ -458,7 +456,7 @@ QT assistant lib
 
 %files -n %{libqassistant}
 %defattr(-,root,root,-)
-%{qtdir}/%_lib/libQtAssistantClient.so.%{qtmajor}*
+%_libdir/libQtAssistantClient.so.%{qtmajor}*
 
 #-------------------------------------------------------------------------
 
@@ -529,11 +527,11 @@ fi
 %_sysconfdir/rpm/macros.d/*
 %{qtdir}/include
 %{qtdir}/mkspecs
-%{qtdir}/%_lib/*.so
-%{qtdir}/%_lib/*.la
-%{qtdir}/%_lib/*.a
-%{qtdir}/%_lib/*.prl
-%{qtdir}/%_lib/pkgconfig/*
+%_libdir/*.so
+%_libdir/*.la
+%_libdir/*.a
+%_libdir/*.prl
+%_libdir/pkgconfig/*
 %{qtdir}/q3porting.xml
 
 #-------------------------------------------------------------------------
@@ -553,7 +551,7 @@ applications, as well as the README files for Qt.
 
 %files -n %{libqt}-static-devel
 %defattr(-,root,root,-)
-%{qtdir}/%_lib/*.a
+%_libdir/*.a
 
 %endif
 
@@ -881,7 +879,7 @@ echo "yes" |
    -release \
 %endif
    -sysconfdir %_sysconfdir \
-   -libdir %{qtdir}/%_lib \
+   -libdir %_libdir \
    -docdir %_docdir/%name/doc \
    -plugindir %pluginsdir \
    -qvfb \
@@ -969,7 +967,6 @@ install -d %buildroot%_bindir
 install -d %buildroot%_docdir/%name
 install -d %buildroot%_sysconfdir
 install -d %buildroot%_sysconfdir/profile.d
-install -d %buildroot%_sysconfdir/ld.so.conf.d
 
 make INSTALL_ROOT=%buildroot \
 	sub-tools-install_subtargets-ordered \
@@ -1005,21 +1002,13 @@ for subdir in examples demos; do
 done
 
 %if %{enable_static}
-	cp safelib/* %buildroot/%{qtdir}/%_lib
+	cp safelib/* %buildroot/%_libdir
 %endif
-
-# Use the new ld.so.conf.d 
-pushd %buildroot/%_sysconfdir/ld.so.conf.d
-echo "%{qtdir}/%_lib" > qt4.conf
-%if "%{_lib}" != "lib"
-echo "%{qtdir}/lib" >> qt4.conf
-%endif
-popd
 
 # Fix all buildroot paths
-find %buildroot/%qtdir/%_lib -type f -name '*prl' -exec perl -pi -e "s, -L%_builddir/\S+,,g" {} \;
-find %buildroot/%qtdir/%_lib -type f -name '*prl' -exec sed -i -e "/^QMAKE_PRL_BUILD_DIR/d" {} \;
-find %buildroot/%qtdir/%_lib -type f -name '*la' -print -exec perl -pi -e "s, -L%_builddir/?\S+,,g" {} \;
+find %buildroot/%_libdir -type f -name '*prl' -exec perl -pi -e "s, -L%_builddir/\S+,,g" {} \;
+find %buildroot/%_libdir -type f -name '*prl' -exec sed -i -e "/^QMAKE_PRL_BUILD_DIR/d" {} \;
+find %buildroot/%_libdir -type f -name '*la' -print -exec perl -pi -e "s, -L%_builddir/?\S+,,g" {} \;
 find %buildroot/%qtdir/mkspecs -name 'qmake.conf' -exec chmod -x -- {} \;
 find %buildroot/%qtdir/mkspecs -name Info.plist.app -exec chmod -x -- {} \;
 
@@ -1030,12 +1019,6 @@ install -m 0644 %SOURCE2 %buildroot/%_sysconfdir/rpm/macros.d
 # Profiles
 cat > %buildroot%_sysconfdir/profile.d/60qt4.sh << EOF
 #!/bin/bash
-
-if [ -z \$PKG_CONFIG_PATH ]; then
-    PKG_CONFIG_PATH=%{qtdir}/%_lib/pkgconfig
-else
-    PKG_CONFIG_PATH=\${PKG_CONFIG_PATH}:%{qtdir}/%_lib/pkgconfig
-fi
 
 QT4DOCDIR=%_docdir/qt4/doc
 
