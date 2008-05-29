@@ -54,7 +54,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 4
+Release: %mkrel 5
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -864,6 +864,9 @@ export PATH=$QTDIR/bin:$PATH
 export CXXFLAGS="${CXXFLAGS} %{optflags} -DPIC -fPIC"
 export CFLAGS="${CFLAGS} %{optflags} -DPIC -fPIC"
 
+# Don't include headers or link with /usr/X11R6/{include,lib}
+perl -pi -e 's@/X11R6/@/@' mkspecs/linux-*/qmake.conf mkspecs/common/linux.conf
+
 #--------------------------------------------------------
 # function configure
 function qt_configure {
@@ -1011,6 +1014,13 @@ find %buildroot/%_libdir -type f -name '*prl' -exec sed -i -e "/^QMAKE_PRL_BUILD
 find %buildroot/%_libdir -type f -name '*la' -print -exec perl -pi -e "s, -L%_builddir/?\S+,,g" {} \;
 find %buildroot/%qtdir/mkspecs -name 'qmake.conf' -exec chmod -x -- {} \;
 find %buildroot/%qtdir/mkspecs -name Info.plist.app -exec chmod -x -- {} \;
+
+# Don't reference %{builddir} neither /usr(/X11R6)?/ in .pc files.
+perl -pi -e '\
+s@-L/usr/X11R6/%{_lib}@@g;\
+s@-I/usr/X11R6/include@@g;\
+s@-L/%{_builddir}\S+@@g'\
+    `find . -name \*.pc`
 
 # Install rpm macros
 mkdir -p %buildroot/%_sysconfdir/rpm/macros.d
