@@ -1017,8 +1017,8 @@ find %buildroot/%qtdir/mkspecs -name Info.plist.app -exec chmod -x -- {} \;
 
 # Don't reference %{builddir} neither /usr(/X11R6)?/ in .pc files.
 perl -pi -e '\
-s@-L/usr/X11R6/%{_lib}@@g;\
-s@-I/usr/X11R6/include@@g;\
+s@-L/usr/X11R6/%{_lib} @@g;\
+s@-I/usr/X11R6/include @@g;\
 s@-L/%{_builddir}\S+@@g'\
     `find . -name \*.pc`
 
