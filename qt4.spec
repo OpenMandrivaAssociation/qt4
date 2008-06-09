@@ -146,8 +146,12 @@ Provides:	qtxmllib = %epoch:%version
 %description -n %{libqtxml}
 QT%{qtmajor} component library
 
+%if %mdkversion < 200900
 %post -n %{libqtxml} -p /sbin/ldconfig
+%endif
+%if %mdkversion < 200900
 %postun -n %{libqtxml} -p /sbin/ldconfig
+%endif
 
 %files -n %{libqtxml}
 %defattr(-,root,root,-)
@@ -164,8 +168,12 @@ Provides:	qtsqllib = %epoch:%version
 %description -n %{libqtsql}
 QT%{qtmajor} component library
 
+%if %mdkversion < 200900
 %post -n %{libqtsql} -p /sbin/ldconfig
+%endif
+%if %mdkversion < 200900
 %postun -n %{libqtsql} -p /sbin/ldconfig
+%endif
 
 %files -n %{libqtsql}
 %defattr(-,root,root,-)
@@ -182,8 +190,12 @@ Provides: qtnetworklib = %epoch:%version
 %description -n %{libqtnetwork}
 QT%{qtmajor} component library
 
+%if %mdkversion < 200900
 %post -n %{libqtnetwork} -p /sbin/ldconfig
+%endif
+%if %mdkversion < 200900
 %postun -n %{libqtnetwork} -p /sbin/ldconfig
+%endif
 
 %files -n %{libqtnetwork}
 %defattr(-,root,root,-)
@@ -200,8 +212,12 @@ Provides: libqtscript = %epoch:%version
 %description -n %{libqtscript}
 QT%{qtmajor} component library
 
+%if %mdkversion < 200900
 %post -n %{libqtscript} -p /sbin/ldconfig
+%endif
+%if %mdkversion < 200900
 %postun -n %{libqtscript} -p /sbin/ldconfig
+%endif
 
 %files -n %{libqtscript}
 %defattr(-,root,root,-)
@@ -220,8 +236,12 @@ Provides: qtguilib = %epoch:%version
 %description -n %{libqtgui}
 QT%{qtmajor} component library
 
+%if %mdkversion < 200900
 %post -n %{libqtgui} -p /sbin/ldconfig
+%endif
+%if %mdkversion < 200900
 %postun -n %{libqtgui} -p /sbin/ldconfig
+%endif
 
 %files -n %{libqtgui}
 %defattr(-,root,root,-)
@@ -240,8 +260,12 @@ Provides: qtsvglib = %epoch:%version
 %description -n %{libqtsvg}
 QT%{qtmajor} component library
 
+%if %mdkversion < 200900
 %post -n %{libqtsvg} -p /sbin/ldconfig
+%endif
+%if %mdkversion < 200900
 %postun -n %{libqtsvg} -p /sbin/ldconfig
+%endif
 
 %files -n %{libqtsvg}
 %defattr(-,root,root,-)
@@ -259,8 +283,12 @@ Provides: qttestlib = %epoch:%version
 %description -n %{libqttest}
 QT%{qtmajor} component library
 
+%if %mdkversion < 200900
 %post -n %{libqttest} -p /sbin/ldconfig
+%endif
+%if %mdkversion < 200900
 %postun -n %{libqttest} -p /sbin/ldconfig
+%endif
 
 %files -n %{libqttest}
 %defattr(-,root,root,-)
@@ -277,8 +305,12 @@ Provides: qtwebkitlib = %epoch:%version
 %description -n %{libqtwebkit}
 QT%{qtmajor} component library
 
+%if %mdkversion < 200900
 %post -n %{libqtwebkit} -p /sbin/ldconfig
+%endif
+%if %mdkversion < 200900
 %postun -n %{libqtwebkit} -p /sbin/ldconfig
+%endif
 
 %files -n %{libqtwebkit}
 %defattr(-,root,root,-)
@@ -296,8 +328,12 @@ Provides: qthelplib = %epoch:%version
 %description -n %{libqthelp}
 QT%{qtmajor} component library
 
+%if %mdkversion < 200900
 %post -n %{libqthelp} -p /sbin/ldconfig
+%endif
+%if %mdkversion < 200900
 %postun -n %{libqthelp} -p /sbin/ldconfig
+%endif
 
 %files -n %{libqthelp}
 %defattr(-,root,root,-)
@@ -314,8 +350,12 @@ Provides: qtclucenelib = %epoch:%version
 %description -n %{libqtclucene}
 QT%{qtmajor} component library
 
+%if %mdkversion < 200900
 %post -n %{libqtclucene} -p /sbin/ldconfig
+%endif
+%if %mdkversion < 200900
 %postun -n %{libqtclucene} -p /sbin/ldconfig
+%endif
 
 %files -n %{libqtclucene}
 %defattr(-,root,root,-)
@@ -334,8 +374,12 @@ Obsoletes: %{_lib}qtuitools4
 %description -n %{libqtcore}
 QT%{qtmajor} component library
 
+%if %mdkversion < 200900
 %post -n %{libqtcore} -p /sbin/ldconfig
+%endif
+%if %mdkversion < 200900
 %postun -n %{libqtcore} -p /sbin/ldconfig
+%endif
 
 %files -n %{libqtcore}
 %defattr(-,root,root,-)
@@ -352,8 +396,12 @@ Provides: qt3supportlib = %epoch:%version
 %description -n %{libqt3support}
 QT%{qtmajor} component library
 
+%if %mdkversion < 200900
 %post -n %{libqt3support} -p /sbin/ldconfig
+%endif
+%if %mdkversion < 200900
 %postun -n %{libqt3support} -p /sbin/ldconfig
+%endif
 
 %files -n %{libqt3support}
 %defattr(-,root,root,-)
@@ -371,8 +419,12 @@ Provides: qtopengllib = %epoch:%version
 %description -n %{libqtopengl}
 QT%{qtmajor} component library
 
+%if %mdkversion < 200900
 %post -n %{libqtopengl} -p /sbin/ldconfig
+%endif
+%if %mdkversion < 200900
 %postun -n %{libqtopengl} -p /sbin/ldconfig
+%endif
 
 %files -n %{libqtopengl}
 %defattr(-,root,root,-)
@@ -394,8 +446,12 @@ QT%{qtmajor} component library
 %description -l pt_BR -n %{libqtdesigner}
 Biblioteca componente da QT%{qtmajor}
 
+%if %mdkversion < 200900
 %post -n %{libqtdesigner} -p /sbin/ldconfig
+%endif
+%if %mdkversion < 200900
 %postun -n %{libqtdesigner} -p /sbin/ldconfig
+%endif
 
 %files -n %{libqtdesigner}
 %defattr(-,root,root,-)
@@ -416,8 +472,12 @@ Conflicts: qt4-devel < 2:4.3.0
 %description -n %{libqdbus}
 QT dbus lib
 
+%if %mdkversion < 200900
 %post -n %{libqdbus} -p /sbin/ldconfig
+%endif
+%if %mdkversion < 200900
 %postun -n %{libqdbus} -p /sbin/ldconfig
+%endif
 
 %files -n %{libqdbus}
 %defattr(-,root,root,-)
@@ -451,8 +511,12 @@ Obsoletes: %{_lib}qassistant1 < 2:4.3.4-4
 %description -n %{libqassistant}
 QT assistant lib
 
+%if %mdkversion < 200900
 %post -n %{libqassistant} -p /sbin/ldconfig
+%endif
+%if %mdkversion < 200900
 %postun -n %{libqassistant} -p /sbin/ldconfig
+%endif
 
 %files -n %{libqassistant}
 %defattr(-,root,root,-)
