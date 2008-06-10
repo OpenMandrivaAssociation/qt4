@@ -54,7 +54,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 7
+Release: %mkrel 8
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -567,6 +567,7 @@ Requires: %{libqtsvg} = %epoch:%version-%release
 Requires: %{libqttest} = %epoch:%version-%release
 Requires: %{libqdbus} = %epoch:%version-%release
 Requires: %{libqtwebkit} = %epoch:%version-%release
+Requires: %{libqtscript} = %epoch:%version-%release
 
 %description -n %{libqt}-devel
 The %{qtlib}-devel package contains the files necessary to develop
