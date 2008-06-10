@@ -54,7 +54,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 5
+Release: %mkrel 6
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -301,6 +301,7 @@ Summary: QT%{qtmajor} component library
 Group: System/Libraries
 Requires(pre): %{name}-common = %epoch:%version
 Provides: qtwebkitlib = %epoch:%version
+Obsoletes: %mklibname QtWebKit 4 < %version
 
 %description -n %{libqtwebkit}
 QT%{qtmajor} component library
@@ -530,6 +531,7 @@ Group: Development/KDE and Qt
 Requires: %{name}-common = %epoch:%version
 Provides: qt4-devel = %epoch:%version-%release
 Provides: libqt4-devel = %epoch:%version-%release
+Obsoletes: %{mklibname -d QtWebKit} < %version
 
 # (anssi) *.prl was moved to -devel
 Conflicts: %{_lib}qtxml4 < 2:4.3.4-3
