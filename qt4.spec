@@ -54,7 +54,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 6
+Release: %mkrel 7
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -74,11 +74,14 @@ Patch103: 0220-no-x-recursion-in-xerrhandler.diff
 Patch104: 0180-window-role.diff
 Patch105: 0216-allow-isystem-for-headers.diff
 Patch106: 0203-qtexthtmlparser-link-color.diff
-Patch107: 0214-fix-qgraphicsproxywidget-tab-crash.diff
-Patch108: 0226-qtreeview-column_resize_when_needed.diff
-Patch109: 0227-qdatastream-regression.diff
-Patch110: 0228-qsortfilterproxymodel-invalidate-noscroll.diff
-Patch111: 0229-fix-qgraphicsproxywidget-delete-crash.diff
+Patch107: 0209-prevent-qt-mixing.diff
+Patch108: 0210-fix-crash-q3stylesheet-font-size.diff
+Patch109: 0214-fix-qgraphicsproxywidget-tab-crash.diff
+Patch110: 0223-fix-qpixmap-hasalpha.diff
+Patch111: 0224-fast-qpixmap-fill.diff
+Patch112: 0226-qtreeview-column_resize_when_needed.diff
+Patch113: 0227-qdatastream-regression.diff
+Patch114: 0228-qsortfilterproxymodel-invalidate-noscroll.diff
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -923,6 +926,9 @@ Qt 4 Embedded Virtual Terminal
 %patch109 -p0 -b .qt-copy
 %patch110 -p0 -b .qt-copy
 %patch111 -p0 -b .qt-copy
+%patch112 -p0 -b .qt-copy
+%patch113 -p0 -b .qt-copy
+%patch114 -p0 -b .qt-copy
 
 %build
 export QTDIR=`/bin/pwd`
