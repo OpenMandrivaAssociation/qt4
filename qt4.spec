@@ -695,13 +695,17 @@ Conflicts:  %name-common <= 4.3.3-4
 Qt Linguist provides easy translation of Qt GUIs to different
 languages
 
+%if %mdkversion < 200900
 %post linguist
 %update_menus
 %{update_desktop_database}
+%endif
 
+%if %mdkversion < 200900
 %postun linguist
 %clean_menus
 %{clean_desktop_database}
+%endif
 
 %files linguist
 %defattr(-,root,root,-)
@@ -722,13 +726,17 @@ Conflicts:  %name-common <= 4.3.3-4
 %description assistant
 Qt Assistant provides a documentation Browser
 
+%if %mdkversion < 200900
 %post assistant
 %update_menus
 %{update_desktop_database}
+%endif
 
+%if %mdkversion < 200900
 %postun assistant
 %clean_menus
 %{clean_desktop_database}
+%endif
 
 %files assistant
 %defattr(-,root,root,-)
@@ -883,11 +891,15 @@ Conflicts:  %name-common <= 4.3.3-4
 The Qt Designer is a visual design tool that makes designing and
 implementing user interfaces a lot easier.
 
+%if %mdkversion < 200900
 %post designer
 %update_menus
+%endif
 
+%if %mdkversion < 200900
 %postun designer
 %clean_menus
+%endif
 
 %files designer
 %defattr(-,root,root,-)
