@@ -66,6 +66,8 @@ Source3: mandriva-designer-qt4.desktop
 Source4: mandriva-assistant-qt4.desktop 
 Source5: mandriva-linguist-qt4.desktop
 Source6: Trolltech.conf
+# (Anssi 06/2008) Fix underlinking, link QtGui.so with glib:
+Patch0: qt4-qtgui-underlinking-glib.patch
 # Qt-copy safe patches
 Patch100: 0195-compositing-properties.diff
 Patch101: 0167-fix-group-reading.diff
@@ -103,7 +105,7 @@ BuildRequires: termcap-devel
 BuildRequires: libpam-devel
 BuildRequires: readline-devel
 BuildRequires: perl
-#BuildRequires: glib2-devel
+BuildRequires: glib2-devel
 Provides: %{qtlib}
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 
@@ -926,6 +928,7 @@ Qt 4 Embedded Virtual Terminal
 
 %prep
 %setup -q -n %{qttarballdir}
+%patch0 -p1 -b .underlinking
 %patch100 -p0 -b .qt-copy
 %patch101 -p0 -b .qt-copy
 %patch102 -p0 -b .qt-copy
