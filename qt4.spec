@@ -54,7 +54,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 10
+Release: %mkrel 11
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -66,7 +66,6 @@ Source3: mandriva-designer-qt4.desktop
 Source4: mandriva-assistant-qt4.desktop 
 Source5: mandriva-linguist-qt4.desktop
 Source6: Trolltech.conf
-# (Anssi 06/2008) Fix underlinking, link QtGui.so with glib:
 Patch0: qt4-qtgui-underlinking-glib.patch
 # Qt-copy safe patches
 Patch100: 0195-compositing-properties.diff
@@ -375,6 +374,7 @@ Requires(pre): %{name}-common = %epoch:%version
 Conflicts: %{libqtgui} <= 2:4.2.2-%mkrel 2
 Provides: qtcorelib = %epoch:%version
 Obsoletes: %{_lib}qtuitools4
+Obsoletes: qt4-codecs-plugin-%_lib
 
 %description -n %{libqtcore}
 QT%{qtmajor} component library
@@ -389,6 +389,8 @@ QT%{qtmajor} component library
 %files -n %{libqtcore}
 %defattr(-,root,root,-)
 %_libdir/libQtCore.so.%{qtmajor}*
+%dir %pluginsdir/codecs
+%pluginsdir/codecs/*.so*
 
 #-------------------------------------------------------------------------
 
@@ -756,7 +758,7 @@ Qt Assistant provides a documentation Browser
 %package database-plugin-odbc-%_lib
 Summary: Database plugin for ODBC Qt support
 Group: Development/KDE and Qt
-Obsoletes: qt4-database-plugin-odbc
+Provides: qt4-database-plugin-odbc
 BuildRequires: unixODBC-devel
 %if %{enable_static}
 BuildRequires: unixODBC-static-devel
@@ -778,7 +780,7 @@ Database plugin for ODBC Qt support
 %package database-plugin-mysql-%_lib
 Summary: Database plugin for mysql Qt support
 Group: Development/KDE and Qt
-Obsoletes: qt4-database-plugin-mysql
+Provides: qt4-database-plugin-mysql
 BuildRequires: mysql-devel
 
 %description database-plugin-mysql-%_lib
@@ -797,7 +799,7 @@ Database plugin for mysql Qt support
 %package database-plugin-sqlite-%_lib
 Summary: Database plugin for sqlite Qt support
 Group: Databases
-Obsoletes: qt4-database-plugin-sqlite
+Provides: qt4-database-plugin-sqlite
 BuildRequires: sqlite3-devel
 %if %{enable_static}
 BuildRequires: sqlite3-static-devel
@@ -818,7 +820,7 @@ Database plugin for sqlite Qt support
 %package database-plugin-ibase-%_lib
 Summary: Database plugin for interbase Qt support
 Group: Development/KDE and Qt
-Obsoletes: qt4-database-plugin-ibase
+Provides: qt4-database-plugin-ibase
 BuildRequires: firebird-devel
 
 %description database-plugin-ibase-%_lib
@@ -836,7 +838,7 @@ Database plugin for interbase Qt support
 %package database-plugin-pgsql-%_lib
 Summary: Database plugin for pgsql Qt support
 Group: Development/KDE and Qt
-Obsoletes: %name-database-plugin-pgsql
+Provides: qt4-database-plugin-pgsql
 BuildRequires: postgresql-devel
 BuildRequires: libpq-devel
 
@@ -854,8 +856,7 @@ Database plugin for pgsql Qt support
 %package accessibility-plugin-%_lib
 Summary: Accessibility plugins for Qt4
 Group: Development/KDE and Qt
-Obsoletes: %name-accessibility-plugin
-Obsoletes: %name-accessibility-plugins
+Provides: qt4-accessibility-plugin
 
 %description accessibility-plugin-%_lib
 Acessibility plugins for Qt4
@@ -865,21 +866,6 @@ Acessibility plugins for Qt4
 %dir %pluginsdir/accessible
 %pluginsdir/accessible/*
 
-#-------------------------------------------------------------------------
-
-%package codecs-plugin-%_lib
-Summary: codecs plugins for Qt4
-Group: 	Development/KDE and Qt
-Obsoletes: %name-codecs-plugin
-Obsoletes: %name-codecs-plugins
-
-%description codecs-plugin-%_lib
-Acessibility plugins for Qt4
-
-%files codecs-plugin-%_lib
-%defattr(-,root,root,-)
-%dir %pluginsdir/codecs
-%pluginsdir/codecs/*.so*
 
 #-------------------------------------------------------------------------
 
