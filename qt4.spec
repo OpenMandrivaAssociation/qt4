@@ -995,6 +995,7 @@ echo "yes" |
    %endif
    %if %{with_sqlite}
    -qt-sql-sqlite \
+   -system-sqlite \
    -no-sql-sqlite2 \
    %else
    -no-sql-sqlite \
@@ -1032,6 +1033,7 @@ qt_configure -shared \
    %endif
    %if %{with_sqlite}
    -plugin-sql-sqlite \
+   -system-sqlite \
    -no-sql-sqlite2 \
    %else
    -no-sql-sqlite \
