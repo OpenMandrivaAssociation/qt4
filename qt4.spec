@@ -965,9 +965,9 @@ echo "yes" |
 %if %{with_debug}
    -debug \
 %else
-   -no-separate-debug-info \
    -release \
 %endif
+   -no-separate-debug-info \
    -sysconfdir %_sysconfdir \
    -libdir %_libdir \
    -docdir %_docdir/%name/doc \
