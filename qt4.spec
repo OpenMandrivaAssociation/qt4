@@ -13,7 +13,7 @@
 %define with_ibase 0
 %{?_with_ibase: %{expand: %%global with_ibase 1}}
 
-%define with_debug 1
+%define with_debug 0
 %{?_with_debug: %{expand: %%global with_debug 1}}
 
 %define enable_static 0
@@ -54,7 +54,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 9
+Release: %mkrel 10
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -965,7 +965,6 @@ echo "yes" |
 %if %{with_debug}
    -debug \
 %else
-   -no-separate-debug-info \
    -release \
 %endif
    -sysconfdir %_sysconfdir \
@@ -978,6 +977,8 @@ echo "yes" |
 %if ! %{with_cups}
    -no-cups \
 %endif
+   -no-separate-debug-info \
+   -no-rpath \
    -no-exceptions \
    -L%_prefix/%_lib \
    -platform linux-g++ \
