@@ -32,6 +32,7 @@
 %define libqtopengl %mklibname qtopengl %qtmajor
 %define libqtsql %mklibname qtsql %qtmajor
 %define libqtxml %mklibname qtxml %qtmajor
+%define libqtxmlpatterns %mklibname qtxmlpatterns %qtmajor
 %define libqtsvg %mklibname qtsvg %qtmajor
 %define libqttest %mklibname qttest %qtmajor
 %define libqdbus %mklibname qtdbus %qtmajor
@@ -54,7 +55,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 11
+Release: %mkrel 12
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -123,7 +124,7 @@ Group: Development/KDE and Qt
 Summary: config, language file for Qt
 
 %description common
-This package contains all config file and language file
+This package contains all config file and language file.
 
 %files common
 %defattr(-,root,root,-)
@@ -148,7 +149,7 @@ Requires(pre): %{name}-common = %epoch:%version
 Provides:	qtxmllib = %epoch:%version
 
 %description -n %{libqtxml}
-QT%{qtmajor} component library
+QT%{qtmajor} component library.
 
 %if %mdkversion < 200900
 %post -n %{libqtxml} -p /sbin/ldconfig
@@ -163,6 +164,28 @@ QT%{qtmajor} component library
 
 #-------------------------------------------------------------------------
 
+%package -n %{libqtxmlpatterns}
+Summary: QT%{qtmajor} component library
+Group: System/Libraries
+Requires(pre): %{name}-common = %epoch:%version
+Requires: %{name}-xmlpatterns = %epoch:%version
+
+%description -n %{libqtxmlpatterns}
+QT%{qtmajor} component library.
+
+%if %mdkversion < 200900
+%post -n %{libqtxmlpatterns} -p /sbin/ldconfig
+%endif
+%if %mdkversion < 200900
+%postun -n %{libqtxmlpatterns} -p /sbin/ldconfig
+%endif
+
+%files -n %{libqtxmlpatterns}
+%defattr(-,root,root,-)
+%_libdir/libQtXmlPatterns.so.%{qtmajor}*
+
+#-------------------------------------------------------------------------
+
 %package -n %{libqtsql}
 Summary: QT%{qtmajor} component library
 Group: System/Libraries
@@ -170,7 +193,7 @@ Requires(pre): %{name}-common = %epoch:%version
 Provides:	qtsqllib = %epoch:%version 
 
 %description -n %{libqtsql}
-QT%{qtmajor} component library
+QT%{qtmajor} component library.
 
 %if %mdkversion < 200900
 %post -n %{libqtsql} -p /sbin/ldconfig
@@ -192,7 +215,7 @@ Requires(pre): %{name}-common = %epoch:%version
 Provides: qtnetworklib = %epoch:%version
 
 %description -n %{libqtnetwork}
-QT%{qtmajor} component library
+QT%{qtmajor} component library.
 
 %if %mdkversion < 200900
 %post -n %{libqtnetwork} -p /sbin/ldconfig
@@ -214,7 +237,7 @@ Requires(pre): %{name}-common = %epoch:%version
 Provides: libqtscript = %epoch:%version
 
 %description -n %{libqtscript}
-QT%{qtmajor} component library
+QT%{qtmajor} component library.
 
 %if %mdkversion < 200900
 %post -n %{libqtscript} -p /sbin/ldconfig
@@ -238,7 +261,7 @@ Conflicts: %{libqtcore} <= 2:4.2.2-%mkrel 2
 Provides: qtguilib = %epoch:%version
 
 %description -n %{libqtgui}
-QT%{qtmajor} component library
+QT%{qtmajor} component library.
 
 %if %mdkversion < 200900
 %post -n %{libqtgui} -p /sbin/ldconfig
@@ -262,7 +285,7 @@ Requires(pre): %{name}-common = %epoch:%version
 Provides: qtsvglib = %epoch:%version
 
 %description -n %{libqtsvg}
-QT%{qtmajor} component library
+QT%{qtmajor} component library.
 
 %if %mdkversion < 200900
 %post -n %{libqtsvg} -p /sbin/ldconfig
@@ -285,7 +308,7 @@ Requires(pre): %{name}-common = %epoch:%version
 Provides: qttestlib = %epoch:%version
 
 %description -n %{libqttest}
-QT%{qtmajor} component library
+QT%{qtmajor} component library.
 
 %if %mdkversion < 200900
 %post -n %{libqttest} -p /sbin/ldconfig
@@ -307,7 +330,7 @@ Requires(pre): %{name}-common = %epoch:%version
 Provides: qtwebkitlib = %epoch:%version
 
 %description -n %{libqtwebkit}
-QT%{qtmajor} component library
+QT%{qtmajor} component library.
 
 %if %mdkversion < 200900
 %post -n %{libqtwebkit} -p /sbin/ldconfig
@@ -330,7 +353,7 @@ Requires(pre): %{name}-common = %epoch:%version
 Provides: qthelplib = %epoch:%version
 
 %description -n %{libqthelp}
-QT%{qtmajor} component library
+QT%{qtmajor} component library.
 
 %if %mdkversion < 200900
 %post -n %{libqthelp} -p /sbin/ldconfig
@@ -352,7 +375,7 @@ Requires(pre): %{name}-common = %epoch:%version
 Provides: qtclucenelib = %epoch:%version
 
 %description -n %{libqtclucene}
-QT%{qtmajor} component library
+QT%{qtmajor} component library.
 
 %if %mdkversion < 200900
 %post -n %{libqtclucene} -p /sbin/ldconfig
@@ -377,7 +400,7 @@ Obsoletes: %{_lib}qtuitools4
 Obsoletes: qt4-codecs-plugin-%_lib
 
 %description -n %{libqtcore}
-QT%{qtmajor} component library
+QT%{qtmajor} component library.
 
 %if %mdkversion < 200900
 %post -n %{libqtcore} -p /sbin/ldconfig
@@ -401,7 +424,7 @@ Requires(pre): %{name}-common = %epoch:%version
 Provides: qt3supportlib = %epoch:%version
 
 %description -n %{libqt3support}
-QT%{qtmajor} component library
+QT%{qtmajor} component library.
 
 %if %mdkversion < 200900
 %post -n %{libqt3support} -p /sbin/ldconfig
@@ -424,7 +447,7 @@ Requires(pre): %{name}-common = %epoch:%version
 Provides: qtopengllib = %epoch:%version
 
 %description -n %{libqtopengl}
-QT%{qtmajor} component library
+QT%{qtmajor} component library.
 
 %if %mdkversion < 200900
 %post -n %{libqtopengl} -p /sbin/ldconfig
@@ -448,10 +471,7 @@ Provides: qtdesignerlib = %epoch:%version
 Obsoletes: %{_lib}qtdesigner1 < 2:4.3.4-4
 
 %description -n %{libqtdesigner}
-QT%{qtmajor} component library
-
-%description -l pt_BR -n %{libqtdesigner}
-Biblioteca componente da QT%{qtmajor}
+QT%{qtmajor} component library.
 
 %if %mdkversion < 200900
 %post -n %{libqtdesigner} -p /sbin/ldconfig
@@ -477,7 +497,7 @@ Provides: qdbuslib = %epoch:%version
 Conflicts: qt4-devel < 2:4.3.0 
 
 %description -n %{libqdbus}
-QT dbus lib
+QT dbus lib.
 
 %if %mdkversion < 200900
 %post -n %{libqdbus} -p /sbin/ldconfig
@@ -498,7 +518,7 @@ Summary(pt_BR): Biblioteca do dbus
 Group: Development/KDE and Qt
 
 %description qtdbus
-QT dbus binary
+QT dbus binary.
 
 %files qtdbus
 %defattr(-,root,root,-)
@@ -516,7 +536,7 @@ Provides: qassistantlib = %epoch:%version
 Obsoletes: %{_lib}qassistant1 < 2:4.3.4-4
 
 %description -n %{libqassistant}
-QT assistant lib
+QT assistant lib.
 
 %if %mdkversion < 200900
 %post -n %{libqassistant} -p /sbin/ldconfig
@@ -566,6 +586,7 @@ Requires: %{libqtnetwork} = %epoch:%version-%release
 Requires: %{libqtopengl} = %epoch:%version-%release
 Requires: %{libqtsql} = %epoch:%version-%release
 Requires: %{libqtxml} = %epoch:%version-%release
+Requires: %{libqtxmlpatterns} = %epoch:%version-%release
 Requires: %{libqtsvg} = %epoch:%version-%release
 Requires: %{libqttest} = %epoch:%version-%release
 Requires: %{libqdbus} = %epoch:%version-%release
@@ -627,6 +648,19 @@ applications, as well as the README files for Qt.
 %_libdir/*.a
 
 %endif
+
+#-------------------------------------------------------------------------
+
+%package xmlpatterns
+Summary: Qt4 xmlpatterns utility
+Group: Development/KDE and Qt
+
+%description xmlpatterns
+Qt4 xmlpatterns utility.
+
+%files xmlpatterns
+%defattr(-,root,root,-)
+%{qtdir}/bin/xmlpatterns
 
 #-------------------------------------------------------------------------
 
@@ -696,7 +730,7 @@ Requires(postun): desktop-file-utils
 Conflicts:  %name-common <= 4.3.3-4
 
 %description linguist
-Qt Linguist provides easy translation of Qt GUIs to different
+Qt Linguist provides easy translation of Qt GUIs to different.
 languages
 
 %if %mdkversion < 200900
@@ -728,7 +762,7 @@ Requires(postun): desktop-file-utils
 Conflicts:  %name-common <= 4.3.3-4
 
 %description assistant
-Qt Assistant provides a documentation Browser
+Qt Assistant provides a documentation Browser.
 
 %if %mdkversion < 200900
 %post assistant
@@ -765,7 +799,7 @@ BuildRequires: unixODBC-static-devel
 %endif
 
 %description database-plugin-odbc-%_lib
-Database plugin for ODBC Qt support
+Database plugin for ODBC Qt support.
 
 %files database-plugin-odbc-%_lib
 %defattr(-,root,root,-)
@@ -784,7 +818,7 @@ Provides: qt4-database-plugin-mysql
 BuildRequires: mysql-devel
 
 %description database-plugin-mysql-%_lib
-Database plugin for mysql Qt support
+Database plugin for mysql Qt support.
 
 %files database-plugin-mysql-%_lib
 %defattr(-,root,root,-)
@@ -806,7 +840,7 @@ BuildRequires: sqlite3-static-devel
 %endif
 
 %description database-plugin-sqlite-%_lib
-Database plugin for sqlite Qt support
+Database plugin for sqlite Qt support.
 
 %files database-plugin-sqlite-%_lib
 %defattr(-,root,root,-)
@@ -824,7 +858,7 @@ Provides: qt4-database-plugin-ibase
 BuildRequires: firebird-devel
 
 %description database-plugin-ibase-%_lib
-Database plugin for interbase Qt support
+Database plugin for interbase Qt support.
 
 %files database-plugin-ibase-%_lib
 %defattr(-,root,root,-)
@@ -843,7 +877,7 @@ BuildRequires: postgresql-devel
 BuildRequires: libpq-devel
 
 %description database-plugin-pgsql-%_lib
-Database plugin for pgsql Qt support
+Database plugin for pgsql Qt support.
 
 %files database-plugin-pgsql-%_lib
 %defattr(-,root,root,-)
@@ -859,7 +893,7 @@ Group: Development/KDE and Qt
 Provides: qt4-accessibility-plugin
 
 %description accessibility-plugin-%_lib
-Acessibility plugins for Qt4
+Acessibility plugins for Qt4.
 
 %files accessibility-plugin-%_lib
 %defattr(-,root,root,-)
@@ -903,7 +937,7 @@ Group: Development/KDE and Qt
 Conflicts:  %name-common <= 4.3.3-4
 
 %description qvfb
-Qt 4 Embedded Virtual Terminal
+Qt 4 Embedded Virtual Terminal.
 
 %files qvfb
 %defattr(-,root,root,-)
@@ -965,7 +999,6 @@ echo "yes" |
 %endif
    -no-separate-debug-info \
    -no-rpath \
-   -no-exceptions \
    -L%_prefix/%_lib \
    -platform linux-g++ \
    -confirm-license \
