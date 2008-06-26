@@ -55,7 +55,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 12
+Release: %mkrel 13
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -757,6 +757,7 @@ languages
 %package assistant
 Summary: QT assistantion doc utility
 Group: Books/Computer books
+Requires: %{name}-database-plugin-sqlite-lib >= %{epoch}:%{version}
 Requires(post): desktop-file-utils
 Requires(postun): desktop-file-utils
 Conflicts:  %name-common <= 4.3.3-4
