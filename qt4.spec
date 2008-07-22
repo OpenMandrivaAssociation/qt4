@@ -55,7 +55,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 18
+Release: %mkrel 19
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -85,11 +85,16 @@ Patch112: 0226-qtreeview-column_resize_when_needed.diff
 Patch113: 0227-qdatastream-regression.diff
 Patch114: 0228-qsortfilterproxymodel-invalidate-noscroll.diff
 Patch115: 0230-qtextcontrol-selectnextword.diff
-Patch116: 0233-fix-q3textbrowser-image.diff
-Patch117: 0234-fix-mysql-threaded.diff
-Patch118: 0235-qdbus-dispatch-async-timeout.diff
-Patch119: 0236-qtoolbararealayout-restore.diff
-Patch120: 0232-fix-qdesktopwidget-screen-merge.diff
+Patch116: 0232-fix-qdesktopwidget-screen-merge.diff
+Patch117: 0233-fix-q3textbrowser-image.diff
+Patch118: 0234-fix-mysql-threaded.diff
+Patch119: 0235-qdbus-dispatch-async-timeout.diff
+Patch120: 0236-qtoolbararealayout-restore.diff
+Patch121: 0237-printdialog-assert.diff
+Patch122: 0238-fix-qt-qttabbar-size.diff
+Patch123: 0239-fix-phonon_qt7-encodedurls.diff
+Patch124: 0240-printdialog-print-into-real-printer.diff
+
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -977,6 +982,10 @@ Qt 4 Embedded Virtual Terminal.
 %patch118 -p0 -b .qt-copy
 %patch119 -p0 -b .qt-copy
 %patch120 -p0 -b .qt-copy
+%patch121 -p0 -b .qt-copy
+%patch122 -p0 -b .qt-copy
+%patch123 -p0 -b .qt-copy
+%patch124 -p0 -b .qt-copy
 
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -i -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" mkspecs/common/linux.conf
