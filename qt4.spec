@@ -43,7 +43,7 @@
 
 %define qtmajor 4
 %define qtminor 4
-%define qtsubminor 0
+%define qtsubminor 1
 
 %define qtversion %{qtmajor}.%{qtminor}.%{qtsubminor} 
 
@@ -55,7 +55,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 19
+Release: %mkrel 1
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -70,30 +70,21 @@ Source6: Trolltech.conf
 Patch0: qt4-qtgui-underlinking-glib.patch
 # Qt-copy safe patches
 Patch100: 0195-compositing-properties.diff
-Patch101: 0167-fix-group-reading.diff
 Patch102: 0225-invalidate-tabbar-geometry-on-refresh.patch
-Patch103: 0220-no-x-recursion-in-xerrhandler.diff
 Patch104: 0180-window-role.diff
 Patch105: 0216-allow-isystem-for-headers.diff
 Patch106: 0203-qtexthtmlparser-link-color.diff
 Patch107: 0209-prevent-qt-mixing.diff
-Patch108: 0210-fix-crash-q3stylesheet-font-size.diff
 Patch109: 0214-fix-qgraphicsproxywidget-tab-crash.diff
-Patch110: 0223-fix-qpixmap-hasalpha.diff
 Patch111: 0224-fast-qpixmap-fill.diff
 Patch112: 0226-qtreeview-column_resize_when_needed.diff
-Patch113: 0227-qdatastream-regression.diff
-Patch114: 0228-qsortfilterproxymodel-invalidate-noscroll.diff
 Patch115: 0230-qtextcontrol-selectnextword.diff
 Patch116: 0232-fix-qdesktopwidget-screen-merge.diff
 Patch117: 0233-fix-q3textbrowser-image.diff
 Patch118: 0234-fix-mysql-threaded.diff
 Patch119: 0235-qdbus-dispatch-async-timeout.diff
 Patch120: 0236-qtoolbararealayout-restore.diff
-Patch121: 0237-printdialog-assert.diff
 Patch122: 0238-fix-qt-qttabbar-size.diff
-Patch123: 0239-fix-phonon_qt7-encodedurls.diff
-Patch124: 0240-printdialog-print-into-real-printer.diff
 
 BuildRequires: X11-devel
 %if %{enable_static}
@@ -962,30 +953,21 @@ Qt 4 Embedded Virtual Terminal.
 %setup -q -n %{qttarballdir}
 %patch0 -p1 -b .underlinking
 %patch100 -p0 -b .qt-copy
-%patch101 -p0 -b .qt-copy
 %patch102 -p0 -b .qt-copy
-%patch103 -p0 -b .qt-copy
 %patch104 -p0 -b .qt-copy
 %patch105 -p0 -b .qt-copy
 %patch106 -p0 -b .qt-copy
 %patch107 -p0 -b .qt-copy
-%patch108 -p0 -b .qt-copy
 %patch109 -p0 -b .qt-copy
-%patch110 -p0 -b .qt-copy
 %patch111 -p0 -b .qt-copy
 %patch112 -p0 -b .qt-copy
-%patch113 -p0 -b .qt-copy
-%patch114 -p0 -b .qt-copy
 %patch115 -p0 -b .qt-copy
 %patch116 -p0 -b .qt-copy
 %patch117 -p0 -b .qt-copy
 %patch118 -p0 -b .qt-copy
 %patch119 -p0 -b .qt-copy
 %patch120 -p0 -b .qt-copy
-%patch121 -p0 -b .qt-copy
 %patch122 -p0 -b .qt-copy
-%patch123 -p0 -b .qt-copy
-%patch124 -p0 -b .qt-copy
 
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -i -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" mkspecs/common/linux.conf
