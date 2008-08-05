@@ -55,7 +55,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 1
+Release: %mkrel 2
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -68,6 +68,8 @@ Source4: mandriva-assistant-qt4.desktop
 Source5: mandriva-linguist-qt4.desktop
 Source6: Trolltech.conf
 Patch0: qt4-qtgui-underlinking-glib.patch
+Patch1: qt-x11-opensource-src-4.4.1-revert-qwidget-systray.patch
+
 # Qt-copy safe patches
 Patch100: 0195-compositing-properties.diff
 Patch102: 0225-invalidate-tabbar-geometry-on-refresh.patch
@@ -85,7 +87,6 @@ Patch118: 0234-fix-mysql-threaded.diff
 Patch119: 0235-qdbus-dispatch-async-timeout.diff
 Patch120: 0236-qtoolbararealayout-restore.diff
 Patch122: 0238-fix-qt-qttabbar-size.diff
-
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -952,6 +953,7 @@ Qt 4 Embedded Virtual Terminal.
 %prep
 %setup -q -n %{qttarballdir}
 %patch0 -p1 -b .underlinking
+%patch1 -p1 -b .systray
 %patch100 -p0 -b .qt-copy
 %patch102 -p0 -b .qt-copy
 %patch104 -p0 -b .qt-copy
