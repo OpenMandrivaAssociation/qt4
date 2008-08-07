@@ -55,7 +55,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 2
+Release: %mkrel 3
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -1150,15 +1150,18 @@ cat > %buildroot%_sysconfdir/profile.d/60qt4.sh << EOF
 #!/bin/bash
 
 QT4DOCDIR=%_docdir/qt4/doc
+export QT4DOCDIR
 
-PATH=\${PATH}:%{qtdir}/bin
+if [ -z $(echo $PATH | grep "%{qtdir}/bin") ]; then
+    PATH=\${PATH}:%{qtdir}/bin
+    export PATH
+fi
 
 function qt4env {
     QTDIR=%{qtdir}
     export QTDIR
 }
 
-export PKG_CONFIG_PATH QT4DOCDIR PATH
 EOF
 
 # Conf
