@@ -1152,7 +1152,7 @@ cat > %buildroot%_sysconfdir/profile.d/60qt4.sh << EOF
 QT4DOCDIR=%_docdir/qt4/doc
 export QT4DOCDIR
 
-if [ -z $(echo $PATH | grep "%{qtdir}/bin") ]; then
+if [ -z $(echo \$PATH | grep "%{qtdir}/bin") ]; then
     PATH=\${PATH}:%{qtdir}/bin
     export PATH
 fi
