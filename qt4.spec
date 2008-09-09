@@ -55,7 +55,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 5
+Release: %mkrel 6
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -87,6 +87,8 @@ Patch118: 0234-fix-mysql-threaded.diff
 Patch119: 0235-qdbus-dispatch-async-timeout.diff
 Patch120: 0236-qtoolbararealayout-restore.diff
 Patch122: 0238-fix-qt-qttabbar-size.diff
+Patch123: 0245-fix-randr-changes-detecting.diff
+Patch124: 0247-avoid-wiggly-line-crashes.diff
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -970,6 +972,8 @@ Qt 4 Embedded Virtual Terminal.
 %patch119 -p0 -b .qt-copy
 %patch120 -p0 -b .qt-copy
 %patch122 -p0 -b .qt-copy
+%patch123 -p0 -b .qt-copy
+%patch124 -p0 -b .qt-copy
 
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -i -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" mkspecs/common/linux.conf
