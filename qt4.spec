@@ -43,7 +43,7 @@
 
 %define qtmajor 4
 %define qtminor 4
-%define qtsubminor 2
+%define qtsubminor 3
 
 %define qtversion %{qtmajor}.%{qtminor}.%{qtsubminor} 
 
