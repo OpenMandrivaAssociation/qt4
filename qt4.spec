@@ -55,7 +55,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 1
+Release: %mkrel 2
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -1141,18 +1141,15 @@ install -m 0644 %SOURCE2 %buildroot/%_sysconfdir/rpm/macros.d
 cat > %buildroot%_sysconfdir/profile.d/60qt4.sh << EOF
 #!/bin/bash
 
-QT4DOCDIR=%_docdir/qt4/doc
-export QT4DOCDIR
+# Qt4 is the main Qt on system
+export QTDIR=%qtdir
+
+[ -z \$QT4DOCDIR ] && export QT4DOCDIR=%_docdir/qt4/doc
 
 if [ -z \$(echo \$PATH | grep "%{qtdir}/bin") ]; then
     PATH=\${PATH}:%{qtdir}/bin
     export PATH
 fi
-
-function qt4env {
-    QTDIR=%{qtdir}
-    export QTDIR
-}
 
 EOF
 
