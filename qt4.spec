@@ -55,7 +55,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 2
+Release: %mkrel 3
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -557,8 +557,6 @@ Requires: %{name}-common = %epoch:%version
 Provides: qt4-devel = %epoch:%version-%release
 Provides: libqt4-devel = %epoch:%version-%release
 Obsoletes: %{mklibname -d QtWebKit} < %version
-
-# (anssi) *.prl was moved to -devel
 Conflicts: %{_lib}qtxml4 < 2:4.3.4-3
 Conflicts: %{_lib}qtsql4 < 2:4.3.4-3
 Conflicts: %{_lib}qtnetwork4 < 2:4.3.4-3
@@ -574,8 +572,7 @@ Conflicts: %{_lib}qtdbus4 < 2:4.3.4-3
 Conflicts: %{_lib}qassistant1 < 2:4.3.4-3
 Conflicts: %{_lib}qttest4 < 2:4.3.4-3
 Conflicts: %{_lib}qtcore4 < 2:4.3.4-3
-
-# There's symlinks to devel
+Conflicts: qt4-linguist < 2:4.4.3-3
 Requires: %{libqassistant} = %epoch:%version-%release
 Requires: %{libqt3support} = %epoch:%version-%release
 Requires: %{libqtcore} = %epoch:%version-%release
@@ -617,6 +614,8 @@ fi
 %{qtdir}/bin/rcc*
 %{qtdir}/bin/qt3to4*
 %{qtdir}/bin/pixeltool*
+%{qtdir}/bin/lreleas*
+%{qtdir}/bin/lupdat*
 %_sysconfdir/rpm/macros.d/*
 %{qtdir}/include
 %{qtdir}/mkspecs
@@ -747,10 +746,9 @@ languages
 %files linguist
 %defattr(-,root,root,-)
 %{qtdir}/bin/lingu*
-%{qtdir}/bin/lreleas*
-%{qtdir}/bin/lupdat*
 %{_datadir}/applications/*linguist*.desktop
 %{qtdir}/translations/linguist*
+
 #-------------------------------------------------------------------------
 
 %package assistant
