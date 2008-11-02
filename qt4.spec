@@ -55,7 +55,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 3
+Release: %mkrel 4
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -69,6 +69,7 @@ Source5: mandriva-linguist-qt4.desktop
 Source6: Trolltech.conf
 Patch0: qt4-qtgui-underlinking-glib.patch
 Patch1: qt-x11-opensource-src-4.4.1-revert-qwidget-systray.patch
+Patch2: qt4-delay-input-method-initializing.patch
 
 # Qt-copy safe patches
 Patch100: 0195-compositing-properties.diff
@@ -948,6 +949,7 @@ Qt 4 Embedded Virtual Terminal.
 %setup -q -n %{qttarballdir}
 %patch0 -p1 -b .underlinking
 %patch1 -p1 -b .systray
+%patch2 -p1 -b .inputmethod
 %patch100 -p0 -b .qt-copy
 %patch102 -p0 -b .qt-copy
 %patch104 -p0 -b .qt-copy
