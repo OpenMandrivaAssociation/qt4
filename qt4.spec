@@ -55,7 +55,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 4
+Release: %mkrel 5
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -84,6 +84,13 @@ Patch112: 0226-qtreeview-column_resize_when_needed.diff
 Patch118: 0234-fix-mysql-threaded.diff
 Patch122: 0238-fix-qt-qttabbar-size.diff
 Patch123: 0245-fix-randr-changes-detecting.diff
+Patch124: 0248-fix-qwidget-scroll-slowness.diff
+Patch125: 0249-webkit-stale-frame-pointer.diff
+Patch126: 0253-qmake_correct_path_separators.diff
+Patch127: 0254-fix-qgraphicsproxywidget-deletion-crash.diff
+Patch128: 0255-qtreeview-selection-columns-hidden.diff
+Patch129: 0256-fix-recursive-backingstore-sync-crash.diff
+Patch130: 0257-qurl-validate-speedup.diff
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -962,6 +969,13 @@ Qt 4 Embedded Virtual Terminal.
 %patch118 -p0 -b .qt-copy
 %patch122 -p0 -b .qt-copy
 %patch123 -p0 -b .qt-copy
+%patch124 -p0 -b .qt-copy
+%patch125 -p0 -b .qt-copy
+%patch126 -p0 -b .qt-copy
+%patch127 -p0 -b .qt-copy
+%patch128 -p0 -b .qt-copy
+%patch129 -p0 -b .qt-copy
+%patch130 -p0 -b .qt-copy
 
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -i -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" mkspecs/common/linux.conf
