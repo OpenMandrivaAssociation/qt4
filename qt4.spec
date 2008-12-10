@@ -55,7 +55,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 6
+Release: %mkrel 7
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -70,6 +70,9 @@ Source6: Trolltech.conf
 Patch0: qt4-qtgui-underlinking-glib.patch
 Patch1: qt-x11-opensource-src-4.4.1-revert-qwidget-systray.patch
 Patch2: qt4-delay-input-method-initializing.patch
+# Inspired by Debian: link against libfbclient, not libgds, for ibase /
+# firebird support - AdamW 2008/12
+Patch3: qt-x11-opensource-src-4.4.3-firebird.patch
 
 # Qt-copy safe patches
 Patch100: 0195-compositing-properties.diff
@@ -957,6 +960,7 @@ Qt 4 Embedded Virtual Terminal.
 %patch0 -p1 -b .underlinking
 %patch1 -p1 -b .systray
 %patch2 -p1 -b .inputmethod
+%patch3 -p1 -b .firebird_link
 %patch100 -p0 -b .qt-copy
 %patch102 -p0 -b .qt-copy
 %patch104 -p0 -b .qt-copy
