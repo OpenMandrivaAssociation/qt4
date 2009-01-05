@@ -55,7 +55,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 7
+Release: %mkrel 8
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -67,7 +67,6 @@ Source3: mandriva-designer-qt4.desktop
 Source4: mandriva-assistant-qt4.desktop 
 Source5: mandriva-linguist-qt4.desktop
 Source6: Trolltech.conf
-Patch0: qt4-qtgui-underlinking-glib.patch
 Patch1: qt-x11-opensource-src-4.4.1-revert-qwidget-systray.patch
 Patch2: qt4-delay-input-method-initializing.patch
 # Inspired by Debian: link against libfbclient, not libgds, for ibase /
@@ -94,6 +93,10 @@ Patch127: 0254-fix-qgraphicsproxywidget-deletion-crash.diff
 Patch128: 0255-qtreeview-selection-columns-hidden.diff
 Patch129: 0256-fix-recursive-backingstore-sync-crash.diff
 Patch130: 0257-qurl-validate-speedup.diff
+Patch131: 0258-windowsxpstyle-qbrush.diff
+Patch132: 0260-fix-qgraphicswidget-deletionclearFocus.diff
+Patch133: 0261-sync-before-reset-errorhandler.patch
+Patch134: 0263-fix-fontconfig-handling.diff 
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -957,7 +960,6 @@ Qt 4 Embedded Virtual Terminal.
 
 %prep
 %setup -q -n %{qttarballdir}
-%patch0 -p1 -b .underlinking
 %patch1 -p1 -b .systray
 %patch2 -p1 -b .inputmethod
 %patch3 -p1 -b .firebird_link
@@ -980,6 +982,10 @@ Qt 4 Embedded Virtual Terminal.
 %patch128 -p0 -b .qt-copy
 %patch129 -p0 -b .qt-copy
 %patch130 -p0 -b .qt-copy
+%patch131 -p0 -b .qt-copy
+%patch132 -p0 -b .qt-copy
+%patch133 -p0 -b .qt-copy
+%patch134 -p0 -b .qt-copy
 
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -i -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" mkspecs/common/linux.conf
