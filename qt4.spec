@@ -72,7 +72,7 @@ Patch2: qt4-delay-input-method-initializing.patch
 # Inspired by Debian: link against libfbclient, not libgds, for ibase /
 # firebird support - AdamW 2008/12
 Patch3: qt-x11-opensource-src-4.4.3-firebird.patch
-
+Patch4: qt4-4.4.3-fix-string-error.patch
 # Qt-copy safe patches
 Patch100: 0195-compositing-properties.diff
 Patch102: 0225-invalidate-tabbar-geometry-on-refresh.patch
@@ -963,6 +963,7 @@ Qt 4 Embedded Virtual Terminal.
 %patch1 -p1 -b .systray
 %patch2 -p1 -b .inputmethod
 %patch3 -p1 -b .firebird_link
+%patch4 -p0 -b .string_error
 %patch100 -p0 -b .qt-copy
 %patch102 -p0 -b .qt-copy
 %patch104 -p0 -b .qt-copy
