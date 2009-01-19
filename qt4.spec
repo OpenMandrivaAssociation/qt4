@@ -4,7 +4,7 @@
 %define with_mysql 1
 %{?_without_mysql: %{expand: %%global with_mysql 0}}
 
-%define with_odbc 1
+%define with_odbc 0
 %{?_without_odbc: %{expand: %%global with_odbc 0}}
 
 %define with_sqlite 1
