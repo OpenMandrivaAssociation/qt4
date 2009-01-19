@@ -55,7 +55,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 8
+Release: %mkrel 9
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -96,7 +96,10 @@ Patch130: 0257-qurl-validate-speedup.diff
 Patch131: 0258-windowsxpstyle-qbrush.diff
 Patch132: 0260-fix-qgraphicswidget-deletionclearFocus.diff
 Patch133: 0261-sync-before-reset-errorhandler.patch
-Patch134: 0263-fix-fontconfig-handling.diff 
+Patch134: 0262-fix-treeview-animation-crash.diff 
+Patch135: 0263-fix-fontconfig-handling.diff 
+Patch136: 0264-fix-zero-height-qpixmap-isnull.diff
+Patch137: 0265-fix-formlayoutcrash.diff
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -986,7 +989,10 @@ Qt 4 Embedded Virtual Terminal.
 %patch131 -p0 -b .qt-copy
 %patch132 -p0 -b .qt-copy
 %patch133 -p0 -b .qt-copy
-%patch134 -p0 -b .qt-copy
+#%patch134 -p0 -b .qt-copy
+%patch135 -p0 -b .qt-copy
+%patch136 -p0 -b .qt-copy
+%patch137 -p0 -b .qt-copy
 
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -i -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" mkspecs/common/linux.conf
