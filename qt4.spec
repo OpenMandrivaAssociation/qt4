@@ -55,7 +55,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 11
+Release: %mkrel 12
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -74,7 +74,6 @@ Patch2: qt4-delay-input-method-initializing.patch
 Patch3: qt-x11-opensource-src-4.4.3-firebird.patch
 Patch4: qt4-4.4.3-fix-string-error.patch
 Patch5: qt4-4.4.3-fix-odbc-build.patch
-Patch6: qt4-4.4.3-fix-folderview-crash.patch
 # Qt-copy safe patches
 Patch100: 0195-compositing-properties.diff
 Patch102: 0225-invalidate-tabbar-geometry-on-refresh.patch
@@ -102,6 +101,8 @@ Patch134: 0262-fix-treeview-animation-crash.diff
 Patch135: 0263-fix-fontconfig-handling.diff 
 Patch136: 0264-fix-zero-height-qpixmap-isnull.diff
 Patch137: 0265-fix-formlayoutcrash.diff
+Patch138: 0266-fix-focusChain1.diff
+Patch139: 0267-fix-focusChain2.diff
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -970,7 +971,6 @@ Qt 4 Embedded Virtual Terminal.
 %patch3 -p1 -b .firebird_link
 %patch4 -p0 -b .string_error
 %patch5 -p0 -b .odbc
-%patch6 -p0
 %patch100 -p0 -b .qt-copy
 %patch102 -p0 -b .qt-copy
 %patch104 -p0 -b .qt-copy
@@ -997,6 +997,8 @@ Qt 4 Embedded Virtual Terminal.
 %patch135 -p0 -b .qt-copy
 %patch136 -p0 -b .qt-copy
 %patch137 -p0 -b .qt-copy
+%patch138 -p0 -b .qt-copy
+%patch139 -p0 -b .qt-copy
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -i -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" mkspecs/common/linux.conf
 
