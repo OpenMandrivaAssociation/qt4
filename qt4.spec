@@ -4,7 +4,7 @@
 %define with_mysql 1
 %{?_without_mysql: %{expand: %%global with_mysql 0}}
 
-%define with_odbc 0
+%define with_odbc 1
 %{?_without_odbc: %{expand: %%global with_odbc 0}}
 
 %define with_sqlite 1
@@ -55,7 +55,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 9
+Release: %mkrel 10
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -73,6 +73,7 @@ Patch2: qt4-delay-input-method-initializing.patch
 # firebird support - AdamW 2008/12
 Patch3: qt-x11-opensource-src-4.4.3-firebird.patch
 Patch4: qt4-4.4.3-fix-string-error.patch
+Patch5: qt4-4.4.3-fix-odbc-build.patch
 # Qt-copy safe patches
 Patch100: 0195-compositing-properties.diff
 Patch102: 0225-invalidate-tabbar-geometry-on-refresh.patch
@@ -967,6 +968,7 @@ Qt 4 Embedded Virtual Terminal.
 %patch2 -p1 -b .inputmethod
 %patch3 -p1 -b .firebird_link
 %patch4 -p0 -b .string_error
+%patch5 -p0 -b .odbc
 %patch100 -p0 -b .qt-copy
 %patch102 -p0 -b .qt-copy
 %patch104 -p0 -b .qt-copy
