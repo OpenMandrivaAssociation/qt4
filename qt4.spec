@@ -102,7 +102,6 @@ Patch134: 0262-fix-treeview-animation-crash.diff
 Patch135: 0263-fix-fontconfig-handling.diff 
 Patch136: 0264-fix-zero-height-qpixmap-isnull.diff
 Patch137: 0265-fix-formlayoutcrash.diff
-Patch138: test
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
