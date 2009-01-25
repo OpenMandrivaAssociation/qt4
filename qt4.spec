@@ -967,7 +967,7 @@ Qt 4 Embedded Virtual Terminal.
 
 %prep
 %setup -q -n %{qttarballdir}
-%patch1 -p1 -b .systray
+#%patch1 -p1 -b .systray
 %patch2 -p1 -b .inputmethod
 %patch3 -p1 -b .firebird_link
 %patch4 -p0 -b .string_error
