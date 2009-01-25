@@ -55,7 +55,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 12
+Release: %mkrel 13
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -74,6 +74,7 @@ Patch2: qt4-delay-input-method-initializing.patch
 Patch3: qt-x11-opensource-src-4.4.3-firebird.patch
 Patch4: qt4-4.4.3-fix-string-error.patch
 Patch5: qt4-4.4.3-fix-odbc-build.patch
+Patch6: qt4-4.4.3-fix-looked-location.patch
 # Qt-copy safe patches
 Patch100: 0195-compositing-properties.diff
 Patch102: 0225-invalidate-tabbar-geometry-on-refresh.patch
@@ -971,6 +972,7 @@ Qt 4 Embedded Virtual Terminal.
 %patch3 -p1 -b .firebird_link
 %patch4 -p0 -b .string_error
 %patch5 -p0 -b .odbc
+%patch6 -p0 -b .bko168200
 %patch100 -p0 -b .qt-copy
 %patch102 -p0 -b .qt-copy
 %patch104 -p0 -b .qt-copy
