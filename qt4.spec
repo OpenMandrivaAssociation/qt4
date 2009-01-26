@@ -22,6 +22,9 @@
 %define with_cups 1
 %{?_without_cups %{expand: %%global with_cups 0}}
 
+%define with_qt_copy 1
+%{?_without_qt_copy %{expand: %%global with_qt_copy 0}}
+
 %define libqt %mklibname qt %qtmajor
 %define libqassistant %mklibname qassistant %qtmajor
 %define libqt3support %mklibname qt3support %qtmajor
@@ -973,6 +976,7 @@ Qt 4 Embedded Virtual Terminal.
 %patch4 -p0 -b .string_error
 %patch5 -p0 -b .odbc
 %patch6 -p0 -b .bko168200
+%if %{with_qt_copy}
 %patch100 -p0 -b .qt-copy
 %patch102 -p0 -b .qt-copy
 %patch104 -p0 -b .qt-copy
@@ -1001,6 +1005,7 @@ Qt 4 Embedded Virtual Terminal.
 %patch137 -p0 -b .qt-copy
 %patch138 -p0 -b .qt-copy
 %patch139 -p0 -b .qt-copy
+%endif
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -i -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" mkspecs/common/linux.conf
 
