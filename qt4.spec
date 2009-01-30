@@ -58,7 +58,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 13
+Release: %mkrel 14
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -107,6 +107,9 @@ Patch136: 0264-fix-zero-height-qpixmap-isnull.diff
 Patch137: 0265-fix-formlayoutcrash.diff
 Patch138: 0266-fix-focusChain1.diff
 Patch139: 0267-fix-focusChain2.diff
+Patch140: 0269-fix-the-systemtrayicon-painting.diff
+Patch141: 0270-fix-QSystemTrayIcon-Add-support-for-the-EWMH.diff 
+Patch142: 0271-fix-the-system-tray-icon-rendering-on-x11.diff
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -1005,6 +1008,9 @@ Qt 4 Embedded Virtual Terminal.
 %patch137 -p0 -b .qt-copy
 %patch138 -p0 -b .qt-copy
 %patch139 -p0 -b .qt-copy
+%patch140 -p0 -b .qt-copy
+%patch141 -p0 -b .qt-copy
+%patch142 -p0 -b .qt-copy
 %endif
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -i -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" mkspecs/common/linux.conf
