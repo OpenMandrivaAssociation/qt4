@@ -58,7 +58,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 15
+Release: %mkrel 16
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -1009,7 +1009,7 @@ Qt 4 Embedded Virtual Terminal.
 %patch138 -p0 -b .qt-copy
 %patch139 -p0 -b .qt-copy
 %patch140 -p0 -b .qt-copy
-#%patch141 -p0 -b .qt-copy
+%patch141 -p0 -b .qt-copy
 #%patch142 -p0 -b .qt-copy
 %endif
 # QMAKE_STRIP need to be clear to allow mdv -debug package
