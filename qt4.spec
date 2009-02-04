@@ -58,7 +58,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 18
+Release: %mkrel 19
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -602,9 +602,11 @@ Conflicts: %{_lib}qtcore4 < 2:4.3.4-3
 Conflicts: qt4-linguist < 2:4.4.3-3
 Requires: %{libqassistant} = %epoch:%version-%release
 Requires: %{libqt3support} = %epoch:%version-%release
+Requires: %{libqtclucene} = %epoch:%version-%release
 Requires: %{libqtcore} = %epoch:%version-%release
 Requires: %{libqtdesigner} = %epoch:%version-%release
 Requires: %{libqtgui} = %epoch:%version-%release
+Requires: %{libqthelp} = %epoch:%version-%release
 Requires: %{libqtnetwork} = %epoch:%version-%release
 Requires: %{libqtopengl} = %epoch:%version-%release
 Requires: %{libqtsql} = %epoch:%version-%release
