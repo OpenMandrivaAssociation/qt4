@@ -22,9 +22,6 @@
 %define with_cups 1
 %{?_without_cups %{expand: %%global with_cups 0}}
 
-%define with_qt_copy 1
-%{?_without_qt_copy %{expand: %%global with_qt_copy 0}}
-
 %define libqt %mklibname qt %qtmajor
 %define libqassistant %mklibname qassistant %qtmajor
 %define libqt3support %mklibname qt3support %qtmajor
@@ -35,6 +32,7 @@
 %define libqtopengl %mklibname qtopengl %qtmajor
 %define libqtsql %mklibname qtsql %qtmajor
 %define libqtxml %mklibname qtxml %qtmajor
+%define libqtscripttools %mklibname qtscripttools %qtmajor
 %define libqtxmlpatterns %mklibname qtxmlpatterns %qtmajor
 %define libqtsvg %mklibname qtsvg %qtmajor
 %define libqttest %mklibname qttest %qtmajor
@@ -45,10 +43,10 @@
 %define libqtwebkit %mklibname qtwebkit %qtmajor
 
 %define qtmajor 4
-%define qtminor 4
-%define qtsubminor 3
+%define qtminor 5
+%define qtsubminor 0
 
-%define qtversion %{qtmajor}.%{qtminor}.%{qtsubminor} 
+%define qtversion %{qtmajor}.%{qtminor}.%{qtsubminor}
 
 %define qtlib qt4
 %define qtdir %_prefix/lib/qt4
@@ -56,60 +54,24 @@
 
 %define qttarballdir qt-x11-opensource-src-%{qtversion}
 
+%define date rc1
+
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 19
+Release: %mkrel 0.rc1.3
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
-License: GPL
+License: LGPL
 URL: http://www.trolltech.com/
-Source0: ftp://ftp.trolltech.com/qt/source/%{qttarballdir}.tar.bz2
+Source0: ftp://ftp.trolltech.com/qt/source/%{qttarballdir}-%date.tar.bz2
 Source2: qt4.macros
 Source3: mandriva-designer-qt4.desktop 
 Source4: mandriva-assistant-qt4.desktop 
 Source5: mandriva-linguist-qt4.desktop
 Source6: Trolltech.conf
-Patch1: qt-x11-opensource-src-4.4.1-revert-qwidget-systray.patch
-Patch2: qt4-delay-input-method-initializing.patch
-# Inspired by Debian: link against libfbclient, not libgds, for ibase /
-# firebird support - AdamW 2008/12
-Patch3: qt-x11-opensource-src-4.4.3-firebird.patch
-Patch4: qt4-4.4.3-fix-string-error.patch
-Patch5: qt4-4.4.3-fix-odbc-build.patch
-Patch6: qt4-4.4.3-fix-looked-location.patch
-# Qt-copy safe patches
-Patch100: 0195-compositing-properties.diff
-Patch102: 0225-invalidate-tabbar-geometry-on-refresh.patch
-Patch104: 0180-window-role.diff
-Patch105: 0216-allow-isystem-for-headers.diff
-Patch106: 0203-qtexthtmlparser-link-color.diff
-Patch107: 0209-prevent-qt-mixing.diff
-Patch109: 0214-fix-qgraphicsproxywidget-tab-crash.diff
-Patch111: 0224-fast-qpixmap-fill.diff
-Patch112: 0226-qtreeview-column_resize_when_needed.diff
-Patch118: 0234-fix-mysql-threaded.diff
-Patch122: 0238-fix-qt-qttabbar-size.diff
-Patch123: 0245-fix-randr-changes-detecting.diff
-Patch124: 0248-fix-qwidget-scroll-slowness.diff
-Patch125: 0249-webkit-stale-frame-pointer.diff
-Patch126: 0253-qmake_correct_path_separators.diff
-Patch127: 0254-fix-qgraphicsproxywidget-deletion-crash.diff
-Patch128: 0255-qtreeview-selection-columns-hidden.diff
-Patch129: 0256-fix-recursive-backingstore-sync-crash.diff
-Patch130: 0257-qurl-validate-speedup.diff
-Patch131: 0258-windowsxpstyle-qbrush.diff
-Patch132: 0260-fix-qgraphicswidget-deletionclearFocus.diff
-Patch133: 0261-sync-before-reset-errorhandler.patch
-Patch134: 0262-fix-treeview-animation-crash.diff 
-Patch135: 0263-fix-fontconfig-handling.diff 
-Patch136: 0264-fix-zero-height-qpixmap-isnull.diff
-Patch137: 0265-fix-formlayoutcrash.diff
-Patch138: 0266-fix-focusChain1.diff
-Patch139: 0267-fix-focusChain2.diff
-Patch140: 0269-fix-the-systemtrayicon-painting.diff
-Patch141: 0270-fix-QSystemTrayIcon-Add-support-for-the-EWMH.diff 
-Patch142: 0271-fix-the-system-tray-icon-rendering-on-x11.diff
+Patch0: qt-x11-opensource-src-4.5.0-rc1-valgrind-fix.patch
+Patch1: qt-x11-opensource-src-4.5.0-rc1-odbc.patch
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -132,6 +94,8 @@ BuildRequires: libpam-devel
 BuildRequires: readline-devel
 BuildRequires: perl
 BuildRequires: glib2-devel
+BuildRequires: libxml2-devel
+
 Provides: %{qtlib}
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 
@@ -177,16 +141,24 @@ Provides:	qtxmllib = %epoch:%version
 %description -n %{libqtxml}
 QT%{qtmajor} component library.
 
-%if %mdkversion < 200900
-%post -n %{libqtxml} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libqtxml} -p /sbin/ldconfig
-%endif
-
 %files -n %{libqtxml}
 %defattr(-,root,root,-)
 %_libdir/libQtXml.so.%{qtmajor}*
+
+#-------------------------------------------------------------------------
+
+%package -n %{libqtscripttools}
+Summary: QT%{qtmajor} component library
+Group: System/Libraries
+Requires(pre): %{name}-common = %epoch:%version
+Provides: qtscripttoolslib = %epoch:%version
+
+%description -n %{libqtscripttools}
+QT%{qtmajor} component library.
+
+%files -n %{libqtscripttools}
+%defattr(-,root,root,-)
+%_libdir/libQtScriptTools.so.%{qtmajor}*
 
 #-------------------------------------------------------------------------
 
@@ -198,13 +170,6 @@ Requires: %{name}-xmlpatterns = %epoch:%version
 
 %description -n %{libqtxmlpatterns}
 QT%{qtmajor} component library.
-
-%if %mdkversion < 200900
-%post -n %{libqtxmlpatterns} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libqtxmlpatterns} -p /sbin/ldconfig
-%endif
 
 %files -n %{libqtxmlpatterns}
 %defattr(-,root,root,-)
@@ -221,13 +186,6 @@ Provides:	qtsqllib = %epoch:%version
 %description -n %{libqtsql}
 QT%{qtmajor} component library.
 
-%if %mdkversion < 200900
-%post -n %{libqtsql} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libqtsql} -p /sbin/ldconfig
-%endif
-
 %files -n %{libqtsql}
 %defattr(-,root,root,-)
 %_libdir/libQtSql.so.%{qtmajor}*
@@ -243,13 +201,6 @@ Provides: qtnetworklib = %epoch:%version
 %description -n %{libqtnetwork}
 QT%{qtmajor} component library.
 
-%if %mdkversion < 200900
-%post -n %{libqtnetwork} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libqtnetwork} -p /sbin/ldconfig
-%endif
-
 %files -n %{libqtnetwork}
 %defattr(-,root,root,-)
 %_libdir/libQtNetwork.so.%{qtmajor}*
@@ -264,13 +215,6 @@ Provides: libqtscript = %epoch:%version
 
 %description -n %{libqtscript}
 QT%{qtmajor} component library.
-
-%if %mdkversion < 200900
-%post -n %{libqtscript} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libqtscript} -p /sbin/ldconfig
-%endif
 
 %files -n %{libqtscript}
 %defattr(-,root,root,-)
@@ -289,13 +233,6 @@ Provides: qtguilib = %epoch:%version
 %description -n %{libqtgui}
 QT%{qtmajor} component library.
 
-%if %mdkversion < 200900
-%post -n %{libqtgui} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libqtgui} -p /sbin/ldconfig
-%endif
-
 %files -n %{libqtgui}
 %defattr(-,root,root,-)
 %_libdir/libQtGui.so.%{qtmajor}*
@@ -313,13 +250,6 @@ Provides: qtsvglib = %epoch:%version
 %description -n %{libqtsvg}
 QT%{qtmajor} component library.
 
-%if %mdkversion < 200900
-%post -n %{libqtsvg} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libqtsvg} -p /sbin/ldconfig
-%endif
-
 %files -n %{libqtsvg}
 %defattr(-,root,root,-)
 %_libdir/libQtSvg.so.%{qtmajor}*
@@ -336,13 +266,6 @@ Provides: qttestlib = %epoch:%version
 %description -n %{libqttest}
 QT%{qtmajor} component library.
 
-%if %mdkversion < 200900
-%post -n %{libqttest} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libqttest} -p /sbin/ldconfig
-%endif
-
 %files -n %{libqttest}
 %defattr(-,root,root,-)
 %_libdir/libQtTest.so.%{qtmajor}*
@@ -357,13 +280,6 @@ Provides: qtwebkitlib = %epoch:%version
 
 %description -n %{libqtwebkit}
 QT%{qtmajor} component library.
-
-%if %mdkversion < 200900
-%post -n %{libqtwebkit} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libqtwebkit} -p /sbin/ldconfig
-%endif
 
 %files -n %{libqtwebkit}
 %defattr(-,root,root,-)
@@ -381,13 +297,6 @@ Provides: qthelplib = %epoch:%version
 %description -n %{libqthelp}
 QT%{qtmajor} component library.
 
-%if %mdkversion < 200900
-%post -n %{libqthelp} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libqthelp} -p /sbin/ldconfig
-%endif
-
 %files -n %{libqthelp}
 %defattr(-,root,root,-)
 %_libdir/libQtHelp.so.%{qtmajor}*
@@ -402,13 +311,6 @@ Provides: qtclucenelib = %epoch:%version
 
 %description -n %{libqtclucene}
 QT%{qtmajor} component library.
-
-%if %mdkversion < 200900
-%post -n %{libqtclucene} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libqtclucene} -p /sbin/ldconfig
-%endif
 
 %files -n %{libqtclucene}
 %defattr(-,root,root,-)
@@ -428,13 +330,6 @@ Obsoletes: qt4-codecs-plugin-%_lib
 %description -n %{libqtcore}
 QT%{qtmajor} component library.
 
-%if %mdkversion < 200900
-%post -n %{libqtcore} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libqtcore} -p /sbin/ldconfig
-%endif
-
 %files -n %{libqtcore}
 %defattr(-,root,root,-)
 %_libdir/libQtCore.so.%{qtmajor}*
@@ -452,13 +347,6 @@ Provides: qt3supportlib = %epoch:%version
 %description -n %{libqt3support}
 QT%{qtmajor} component library.
 
-%if %mdkversion < 200900
-%post -n %{libqt3support} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libqt3support} -p /sbin/ldconfig
-%endif
-
 %files -n %{libqt3support}
 %defattr(-,root,root,-)
 %_libdir/libQt3Support.so.%{qtmajor}*
@@ -474,13 +362,6 @@ Provides: qtopengllib = %epoch:%version
 
 %description -n %{libqtopengl}
 QT%{qtmajor} component library.
-
-%if %mdkversion < 200900
-%post -n %{libqtopengl} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libqtopengl} -p /sbin/ldconfig
-%endif
 
 %files -n %{libqtopengl}
 %defattr(-,root,root,-)
@@ -498,13 +379,6 @@ Obsoletes: %{_lib}qtdesigner1 < 2:4.3.4-4
 
 %description -n %{libqtdesigner}
 QT%{qtmajor} component library.
-
-%if %mdkversion < 200900
-%post -n %{libqtdesigner} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libqtdesigner} -p /sbin/ldconfig
-%endif
 
 %files -n %{libqtdesigner}
 %defattr(-,root,root,-)
@@ -524,13 +398,6 @@ Conflicts: qt4-devel < 2:4.3.0
 
 %description -n %{libqdbus}
 QT dbus lib.
-
-%if %mdkversion < 200900
-%post -n %{libqdbus} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libqdbus} -p /sbin/ldconfig
-%endif
 
 %files -n %{libqdbus}
 %defattr(-,root,root,-)
@@ -564,13 +431,6 @@ Obsoletes: %{_lib}qassistant1 < 2:4.3.4-4
 %description -n %{libqassistant}
 QT assistant lib.
 
-%if %mdkversion < 200900
-%post -n %{libqassistant} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libqassistant} -p /sbin/ldconfig
-%endif
-
 %files -n %{libqassistant}
 %defattr(-,root,root,-)
 %_libdir/libQtAssistantClient.so.%{qtmajor}*
@@ -602,21 +462,23 @@ Conflicts: %{_lib}qtcore4 < 2:4.3.4-3
 Conflicts: qt4-linguist < 2:4.4.3-3
 Requires: %{libqassistant} = %epoch:%version-%release
 Requires: %{libqt3support} = %epoch:%version-%release
-Requires: %{libqtclucene} = %epoch:%version-%release
 Requires: %{libqtcore} = %epoch:%version-%release
 Requires: %{libqtdesigner} = %epoch:%version-%release
 Requires: %{libqtgui} = %epoch:%version-%release
-Requires: %{libqthelp} = %epoch:%version-%release
 Requires: %{libqtnetwork} = %epoch:%version-%release
 Requires: %{libqtopengl} = %epoch:%version-%release
 Requires: %{libqtsql} = %epoch:%version-%release
 Requires: %{libqtxml} = %epoch:%version-%release
+Requires: %{libqtscripttools} = %epoch:%version-%release
 Requires: %{libqtxmlpatterns} = %epoch:%version-%release
 Requires: %{libqtsvg} = %epoch:%version-%release
+Requires: %{libqtclucene} = %epoch:%version-%release
 Requires: %{libqttest} = %epoch:%version-%release
 Requires: %{libqdbus} = %epoch:%version-%release
 Requires: %{libqtwebkit} = %epoch:%version-%release
 Requires: %{libqtscript} = %epoch:%version-%release
+Requires: %{libqthelp} = %epoch:%version-%release
+Requires: phonon-devel 
 
 %description -n %{libqt}-devel
 The %{qtlib}-devel package contains the files necessary to develop
@@ -760,21 +622,10 @@ Conflicts:  %name-common <= 4.3.3-4
 Qt Linguist provides easy translation of Qt GUIs to different.
 languages
 
-%if %mdkversion < 200900
-%post linguist
-%update_menus
-%{update_desktop_database}
-%endif
-
-%if %mdkversion < 200900
-%postun linguist
-%clean_menus
-%{clean_desktop_database}
-%endif
-
 %files linguist
 %defattr(-,root,root,-)
 %{qtdir}/bin/lingu*
+%{qtdir}/bin/lconvert*
 %{_datadir}/applications/*linguist*.desktop
 %{qtdir}/translations/linguist*
 
@@ -791,18 +642,6 @@ Conflicts:  %name-common <= 4.3.3-4
 %description assistant
 Qt Assistant provides a documentation Browser.
 
-%if %mdkversion < 200900
-%post assistant
-%update_menus
-%{update_desktop_database}
-%endif
-
-%if %mdkversion < 200900
-%postun assistant
-%clean_menus
-%{clean_desktop_database}
-%endif
-
 %files assistant
 %defattr(-,root,root,-)
 %{qtdir}/bin/assistant*
@@ -816,19 +655,19 @@ Qt Assistant provides a documentation Browser.
 
 %if %{with_odbc}
 
-%package database-plugin-odbc-%_lib
+%package database-plugin-odbc
 Summary: Database plugin for ODBC Qt support
 Group: Development/KDE and Qt
-Provides: qt4-database-plugin-odbc
+Obsoletes: qt4-database-plugin-odbc-%_lib
 BuildRequires: unixODBC-devel
 %if %{enable_static}
 BuildRequires: unixODBC-static-devel
 %endif
-
-%description database-plugin-odbc-%_lib
+ 
+%description database-plugin-odbc
 Database plugin for ODBC Qt support.
 
-%files database-plugin-odbc-%_lib
+%files database-plugin-odbc
 %defattr(-,root,root,-)
 %pluginsdir/sqldrivers/libqsqlodbc*
 
@@ -838,16 +677,16 @@ Database plugin for ODBC Qt support.
 
 %if %{with_mysql}
 
-%package database-plugin-mysql-%_lib
+%package database-plugin-mysql
 Summary: Database plugin for mysql Qt support
 Group: Development/KDE and Qt
-Provides: qt4-database-plugin-mysql
+Obsoletes: qt4-database-plugin-mysql-%_lib
 BuildRequires: mysql-devel
 
-%description database-plugin-mysql-%_lib
+%description database-plugin-mysql
 Database plugin for mysql Qt support.
 
-%files database-plugin-mysql-%_lib
+%files database-plugin-mysql
 %defattr(-,root,root,-)
 %pluginsdir/sqldrivers/libqsqlmysql*
 
@@ -857,19 +696,19 @@ Database plugin for mysql Qt support.
 
 %if %{with_sqlite}
 
-%package database-plugin-sqlite-%_lib
+%package database-plugin-sqlite
 Summary: Database plugin for sqlite Qt support
 Group: Databases
-Provides: qt4-database-plugin-sqlite
+Obsoletes: qt4-database-plugin-sqlite-%_lib
 BuildRequires: sqlite3-devel
 %if %{enable_static}
 BuildRequires: sqlite3-static-devel
 %endif
 
-%description database-plugin-sqlite-%_lib
+%description database-plugin-sqlite
 Database plugin for sqlite Qt support.
 
-%files database-plugin-sqlite-%_lib
+%files database-plugin-sqlite
 %defattr(-,root,root,-)
 %pluginsdir/sqldrivers/libqsqlite*
 %endif
@@ -878,16 +717,16 @@ Database plugin for sqlite Qt support.
 
 %if %{with_ibase}
 
-%package database-plugin-ibase-%_lib
+%package database-plugin-ibase
 Summary: Database plugin for interbase Qt support
 Group: Development/KDE and Qt
-Provides: qt4-database-plugin-ibase
+Obsoletes: qt4-database-plugin-ibase-%_lib
 BuildRequires: firebird-devel
 
-%description database-plugin-ibase-%_lib
+%description database-plugin-ibase
 Database plugin for interbase Qt support.
 
-%files database-plugin-ibase-%_lib
+%files database-plugin-ibase
 %defattr(-,root,root,-)
 %pluginsdir/sqldrivers/libqsqlibase*
 %endif
@@ -896,17 +735,17 @@ Database plugin for interbase Qt support.
 
 %if %{with_postgres}
 
-%package database-plugin-pgsql-%_lib
+%package database-plugin-pgsql
 Summary: Database plugin for pgsql Qt support
 Group: Development/KDE and Qt
-Provides: qt4-database-plugin-pgsql
+Obsoletes: qt4-database-plugin-pgsql-%_lib
 BuildRequires: postgresql-devel
 BuildRequires: libpq-devel
 
-%description database-plugin-pgsql-%_lib
+%description database-plugin-pgsql
 Database plugin for pgsql Qt support.
 
-%files database-plugin-pgsql-%_lib
+%files database-plugin-pgsql
 %defattr(-,root,root,-)
 %pluginsdir/sqldrivers/libqsqlpsql*
 
@@ -914,15 +753,32 @@ Database plugin for pgsql Qt support.
 
 #-------------------------------------------------------------------------
 
-%package accessibility-plugin-%_lib
+%package graphicssystems-plugin
+Summary: Graphicssystems plugins for Qt4
+Group: Development/KDE and Qt
+Obsoletes: qt4-graphicssystems-plugin-%_lib
+
+%description graphicssystems-plugin
+Graphicssystems plugins for Qt4.
+
+%files graphicssystems-plugin
+%defattr(-,root,root,-)
+%dir %pluginsdir/graphicssystems
+%pluginsdir/graphicssystems/*
+
+
+
+#-------------------------------------------------------------------------
+
+%package accessibility-plugin
 Summary: Accessibility plugins for Qt4
 Group: Development/KDE and Qt
-Provides: qt4-accessibility-plugin
+Obsoletes: qt4-accessibility-plugin-%_lib
 
-%description accessibility-plugin-%_lib
+%description accessibility-plugin
 Acessibility plugins for Qt4.
 
-%files accessibility-plugin-%_lib
+%files accessibility-plugin
 %defattr(-,root,root,-)
 %dir %pluginsdir/accessible
 %pluginsdir/accessible/*
@@ -939,16 +795,6 @@ Conflicts:  %name-common <= 4.3.3-4
 %description designer
 The Qt Designer is a visual design tool that makes designing and
 implementing user interfaces a lot easier.
-
-%if %mdkversion < 200900
-%post designer
-%update_menus
-%endif
-
-%if %mdkversion < 200900
-%postun designer
-%clean_menus
-%endif
 
 %files designer
 %defattr(-,root,root,-)
@@ -971,49 +817,16 @@ Qt 4 Embedded Virtual Terminal.
 %{qtdir}/bin/qvf*
 %{qtdir}/translations/qvfb*
 
+
 #-------------------------------------------------------------------------
 
 %prep
-%setup -q -n %{qttarballdir}
-#%patch1 -p1 -b .systray
-%patch2 -p1 -b .inputmethod
-%patch3 -p1 -b .firebird_link
-%patch4 -p0 -b .string_error
-%patch5 -p0 -b .odbc
-%patch6 -p0 -b .bko168200
-%if %{with_qt_copy}
-%patch100 -p0 -b .qt-copy
-%patch102 -p0 -b .qt-copy
-%patch104 -p0 -b .qt-copy
-%patch105 -p0 -b .qt-copy
-%patch106 -p0 -b .qt-copy
-%patch107 -p0 -b .qt-copy
-%patch109 -p0 -b .qt-copy
-%patch111 -p0 -b .qt-copy
-%patch112 -p0 -b .qt-copy
-%patch118 -p0 -b .qt-copy
-%patch122 -p0 -b .qt-copy
-%patch123 -p0 -b .qt-copy
-%patch124 -p0 -b .qt-copy
-%patch125 -p0 -b .qt-copy
-%patch126 -p0 -b .qt-copy
-%patch127 -p0 -b .qt-copy
-%patch128 -p0 -b .qt-copy
-%patch129 -p0 -b .qt-copy
-%patch130 -p0 -b .qt-copy
-%patch131 -p0 -b .qt-copy
-%patch132 -p0 -b .qt-copy
-%patch133 -p0 -b .qt-copy
-#%patch134 -p0 -b .qt-copy
-%patch135 -p0 -b .qt-copy
-%patch136 -p0 -b .qt-copy
-%patch137 -p0 -b .qt-copy
-%patch138 -p0 -b .qt-copy
-%patch139 -p0 -b .qt-copy
-%patch140 -p0 -b .qt-copy
-#%patch141 -p0 -b .qt-copy
-#%patch142 -p0 -b .qt-copy
-%endif
+%setup -q -n %{qttarballdir}-%date
+
+%patch0 -p0 -b .valgrind
+%patch1 -p0 -b .odbc
+
+
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -i -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" mkspecs/common/linux.conf
 
@@ -1021,8 +834,6 @@ sed -i -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" mkspecs/common/linux.
 %build
 export QTDIR=`/bin/pwd`
 export PATH=$QTDIR/bin:$PATH
-export CXXFLAGS="${CXXFLAGS} %{optflags} -DPIC -fPIC"
-export CFLAGS="${CFLAGS} %{optflags} -DPIC -fPIC"
 
 # Don't include headers or link with /usr/X11R6/{include,lib}
 perl -pi -e 's@/X11R6/@/@' mkspecs/linux-*/qmake.conf mkspecs/common/linux.conf
@@ -1045,12 +856,12 @@ echo "yes" |
    -docdir %_docdir/%name/doc \
    -plugindir %pluginsdir \
    -qvfb \
-   -no-phonon \
    -qt-gif \
 %if ! %{with_cups}
    -no-cups \
 %endif
    -no-separate-debug-info \
+   -no-phonon-backend \
    -no-rpath \
    -L%_prefix/%_lib \
    -platform linux-g++ \
@@ -1170,6 +981,11 @@ done
 	cp safelib/* %buildroot/%_libdir
 %endif
 
+# Phonon needed just in compilation time to enable webkit
+rm -f %buildroot/%_libdir/libphonon*
+rm -f %buildroot/%pluginsdir/designer/libphonon*
+rm -f %buildroot/%_libdir/pkgconfig/phonon*
+
 # Fix all buildroot paths
 find %buildroot/%_libdir -type f -name '*prl' -exec perl -pi -e "s, -L%_builddir/\S+,,g" {} \;
 find %buildroot/%_libdir -type f -name '*prl' -exec sed -i -e "/^QMAKE_PRL_BUILD_DIR/d" {} \;
@@ -1209,3 +1025,4 @@ cp %SOURCE6 %buildroot%_sysconfdir
 
 %clean
 rm -rf %buildroot
+
