@@ -58,7 +58,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 0.rc1.3
+Release: %mkrel 0.rc1.4
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -72,6 +72,13 @@ Source5: mandriva-linguist-qt4.desktop
 Source6: Trolltech.conf
 Patch0: qt-x11-opensource-src-4.5.0-rc1-valgrind-fix.patch
 Patch1: qt-x11-opensource-src-4.5.0-rc1-odbc.patch
+# Qt copy patches as usual
+Patch195:  0195-compositing-properties.diff
+Patch216:  0216-allow-isystem-for-headers.diff
+Patch225:  0225-invalidate-tabbar-geometry-on-refresh.patch
+Patch245:  0245-fix-randr-changes-detecting.diff
+Patch253:  0253-qmake_correct_path_separators.diff
+Patch255:  0255-qtreeview-selection-columns-hidden.diff
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -817,6 +824,19 @@ Qt 4 Embedded Virtual Terminal.
 %{qtdir}/bin/qvf*
 %{qtdir}/translations/qvfb*
 
+#-------------------------------------------------------------------------
+
+%package qdoc3
+Summary: %{qtlib} documentation generator
+Group: Development/KDE and Qt
+Conflicts:  %name-common <= 4.3.3-4
+
+%description qdoc3
+Qt 4 documentation generator.
+
+%files qdoc3
+%defattr(-,root,root,-)
+%{qtdir}/tools/qdoc3
 
 #-------------------------------------------------------------------------
 
@@ -825,7 +845,12 @@ Qt 4 Embedded Virtual Terminal.
 
 %patch0 -p0 -b .valgrind
 %patch1 -p0 -b .odbc
-
+%patch195 -p0 -b .qt-copy
+%patch216 -p0 -b .qt-copy
+%patch225 -p0 -b .qt-copy
+%patch245 -p0 -b .qt-copy
+%patch253 -p0 -b .qt-copy
+%patch255 -p0 -b .qt-copy
 
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -i -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" mkspecs/common/linux.conf
@@ -932,10 +957,9 @@ qt_configure -shared \
 
 %make 
 
-# Compile qvfb
-pushd tools/qvfb
-   make 
-popd
+%make sub-tools-qdoc3
+
+make -C tools/qvfb
 
 %install
 rm -rf %buildroot
@@ -954,10 +978,12 @@ make INSTALL_ROOT=%buildroot \
 
 install -m 0644 README %buildroot%_docdir/%name
 
+# Install qdoc3
+mkdir -p %buildroot/%{qtdir}/tools/qdoc3
+install -m 755 tools/qdoc3/qdoc3 %buildroot/%{qtdir}/tools/qdoc3
+
 # Install qvfb
-pushd tools/qvfb
-   make INSTALL_ROOT=%buildroot install
-popd
+make -C tools/qvfb INSTALL_ROOT=%buildroot install
 
 mkdir -p %buildroot%_datadir/applications
 install -m 644 %SOURCE3 %buildroot%_datadir/applications
