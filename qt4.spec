@@ -63,7 +63,7 @@ Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
 License: LGPL
-URL: http://www.trolltech.com/
+URL:     http://www.qtsoftware.com
 Source0: ftp://ftp.trolltech.com/qt/source/%{qttarballdir}-%date.tar.bz2
 Source2: qt4.macros
 Source3: mandriva-designer-qt4.desktop 
