@@ -58,7 +58,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 0.rc1.4
+Release: %mkrel 0.rc1.5
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -485,7 +485,7 @@ Requires: %{libqdbus} = %epoch:%version-%release
 Requires: %{libqtwebkit} = %epoch:%version-%release
 Requires: %{libqtscript} = %epoch:%version-%release
 Requires: %{libqthelp} = %epoch:%version-%release
-Requires: phonon-devel 
+Requires: phonon-devel >= 1:4.3.0
 
 %description -n %{libqt}-devel
 The %{qtlib}-devel package contains the files necessary to develop
@@ -523,6 +523,9 @@ fi
 %_libdir/*.prl
 %_libdir/pkgconfig/*
 %{qtdir}/q3porting.xml
+# Phonon header come from Phonon package
+%exclude %{qtdir}/include/phonon
+%exclude %{qtdir}/include/Qt/phonon*
 
 #-------------------------------------------------------------------------
 
