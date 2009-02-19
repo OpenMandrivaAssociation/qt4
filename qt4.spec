@@ -857,6 +857,8 @@ Qt 4 documentation generator.
 
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -i -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" mkspecs/common/linux.conf
+sed -i	-e "s|^QMAKE_CFLAGS_RELEASE.*$|QMAKE_CFLAGS_RELEASE    += %{optflags}|" \
+	-e "s|^QMAKE_LFLAGS	.*$|QMAKE_LFLAGS		+= %{ldflags}|" mkspecs/common/g++.conf
 
 
 %build
@@ -958,7 +960,7 @@ qt_configure -shared \
    -nomake demos \
    -nomake examples 
 
-%make 
+%make
 
 %make sub-tools-qdoc3
 
