@@ -58,7 +58,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 0.rc1.6
+Release: %mkrel 0.rc1.8
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -79,6 +79,7 @@ Patch225:  0225-invalidate-tabbar-geometry-on-refresh.patch
 Patch245:  0245-fix-randr-changes-detecting.diff
 Patch253:  0253-qmake_correct_path_separators.diff
 Patch255:  0255-qtreeview-selection-columns-hidden.diff
+Patch256:  0272-qiconvcodec-fix.diff
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -854,6 +855,7 @@ Qt 4 documentation generator.
 %patch245 -p0 -b .qt-copy
 %patch253 -p0 -b .qt-copy
 %patch255 -p0 -b .qt-copy
+%patch256 -p0 -b .qt-copy
 
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -i -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" mkspecs/common/linux.conf
