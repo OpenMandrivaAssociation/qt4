@@ -58,7 +58,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 0.rc1.8
+Release: %mkrel 0.rc1.9
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -487,7 +487,7 @@ Requires: %{libqtwebkit} = %epoch:%version-%release
 Requires: %{libqtscript} = %epoch:%version-%release
 Requires: %{libqthelp} = %epoch:%version-%release
 Requires: phonon-devel >= 1:4.3.0
-
+Requires: mesaglu-devel 
 %description -n %{libqt}-devel
 The %{qtlib}-devel package contains the files necessary to develop
 applications using the Qt GUI toolkit: the header files, the Qt
