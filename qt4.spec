@@ -858,9 +858,9 @@ Qt 4 documentation generator.
 %patch256 -p0 -b .qt-copy
 
 # QMAKE_STRIP need to be clear to allow mdv -debug package
-sed -i -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" mkspecs/common/linux.conf
-sed -i	-e "s|^QMAKE_CFLAGS_RELEASE.*$|QMAKE_CFLAGS_RELEASE    += %{optflags}|" \
-	-e "s|^QMAKE_LFLAGS	.*$|QMAKE_LFLAGS		+= %{ldflags}|" mkspecs/common/g++.conf
+sed -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" -i mkspecs/common/linux.conf
+sed -e "s|^QMAKE_CFLAGS_RELEASE.*$|QMAKE_CFLAGS_RELEASE    += %{optflags}|" \
+    -e "s|^QMAKE_LFLAGS	.*$|QMAKE_LFLAGS		+= %{ldflags}|" -i mkspecs/common/g++.conf
 
 
 %build
