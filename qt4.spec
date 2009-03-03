@@ -68,6 +68,7 @@ Source3: mandriva-designer-qt4.desktop
 Source4: mandriva-assistant-qt4.desktop 
 Source5: mandriva-linguist-qt4.desktop
 Source6: Trolltech.conf
+Patch0 : qt-x11-opensource-src-4.5.0-rc1-odbc.patch 
 # Qt copy patches as usual
 Patch195:  0195-compositing-properties.diff
 Patch216:  0216-allow-isystem-for-headers.diff
@@ -842,7 +843,7 @@ Qt 4 documentation generator.
 
 %prep
 %setup -q -n %{qttarballdir}
-
+%patch0 -p0 -b .odbc
 # Qt-copy - Follow the numbers in qt-copy upstream
 %patch195 -p0 -b .qt-copy
 %patch216 -p0 -b .qt-copy
