@@ -54,24 +54,20 @@
 
 %define qttarballdir qt-x11-opensource-src-%{qtversion}
 
-%define date rc1
-
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 0.rc1.9
+Release: %mkrel 1
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
 License: LGPL
 URL:     http://www.qtsoftware.com
-Source0: ftp://ftp.trolltech.com/qt/source/%{qttarballdir}-%date.tar.bz2
+Source0: ftp://ftp.trolltech.com/qt/source/%{qttarballdir}.tar.bz2
 Source2: qt4.macros
 Source3: mandriva-designer-qt4.desktop 
 Source4: mandriva-assistant-qt4.desktop 
 Source5: mandriva-linguist-qt4.desktop
 Source6: Trolltech.conf
-Patch0: qt-x11-opensource-src-4.5.0-rc1-valgrind-fix.patch
-Patch1: qt-x11-opensource-src-4.5.0-rc1-odbc.patch
 # Qt copy patches as usual
 Patch195:  0195-compositing-properties.diff
 Patch216:  0216-allow-isystem-for-headers.diff
@@ -79,7 +75,6 @@ Patch225:  0225-invalidate-tabbar-geometry-on-refresh.patch
 Patch245:  0245-fix-randr-changes-detecting.diff
 Patch253:  0253-qmake_correct_path_separators.diff
 Patch255:  0255-qtreeview-selection-columns-hidden.diff
-Patch256:  0272-qiconvcodec-fix.diff
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -646,6 +641,7 @@ languages
 Summary: QT assistantion doc utility
 Group: Books/Computer books
 Requires: qt4-database-plugin-sqlite
+Suggests: qt4-doc
 Requires(post): desktop-file-utils
 Requires(postun): desktop-file-utils
 Conflicts:  %name-common <= 4.3.3-4
@@ -845,17 +841,15 @@ Qt 4 documentation generator.
 #-------------------------------------------------------------------------
 
 %prep
-%setup -q -n %{qttarballdir}-%date
+%setup -q -n %{qttarballdir}
 
-%patch0 -p0 -b .valgrind
-%patch1 -p0 -b .odbc
+# Qt-copy - Follow the numbers in qt-copy upstream
 %patch195 -p0 -b .qt-copy
 %patch216 -p0 -b .qt-copy
 %patch225 -p0 -b .qt-copy
 %patch245 -p0 -b .qt-copy
 %patch253 -p0 -b .qt-copy
 %patch255 -p0 -b .qt-copy
-%patch256 -p0 -b .qt-copy
 
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" -i mkspecs/common/linux.conf
