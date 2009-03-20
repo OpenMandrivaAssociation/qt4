@@ -13,6 +13,9 @@
 %define with_ibase 0
 %{?_with_ibase: %{expand: %%global with_ibase 1}}
 
+%define with_tds 1
+%{?_without_tds: %{expand: %%global with_tds 0}}
+
 %define with_debug 0
 %{?_with_debug: %{expand: %%global with_debug 1}}
 
@@ -56,7 +59,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 1
+Release: %mkrel 2
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -99,6 +102,9 @@ BuildRequires: readline-devel
 BuildRequires: perl
 BuildRequires: glib2-devel
 BuildRequires: libxml2-devel
+BuildRequires: binutils >= 2.18 
+# For qtgtk style 
+BuildRequires: gtk+2-devel
 
 Provides: %{qtlib}
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
@@ -723,6 +729,25 @@ Database plugin for sqlite Qt support.
 
 #-------------------------------------------------------------------------
 
+%if %{with_tds}
+
+%package database-plugin-tds
+Summary: Database plugin for freetds Qt support
+Group: Databases
+Obsoletes: qt4-database-plugin-tds-%_lib
+BuildRequires: freetds-devel
+
+%description database-plugin-tds
+Database plugin for freetds Qt support.
+
+%files database-plugin-tds
+%defattr(-,root,root,-)
+%pluginsdir/sqldrivers/libqsqltds*
+
+%endif
+
+#-------------------------------------------------------------------------
+
 %if %{with_ibase}
 
 %package database-plugin-ibase
@@ -875,8 +900,10 @@ echo "yes" |
 	-qdbus \
 %if %{with_debug}
    -debug \
+   -verbose \
 %else
    -release \
+   -silent \
 %endif
    -sysconfdir %_sysconfdir \
    -libdir %_libdir \
@@ -890,10 +917,11 @@ echo "yes" |
    -no-separate-debug-info \
    -no-phonon-backend \
    -no-rpath \
+   -reduce-relocations \
+   -opengl desktop \
    -L%_prefix/%_lib \
    -platform linux-g++ \
    -confirm-license \
-   -verbose \
 	$*
 }
 
@@ -926,7 +954,6 @@ echo "yes" |
 qt_configure -shared \
    %if %{with_postgres}
    -plugin-sql-psql \
-        -no-pch \
    -I%{_includedir}/pgsql \
    -I%{_includedir}/pgsql/server \
    %endif
