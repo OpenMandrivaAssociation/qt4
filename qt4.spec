@@ -59,7 +59,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 2
+Release: %mkrel 3
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -70,7 +70,6 @@ Source2: qt4.macros
 Source3: mandriva-designer-qt4.desktop 
 Source4: mandriva-assistant-qt4.desktop 
 Source5: mandriva-linguist-qt4.desktop
-Source6: Trolltech.conf
 Patch0 : qt-x11-opensource-src-4.5.0-rc1-odbc.patch 
 # Qt copy patches as usual
 Patch195:  0195-compositing-properties.diff
@@ -129,7 +128,6 @@ This package contains all config file and language file.
 %files common
 %defattr(-,root,root,-)
 %attr(0755,root,root) %_sysconfdir/profile.d/*
-%attr(0644,root,root) %_sysconfdir/Trolltech.conf
 %dir %{qtdir}
 %dir %{qtdir}/bin
 %dir %pluginsdir
@@ -1074,9 +1072,6 @@ if [ -z \$(echo \$PATH | grep "%{qtdir}/bin") ]; then
 fi
 
 EOF
-
-# Conf
-cp %SOURCE6 %buildroot%_sysconfdir
 
 %clean
 rm -rf %buildroot
