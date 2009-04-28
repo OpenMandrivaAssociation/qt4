@@ -47,7 +47,7 @@
 
 %define qtmajor 4
 %define qtminor 5
-%define qtsubminor 0
+%define qtsubminor 1
 
 %define qtversion %{qtmajor}.%{qtminor}.%{qtsubminor}
 
@@ -59,7 +59,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 3
+Release: %mkrel 1
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -70,14 +70,16 @@ Source2: qt4.macros
 Source3: mandriva-designer-qt4.desktop 
 Source4: mandriva-assistant-qt4.desktop 
 Source5: mandriva-linguist-qt4.desktop
-Patch0 : qt-x11-opensource-src-4.5.0-rc1-odbc.patch 
-# Qt copy patches as usual
-Patch195:  0195-compositing-properties.diff
-Patch216:  0216-allow-isystem-for-headers.diff
-Patch225:  0225-invalidate-tabbar-geometry-on-refresh.patch
-Patch245:  0245-fix-randr-changes-detecting.diff
-Patch253:  0253-qmake_correct_path_separators.diff
-Patch255:  0255-qtreeview-selection-columns-hidden.diff
+# Qt copy patches as usual - Follow the qt-copy number
+Patch195: 0195-compositing-properties.diff
+Patch216: 0216-allow-isystem-for-headers.diff
+Patch225: 0225-invalidate-tabbar-geometry-on-refresh.patch
+Patch253: 0253-qmake_correct_path_separators.diff
+Patch255: 0255-qtreeview-selection-columns-hidden.diff
+Patch273: 0273-odbc-64bit-compile.diff
+Patch274: 0274-shm-native-image-fix.diff
+Patch279: 0279-svg-rendering-regression.diff
+Patch280: 0280-deserialization-custom-dbus-properties.diff
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -866,14 +868,16 @@ Qt 4 documentation generator.
 
 %prep
 %setup -q -n %{qttarballdir}
-%patch0 -p0 -b .odbc
 # Qt-copy - Follow the numbers in qt-copy upstream
 %patch195 -p0 -b .qt-copy
 %patch216 -p0 -b .qt-copy
 %patch225 -p0 -b .qt-copy
-%patch245 -p0 -b .qt-copy
 %patch253 -p0 -b .qt-copy
 %patch255 -p0 -b .qt-copy
+%patch273 -p0 -b .qt-copy
+%patch274 -p0 -b .qt-copy
+%patch279 -p0 -b .qt-copy
+%patch280 -p0 -b .qt-copy
 
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" -i mkspecs/common/linux.conf
