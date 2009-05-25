@@ -59,7 +59,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 1
+Release: %mkrel 2
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -80,6 +80,7 @@ Patch273: 0273-odbc-64bit-compile.diff
 Patch274: 0274-shm-native-image-fix.diff
 Patch279: 0279-svg-rendering-regression.diff
 Patch280: 0280-deserialization-custom-dbus-properties.diff
+Patch282: 0282-fix-qpixmapcache-leak.diff
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -878,6 +879,7 @@ Qt 4 documentation generator.
 %patch274 -p0 -b .qt-copy
 %patch279 -p0 -b .qt-copy
 %patch280 -p0 -b .qt-copy
+%patch282 -p0 -b .qt-copy
 
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" -i mkspecs/common/linux.conf
