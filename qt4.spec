@@ -918,6 +918,7 @@ echo "yes" |
    -L%_prefix/%_lib \
    -platform linux-g++ \
    -confirm-license \
+   -opensource \
 	$*
 }
 
