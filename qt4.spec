@@ -59,7 +59,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 1
+Release: %mkrel 2
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -70,6 +70,9 @@ Source2: qt4.macros
 Source3: mandriva-designer-qt4.desktop 
 Source4: mandriva-assistant-qt4.desktop 
 Source5: mandriva-linguist-qt4.desktop
+# Mandriva patches
+Patch0: qt-4.5.2-xorg-special-keys.patch
+Patch1: qt-4.5.2-wformat.patch
 # Qt copy patches as usual - Follow the qt-copy number
 Patch195: 0195-compositing-properties.diff
 Patch216: 0216-allow-isystem-for-headers.diff
@@ -865,6 +868,9 @@ Qt 4 documentation generator.
 
 %prep
 %setup -q -n %{qttarballdir}
+# Mandriva patches
+%patch0 -p1 -b .mandriva
+%patch1 -p0 -b .mandriva
 # Qt-copy - Follow the numbers in qt-copy upstream
 %patch195 -p0 -b .qt-copy
 %patch216 -p0 -b .qt-copy
