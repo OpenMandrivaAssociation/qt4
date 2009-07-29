@@ -67,7 +67,7 @@
 Name: %{qtlib}
 Version: %{qtversion}
 Release: %mkrel 3
-Epoch: 3
+Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
 License: LGPL
