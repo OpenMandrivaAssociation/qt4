@@ -1,3 +1,5 @@
+%define _default_patch_fuzz 1
+
 %define with_postgres 1
 %{?_without_postgres: %{expand: %%global with_postgres 0}}
 
@@ -24,6 +26,11 @@
 
 %define with_cups 1
 %{?_without_cups %{expand: %%global with_cups 0}}
+
+%define with_qvfb 1
+%{?_without_qvfb %{expand: %%global with_qvfb 0}}
+
+%define with_kde_qt 1
 
 %define libqt %mklibname qt %qtmajor
 %define libqassistant %mklibname qassistant %qtmajor
@@ -59,7 +66,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 2
+Release: %mkrel 3
 Epoch: 3
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -71,15 +78,27 @@ Source3: mandriva-designer-qt4.desktop
 Source4: mandriva-assistant-qt4.desktop 
 Source5: mandriva-linguist-qt4.desktop
 # Mandriva patches
-Patch0: qt-4.5.2-xorg-special-keys.patch
-Patch1: qt-4.5.2-wformat.patch
-# Qt copy patches as usual - Follow the qt-copy number
-Patch195: 0195-compositing-properties.diff
-Patch216: 0216-allow-isystem-for-headers.diff
-Patch225: 0225-invalidate-tabbar-geometry-on-refresh.patch
-Patch253: 0253-qmake_correct_path_separators.diff
-Patch255: 0255-qtreeview-selection-columns-hidden.diff
-Patch280: 0280-deserialization-custom-dbus-properties.diff
+Patch0: qt-4.5.2-wformat.patch
+Patch1001: 0001-This-patch-uses-object-name-as-a-fallback-for-window.patch
+Patch1002: 0002-This-patch-makes-override-redirect-windows-popup-men.patch
+Patch1003: 0003-This-patch-changes-QObjectPrivateVersion-thus-preven.patch
+Patch1004: 0004-This-patch-adds-support-for-using-isystem-to-allow-p.patch
+Patch1005: 0005-When-tabs-are-inserted-or-removed-in-a-QTabBar.patch
+Patch1006: 0006-Fix-configure.exe-to-do-an-out-of-source-build-on-wi.patch
+Patch1007: 0007-When-using-qmake-outside-qt-src-tree-it-sometimes-ge.patch
+Patch1008: 0008-In-a-treeview-with-columns-like-this.patch
+Patch1009: 0009-This-patch-fixes-deserialization-of-values-with-cust.patch
+Patch1010: 0010-Import-README.qt-copy-from-the-original-qt-copy.patch
+Patch1011: 0011-Update-this-file-to-reflect-the-workflow-with-Git-as.patch
+Patch1012: 0012-This-patch-makes-the-raster-graphics-system-use-shar.patch
+Patch1013: 0013-Restore-a-section-of-the-file-that-got-removed-due-t.patch
+Patch1014: 0014-Add-missing-word-in-sentence.patch
+Patch1015: 0015-Building-Qt-documentation-said-to-run-make-install-b.patch
+Patch1016: 0016-Fix-error-line-not-to-have-a-as-it-s-not-correct.patch
+Patch1017: 0017-Attempt-to-fix-header-installation-for-Phonon.patch
+Patch1018: 0018-Fix-compilation-after-the-last-change.patch
+Patch1019: 0019-Make-QMenu-respect-the-minimum-width-set.patch
+Patch1020: 0020-Fill-gap-of-X.org-XFree-multimedia-special-launcher-.patch
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -136,7 +155,7 @@ This package contains all config file and language file.
 %{qtdir}/phrasebooks
 %dir %{qtdir}/translations
 %{qtdir}/translations/qt_*
-%_docdir/%name/README
+%_docdir/%name/README.kde-qt
 
 #------------------------------------------------------------------------
 # CORE QT LIBRARIES
@@ -528,7 +547,6 @@ fi
 %{qtdir}/q3porting.xml
 # Phonon header come from Phonon package
 %exclude %{qtdir}/include/phonon
-%exclude %{qtdir}/include/Qt/phonon*
 
 #-------------------------------------------------------------------------
 
@@ -837,6 +855,8 @@ implementing user interfaces a lot easier.
 
 #-------------------------------------------------------------------------
 
+%if %{with_qvfb}
+
 %package qvfb
 Summary: %{qtlib} embedded virtual terminal
 Group: Development/KDE and Qt
@@ -849,6 +869,8 @@ Qt 4 Embedded Virtual Terminal.
 %defattr(-,root,root,-)
 %{qtdir}/bin/qvf*
 %{qtdir}/translations/qvfb*
+
+%endif
 
 #-------------------------------------------------------------------------
 
@@ -868,16 +890,27 @@ Qt 4 documentation generator.
 
 %prep
 %setup -q -n %{qttarballdir}
-# Mandriva patches
-%patch0 -p1 -b .mandriva
-%patch1 -p0 -b .mandriva
-# Qt-copy - Follow the numbers in qt-copy upstream
-%patch195 -p0 -b .qt-copy
-%patch216 -p0 -b .qt-copy
-%patch225 -p0 -b .qt-copy
-%patch253 -p0 -b .qt-copy
-%patch255 -p0 -b .qt-copy
-%patch280 -p0 -b .qt-copy
+%patch0 -p0 -b .mandriva
+%patch1001 -p1 -b .kde-qt
+%patch1002 -p1 -b .kde-qt
+%patch1003 -p1 -b .kde-qt
+%patch1004 -p1 -b .kde-qt
+%patch1005 -p1 -b .kde-qt
+%patch1006 -p1 -b .kde-qt
+%patch1007 -p1 -b .kde-qt
+%patch1008 -p1 -b .kde-qt
+%patch1009 -p1 -b .kde-qt
+%patch1010 -p1 -b .kde-qt
+%patch1011 -p1 -b .kde-qt
+%patch1012 -p1 -b .kde-qt
+%patch1013 -p1 -b .kde-qt
+%patch1014 -p1 -b .kde-qt
+%patch1015 -p1 -b .kde-qt
+%patch1016 -p1 -b .kde-qt
+%patch1017 -p1 -b .kde-qt
+%patch1018 -p1 -b .kde-qt
+%patch1019 -p1 -b .kde-qt
+%patch1020 -p1 -b .kde-qt
 
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" -i mkspecs/common/linux.conf
@@ -991,7 +1024,9 @@ qt_configure -shared \
 
 %make sub-tools-qdoc3
 
-make -C tools/qvfb
+%if %{with_qvfb}
+	make -C tools/qvfb
+%endif
 
 %install
 rm -rf %buildroot
@@ -1008,14 +1043,16 @@ make INSTALL_ROOT=%buildroot \
 	install_translations \
 	install_mkspecs
 
-install -m 0644 README %buildroot%_docdir/%name
+install -m 0644 README.kde-qt %buildroot%_docdir/%name
 
 # Install qdoc3
 mkdir -p %buildroot/%{qtdir}/tools/qdoc3
 install -m 755 tools/qdoc3/qdoc3 %buildroot/%{qtdir}/tools/qdoc3
 
-# Install qvfb
-make -C tools/qvfb INSTALL_ROOT=%buildroot install
+%if %{with_qvfb}
+	# Install qvfb
+	%make -C tools/qvfb INSTALL_ROOT=%buildroot install
+%endif
 
 mkdir -p %buildroot%_datadir/applications
 install -m 644 %SOURCE3 %buildroot%_datadir/applications
