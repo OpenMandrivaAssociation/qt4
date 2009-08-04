@@ -422,8 +422,6 @@ Summary(pt_BR): Biblioteca do dbus
 Group: System/Libraries
 Requires(pre): %{name}-common = %epoch:%version
 Provides: qdbuslib = %epoch:%version
-Conflicts: qt4-devel < 2:4.3.0
-
 
 %description -n %{libqdbus}
 QT dbus lib.
