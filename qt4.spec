@@ -66,7 +66,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 5
+Release: %mkrel 6
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -445,7 +445,8 @@ QT dbus binary.
 
 %files qtdbus
 %defattr(-,root,root,-)
-%{qtdir}/bin/qdbus*
+%{qtdir}/bin/qdbus
+%{qtdir}/bin/qdbusviewer
 
 #-------------------------------------------------------------------------
 
@@ -508,6 +509,7 @@ Requires: %{libqdbus} = %epoch:%version-%release
 Requires: %{libqtwebkit} = %epoch:%version-%release
 Requires: %{libqtscript} = %epoch:%version-%release
 Requires: %{libqthelp} = %epoch:%version-%release
+Requires: qt4-qtdbus = %epoch:%version-%release
 Requires: phonon-devel >= 1:4.3.0
 Requires: mesaglu-devel 
 %description -n %{libqt}-devel
@@ -537,6 +539,8 @@ fi
 %{qtdir}/bin/pixeltool*
 %{qtdir}/bin/lreleas*
 %{qtdir}/bin/lupdat*
+%{qtdir}/bin/qdbusxml2cpp
+%{qtdir}/bin/qdbuscpp2xml
 %_sysconfdir/rpm/macros.d/*
 %{qtdir}/include
 %{qtdir}/mkspecs
