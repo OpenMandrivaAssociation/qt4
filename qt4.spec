@@ -32,7 +32,14 @@
 
 %define with_kde_qt 1
 
+%define qtmajor 4
+%define qtminor 5
+%define qtsubminor 2
+
+%define qtversion %{qtmajor}.%{qtminor}.%{qtsubminor}
+
 %define libqt %mklibname qt %qtmajor
+%define libqtdevel %mklibname qt %qtmajor -d
 %define libqassistant %mklibname qassistant %qtmajor
 %define libqt3support %mklibname qt3support %qtmajor
 %define libqtcore %mklibname qtcore %qtmajor
@@ -51,12 +58,7 @@
 %define libqtclucene %mklibname qtclucene %qtmajor
 %define libqthelp %mklibname qthelp %qtmajor
 %define libqtwebkit %mklibname qtwebkit %qtmajor
-
-%define qtmajor 4
-%define qtminor 5
-%define qtsubminor 2
-
-%define qtversion %{qtmajor}.%{qtminor}.%{qtsubminor}
+%define libphonon %mklibname phonon %qtmajor
 
 %define qtlib qt4
 %define qtdir %_prefix/lib/qt4
@@ -66,7 +68,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 7
+Release: %mkrel 8
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -313,7 +315,6 @@ QT%{qtmajor} component library.
 %files -n %{libqtwebkit}
 %defattr(-,root,root,-)
 %_libdir/libQtWebKit.so.%{qtmajor}*
-%pluginsdir/designer/libqwebview.*
 
 #-------------------------------------------------------------------------
 
@@ -379,7 +380,6 @@ QT%{qtmajor} component library.
 %files -n %{libqt3support}
 %defattr(-,root,root,-)
 %_libdir/libQt3Support.so.%{qtmajor}*
-%pluginsdir/designer/libqt3supportwidgets.so*
 
 #-------------------------------------------------------------------------
 
@@ -418,7 +418,6 @@ QT%{qtmajor} component library.
 
 %package -n %{libqdbus}
 Summary: QT dbus lib
-Summary(pt_BR): Biblioteca do dbus
 Group: System/Libraries
 Requires(pre): %{name}-common = %epoch:%version
 Provides: qdbuslib = %epoch:%version
@@ -432,9 +431,46 @@ QT dbus lib.
 
 #-------------------------------------------------------------------------
 
+%package -n %{libphonon}
+Summary: QT phonon library
+Group: System/Libraries
+Requires(pre): %{name}-common = %epoch:%version
+
+%description -n %{libphonon}
+Qt phonon library.
+
+%files -n %{libphonon}
+%defattr(-,root,root,-)
+%_libdir/libphonon.so.%{qtmajor}*
+
+#-------------------------------------------------------------------------
+
+%package -n phonon-gstreamer
+Summary: QT phonon gstreamer backend
+Group: System/Libraries
+Provides: phonon-backend = %{epoch}:%{version}
+BuildRequires: libgstreamer-devel
+BuildRequires: libgstreamer-plugins-base-devel
+Requires: gstreamer0.10-plugins-good
+Requires: gstreamer0.10-pulse
+Suggests: gstreamer0.10-ffmpeg
+Suggests: gstreamer0.10-soup
+%if %mdkversion >= 201000
+Obsoletes: arts
+Obsoletes: arts3
+%endif
+
+%description -n phonon-gstreamer
+Qt phonon library.
+
+%files -n phonon-gstreamer
+%defattr(-,root,root,-)
+%pluginsdir/phonon_backend/libphonon_gstreamer.so
+
+#-------------------------------------------------------------------------
+
 %package qtdbus
 Summary: QT dbus binary
-Summary(pt_BR): Biblioteca do dbus
 Group: Development/KDE and Qt
 Requires(pre): %{libqdbus} >= 4:4.5.2
 
@@ -450,7 +486,6 @@ QT dbus binary.
 
 %package -n %{libqassistant}
 Summary: QT assistant lib
-Summary(pt_BR): Biblioteca do qt-assistant
 Group: System/Libraries
 Requires(pre): %{name}-common = %epoch:%version
 Provides: qassistantlib = %epoch:%version
@@ -466,13 +501,16 @@ QT assistant lib.
 
 #-------------------------------------------------------------------------
 
-%package -n %{libqt}-devel
+%package -n %{libqtdevel}
 Summary: Development files for the Qt GUI toolkit
 Group: Development/KDE and Qt
 Requires: %{name}-common = %epoch:%version
+Requires: qt4-qtconfig
 Provides: qt4-devel = %epoch:%version-%release
+Provides: phonon-devel = %epoch:%version-%release
 Provides: libqt4-devel = %epoch:%version-%release
 Obsoletes: %{mklibname -d QtWebKit} < %version
+Obsoletes: phonon-devel < 4:4.5
 Conflicts: %{_lib}qtxml4 < 2:4.3.4-3
 Conflicts: %{_lib}qtsql4 < 2:4.3.4-3
 Conflicts: %{_lib}qtnetwork4 < 2:4.3.4-3
@@ -489,28 +527,32 @@ Conflicts: %{_lib}qassistant1 < 2:4.3.4-3
 Conflicts: %{_lib}qttest4 < 2:4.3.4-3
 Conflicts: %{_lib}qtcore4 < 2:4.3.4-3
 Conflicts: qt4-linguist < 2:4.4.3-3
-Requires: %{libqassistant} = %epoch:%version-%release
-Requires: %{libqt3support} = %epoch:%version-%release
-Requires: %{libqtcore} = %epoch:%version-%release
-Requires: %{libqtdesigner} = %epoch:%version-%release
-Requires: %{libqtgui} = %epoch:%version-%release
-Requires: %{libqtnetwork} = %epoch:%version-%release
-Requires: %{libqtopengl} = %epoch:%version-%release
-Requires: %{libqtsql} = %epoch:%version-%release
-Requires: %{libqtxml} = %epoch:%version-%release
-Requires: %{libqtscripttools} = %epoch:%version-%release
-Requires: %{libqtxmlpatterns} = %epoch:%version-%release
-Requires: %{libqtsvg} = %epoch:%version-%release
-Requires: %{libqtclucene} = %epoch:%version-%release
-Requires: %{libqttest} = %epoch:%version-%release
-Requires: %{libqdbus} = %epoch:%version-%release
-Requires: %{libqtwebkit} = %epoch:%version-%release
-Requires: %{libqtscript} = %epoch:%version-%release
-Requires: %{libqthelp} = %epoch:%version-%release
-Requires: qt4-qtdbus = %epoch:%version-%release
-Requires: phonon-devel >= 1:4.3.0
+Requires: %{libqassistant} = %epoch:%version
+Requires: %{libqt3support} = %epoch:%version
+Requires: %{libqtcore} = %epoch:%version
+Requires: %{libqtdesigner} = %epoch:%version
+Requires: %{libqtgui} = %epoch:%version
+Requires: %{libqtnetwork} = %epoch:%version
+Requires: %{libqtopengl} = %epoch:%version
+Requires: %{libqtsql} = %epoch:%version
+Requires: %{libqtxml} = %epoch:%version
+Requires: %{libqtscripttools} = %epoch:%version
+Requires: %{libqtxmlpatterns} = %epoch:%version
+Requires: %{libqtsvg} = %epoch:%version
+Requires: %{libqtclucene} = %epoch:%version
+Requires: %{libqttest} = %epoch:%version
+Requires: %{libqdbus} = %epoch:%version
+Requires: %{libqtwebkit} = %epoch:%version
+Requires: %{libqtscript} = %epoch:%version
+Requires: %{libqthelp} = %epoch:%version
+Requires: %{libphonon} = %epoch:%version
+Requires: qt4-qtdbus = %epoch:%version
+Requires: qt4-designer-plugin-phonon = %epoch:%version
+Requires: qt4-designer-plugin-webkit = %epoch:%version
+Requires: qt4-designer-plugin-qt3support = %epoch:%version
 Requires: mesaglu-devel 
-%description -n %{libqt}-devel
+
+%description -n %{libqtdevel}
 The %{qtlib}-devel package contains the files necessary to develop
 applications using the Qt GUI toolkit: the header files, the Qt
 meta object compiler, and the static libraries.  See the address
@@ -519,15 +561,15 @@ about Qt.
 Install qt-devel if you want to develop GUI applications using the Qt
 toolkit.
 
-%post -n %{libqt}-devel
+%post -n %{libqtdevel}
 update-alternatives --install %_bindir/qmake qmake %qtdir/bin/qmake 20
 
-%postun -n %{libqt}-devel
+%postun -n %{libqtdevel}
 if ! [ -e %qtdir/bin/qmake ]; then
   update-alternatives --remove qmake %qtdir/bin/qmake
 fi
 
-%files -n %{libqt}-devel
+%files -n %{libqtdevel}
 %defattr(-,root,root,-)
 %{qtdir}/bin/moc*
 %{qtdir}/bin/qmake*
@@ -548,8 +590,7 @@ fi
 %_libdir/*.prl
 %_libdir/pkgconfig/*
 %{qtdir}/q3porting.xml
-# Phonon header come from Phonon package
-%exclude %{qtdir}/include/phonon
+%pluginsdir/designer/*
 
 #-------------------------------------------------------------------------
 
@@ -820,8 +861,6 @@ Graphicssystems plugins for Qt4.
 %dir %pluginsdir/graphicssystems
 %pluginsdir/graphicssystems/*
 
-
-
 #-------------------------------------------------------------------------
 
 %package accessibility-plugin
@@ -837,13 +876,12 @@ Acessibility plugins for Qt4.
 %dir %pluginsdir/accessible
 %pluginsdir/accessible/*
 
-
 #-------------------------------------------------------------------------
 
 %package designer
 Summary: %{qtlib} visual design tool
 Group: Development/KDE and Qt
-Requires: %{libqt}-devel = %epoch:%version
+Requires: %{libqtdevel} = %epoch:%version
 Conflicts:  %name-common <= 4.3.3-4
 
 %description designer
@@ -855,6 +893,45 @@ implementing user interfaces a lot easier.
 %{qtdir}/bin/design*
 %{_datadir}/applications/*designer*.desktop
 %{qtdir}/translations/designer_*
+
+#-------------------------------------------------------------------------
+
+%package designer-plugin-phonon
+Summary: designer plugin for phonon Qt support
+Group: Development/KDE and Qt
+
+%description designer-plugin-phonon
+designer plugin for phonon Qt support.
+
+%files designer-plugin-phonon
+%defattr(-,root,root,-)
+%pluginsdir/designer/libphonon*
+
+#-------------------------------------------------------------------------
+
+%package designer-plugin-webkit
+Summary: designer plugin for webkit Qt support
+Group: Development/KDE and Qt
+
+%description designer-plugin-webkit
+designer plugin for webkit Qt support.
+
+%files designer-plugin-webkit
+%defattr(-,root,root,-)
+%pluginsdir/designer/libqwebview*
+
+#-------------------------------------------------------------------------
+
+%package designer-plugin-qt3support
+Summary: designer plugin for qt3support Qt support
+Group: Development/KDE and Qt
+
+%description designer-plugin-qt3support
+designer plugin for qt3support Qt support.
+
+%files designer-plugin-qt3support
+%defattr(-,root,root,-)
+%pluginsdir/designer/libqt3supportwidget*
 
 #-------------------------------------------------------------------------
 
@@ -953,7 +1030,6 @@ echo "yes" |
    -no-cups \
 %endif
    -no-separate-debug-info \
-   -no-phonon-backend \
    -no-rpath \
    -reduce-relocations \
    -opengl desktop \
@@ -1078,11 +1154,6 @@ done
 %if %{enable_static}
 	cp safelib/* %buildroot/%_libdir
 %endif
-
-# Phonon needed just in compilation time to enable webkit
-rm -f %buildroot/%_libdir/libphonon*
-rm -f %buildroot/%pluginsdir/designer/libphonon*
-rm -f %buildroot/%_libdir/pkgconfig/phonon*
 
 # Fix all buildroot paths
 find %buildroot/%_libdir -type f -name '*prl' -exec perl -pi -e "s, -L%_builddir/\S+,,g" {} \;
