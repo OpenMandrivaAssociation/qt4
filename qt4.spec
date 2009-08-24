@@ -32,6 +32,8 @@
 
 %define with_kde_qt 1
 
+%define with_local_phonon_package 0
+
 %define qtmajor 4
 %define qtminor 5
 %define qtsubminor 2
@@ -68,7 +70,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 8
+Release: %mkrel 9
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -431,6 +433,8 @@ QT dbus lib.
 
 #-------------------------------------------------------------------------
 
+%if %{with_local_phonon_package}
+
 %package -n %{libphonon}
 Summary: QT phonon library
 Group: System/Libraries
@@ -466,6 +470,8 @@ Qt phonon library.
 %files -n phonon-gstreamer
 %defattr(-,root,root,-)
 %pluginsdir/phonon_backend/libphonon_gstreamer.so
+
+%endif
 
 #-------------------------------------------------------------------------
 
@@ -507,10 +513,8 @@ Group: Development/KDE and Qt
 Requires: %{name}-common = %epoch:%version
 Requires: qt4-qtconfig
 Provides: qt4-devel = %epoch:%version-%release
-Provides: phonon-devel = %epoch:%version-%release
 Provides: libqt4-devel = %epoch:%version-%release
 Obsoletes: %{mklibname -d QtWebKit} < %version
-Obsoletes: phonon-devel < 4:4.5
 Conflicts: %{_lib}qtxml4 < 2:4.3.4-3
 Conflicts: %{_lib}qtsql4 < 2:4.3.4-3
 Conflicts: %{_lib}qtnetwork4 < 2:4.3.4-3
@@ -545,7 +549,11 @@ Requires: %{libqdbus} = %epoch:%version
 Requires: %{libqtwebkit} = %epoch:%version
 Requires: %{libqtscript} = %epoch:%version
 Requires: %{libqthelp} = %epoch:%version
+%if %{with_local_phonon_package}
 Requires: %{libphonon} = %epoch:%version
+%else
+Requires: phonon-devel
+%endif
 Requires: qt4-qtdbus = %epoch:%version
 Requires: qt4-designer-plugin-phonon = %epoch:%version
 Requires: qt4-designer-plugin-webkit = %epoch:%version
@@ -1036,6 +1044,9 @@ echo "yes" |
    -L%_prefix/%_lib \
    -platform linux-g++ \
    -confirm-license \
+%if ! %{with_local_phonon_package}
+	-no-phonon-backend \
+%endif
    -opensource \
 	$*
 }
@@ -1188,6 +1199,14 @@ if [ -z \$(echo \$PATH | grep "%{qtdir}/bin") ]; then
 fi
 
 EOF
+
+# We need a proper removal
+%if ! %{with_local_phonon_package}
+rm -rf %{buildroot}/%_libdir/libphonon.*
+rm -rf %{buildroot}/%{qtdir}/include/phonon
+rm -rf %{buildroot}/%{_libdir}/pkgconfig/phonon.pc
+%endif
+
 
 %clean
 rm -rf %buildroot
