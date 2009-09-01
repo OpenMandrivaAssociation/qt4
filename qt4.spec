@@ -70,7 +70,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 9
+Release: %mkrel 10
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -598,7 +598,6 @@ fi
 %_libdir/*.prl
 %_libdir/pkgconfig/*
 %{qtdir}/q3porting.xml
-%pluginsdir/designer/*
 
 #-------------------------------------------------------------------------
 
