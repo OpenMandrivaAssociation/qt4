@@ -70,7 +70,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 10
+Release: %mkrel 11
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -103,6 +103,7 @@ Patch1017: 0017-Attempt-to-fix-header-installation-for-Phonon.patch
 Patch1018: 0018-Fix-compilation-after-the-last-change.patch
 Patch1019: 0019-Make-QMenu-respect-the-minimum-width-set.patch
 Patch1020: 0020-Fill-gap-of-X.org-XFree-multimedia-special-launcher-.patch
+Patch1021: qt-x11-opensource-src-4.4.3-CVE-2009-2700.diff
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -998,6 +999,7 @@ Qt 4 documentation generator.
 %patch1018 -p1 -b .kde-qt
 %patch1019 -p1 -b .kde-qt
 %patch1020 -p1 -b .kde-qt
+%patch1021 -p0 -b .CVE-2009-2700
 
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" -i mkspecs/common/linux.conf
