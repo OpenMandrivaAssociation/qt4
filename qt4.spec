@@ -83,6 +83,9 @@ Source4: mandriva-assistant-qt4.desktop
 Source5: mandriva-linguist-qt4.desktop
 # Mandriva patches
 Patch0: qt-4.5.2-wformat.patch
+Patch1: qt-x11-opensource-src-4.4.3-CVE-2009-2700.diff
+# Gitorius patches from kde-qt
+# git format-patch v4.5.2..kde-qt/4.5.2-patched
 Patch1001: 0001-This-patch-uses-object-name-as-a-fallback-for-window.patch
 Patch1002: 0002-This-patch-makes-override-redirect-windows-popup-men.patch
 Patch1003: 0003-This-patch-changes-QObjectPrivateVersion-thus-preven.patch
@@ -103,7 +106,7 @@ Patch1017: 0017-Attempt-to-fix-header-installation-for-Phonon.patch
 Patch1018: 0018-Fix-compilation-after-the-last-change.patch
 Patch1019: 0019-Make-QMenu-respect-the-minimum-width-set.patch
 Patch1020: 0020-Fill-gap-of-X.org-XFree-multimedia-special-launcher-.patch
-Patch1021: qt-x11-opensource-src-4.4.3-CVE-2009-2700.diff
+Patch1021: 0021-Add-support-for-isOpen-in-mysql-driver-plugin.patch
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -979,6 +982,7 @@ Qt 4 documentation generator.
 %prep
 %setup -q -n %{qttarballdir}
 %patch0 -p0 -b .mandriva
+%patch1 -p0 -b .CVE-2009-2700
 %patch1001 -p1 -b .kde-qt
 %patch1002 -p1 -b .kde-qt
 %patch1003 -p1 -b .kde-qt
@@ -999,7 +1003,7 @@ Qt 4 documentation generator.
 %patch1018 -p1 -b .kde-qt
 %patch1019 -p1 -b .kde-qt
 %patch1020 -p1 -b .kde-qt
-%patch1021 -p0 -b .CVE-2009-2700
+%patch1021 -p1 -b .kde-qt
 
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" -i mkspecs/common/linux.conf
