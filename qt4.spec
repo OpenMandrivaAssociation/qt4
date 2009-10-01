@@ -1112,7 +1112,7 @@ install -d %buildroot%_sysconfdir
 install -d %buildroot%_sysconfdir/profile.d
 
 make INSTALL_ROOT=%buildroot \
-	subtout-tools-install_subtargets-ordered \
+	sub-tools-install_subtargets-ordered \
 	install_htmldocs \
 	install_qchdocs \
 	install_qmake \
