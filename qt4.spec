@@ -155,8 +155,6 @@ This package contains all config file and language file.
 %dir %{qtdir}/bin
 %dir %pluginsdir
 %{qtdir}/phrasebooks
-%dir %{qtdir}/translations
-%{qtdir}/translations/qt_*
 %_docdir/%name/README.kde-qt
 
 #------------------------------------------------------------------------
@@ -652,7 +650,6 @@ fi
 %files qtconfig
 %defattr(-,root,root,-)
 %{qtdir}/bin/qtconf*
-%{qtdir}/translations/qtconfig*
 
 #-------------------------------------------------------------------------
 
@@ -707,7 +704,6 @@ languages
 %{qtdir}/bin/lingu*
 %{qtdir}/bin/lconvert*
 %{_datadir}/applications/*linguist*.desktop
-%{qtdir}/translations/linguist*
 
 #-------------------------------------------------------------------------
 
@@ -730,7 +726,6 @@ Qt Assistant provides a documentation Browser.
 %{qtdir}/bin/qhelpconv*
 %{qtdir}/bin/qhelpgen*
 %{_datadir}/applications/*assistant*.desktop
-%{qtdir}/translations/assistant*
 
 #-------------------------------------------------------------------------
 
@@ -897,7 +892,6 @@ implementing user interfaces a lot easier.
 %defattr(-,root,root,-)
 %{qtdir}/bin/design*
 %{_datadir}/applications/*designer*.desktop
-%{qtdir}/translations/designer_*
 
 #-------------------------------------------------------------------------
 
@@ -953,7 +947,6 @@ Qt 4 Embedded Virtual Terminal.
 %files qvfb
 %defattr(-,root,root,-)
 %{qtdir}/bin/qvf*
-%{qtdir}/translations/qvfb*
 
 %endif
 
@@ -1119,11 +1112,10 @@ install -d %buildroot%_sysconfdir
 install -d %buildroot%_sysconfdir/profile.d
 
 make INSTALL_ROOT=%buildroot \
-	sub-tools-install_subtargets-ordered \
+	subtout-tools-install_subtargets-ordered \
 	install_htmldocs \
 	install_qchdocs \
 	install_qmake \
-	install_translations \
 	install_mkspecs
 
 install -m 0644 README.kde-qt %buildroot%_docdir/%name
