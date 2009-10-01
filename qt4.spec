@@ -36,7 +36,7 @@
 
 %define qtmajor 4
 %define qtminor 5
-%define qtsubminor 2
+%define qtsubminor 3
 
 %define qtversion %{qtmajor}.%{qtminor}.%{qtsubminor}
 
@@ -70,20 +70,19 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 12
+Release: %mkrel 1
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
 License: LGPL
 URL:     http://www.qtsoftware.com
-Source0: ftp://ftp.trolltech.com/qt/source/%{qttarballdir}.tar.bz2
+Source0: ftp://ftp.trolltech.com/qt/source/%{qttarballdir}.tar.gz
 Source2: qt4.macros
 Source3: mandriva-designer-qt4.desktop 
 Source4: mandriva-assistant-qt4.desktop 
 Source5: mandriva-linguist-qt4.desktop
 # Mandriva patches
 Patch0: qt-4.5.2-wformat.patch
-Patch1: qt-x11-opensource-src-4.4.3-CVE-2009-2700.diff
 # Gitorius patches from kde-qt
 # git format-patch v4.5.2..kde-qt/4.5.2-patched
 Patch1001: 0001-This-patch-uses-object-name-as-a-fallback-for-window.patch
@@ -97,13 +96,8 @@ Patch1008: 0008-In-a-treeview-with-columns-like-this.patch
 Patch1009: 0009-This-patch-fixes-deserialization-of-values-with-cust.patch
 Patch1010: 0010-Import-README.qt-copy-from-the-original-qt-copy.patch
 Patch1011: 0011-Update-this-file-to-reflect-the-workflow-with-Git-as.patch
-Patch1012: 0012-This-patch-makes-the-raster-graphics-system-use-shar.patch
-Patch1013: 0013-Restore-a-section-of-the-file-that-got-removed-due-t.patch
 Patch1014: 0014-Add-missing-word-in-sentence.patch
 Patch1015: 0015-Building-Qt-documentation-said-to-run-make-install-b.patch
-Patch1016: 0016-Fix-error-line-not-to-have-a-as-it-s-not-correct.patch
-Patch1017: 0017-Attempt-to-fix-header-installation-for-Phonon.patch
-Patch1018: 0018-Fix-compilation-after-the-last-change.patch
 Patch1019: 0019-Make-QMenu-respect-the-minimum-width-set.patch
 Patch1020: 0020-Fill-gap-of-X.org-XFree-multimedia-special-launcher-.patch
 Patch1021: 0021-Add-support-for-isOpen-in-mysql-driver-plugin.patch
@@ -982,7 +976,6 @@ Qt 4 documentation generator.
 %prep
 %setup -q -n %{qttarballdir}
 %patch0 -p0 -b .mandriva
-%patch1 -p0 -b .CVE-2009-2700
 %patch1001 -p1 -b .kde-qt
 %patch1002 -p1 -b .kde-qt
 %patch1003 -p1 -b .kde-qt
@@ -994,13 +987,8 @@ Qt 4 documentation generator.
 %patch1009 -p1 -b .kde-qt
 %patch1010 -p1 -b .kde-qt
 %patch1011 -p1 -b .kde-qt
-%patch1012 -p1 -b .kde-qt
-%patch1013 -p1 -b .kde-qt
 %patch1014 -p1 -b .kde-qt
 %patch1015 -p1 -b .kde-qt
-%patch1016 -p1 -b .kde-qt
-%patch1017 -p1 -b .kde-qt
-%patch1018 -p1 -b .kde-qt
 %patch1019 -p1 -b .kde-qt
 %patch1020 -p1 -b .kde-qt
 %patch1021 -p1 -b .kde-qt
