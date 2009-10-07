@@ -70,7 +70,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 1
+Release: %mkrel 2
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -84,23 +84,27 @@ Source5: mandriva-linguist-qt4.desktop
 # Mandriva patches
 Patch0: qt-4.5.2-wformat.patch
 # Gitorius patches from kde-qt
-# git format-patch v4.5.2..kde-qt/4.5.2-patched
-Patch1001: 0001-This-patch-uses-object-name-as-a-fallback-for-window.patch
-Patch1002: 0002-This-patch-makes-override-redirect-windows-popup-men.patch
-Patch1003: 0003-This-patch-changes-QObjectPrivateVersion-thus-preven.patch
-Patch1004: 0004-This-patch-adds-support-for-using-isystem-to-allow-p.patch
-Patch1005: 0005-When-tabs-are-inserted-or-removed-in-a-QTabBar.patch
-Patch1006: 0006-Fix-configure.exe-to-do-an-out-of-source-build-on-wi.patch
-Patch1007: 0007-When-using-qmake-outside-qt-src-tree-it-sometimes-ge.patch
-Patch1008: 0008-In-a-treeview-with-columns-like-this.patch
-Patch1009: 0009-This-patch-fixes-deserialization-of-values-with-cust.patch
-Patch1010: 0010-Import-README.qt-copy-from-the-original-qt-copy.patch
-Patch1011: 0011-Update-this-file-to-reflect-the-workflow-with-Git-as.patch
-Patch1014: 0014-Add-missing-word-in-sentence.patch
-Patch1015: 0015-Building-Qt-documentation-said-to-run-make-install-b.patch
-Patch1019: 0019-Make-QMenu-respect-the-minimum-width-set.patch
-Patch1020: 0020-Fill-gap-of-X.org-XFree-multimedia-special-launcher-.patch
-Patch1021: 0021-Add-support-for-isOpen-in-mysql-driver-plugin.patch
+# git format-patch v4.5.3..4.5.3-patched
+Patch1000: 1000-This-patch-uses-object-name-as-a-fallback-for-window.patch
+Patch1001: 1001-This-patch-makes-override-redirect-windows-popup-men.patch
+Patch1002: 1002-This-patch-changes-QObjectPrivateVersion-thus-preven.patch
+Patch1003: 1003-This-patch-adds-support-for-using-isystem-to-allow-p.patch
+Patch1004: 1004-When-tabs-are-inserted-or-removed-in-a-QTabBar.patch
+Patch1005: 1005-Fix-configure.exe-to-do-an-out-of-source-build-on-wi.patch
+Patch1006: 1006-When-using-qmake-outside-qt-src-tree-it-sometimes-ge.patch
+Patch1007: 1007-In-a-treeview-with-columns-like-this.patch
+Patch1008: 1008-This-patch-fixes-deserialization-of-values-with-cust.patch
+Patch1009: 1009-Import-README.qt-copy-from-the-original-qt-copy.patch
+Patch1010: 1010-Update-this-file-to-reflect-the-workflow-with-Git-as.patch
+Patch1011: 1011-This-patch-makes-the-raster-graphics-system-use-shar.patch
+Patch1012: 1012-Restore-a-section-of-the-file-that-got-removed-due-t.patch
+Patch1013: 1013-Fix-error-line-not-to-have-a-as-it-s-not-correct.patch
+Patch1014: 1014-Make-QMenu-respect-the-minimum-width-set.patch
+Patch1015: 1015-Fill-gap-of-X.org-XFree-multimedia-special-launcher-.patch
+Patch1016: 1016-Add-context-to-tr-calls-in-QShortcut.patch
+Patch1017: 1017-Fix-QNativeImage-constructor.patch
+Patch1018: 1018-Fix-regressions-in-qeventloop-qtimer-and-qsocketnoti.patch
+Patch1100: qt-4.5.3-patched-shm-native-image-fix.patch 
 BuildRequires: X11-devel
 %if %{enable_static}
 BuildRequires: X11-static-devel
@@ -969,6 +973,7 @@ Qt 4 documentation generator.
 %prep
 %setup -q -n %{qttarballdir}
 %patch0 -p0 -b .mandriva
+%patch1000 -p1 -b .kde-qt
 %patch1001 -p1 -b .kde-qt
 %patch1002 -p1 -b .kde-qt
 %patch1003 -p1 -b .kde-qt
@@ -979,12 +984,17 @@ Qt 4 documentation generator.
 %patch1008 -p1 -b .kde-qt
 %patch1009 -p1 -b .kde-qt
 %patch1010 -p1 -b .kde-qt
-%patch1011 -p1 -b .kde-qt
+# Keep those as reference that is git fault
+#patch1011 -p1 -b .kde-qt
+#patch1012 -p1 -b .kde-qt
+#patch1013 -p1 -b .kde-qt
 %patch1014 -p1 -b .kde-qt
 %patch1015 -p1 -b .kde-qt
-%patch1019 -p1 -b .kde-qt
-%patch1020 -p1 -b .kde-qt
-%patch1021 -p1 -b .kde-qt
+%patch1016 -p1 -b .kde-qt
+#patch1017 -p1 -b .kde-qt
+%patch1018 -p1 -b .kde-qt
+# This ones override git issue 1011 1012 1013 1017
+%patch1100 -p1 -b .kde-qt-fix
 
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" -i mkspecs/common/linux.conf
