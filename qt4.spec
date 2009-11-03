@@ -1,42 +1,24 @@
 %define _default_patch_fuzz 1
+%define _disable_exceptions 1
 
-%define with_postgres 1
-%{?_without_postgres: %{expand: %%global with_postgres 0}}
+%bcond_without postgres
+%bcond_without mysql
+%bcond_without odbc
+%bcond_without sqlite
+%bcond_without tds
+%bcond_without cups
+%bcond_without qvfb
 
-%define with_mysql 1
-%{?_without_mysql: %{expand: %%global with_mysql 0}}
+%bcond_with debug
+%bcond_with docs
+%bcond_with ibase 
+%bcond_with local_phonon_package
 
-%define with_odbc 1
-%{?_without_odbc: %{expand: %%global with_odbc 0}}
-
-%define with_sqlite 1
-%{?_without_sqlite: %{expand: %%global with_sqlite 0}}
-
-%define with_ibase 0
-%{?_with_ibase: %{expand: %%global with_ibase 1}}
-
-%define with_tds 1
-%{?_without_tds: %{expand: %%global with_tds 0}}
-
-%define with_debug 0
-%{?_with_debug: %{expand: %%global with_debug 1}}
-
-%define enable_static 0
-%{?_with_static: %{expand: %%global enable_static 1}}
-
-%define with_cups 1
-%{?_without_cups %{expand: %%global with_cups 0}}
-
-%define with_qvfb 1
-%{?_without_qvfb %{expand: %%global with_qvfb 0}}
-
-%define with_kde_qt 1
-
-%define with_local_phonon_package 0
+%define with_kde_qt 0
 
 %define qtmajor 4
-%define qtminor 5
-%define qtsubminor 3
+%define qtminor 6
+%define qtsubminor 0
 
 %define qtversion %{qtmajor}.%{qtminor}.%{qtsubminor}
 
@@ -60,6 +42,7 @@
 %define libqtclucene %mklibname qtclucene %qtmajor
 %define libqthelp %mklibname qthelp %qtmajor
 %define libqtwebkit %mklibname qtwebkit %qtmajor
+%define libqtmultimedia %mklibname qtmultimedia %qtmajor
 %define libphonon %mklibname phonon %qtmajor
 
 %define qtlib qt4
@@ -67,48 +50,23 @@
 %define pluginsdir %_libdir/qt4/plugins
 
 %define qttarballdir qt-x11-opensource-src-%{qtversion}
+%define qttarballdir qt-everywhere-opensource-src-%{qtversion}
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 3
+Release: %mkrel -c beta1 1
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
 License: LGPL
 URL:     http://www.qtsoftware.com
-Source0: ftp://ftp.trolltech.com/qt/source/%{qttarballdir}.tar.gz
+Source0: ftp://ftp.trolltech.com/qt/source/%{qttarballdir}-beta1.tar.gz
 Source2: qt4.macros
 Source3: mandriva-designer-qt4.desktop 
 Source4: mandriva-assistant-qt4.desktop 
 Source5: mandriva-linguist-qt4.desktop
-# Mandriva patches
-Patch0: qt-4.5.2-wformat.patch
-# Gitorius patches from kde-qt
-# git format-patch v4.5.3..4.5.3-patched
-Patch1000: 1000-This-patch-uses-object-name-as-a-fallback-for-window.patch
-Patch1001: 1001-This-patch-makes-override-redirect-windows-popup-men.patch
-Patch1002: 1002-This-patch-changes-QObjectPrivateVersion-thus-preven.patch
-Patch1003: 1003-This-patch-adds-support-for-using-isystem-to-allow-p.patch
-Patch1004: 1004-When-tabs-are-inserted-or-removed-in-a-QTabBar.patch
-Patch1005: 1005-Fix-configure.exe-to-do-an-out-of-source-build-on-wi.patch
-Patch1006: 1006-When-using-qmake-outside-qt-src-tree-it-sometimes-ge.patch
-Patch1007: 1007-In-a-treeview-with-columns-like-this.patch
-Patch1008: 1008-This-patch-fixes-deserialization-of-values-with-cust.patch
-Patch1009: 1009-Import-README.qt-copy-from-the-original-qt-copy.patch
-Patch1010: 1010-Update-this-file-to-reflect-the-workflow-with-Git-as.patch
-Patch1011: 1011-This-patch-makes-the-raster-graphics-system-use-shar.patch
-Patch1012: 1012-Restore-a-section-of-the-file-that-got-removed-due-t.patch
-Patch1013: 1013-Fix-error-line-not-to-have-a-as-it-s-not-correct.patch
-Patch1014: 1014-Make-QMenu-respect-the-minimum-width-set.patch
-Patch1015: 1015-Fill-gap-of-X.org-XFree-multimedia-special-launcher-.patch
-Patch1016: 1016-Add-context-to-tr-calls-in-QShortcut.patch
-Patch1017: 1017-Fix-QNativeImage-constructor.patch
-Patch1018: 1018-Fix-regressions-in-qeventloop-qtimer-and-qsocketnoti.patch
-Patch1100: qt-4.5.3-patched-shm-native-image-fix.patch 
+Patch0: qt-x11-opensource-src-4.6.0-qvfb.patch
 BuildRequires: X11-devel
-%if %{enable_static}
-BuildRequires: X11-static-devel
-%endif
 BuildRequires: libxslt-devel
 BuildRequires: GL-devel
 BuildRequires: Mesa-common-devel
@@ -159,7 +117,13 @@ This package contains all config file and language file.
 %dir %{qtdir}/bin
 %dir %pluginsdir
 %{qtdir}/phrasebooks
+%if %with docs
+%dir %{qtdir}/translations
+%{qtdir}/translations/qt_*
+%endif
+%if %{with_kde_qt}
 %_docdir/%name/README.kde-qt
+%endif
 
 #------------------------------------------------------------------------
 # CORE QT LIBRARIES
@@ -433,7 +397,22 @@ QT dbus lib.
 
 #-------------------------------------------------------------------------
 
-%if %{with_local_phonon_package}
+%package -n %{libqtmultimedia}
+Summary: QT dbus lib
+Group: System/Libraries
+Requires(pre): %{name}-common = %epoch:%version
+Provides: qdbuslib = %epoch:%version
+
+%description -n %{libqtmultimedia}
+QT dbus lib.
+
+%files -n %{libqtmultimedia}
+%defattr(-,root,root,-)
+%_libdir/libQtMultimedia.so.%{qtmajor}*
+
+#-------------------------------------------------------------------------
+
+%if %with local_phonon_package
 
 %package -n %{libphonon}
 Summary: QT phonon library
@@ -549,7 +528,7 @@ Requires: %{libqdbus} = %epoch:%version
 Requires: %{libqtwebkit} = %epoch:%version
 Requires: %{libqtscript} = %epoch:%version
 Requires: %{libqthelp} = %epoch:%version
-%if %{with_local_phonon_package}
+%if %with local_phonon_package
 Requires: %{libphonon} = %epoch:%version
 %else
 Requires: phonon-devel
@@ -589,6 +568,8 @@ fi
 %{qtdir}/bin/lupdat*
 %{qtdir}/bin/qdbusxml2cpp
 %{qtdir}/bin/qdbuscpp2xml
+%{qtdir}/bin/xmlpatternsvalidator
+%{qtdir}/bin/qttracereplay
 %_sysconfdir/rpm/macros.d/*
 %{qtdir}/include
 %{qtdir}/mkspecs
@@ -598,27 +579,6 @@ fi
 %_libdir/*.prl
 %_libdir/pkgconfig/*
 %{qtdir}/q3porting.xml
-
-#-------------------------------------------------------------------------
-
-%if %{enable_static}
-%package -n %{libqt}-static-devel
-Summary: The static library for the Qt GUI toolkit
-Group:		Development/KDE and Qt 
-
-%description -n %{libqt}-static-devel
-Qt is a GUI software toolkit which simplifies the task of writing and
-maintaining GUI (Graphical User Interface) applications for the X
-Window System. Qt is written in C++ and is fully object-oriented.
-
-This package contains the shared library needed to run Qt
-applications, as well as the README files for Qt.
-
-%files -n %{libqt}-static-devel
-%defattr(-,root,root,-)
-%_libdir/*.a
-
-%endif
 
 #-------------------------------------------------------------------------
 
@@ -654,8 +614,13 @@ fi
 %files qtconfig
 %defattr(-,root,root,-)
 %{qtdir}/bin/qtconf*
+%if %with docs
+%{qtdir}/translations/qtconfig*
+%endif
 
 #-------------------------------------------------------------------------
+
+%if %with docs
 
 %package doc
 Summary: HTML Documentation for Qt version %{version}
@@ -674,6 +639,8 @@ find %_docdir -maxdepth 1 -type d -name qt-4.\* -exec rm -rf {} \;
 %defattr(-,root,root,-)
 %_docdir/%name/doc/html
 %_docdir/%name/doc/qch
+
+%endif
 
 #-------------------------------------------------------------------------
 
@@ -708,6 +675,9 @@ languages
 %{qtdir}/bin/lingu*
 %{qtdir}/bin/lconvert*
 %{_datadir}/applications/*linguist*.desktop
+%if %with docs
+%{qtdir}/translations/linguist*
+%endif
 
 #-------------------------------------------------------------------------
 
@@ -730,19 +700,19 @@ Qt Assistant provides a documentation Browser.
 %{qtdir}/bin/qhelpconv*
 %{qtdir}/bin/qhelpgen*
 %{_datadir}/applications/*assistant*.desktop
+%if %with docs
+%{qtdir}/translations/assistant*
+%endif
 
 #-------------------------------------------------------------------------
 
-%if %{with_odbc}
+%if ! %without odbc
 
 %package database-plugin-odbc
 Summary: Database plugin for ODBC Qt support
 Group: Development/KDE and Qt
 Obsoletes: qt4-database-plugin-odbc-%_lib
 BuildRequires: unixODBC-devel
-%if %{enable_static}
-BuildRequires: unixODBC-static-devel
-%endif
  
 %description database-plugin-odbc
 Database plugin for ODBC Qt support.
@@ -755,7 +725,7 @@ Database plugin for ODBC Qt support.
 
 #-------------------------------------------------------------------------
 
-%if %{with_mysql}
+%if ! %without mysql
 
 %package database-plugin-mysql
 Summary: Database plugin for mysql Qt support
@@ -774,16 +744,13 @@ Database plugin for mysql Qt support.
 
 #-------------------------------------------------------------------------
 
-%if %{with_sqlite}
+%if ! %without sqlite
 
 %package database-plugin-sqlite
 Summary: Database plugin for sqlite Qt support
 Group: Databases
 Obsoletes: qt4-database-plugin-sqlite-%_lib
 BuildRequires: sqlite3-devel
-%if %{enable_static}
-BuildRequires: sqlite3-static-devel
-%endif
 
 %description database-plugin-sqlite
 Database plugin for sqlite Qt support.
@@ -795,7 +762,7 @@ Database plugin for sqlite Qt support.
 
 #-------------------------------------------------------------------------
 
-%if %{with_tds}
+%if ! %without tds
 
 %package database-plugin-tds
 Summary: Database plugin for freetds Qt support
@@ -814,7 +781,7 @@ Database plugin for freetds Qt support.
 
 #-------------------------------------------------------------------------
 
-%if %{with_ibase}
+%if %with ibase
 
 %package database-plugin-ibase
 Summary: Database plugin for interbase Qt support
@@ -832,7 +799,7 @@ Database plugin for interbase Qt support.
 
 #-------------------------------------------------------------------------
 
-%if %{with_postgres}
+%if ! %without postgres
 
 %package database-plugin-pgsql
 Summary: Database plugin for pgsql Qt support
@@ -896,6 +863,9 @@ implementing user interfaces a lot easier.
 %defattr(-,root,root,-)
 %{qtdir}/bin/design*
 %{_datadir}/applications/*designer*.desktop
+%if %with docs
+%{qtdir}/translations/designer_*
+%endif
 
 #-------------------------------------------------------------------------
 
@@ -938,7 +908,7 @@ designer plugin for qt3support Qt support.
 
 #-------------------------------------------------------------------------
 
-%if %{with_qvfb}
+%if ! %without qvfb
 
 %package qvfb
 Summary: %{qtlib} embedded virtual terminal
@@ -951,10 +921,15 @@ Qt 4 Embedded Virtual Terminal.
 %files qvfb
 %defattr(-,root,root,-)
 %{qtdir}/bin/qvf*
+%if %with docs
+%{qtdir}/translations/qvfb*
+%endif
 
 %endif
 
 #-------------------------------------------------------------------------
+
+%if %with docs
 
 %package qdoc3
 Summary: %{qtlib} documentation generator
@@ -968,33 +943,13 @@ Qt 4 documentation generator.
 %defattr(-,root,root,-)
 %{qtdir}/tools/qdoc3
 
+%endif
+
 #-------------------------------------------------------------------------
 
 %prep
-%setup -q -n %{qttarballdir}
-%patch0 -p0 -b .mandriva
-%patch1000 -p1 -b .kde-qt
-%patch1001 -p1 -b .kde-qt
-%patch1002 -p1 -b .kde-qt
-%patch1003 -p1 -b .kde-qt
-%patch1004 -p1 -b .kde-qt
-%patch1005 -p1 -b .kde-qt
-%patch1006 -p1 -b .kde-qt
-%patch1007 -p1 -b .kde-qt
-%patch1008 -p1 -b .kde-qt
-%patch1009 -p1 -b .kde-qt
-%patch1010 -p1 -b .kde-qt
-# Keep those as reference that is git fault
-#patch1011 -p1 -b .kde-qt
-#patch1012 -p1 -b .kde-qt
-#patch1013 -p1 -b .kde-qt
-%patch1014 -p1 -b .kde-qt
-%patch1015 -p1 -b .kde-qt
-%patch1016 -p1 -b .kde-qt
-#patch1017 -p1 -b .kde-qt
-%patch1018 -p1 -b .kde-qt
-# This ones override git issue 1011 1012 1013 1017
-%patch1100 -p1 -b .kde-qt-fix
+%setup -q -n %{qttarballdir}-beta1
+#%patch0 -p0 -b .orig
 
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" -i mkspecs/common/linux.conf
@@ -1010,14 +965,12 @@ export PATH=$QTDIR/bin:$PATH
 perl -pi -e 's@/X11R6/@/@' mkspecs/linux-*/qmake.conf mkspecs/common/linux.conf
 
 #--------------------------------------------------------
-# function configure
-function qt_configure {
 
-echo "yes" |
 ./configure \
-	-prefix %{qtdir} \
-	-qdbus \
-%if %{with_debug}
+   -prefix %{qtdir} \
+   -qdbus \
+   -shared \
+%if %with debug
    -debug \
    -verbose \
 %else
@@ -1030,6 +983,9 @@ echo "yes" |
    -plugindir %pluginsdir \
    -qvfb \
    -qt-gif \
+   -xmlpatterns \
+   -optimized-qmake \
+   -gtkstyle \
 %if ! %{with_cups}
    -no-cups \
 %endif
@@ -1040,57 +996,27 @@ echo "yes" |
    -L%_prefix/%_lib \
    -platform linux-g++ \
    -confirm-license \
-%if ! %{with_local_phonon_package}
-	-no-phonon-backend \
+%if ! %with local_phonon_package
+    -no-phonon-backend \
 %endif
-   -opensource \
-	$*
-}
-
-# static
-%if %{enable_static}
-	qt_configure \
-   %if %{with_odbc}
-   -qt-sql-odbc \
-   %endif
-   %if %{with_sqlite}
-   -qt-sql-sqlite \
-   -system-sqlite \
-   -no-sql-sqlite2 \
-   %else
-   -no-sql-sqlite \
-   -no-sql-sqlite2 \
-   %endif
-   -nomake demos \
-   -nomake examples \
-   -nomake tools \
-   -static
-
-   %make
-
-	mkdir safelib
-	cp lib/*.a safelib
-%endif
-
-# shared
-qt_configure -shared \
-   %if %{with_postgres}
+    -opensource \
+   %if ! %without postgres
    -plugin-sql-psql \
    -I%{_includedir}/pgsql \
    -I%{_includedir}/pgsql/server \
    %endif
-   %if %{with_mysql}
+   %if ! %without mysql
    -plugin-sql-mysql \
    -I%{_includedir}/mysql \
    %else
    -no-sql-mysql \
    %endif
-   %if %{with_ibase}
+   %if %with ibase
    -plugin-sql-ibase \
    %else
    -no-sql-ibase \
    %endif
-   %if %{with_sqlite}
+   %if ! %without sqlite
    -plugin-sql-sqlite \
    -system-sqlite \
    -no-sql-sqlite2 \
@@ -1098,19 +1024,18 @@ qt_configure -shared \
    -no-sql-sqlite \
    -no-sql-sqlite2 \
    %endif
-   %if %{with_odbc}
+   %if ! %without odbc
    -plugin-sql-odbc \
    %else
    -no-sql-odbc \
    %endif
    -nomake demos \
-   -nomake examples 
+   -nomake examples
 
 %make
-
 %make sub-tools-qdoc3
 
-%if %{with_qvfb}
+%if ! %without qvfb
 	make -C tools/qvfb
 %endif
 
@@ -1123,18 +1048,25 @@ install -d %buildroot%_sysconfdir/profile.d
 
 make INSTALL_ROOT=%buildroot \
 	sub-tools-install_subtargets-ordered \
+	%if %with docs
 	install_htmldocs \
 	install_qchdocs \
+	install_translations \
+	%endif
 	install_qmake \
 	install_mkspecs
 
+%if %{with_kde_qt}
 install -m 0644 README.kde-qt %buildroot%_docdir/%name
+%endif
 
+%if %with docs
 # Install qdoc3
 mkdir -p %buildroot/%{qtdir}/tools/qdoc3
 install -m 755 tools/qdoc3/qdoc3 %buildroot/%{qtdir}/tools/qdoc3
+%endif
 
-%if %{with_qvfb}
+%if ! %without qvfb
 	# Install qvfb
 	%make -C tools/qvfb INSTALL_ROOT=%buildroot install
 %endif
@@ -1156,10 +1088,6 @@ for subdir in examples demos; do
    for dir in `find $subdir -type d -name .moc`; do rm -rf $dir; done
    cp -a $subdir %buildroot/%{qtdir}
 done
-
-%if %{enable_static}
-	cp safelib/* %buildroot/%_libdir
-%endif
 
 # Fix all buildroot paths
 find %buildroot/%_libdir -type f -name '*prl' -exec perl -pi -e "s, -L%_builddir/\S+,,g" {} \;
@@ -1196,7 +1124,7 @@ fi
 EOF
 
 # We need a proper removal
-%if ! %{with_local_phonon_package}
+%if ! %with local_phonon_package
 rm -rf %{buildroot}/%_libdir/libphonon.*
 rm -rf %{buildroot}/%{qtdir}/include/phonon
 rm -rf %{buildroot}/%{_libdir}/pkgconfig/phonon.pc
