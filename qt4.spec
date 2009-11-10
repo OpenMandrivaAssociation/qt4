@@ -1037,6 +1037,7 @@ perl -pi -e 's@/X11R6/@/@' mkspecs/linux-*/qmake.conf mkspecs/common/linux.conf
    %else
    -no-sql-odbc \
    %endif
+   -no-pch \
    -nomake demos \
    -nomake examples
 
