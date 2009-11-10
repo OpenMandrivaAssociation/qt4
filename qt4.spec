@@ -8,9 +8,9 @@
 %bcond_without tds
 %bcond_without cups
 %bcond_without qvfb
+%bcond_without docs
 
 %bcond_with debug
-%bcond_with docs
 %bcond_with ibase 
 %bcond_with local_phonon_package
 
@@ -58,7 +58,7 @@
 %endif
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel -c beta1 4
+Release: %mkrel -c beta1 5
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
