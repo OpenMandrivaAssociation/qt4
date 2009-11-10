@@ -16,6 +16,8 @@
 
 %define with_kde_qt 0
 
+%define with_qt_snapshot 1
+
 %define qtmajor 4
 %define qtminor 6
 %define qtsubminor 0
@@ -49,18 +51,20 @@
 %define qtdir %_prefix/lib/qt4
 %define pluginsdir %_libdir/qt4/plugins
 
-%define qttarballdir qt-x11-opensource-src-%{qtversion}
-%define qttarballdir qt-everywhere-opensource-src-%{qtversion}
-
+%if %with_qt_snapshot
+%define qttarballdir qt-4.6.8513a37
+%else
+%define qttarballdir qt-everywhere-opensource-src-%{qtversion}-beta1
+%endif
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel -c beta1 3
+Release: %mkrel -c beta1 4
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
 License: LGPL
 URL:     http://www.qtsoftware.com
-Source0: ftp://ftp.trolltech.com/qt/source/%{qttarballdir}-beta1.tar.gz
+Source0: ftp://ftp.trolltech.com/qt/source/%{qttarballdir}.tar.gz
 Source2: qt4.macros
 Source3: mandriva-designer-qt4.desktop 
 Source4: mandriva-assistant-qt4.desktop 
@@ -948,7 +952,11 @@ Qt 4 documentation generator.
 #-------------------------------------------------------------------------
 
 %prep
+%if %with_qt_snapshot
+%setup -q -n qt
+%else
 %setup -q -n %{qttarballdir}-beta1
+%endif
 #%patch0 -p0 -b .orig
 
 # QMAKE_STRIP need to be clear to allow mdv -debug package
