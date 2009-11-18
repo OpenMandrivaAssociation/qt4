@@ -8,15 +8,15 @@
 %bcond_without tds
 %bcond_without cups
 %bcond_without qvfb
+%bcond_without docs
 
-%bcond_with docs
 %bcond_with debug
 %bcond_with ibase 
 %bcond_with local_phonon_package
 
 %define with_kde_qt 0
 
-%define with_qt_snapshot 1
+%define with_qt_snapshot 0
 
 %define qtmajor 4
 %define qtminor 6
@@ -54,11 +54,11 @@
 %if %with_qt_snapshot
 %define qttarballdir qt-4.6.8513a37
 %else
-%define qttarballdir qt-everywhere-opensource-src-%{qtversion}-beta1
+%define qttarballdir qt-everywhere-opensource-src-%{qtversion}-rc1
 %endif
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel -c beta1 6
+Release: %mkrel -c rc1 1
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -955,7 +955,7 @@ Qt 4 documentation generator.
 %if %with_qt_snapshot
 %setup -q -n qt
 %else
-%setup -q -n %{qttarballdir}-beta1
+%setup -q -n %{qttarballdir}
 %endif
 #%patch0 -p0 -b .orig
 
