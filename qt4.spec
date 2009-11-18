@@ -1060,7 +1060,6 @@ make INSTALL_ROOT=%buildroot \
 	%if %with docs
 	install_htmldocs \
 	install_qchdocs \
-	install_translations \
 	%endif
 	install_qmake \
 	install_mkspecs
