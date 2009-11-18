@@ -1068,11 +1068,11 @@ make INSTALL_ROOT=%buildroot \
 install -m 0644 README.kde-qt %buildroot%_docdir/%name
 %endif
 
-%if %with docs
+#%if %with docs
 # Install qdoc3
-mkdir -p %buildroot/%{qtdir}/tools/qdoc3
-install -m 755 tools/qdoc3/qdoc3 %buildroot/%{qtdir}/tools/qdoc3
-%endif
+#mkdir -p %buildroot/%{qtdir}/tools/qdoc3
+#install -m 755 tools/qdoc3/qdoc3 %buildroot/%{qtdir}/tools/qdoc3
+#%endif
 
 %if ! %without qvfb
 	# Install qvfb
