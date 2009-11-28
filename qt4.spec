@@ -402,13 +402,13 @@ QT dbus lib.
 #-------------------------------------------------------------------------
 
 %package -n %{libqtmultimedia}
-Summary: QT dbus lib
+Summary: QT multimedia lib
 Group: System/Libraries
 Requires(pre): %{name}-common = %epoch:%version
 Provides: qdbuslib = %epoch:%version
 
 %description -n %{libqtmultimedia}
-QT dbus lib.
+QT multimedia lib.
 
 %files -n %{libqtmultimedia}
 %defattr(-,root,root,-)
