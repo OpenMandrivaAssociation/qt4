@@ -58,7 +58,7 @@
 %endif
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel -c rc1 1
+Release: %mkrel -c rc1 2
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -532,6 +532,7 @@ Requires: %{libqdbus} = %epoch:%version
 Requires: %{libqtwebkit} = %epoch:%version
 Requires: %{libqtscript} = %epoch:%version
 Requires: %{libqthelp} = %epoch:%version
+Requires: %{libqtmultimedia} = %epoch:%version
 %if %with local_phonon_package
 Requires: %{libphonon} = %epoch:%version
 %else
