@@ -54,11 +54,11 @@
 %if %with_qt_snapshot
 %define qttarballdir qt-4.6.8513a37
 %else
-%define qttarballdir qt-everywhere-opensource-src-%{qtversion}-rc1
+%define qttarballdir qt-everywhere-opensource-src-%{qtversion}
 %endif
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel -c rc1 2
+Release: %mkrel 1
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
