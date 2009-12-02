@@ -58,7 +58,7 @@
 %endif
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 1
+Release: %mkrel 2
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -69,7 +69,8 @@ Source2: qt4.macros
 Source3: mandriva-designer-qt4.desktop 
 Source4: mandriva-assistant-qt4.desktop 
 Source5: mandriva-linguist-qt4.desktop
-Patch0: qt-x11-opensource-src-4.6.0-qvfb.patch
+Patch0:  qt-x11-opensource-src-4.6.0-qvfb.patch
+Patch1:  qt-everywhere-opensource-src-4.6.0-fix-QGraphicsView-crash.patch 
 BuildRequires: X11-devel
 BuildRequires: libxslt-devel
 BuildRequires: GL-devel
@@ -959,6 +960,7 @@ Qt 4 documentation generator.
 %setup -q -n %{qttarballdir}
 %endif
 #%patch0 -p0 -b .orig
+%patch1 -p0
 
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" -i mkspecs/common/linux.conf
