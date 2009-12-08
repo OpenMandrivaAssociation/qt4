@@ -8,8 +8,8 @@
 %bcond_without tds
 %bcond_without cups
 %bcond_without qvfb
+%bcond_without docs
 
-%bcond_with docs
 %bcond_with debug
 %bcond_with ibase 
 %bcond_with local_phonon_package
@@ -406,7 +406,6 @@ QT dbus lib.
 Summary: QT multimedia lib
 Group: System/Libraries
 Requires(pre): %{name}-common = %epoch:%version
-Provides: qdbuslib = %epoch:%version
 
 %description -n %{libqtmultimedia}
 QT multimedia lib.
@@ -934,23 +933,22 @@ Qt 4 Embedded Virtual Terminal.
 %endif
 
 #-------------------------------------------------------------------------
-
-%if %with docs
-
-%package qdoc3
-Summary: %{qtlib} documentation generator
-Group: Development/KDE and Qt
-Conflicts:  %name-common <= 4.3.3-4
-
-%description qdoc3
-Qt 4 documentation generator.
-
-%files qdoc3
-%defattr(-,root,root,-)
-%{qtdir}/tools/qdoc3
-
-%endif
-
+# %if %with docs
+# 
+# %package qdoc3
+# Summary: %{qtlib} documentation generator
+# Group: Development/KDE and Qt
+# Conflicts:  %name-common <= 4.3.3-4
+# 
+# %description qdoc3
+# Qt 4 documentation generator.
+# 
+# %files qdoc3
+# %defattr(-,root,root,-)
+# %{qtdir}/tools/qdoc3
+# 
+# %endif
+# 
 #-------------------------------------------------------------------------
 
 %prep
@@ -1045,7 +1043,7 @@ perl -pi -e 's@/X11R6/@/@' mkspecs/linux-*/qmake.conf mkspecs/common/linux.conf
    -nomake examples
 
 %make
-%make sub-tools-qdoc3
+#%make sub-tools-qdoc3
 
 %if ! %without qvfb
 	make -C tools/qvfb
@@ -1063,6 +1061,7 @@ make INSTALL_ROOT=%buildroot \
 	%if %with docs
 	install_htmldocs \
 	install_qchdocs \
+    install_translations \
 	%endif
 	install_qmake \
 	install_mkspecs
@@ -1073,9 +1072,9 @@ install -m 0644 README.kde-qt %buildroot%_docdir/%name
 
 #%if %with docs
 # Install qdoc3
-#mkdir -p %buildroot/%{qtdir}/tools/qdoc3
-#install -m 755 tools/qdoc3/qdoc3 %buildroot/%{qtdir}/tools/qdoc3
-#%endif
+# mkdir -p %buildroot/%{qtdir}/tools/qdoc3
+# install -m 755 tools/qdoc3/qdoc3 %buildroot/%{qtdir}/tools/qdoc3
+# %endif
 
 %if ! %without qvfb
 	# Install qvfb
