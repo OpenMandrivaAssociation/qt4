@@ -58,7 +58,7 @@
 %endif
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 2
+Release: %mkrel 3
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -71,6 +71,7 @@ Source4: mandriva-assistant-qt4.desktop
 Source5: mandriva-linguist-qt4.desktop
 Patch0:  qt-x11-opensource-src-4.6.0-qvfb.patch
 Patch1:  qt-everywhere-opensource-src-4.6.0-fix-QGraphicsView-crash.patch 
+Patch2:  qt-everywhere-opensource-src-4.6.0-beta1-qdoc3.patch
 BuildRequires: X11-devel
 BuildRequires: libxslt-devel
 BuildRequires: GL-devel
@@ -933,22 +934,22 @@ Qt 4 Embedded Virtual Terminal.
 %endif
 
 #-------------------------------------------------------------------------
-# %if %with docs
-# 
-# %package qdoc3
-# Summary: %{qtlib} documentation generator
-# Group: Development/KDE and Qt
-# Conflicts:  %name-common <= 4.3.3-4
-# 
-# %description qdoc3
-# Qt 4 documentation generator.
-# 
-# %files qdoc3
-# %defattr(-,root,root,-)
-# %{qtdir}/tools/qdoc3
-# 
-# %endif
-# 
+%if %with docs
+
+%package qdoc3
+Summary: %{qtlib} documentation generator
+Group: Development/KDE and Qt
+Conflicts:  %name-common <= 4.3.3-4
+
+%description qdoc3
+Qt 4 documentation generator.
+
+%files qdoc3
+%defattr(-,root,root,-)
+%{qtdir}/bin/qdoc3
+
+%endif
+ 
 #-------------------------------------------------------------------------
 
 %prep
@@ -959,7 +960,9 @@ Qt 4 Embedded Virtual Terminal.
 %endif
 #%patch0 -p0 -b .orig
 %patch1 -p0
-
+%if %with docs
+%patch2 -p0
+%endif
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" -i mkspecs/common/linux.conf
 sed -e "s|^QMAKE_CFLAGS_RELEASE.*$|QMAKE_CFLAGS_RELEASE    += %{optflags}|" \
