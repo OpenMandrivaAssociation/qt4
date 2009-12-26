@@ -492,12 +492,12 @@ QT assistant lib.
 #-------------------------------------------------------------------------
 
 %package -n %{libqtdevel}
-Summary: Development files for the Qt GUI toolkit
-Group: Development/KDE and Qt
-Requires: %{name}-common = %epoch:%version
-Requires: qt4-qtconfig
-Provides: qt4-devel = %epoch:%version-%release
-Provides: libqt4-devel = %epoch:%version-%release
+Summary:   Development files for the Qt GUI toolkit
+Group:     Development/KDE and Qt
+Requires:  %{name}-common = %epoch:%version
+Requires:  qt4-qtconfig
+Provides:  qt4-devel = %epoch:%version-%release
+Provides:  libqt4-devel = %epoch:%version-%release
 Obsoletes: %{mklibname -d QtWebKit} < %version
 Conflicts: %{_lib}qtxml4 < 2:4.3.4-3
 Conflicts: %{_lib}qtsql4 < 2:4.3.4-3
@@ -515,35 +515,37 @@ Conflicts: %{_lib}qassistant1 < 2:4.3.4-3
 Conflicts: %{_lib}qttest4 < 2:4.3.4-3
 Conflicts: %{_lib}qtcore4 < 2:4.3.4-3
 Conflicts: qt4-linguist < 2:4.4.3-3
-Requires: %{libqassistant} = %epoch:%version
-Requires: %{libqt3support} = %epoch:%version
-Requires: %{libqtcore} = %epoch:%version
-Requires: %{libqtdesigner} = %epoch:%version
-Requires: %{libqtgui} = %epoch:%version
-Requires: %{libqtnetwork} = %epoch:%version
-Requires: %{libqtopengl} = %epoch:%version
-Requires: %{libqtsql} = %epoch:%version
-Requires: %{libqtxml} = %epoch:%version
-Requires: %{libqtscripttools} = %epoch:%version
-Requires: %{libqtxmlpatterns} = %epoch:%version
-Requires: %{libqtsvg} = %epoch:%version
-Requires: %{libqtclucene} = %epoch:%version
-Requires: %{libqttest} = %epoch:%version
-Requires: %{libqdbus} = %epoch:%version
-Requires: %{libqtwebkit} = %epoch:%version
-Requires: %{libqtscript} = %epoch:%version
-Requires: %{libqthelp} = %epoch:%version
-Requires: %{libqtmultimedia} = %epoch:%version
+Requires:  %{libqassistant} = %epoch:%version
+Requires:  %{libqt3support} = %epoch:%version
+Requires:  %{libqtcore} = %epoch:%version
+Requires:  %{libqtdesigner} = %epoch:%version
+Requires:  %{libqtgui} = %epoch:%version
+Requires:  %{libqtnetwork} = %epoch:%version
+Requires:  %{libqtopengl} = %epoch:%version
+Requires:  %{libqtsql} = %epoch:%version
+Requires:  %{libqtxml} = %epoch:%version
+Requires:  %{libqtscripttools} = %epoch:%version
+Requires:  %{libqtxmlpatterns} = %epoch:%version
+Requires:  %{libqtsvg} = %epoch:%version
+Requires:  %{libqtclucene} = %epoch:%version
+Requires:  %{libqttest} = %epoch:%version
+Requires:  %{libqdbus} = %epoch:%version
+Requires:  %{libqtwebkit} = %epoch:%version
+Requires:  %{libqtscript} = %epoch:%version
+Requires:  %{libqthelp} = %epoch:%version
+Requires:  %{libqtmultimedia} = %epoch:%version
 %if %with local_phonon_package
-Requires: %{libphonon} = %epoch:%version
+Requires:  %{libphonon} = %epoch:%version
 %else
-Requires: phonon-devel
+Requires:  phonon-devel
 %endif
-Requires: qt4-qtdbus = %epoch:%version
-Requires: qt4-designer-plugin-phonon = %epoch:%version
-Requires: qt4-designer-plugin-webkit = %epoch:%version
-Requires: qt4-designer-plugin-qt3support = %epoch:%version
-Requires: mesaglu-devel 
+Requires:  qt4-qtdbus = %epoch:%version
+Requires:  qt4-designer-plugin-phonon = %epoch:%version
+Requires:  qt4-designer-plugin-webkit = %epoch:%version
+Requires:  qt4-designer-plugin-qt3support = %epoch:%version
+Requires:  mesaglu-devel 
+Requires:  png-devel
+Requires:  jpeg-devel
 
 %description -n %{libqtdevel}
 The %{qtlib}-devel package contains the files necessary to develop
