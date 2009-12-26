@@ -58,7 +58,7 @@
 %endif
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 3
+Release: %mkrel 4
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -72,7 +72,7 @@ Source5: mandriva-linguist-qt4.desktop
 Patch0:  qt-x11-opensource-src-4.6.0-qvfb.patch
 Patch1:  qt-everywhere-opensource-src-4.6.0-fix-QGraphicsView-crash.patch 
 Patch2:  qt-everywhere-opensource-src-4.6.0-beta1-qdoc3.patch
-BuildRequires: X11-devel
+BuildRequires: libxtst-devel
 BuildRequires: libxslt-devel
 BuildRequires: GL-devel
 BuildRequires: Mesa-common-devel
