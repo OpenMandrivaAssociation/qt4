@@ -14,6 +14,9 @@
 %bcond_with ibase 
 %bcond_with local_phonon_package
 
+#git clone git://gitorious.org/+kde-developers/qt/kde-qt.git
+#cd kde-qt
+#git archive --format=tar --prefix=qt-everywhere-opensource-src-4.6.1/ master | bzip2 >/tmp/qt-everywhere-opensource-src-4.6.0.tar.bz2
 %define with_kde_qt 0
 
 %define with_qt_snapshot 0
