@@ -73,7 +73,6 @@ Source3: mandriva-designer-qt4.desktop
 Source4: mandriva-assistant-qt4.desktop 
 Source5: mandriva-linguist-qt4.desktop
 Patch0:  qt-x11-opensource-src-4.6.0-qvfb.patch
-Patch1:  qt-everywhere-opensource-src-4.6.0-fix-QGraphicsView-crash.patch 
 Patch2:  qt-everywhere-opensource-src-4.6.0-beta1-qdoc3.patch
 Patch3:  qt-everywhere-opensource-src-4.6.0-fix-str-fmt.patch
 BuildRequires: libxtst-devel
@@ -965,7 +964,6 @@ Qt 4 documentation generator.
 %setup -q -n %{qttarballdir}
 %endif
 #%patch0 -p0 -b .orig
-%patch1 -p0
 %if %with docs
 %patch2 -p0
 %patch3 -p0
