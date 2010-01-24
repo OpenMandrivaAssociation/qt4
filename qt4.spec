@@ -73,7 +73,7 @@ Source3: mandriva-designer-qt4.desktop
 Source4: mandriva-assistant-qt4.desktop 
 Source5: mandriva-linguist-qt4.desktop
 Patch0:  qt-x11-opensource-src-4.6.0-qvfb.patch
-Patch2:  qt-everywhere-opensource-src-4.6.0-beta1-qdoc3.patch
+Patch2:  qt-everywhere-opensource-src-4.6.1-qdoc3.patch
 Patch3:  qt-everywhere-opensource-src-4.6.0-fix-str-fmt.patch
 BuildRequires: libxtst-devel
 BuildRequires: libxslt-devel
