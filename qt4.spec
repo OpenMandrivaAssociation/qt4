@@ -8,8 +8,8 @@
 %bcond_without tds
 %bcond_without cups
 %bcond_without qvfb
-%bcond_without docs
 
+%bcond_with docs
 %bcond_with debug
 %bcond_with ibase 
 %bcond_with local_phonon_package
