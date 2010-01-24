@@ -939,7 +939,7 @@ Qt 4 Embedded Virtual Terminal.
 %endif
 
 #-------------------------------------------------------------------------
-%if %with docs
+#%if %with docs
 
 %package qdoc3
 Summary: %{qtlib} documentation generator
@@ -953,7 +953,7 @@ Qt 4 documentation generator.
 %defattr(-,root,root,-)
 %{qtdir}/bin/qdoc3
 
-%endif
+#%endif
  
 #-------------------------------------------------------------------------
 
