@@ -61,7 +61,7 @@
 %endif
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 2
+Release: %mkrel 3
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -75,6 +75,8 @@ Source5: mandriva-linguist-qt4.desktop
 Patch0:  qt-x11-opensource-src-4.6.0-qvfb.patch
 Patch2:  qt-everywhere-opensource-src-4.6.1-qdoc3.patch
 Patch3:  qt-everywhere-opensource-src-4.6.0-fix-str-fmt.patch
+Patch4:  qt-everywhere-opensource-src-4.6.1-add_missing_bold_style.diff
+Patch5:  qt-everywhere-opensource-src-4.6.1-use_ft_glyph_embolden_to_fake_bold.diff
 BuildRequires: libxtst-devel
 BuildRequires: libxslt-devel
 BuildRequires: GL-devel
@@ -968,6 +970,9 @@ Qt 4 documentation generator.
 %patch2 -p0
 %patch3 -p0
 %endif
+%patch4 -p0
+%patch5 -p0
+
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" -i mkspecs/common/linux.conf
 sed -e "s|^QMAKE_CFLAGS_RELEASE.*$|QMAKE_CFLAGS_RELEASE    += %{optflags}|" \
