@@ -11,7 +11,7 @@
 
 %bcond_with docs
 %bcond_with debug
-%bcond_with ibase 
+%bcond_with ibase
 %bcond_with local_phonon_package
 
 #git clone git://gitorious.org/+kde-developers/qt/kde-qt.git
@@ -61,7 +61,7 @@
 %endif
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 3
+Release: %mkrel 4
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -991,10 +991,25 @@ perl -pi -e 's@/X11R6/@/@' mkspecs/linux-*/qmake.conf mkspecs/common/linux.conf
 
 #--------------------------------------------------------
 
+# Removed options from configure
+# lets check if it is still necessary
+# -L%_prefix/%_lib crashs current build
+#
+#-L%_prefix/%_lib \
+#
+#%if ! %without postgres
+#-I%{_includedir}/pgsql \
+#-I%{_includedir}/pgsql/server \
+#
+#%if ! %without mysql
+#-I%{_includedir}/mysql \
+
 ./configure \
    -prefix %{qtdir} \
-   -qdbus \
-   -shared \
+   -sysconfdir %_sysconfdir \
+   -libdir %_libdir \
+   -docdir %_docdir/%name/doc \
+   -plugindir %pluginsdir \
 %if %with debug
    -debug \
    -verbose \
@@ -1002,67 +1017,60 @@ perl -pi -e 's@/X11R6/@/@' mkspecs/linux-*/qmake.conf mkspecs/common/linux.conf
    -release \
    -silent \
 %endif
-   -sysconfdir %_sysconfdir \
-   -libdir %_libdir \
-   -docdir %_docdir/%name/doc \
-   -plugindir %pluginsdir \
+   -opensource \
+   -confirm-license \
+   -shared \
+   -no-separate-debug-info \
+   -no-rpath \
+   -no-pch \
+   -optimized-qmake \
+   -reduce-relocations \
+   -qdbus \
    -qvfb \
    -qt-gif \
-   -xmlpatterns \
-   -optimized-qmake \
    -gtkstyle \
+   -xmlpatterns \
+   -opengl desktop \
+   -platform linux-g++ \
 %if ! %{with_cups}
    -no-cups \
 %endif
-   -no-separate-debug-info \
-   -no-rpath \
-   -reduce-relocations \
-   -opengl desktop \
-   -L%_prefix/%_lib \
-   -platform linux-g++ \
-   -confirm-license \
 %if ! %with local_phonon_package
     -no-phonon-backend \
 %endif
-    -opensource \
-   %if ! %without postgres
+%if ! %without postgres
    -plugin-sql-psql \
-   -I%{_includedir}/pgsql \
-   -I%{_includedir}/pgsql/server \
-   %endif
-   %if ! %without mysql
+%endif
+%if ! %without mysql
    -plugin-sql-mysql \
-   -I%{_includedir}/mysql \
-   %else
+%else
    -no-sql-mysql \
-   %endif
-   %if %with ibase
+%endif
+%if %with ibase
    -plugin-sql-ibase \
-   %else
+%else
    -no-sql-ibase \
-   %endif
-   %if ! %without sqlite
+%endif
+%if ! %without sqlite
    -plugin-sql-sqlite \
    -system-sqlite \
    -no-sql-sqlite2 \
-   %else
+%else
    -no-sql-sqlite \
    -no-sql-sqlite2 \
-   %endif
-   %if ! %without odbc
+%endif
+%if ! %without odbc
    -plugin-sql-odbc \
-   %else
+%else
    -no-sql-odbc \
-   %endif
-   -no-pch \
+%endif
    -nomake demos \
    -nomake examples
 
 %make
-#%make sub-tools-qdoc3
 
 %if ! %without qvfb
-	make -C tools/qvfb
+    make -C tools/qvfb
 %endif
 
 %install
@@ -1073,14 +1081,14 @@ install -d %buildroot%_sysconfdir
 install -d %buildroot%_sysconfdir/profile.d
 
 make INSTALL_ROOT=%buildroot \
-	sub-tools-install_subtargets-ordered \
-	%if %with docs
-	install_htmldocs \
-	install_qchdocs \
+    sub-tools-install_subtargets-ordered \
+    %if %with docs
+    install_htmldocs \
+    install_qchdocs \
     install_translations \
-	%endif
-	install_qmake \
-	install_mkspecs
+    %endif
+    install_qmake \
+    install_mkspecs
 
 %if %{with_kde_qt}
 install -m 0644 README.kde-qt %buildroot%_docdir/%name
@@ -1093,8 +1101,8 @@ install -m 0644 README.kde-qt %buildroot%_docdir/%name
 # %endif
 
 %if ! %without qvfb
-	# Install qvfb
-	%make -C tools/qvfb INSTALL_ROOT=%buildroot install
+    # Install qvfb
+    %make -C tools/qvfb INSTALL_ROOT=%buildroot install
 %endif
 
 mkdir -p %buildroot%_datadir/applications
@@ -1156,7 +1164,5 @@ rm -rf %{buildroot}/%{qtdir}/include/phonon
 rm -rf %{buildroot}/%{_libdir}/pkgconfig/phonon.pc
 %endif
 
-
 %clean
 rm -rf %buildroot
-
