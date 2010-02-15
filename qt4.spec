@@ -16,9 +16,9 @@
 
 #git clone git://gitorious.org/+kde-developers/qt/kde-qt.git
 #cd kde-qt
-#git archive --format=tar --prefix=qt-everywhere-opensource-src-4.6.1/ master | bzip2 >/tmp/qt-everywhere-opensource-src-4.6.0.tar.bz2
-%define with_kde_qt 0
-
+#git archive --format=tar --prefix=kde-qt-everywhere-opensource-src-4.6.2/ master | bzip2 >/tmp/kde-qt-everywhere-opensource-src-4.6.2.tar.bz2
+%define with_kde_qt 1
+%define kdeqttarballdir kde-qt-everywhere-opensource-src-%{qtversion} 
 %define with_qt_snapshot 0
 
 %define qtmajor 4
@@ -54,20 +54,24 @@
 %define qtdir %_prefix/lib/qt4
 %define pluginsdir %_libdir/qt4/plugins
 
-%if %with_qt_snapshot
-%define qttarballdir qt-4.6.8513a37
+%if %with_kde_qt
+%define qttarballdir kde-qt-everywhere-opensource-src-%{qtversion}
 %else
 %define qttarballdir qt-everywhere-opensource-src-%{qtversion}
 %endif
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 1
+Release: %mkrel 2
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
 License: LGPLv2 with exceptions or GPLv3 with exceptions
 URL:     http://qt.nokia.com/
+%if %with_kde_qt
+Source0: http://get.qt.nokia.com/qt/source/%{kdeqttarballdir}.tar.bz2
+%else
 Source0: http://get.qt.nokia.com/qt/source/%{qttarballdir}.tar.gz
+%endif
 Source2: qt4.macros
 Source3: mandriva-designer-qt4.desktop 
 Source4: mandriva-assistant-qt4.desktop 
