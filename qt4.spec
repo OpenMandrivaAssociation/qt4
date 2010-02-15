@@ -65,9 +65,9 @@ Release: %mkrel 1
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
-License: LGPL
-URL:     http://www.qtsoftware.com
-Source0: ftp://ftp.trolltech.com/qt/source/%{qttarballdir}.tar.gz
+License: LGPLv2 with exceptions or GPLv3 with exceptions
+URL:     http://qt.nokia.com/
+Source0: http://get.qt.nokia.com/qt/source/%{qttarballdir}.tar.gz
 Source2: qt4.macros
 Source3: mandriva-designer-qt4.desktop 
 Source4: mandriva-assistant-qt4.desktop 
@@ -558,9 +558,9 @@ Requires:  jpeg-devel
 The %{qtlib}-devel package contains the files necessary to develop
 applications using the Qt GUI toolkit: the header files, the Qt
 meta object compiler, and the static libraries.  See the address
-http://www.trolltech.com/products/qt.html for more information
-about Qt.
-Install qt-devel if you want to develop GUI applications using the Qt
+http://qt.nokia.com/ for more information about Qt.
+
+Install %{qtlib}-devel if you want to develop GUI applications using the Qt
 toolkit.
 
 %post -n %{libqtdevel}
