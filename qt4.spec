@@ -137,8 +137,8 @@ This package contains all config file and language file.
 %dir %pluginsdir
 %{qtdir}/phrasebooks
 %if %with docs
-#%dir %{qtdir}/translations
-#%{qtdir}/translations/qt_*
+%dir %{qtdir}/translations
+%{qtdir}/translations/qt_*
 %endif
 %if %{with_kde_qt}
 %_docdir/%name/README.kde-qt
@@ -636,7 +636,7 @@ fi
 %defattr(-,root,root,-)
 %{qtdir}/bin/qtconf*
 %if %with docs
-#%{qtdir}/translations/qtconfig*
+%{qtdir}/translations/qtconfig*
 %endif
 
 #-------------------------------------------------------------------------
@@ -697,7 +697,7 @@ languages
 %{qtdir}/bin/lconvert*
 %{_datadir}/applications/*linguist*.desktop
 %if %with docs
-#%{qtdir}/translations/linguist*
+%{qtdir}/translations/linguist*
 %endif
 
 #-------------------------------------------------------------------------
@@ -722,7 +722,7 @@ Qt Assistant provides a documentation Browser.
 %{qtdir}/bin/qhelpgen*
 %{_datadir}/applications/*assistant*.desktop
 %if %with docs
-#%{qtdir}/translations/assistant*
+%{qtdir}/translations/assistant*
 %endif
 
 #-------------------------------------------------------------------------
@@ -885,7 +885,7 @@ implementing user interfaces a lot easier.
 %{qtdir}/bin/design*
 %{_datadir}/applications/*designer*.desktop
 %if %with docs
-#%{qtdir}/translations/designer_*
+%{qtdir}/translations/designer_*
 %endif
 
 #-------------------------------------------------------------------------
@@ -943,7 +943,7 @@ Qt 4 Embedded Virtual Terminal.
 %defattr(-,root,root,-)
 %{qtdir}/bin/qvf*
 %if %with docs
-#%{qtdir}/translations/qvfb*
+%{qtdir}/translations/qvfb*
 %endif
 
 %endif
@@ -1099,6 +1099,7 @@ make INSTALL_ROOT=%buildroot \
     %if %with docs
     install_htmldocs \
     install_qchdocs \
+    install_translations \
     %endif
     install_qmake \
     install_mkspecs
