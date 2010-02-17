@@ -8,8 +8,8 @@
 %bcond_without tds
 %bcond_without cups
 %bcond_without qvfb
+%bcond_without docs
 
-%bcond_with docs
 %bcond_with debug
 %bcond_with ibase
 %bcond_with local_phonon_package
@@ -53,6 +53,7 @@
 %define qtlib qt4
 %define qtdir %_prefix/lib/qt4
 %define pluginsdir %_libdir/qt4/plugins
+%define translationdir %qtdir/translations
 
 %if %with_kde_qt
 %define qttarballdir kde-qt-everywhere-opensource-src-%{qtversion}
@@ -69,6 +70,7 @@ License: LGPLv2 with exceptions or GPLv3 with exceptions
 URL:     http://qt.nokia.com/
 %if %with_kde_qt
 Source0: http://get.qt.nokia.com/qt/source/%{kdeqttarballdir}.tar.bz2
+Source6: qt-everywhere-opensource-src-doc-4.6.2.tar.bz2
 %else
 Source0: http://get.qt.nokia.com/qt/source/%{qttarballdir}.tar.gz
 %endif
@@ -135,8 +137,8 @@ This package contains all config file and language file.
 %dir %pluginsdir
 %{qtdir}/phrasebooks
 %if %with docs
-%dir %{qtdir}/translations
-%{qtdir}/translations/qt_*
+#%dir %{qtdir}/translations
+#%{qtdir}/translations/qt_*
 %endif
 %if %{with_kde_qt}
 %_docdir/%name/README.kde-qt
@@ -634,7 +636,7 @@ fi
 %defattr(-,root,root,-)
 %{qtdir}/bin/qtconf*
 %if %with docs
-%{qtdir}/translations/qtconfig*
+#%{qtdir}/translations/qtconfig*
 %endif
 
 #-------------------------------------------------------------------------
@@ -695,7 +697,7 @@ languages
 %{qtdir}/bin/lconvert*
 %{_datadir}/applications/*linguist*.desktop
 %if %with docs
-%{qtdir}/translations/linguist*
+#%{qtdir}/translations/linguist*
 %endif
 
 #-------------------------------------------------------------------------
@@ -720,7 +722,7 @@ Qt Assistant provides a documentation Browser.
 %{qtdir}/bin/qhelpgen*
 %{_datadir}/applications/*assistant*.desktop
 %if %with docs
-%{qtdir}/translations/assistant*
+#%{qtdir}/translations/assistant*
 %endif
 
 #-------------------------------------------------------------------------
@@ -883,7 +885,7 @@ implementing user interfaces a lot easier.
 %{qtdir}/bin/design*
 %{_datadir}/applications/*designer*.desktop
 %if %with docs
-%{qtdir}/translations/designer_*
+#%{qtdir}/translations/designer_*
 %endif
 
 #-------------------------------------------------------------------------
@@ -941,7 +943,7 @@ Qt 4 Embedded Virtual Terminal.
 %defattr(-,root,root,-)
 %{qtdir}/bin/qvf*
 %if %with docs
-%{qtdir}/translations/qvfb*
+#%{qtdir}/translations/qvfb*
 %endif
 
 %endif
@@ -966,11 +968,12 @@ Qt 4 documentation generator.
 #-------------------------------------------------------------------------
 
 %prep
-%if %with_qt_snapshot
-%setup -q -n qt
+%if %with_kde_qt 
+%setup -q -n %{qttarballdir} -a6
 %else
 %setup -q -n %{qttarballdir}
 %endif
+
 #%patch0 -p0 -b .orig
 %if %with docs
 %patch2 -p0
@@ -985,6 +988,10 @@ sed -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" -i mkspecs/common/linux.
 sed -e "s|^QMAKE_CFLAGS_RELEASE.*$|QMAKE_CFLAGS_RELEASE    += %{optflags}|" \
     -e "s|^QMAKE_LFLAGS	.*$|QMAKE_LFLAGS		+= %{ldflags}|" -i mkspecs/common/g++.conf
 
+# let makefile create missing .qm files, the .qm files should be included in qt upstream
+for f in translations/*.ts ; do
+  touch ${f%.ts}.qm
+done
 
 %build
 export QTDIR=`/bin/pwd`
@@ -1014,6 +1021,7 @@ perl -pi -e 's@/X11R6/@/@' mkspecs/linux-*/qmake.conf mkspecs/common/linux.conf
    -libdir %_libdir \
    -docdir %_docdir/%name/doc \
    -plugindir %pluginsdir \
+   -translationdir %translationdir \
 %if %with debug
    -debug \
    -verbose \
@@ -1068,8 +1076,10 @@ perl -pi -e 's@/X11R6/@/@' mkspecs/linux-*/qmake.conf mkspecs/common/linux.conf
 %else
    -no-sql-odbc \
 %endif
+%if  %without docs
    -nomake demos \
    -nomake examples
+%endif
 
 %make
 
@@ -1089,7 +1099,6 @@ make INSTALL_ROOT=%buildroot \
     %if %with docs
     install_htmldocs \
     install_qchdocs \
-    install_translations \
     %endif
     install_qmake \
     install_mkspecs
@@ -1098,11 +1107,8 @@ make INSTALL_ROOT=%buildroot \
 install -m 0644 README.kde-qt %buildroot%_docdir/%name
 %endif
 
-#%if %with docs
-# Install qdoc3
-# mkdir -p %buildroot/%{qtdir}/tools/qdoc3
-# install -m 755 tools/qdoc3/qdoc3 %buildroot/%{qtdir}/tools/qdoc3
-# %endif
+# recreate .qm files
+LD_LIBRARY_PATH=`pwd`/lib bin/lrelease translations/*.ts
 
 %if ! %without qvfb
     # Install qvfb
