@@ -62,7 +62,7 @@
 %endif
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 3
+Release: %mkrel 4
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -981,7 +981,7 @@ Qt 4 documentation generator.
 %endif
 %patch4 -p0
 %patch5 -p0
-%patch6 -p0
+#%patch6 -p0
 
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" -i mkspecs/common/linux.conf
