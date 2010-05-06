@@ -62,7 +62,7 @@
 %endif
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 8
+Release: %mkrel 9
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -561,6 +561,7 @@ Requires:  qt4-designer-plugin-qt3support = %epoch:%version
 Requires:  mesaglu-devel 
 Requires:  png-devel
 Requires:  jpeg-devel
+Requires:  make
 
 %description -n %{libqtdevel}
 The %{qtlib}-devel package contains the files necessary to develop
