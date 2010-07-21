@@ -512,7 +512,7 @@ Qt4 qmlviewer utility.
 %files qmlviewer
 %defattr(-,root,root,-)
 %{qtdir}/bin/qmlviewer
-%_libdir/qt4/imports/Qt
+%qtdir/imports/Qt
 %pluginsdir/bearer/libqgenericbearer.so
 %pluginsdir/bearer/libqnmbearer.so
 %pluginsdir/designer/libqdeclarativeview.so
