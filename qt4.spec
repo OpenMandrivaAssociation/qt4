@@ -8,8 +8,8 @@
 %bcond_without tds
 %bcond_without cups
 %bcond_without qvfb
-%bcond_without docs
 
+%bcond_with docs
 %bcond_with debug
 %bcond_with ibase
 %bcond_with local_phonon_package
@@ -22,14 +22,13 @@
 %define with_qt_snapshot 0
 
 %define qtmajor 4
-%define qtminor 6
-%define qtsubminor 2
+%define qtminor 7
+%define qtsubminor 0
 
 %define qtversion %{qtmajor}.%{qtminor}.%{qtsubminor}
 
 %define libqt %mklibname qt %qtmajor
 %define libqtdevel %mklibname qt %qtmajor -d
-%define libqassistant %mklibname qassistant %qtmajor
 %define libqt3support %mklibname qt3support %qtmajor
 %define libqtcore %mklibname qtcore %qtmajor
 %define libqtdesigner %mklibname qtdesigner %qtmajor
@@ -49,7 +48,7 @@
 %define libqtwebkit %mklibname qtwebkit %qtmajor
 %define libqtmultimedia %mklibname qtmultimedia %qtmajor
 %define libphonon %mklibname phonon %qtmajor
-
+%define libqtdeclarative %mklibname qtdeclarative %qtmajor
 %define qtlib qt4
 %define qtdir %_prefix/lib/qt4
 %define pluginsdir %_libdir/qt4/plugins
@@ -62,7 +61,7 @@
 %endif
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 9
+Release: %mkrel 0.1
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -143,7 +142,7 @@ This package contains all config file and language file.
 %{qtdir}/translations/qt_*
 %endif
 %if %{with_kde_qt}
-%_docdir/%name/README.kde-qt
+#%_docdir/%name/README.kde-qt
 %endif
 
 #------------------------------------------------------------------------
@@ -489,20 +488,34 @@ QT dbus binary.
 
 #-------------------------------------------------------------------------
 
-%package -n %{libqassistant}
-Summary: QT assistant lib
+%package -n %{libqtdeclarative}
+Summary: QT phonon library
 Group: System/Libraries
 Requires(pre): %{name}-common = %epoch:%version
-Provides: qassistantlib = %epoch:%version
-# Had wrong major:
-Obsoletes: %{_lib}qassistant1 < 2:4.3.4-4
 
-%description -n %{libqassistant}
-QT assistant lib.
+%description -n %{libqtdeclarative}
+Qt phonon library.
 
-%files -n %{libqassistant}
+%files -n %{libqtdeclarative}
 %defattr(-,root,root,-)
-%_libdir/libQtAssistantClient.so.%{qtmajor}*
+%_libdir/libQtDeclarative.so.%{qtmajor}*
+
+#-------------------------------------------------------------------------
+
+%package qmlviewer
+Summary: Qt4 qmlviewer utility
+Group: Development/KDE and Qt
+
+%description qmlviewer
+Qt4 qmlviewer utility.
+
+%files qmlviewer
+%defattr(-,root,root,-)
+%{qtdir}/bin/qmlviewer
+%_libdir/qt4/imports/Qt
+%pluginsdir/bearer/libqgenericbearer.so
+%pluginsdir/bearer/libqnmbearer.so
+%pluginsdir/designer/libqdeclarativeview.so
 
 #-------------------------------------------------------------------------
 
@@ -530,7 +543,8 @@ Conflicts: %{_lib}qassistant1 < 2:4.3.4-3
 Conflicts: %{_lib}qttest4 < 2:4.3.4-3
 Conflicts: %{_lib}qtcore4 < 2:4.3.4-3
 Conflicts: qt4-linguist < 2:4.4.3-3
-Requires:  %{libqassistant} = %epoch:%version
+Requires:  %{libqtdeclarative} = %epoch:%version
+Requires:  %{libqt3support} = %epoch:%version
 Requires:  %{libqt3support} = %epoch:%version
 Requires:  %{libqtcore} = %epoch:%version
 Requires:  %{libqtdesigner} = %epoch:%version
@@ -972,7 +986,8 @@ Qt 4 documentation generator.
 
 %prep
 %if %with_kde_qt 
-%setup -q -n %{qttarballdir} -a6
+%setup -n qt 
+#-a6
 %else
 %setup -q -n %{qttarballdir}
 %endif
@@ -983,10 +998,9 @@ Qt 4 documentation generator.
 %patch3 -p0
 %endif
 %patch4 -p0
-%patch5 -p0
 #%patch6 -p0
-%patch7 -p0
-%patch8 -p1
+# REAPPLY ?
+##%patch8 -p1
 
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" -i mkspecs/common/linux.conf
@@ -1110,7 +1124,7 @@ make INSTALL_ROOT=%buildroot \
     install_mkspecs
 
 %if %{with_kde_qt}
-install -m 0644 README.kde-qt %buildroot%_docdir/%name
+#install -m 0644 README.kde-qt %buildroot%_docdir/%name
 %endif
 
 # recreate .qm files
@@ -1178,6 +1192,7 @@ EOF
 rm -rf %{buildroot}/%_libdir/libphonon.*
 rm -rf %{buildroot}/%{qtdir}/include/phonon
 rm -rf %{buildroot}/%{_libdir}/pkgconfig/phonon.pc
+rm -rf %{buildroot}/%{_libdir}/qt4/plugins/phonon_backend/libphonon_gstreamer.so
 %endif
 
 %clean
