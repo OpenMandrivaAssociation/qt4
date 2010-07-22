@@ -513,6 +513,8 @@ Qt4 qmlviewer utility.
 %defattr(-,root,root,-)
 %{qtdir}/bin/qmlviewer
 %qtdir/imports/Qt
+%qtdir/imports/org/webkit/libqmlwebkitplugin.so
+%qtdir/imports/org/webkit/qmldir
 %pluginsdir/bearer/libqgenericbearer.so
 %pluginsdir/bearer/libqnmbearer.so
 %pluginsdir/designer/libqdeclarativeview.so
