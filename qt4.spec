@@ -17,7 +17,7 @@
 #git clone git://gitorious.org/+kde-developers/qt/kde-qt.git
 #cd kde-qt
 #git archive --format=tar --prefix=kde-qt-everywhere-opensource-src-4.6.2/ master | bzip2 >/tmp/kde-qt-everywhere-opensource-src-4.6.2.tar.bz2
-%define with_kde_qt 1
+%define with_kde_qt 0
 %define kdeqttarballdir kde-qt-everywhere-opensource-src-%{qtversion} 
 %define with_qt_snapshot 0
 
@@ -57,7 +57,7 @@
 %if %with_kde_qt
 %define qttarballdir kde-qt-everywhere-opensource-src-%{qtversion}
 %else
-%define qttarballdir qt-everywhere-opensource-src-%{qtversion}
+%define qttarballdir qt-everywhere-opensource-src-%{qtversion}-gita11bd40
 %endif
 Name: %{qtlib}
 Version: %{qtversion}
@@ -71,7 +71,7 @@ URL:     http://qt.nokia.com/
 Source0: http://get.qt.nokia.com/qt/source/%{kdeqttarballdir}.tar.bz2
 Source6: qt-everywhere-opensource-src-doc-4.6.2.tar.bz2
 %else
-Source0: http://get.qt.nokia.com/qt/source/%{qttarballdir}.tar.gz
+Source0: http://get.qt.nokia.com/qt/source/%{qttarballdir}.tar.bz2
 %endif
 Source2: qt4.macros
 Source3: mandriva-designer-qt4.desktop 
@@ -988,7 +988,7 @@ Qt 4 documentation generator.
 
 %prep
 %if %with_kde_qt 
-%setup -n qt 
+%setup -q -n qt 
 #-a6
 %else
 %setup -q -n %{qttarballdir}
