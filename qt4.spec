@@ -991,7 +991,9 @@ Qt 4 documentation generator.
 %setup -q -n qt 
 #-a6
 %else
-%setup -q -n %{qttarballdir}
+%setup -q -n qt
+# add it back for official tarball
+#%{qttarballdir}
 %endif
 
 #%patch0 -p0 -b .orig
