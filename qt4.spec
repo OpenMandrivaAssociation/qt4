@@ -61,7 +61,7 @@
 %endif
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 0.1
+Release: %mkrel 0.2
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
