@@ -8,7 +8,7 @@
 %bcond_without cups
 %bcond_without qvfb
 
-%bcond_without odbc
+%bcond_with odbc
 %bcond_with docs
 %bcond_with debug
 %bcond_with ibase
