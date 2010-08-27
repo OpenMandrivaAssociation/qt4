@@ -57,11 +57,11 @@
 %if %with_kde_qt
 %define qttarballdir kde-qt-everywhere-opensource-src-%{qtversion}
 %else
-%define qttarballdir qt-everywhere-opensource-src-%{qtversion}-gita11bd40
+%define qttarballdir qt-everywhere-opensource-src-%{qtversion}-rc1
 %endif
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 0.2
+Release: %mkrel 0.rc1.1
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -71,7 +71,7 @@ URL:     http://qt.nokia.com/
 Source0: http://get.qt.nokia.com/qt/source/%{kdeqttarballdir}.tar.bz2
 Source6: qt-everywhere-opensource-src-doc-4.6.2.tar.bz2
 %else
-Source0: http://get.qt.nokia.com/qt/source/%{qttarballdir}.tar.bz2
+Source0: http://get.qt.nokia.com/qt/source/%{qttarballdir}.tar.gz
 %endif
 Source2: qt4.macros
 Source3: mandriva-designer-qt4.desktop 
@@ -992,9 +992,7 @@ Qt 4 documentation generator.
 %setup -q -n qt 
 #-a6
 %else
-%setup -q -n qt
-# add it back for official tarball
-#%{qttarballdir}
+%setup -q -n %{qttarballdir}
 %endif
 
 #%patch0 -p0 -b .orig
