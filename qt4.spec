@@ -3,12 +3,12 @@
 
 %bcond_without postgres
 %bcond_without mysql
-%bcond_without odbc
 %bcond_without sqlite
 %bcond_without tds
 %bcond_without cups
 %bcond_without qvfb
 
+%bcond_without odbc
 %bcond_with docs
 %bcond_with debug
 %bcond_with ibase
