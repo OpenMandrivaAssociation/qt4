@@ -61,7 +61,7 @@
 %endif
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 0.3
+Release: %mkrel 0.4
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -515,7 +515,6 @@ Qt4 qmlviewer utility.
 %qtdir/imports/Qt
 %qtdir/imports/QtWebKit/libqmlwebkitplugin.so
 %qtdir/imports/QtWebKit/qmldir
-%pluginsdir/bearer/libqconnmanbearer.so
 %pluginsdir/bearer/libqgenericbearer.so
 %pluginsdir/bearer/libqnmbearer.so
 %pluginsdir/designer/libqdeclarativeview.so
