@@ -61,7 +61,7 @@
 %endif
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 0.4
+Release: %mkrel 0.5
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -665,6 +665,7 @@ fi
 %package doc
 Summary: HTML Documentation for Qt version %{version}
 Group: Books/Computer books
+BuildArch: noarch
 
 %description doc
 HTML documentation for the Qt toolkit. To view the documentation,
