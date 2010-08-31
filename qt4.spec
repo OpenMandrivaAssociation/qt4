@@ -61,7 +61,7 @@
 %endif
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 0.5
+Release: %mkrel 0.6
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -689,6 +689,7 @@ find %_docdir -maxdepth 1 -type d -name qt-4.\* -exec rm -rf {} \;
 Summary: Example programs made with Qt version %{version}
 Group: Books/Computer books
 Obsoletes: qt4-tutorial
+BuildArch: noarch
 
 %description examples
 Example programs made with Qt version %{version}.
