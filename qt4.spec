@@ -7,9 +7,9 @@
 %bcond_without tds
 %bcond_without cups
 %bcond_without qvfb
+%bcond_without docs
 
 %bcond_with odbc
-%bcond_with docs
 %bcond_with debug
 %bcond_with ibase
 %bcond_with local_phonon_package
@@ -61,7 +61,7 @@
 %endif
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 1
+Release: %mkrel 2
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -78,8 +78,6 @@ Source3: mandriva-designer-qt4.desktop
 Source4: mandriva-assistant-qt4.desktop 
 Source5: mandriva-linguist-qt4.desktop
 Patch0:  qt-x11-opensource-src-4.6.0-qvfb.patch
-Patch2:  qt-everywhere-opensource-src-4.6.1-qdoc3.patch
-Patch3:  qt-everywhere-opensource-src-4.6.0-fix-str-fmt.patch
 Patch4:  qt-everywhere-opensource-src-4.6.1-add_missing_bold_style.diff
 Patch5:  qt-everywhere-opensource-src-4.6.1-use_ft_glyph_embolden_to_fake_bold.diff
 #(nl): https://bugs.kde.org/180051
@@ -996,11 +994,6 @@ Qt 4 documentation generator.
 %setup -q -n %{qttarballdir}
 %endif
 
-#%patch0 -p0 -b .orig
-%if %with docs
-%patch2 -p0
-%patch3 -p0
-%endif
 %patch4 -p0
 #%patch6 -p0
 # REAPPLY ?
@@ -1008,8 +1001,10 @@ Qt 4 documentation generator.
 
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" -i mkspecs/common/linux.conf
-sed -e "s|^QMAKE_CFLAGS_RELEASE.*$|QMAKE_CFLAGS_RELEASE    += %{optflags}|" \
-    -e "s|^QMAKE_LFLAGS	.*$|QMAKE_LFLAGS		+= %{ldflags}|" -i mkspecs/common/g++.conf
+sed -e "s|^QMAKE_CFLAGS_RELEASE.*$|QMAKE_CFLAGS_RELEASE    += %{optflags}  -DPIC -fPIC|" \
+    -e "s|^QMAKE_LFLAGS	.*$|QMAKE_LFLAGS		+= %{ldflags}|" \
+    -e "s|^QMAKE_LFLAGS_PLUGIN.*\+= |QMAKE_LFLAGS_PLUGIN += %(echo %ldflags|sed -e 's#-Wl,--no-undefined##') |" \
+    -i mkspecs/common/g++.conf
 
 # let makefile create missing .qm files, the .qm files should be included in qt upstream
 for f in translations/*.ts ; do
