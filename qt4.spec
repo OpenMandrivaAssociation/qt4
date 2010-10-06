@@ -61,7 +61,7 @@
 %endif
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 3
+Release: %mkrel 4
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -86,6 +86,8 @@ Patch7:  qt-everywhere-opensource-src-gitc0887695-fix-QGraphicsView-crash.patch
 Patch8:  qt-everywhere-opensource-src-4.6.2-cups-QTBUG-6471.patch
 BuildRequires: libxtst-devel
 BuildRequires: libxslt-devel
+BuildRequires: libalsa-devel
+BuildRequires: pulseaudio-devel
 BuildRequires: GL-devel
 BuildRequires: Mesa-common-devel
 BuildRequires: zlib-devel 
@@ -1055,7 +1057,8 @@ perl -pi -e 's@/X11R6/@/@' mkspecs/linux-*/qmake.conf mkspecs/common/linux.conf
    -no-pch \
    -optimized-qmake \
    -reduce-relocations \
-   -qdbus \
+   -openssl-linked \
+   -dbus-linked \
    -qvfb \
    -qt-gif \
    -gtkstyle \
