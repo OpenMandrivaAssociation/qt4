@@ -91,6 +91,7 @@ BuildRequires: pulseaudio-devel
 BuildRequires: GL-devel
 BuildRequires: Mesa-common-devel
 BuildRequires: zlib-devel 
+BuildRequires: openssl-devel
 BuildRequires: libpng-devel 
 BuildRequires: libjpeg-devel
 BuildRequires: libmng-devel
