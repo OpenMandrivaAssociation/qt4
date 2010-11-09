@@ -79,6 +79,7 @@ Source4: mandriva-assistant-qt4.desktop
 Source5: mandriva-linguist-qt4.desktop
 Patch0:  qt-x11-opensource-src-4.6.0-qvfb.patch
 Patch1:  qt-everywhere-opensource-src-4.7.0-force-gb18030-for-gb2312.patch
+Patch2:  qt-everywhere-opensource-src-4.7.1-fix-str-fmt.patch
 Patch4:  qt-everywhere-opensource-src-4.6.1-add_missing_bold_style.diff
 Patch5:  qt-everywhere-opensource-src-4.6.1-use_ft_glyph_embolden_to_fake_bold.diff
 #(nl): https://bugs.kde.org/180051
@@ -999,6 +1000,7 @@ Qt 4 documentation generator.
 %endif
 
 %patch1 -p0
+%patch2 -p1
 %patch4 -p0
 #%patch6 -p0
 # REAPPLY ?
