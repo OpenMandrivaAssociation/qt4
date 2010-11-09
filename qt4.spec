@@ -23,7 +23,7 @@
 
 %define qtmajor 4
 %define qtminor 7
-%define qtsubminor 0
+%define qtsubminor 1
 
 %define qtversion %{qtmajor}.%{qtminor}.%{qtsubminor}
 
@@ -61,7 +61,7 @@
 %endif
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 5
+Release: %mkrel 1
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
