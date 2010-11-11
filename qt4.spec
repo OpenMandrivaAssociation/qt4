@@ -520,6 +520,7 @@ Qt4 qmlviewer utility.
 %qtdir/imports/QtWebKit/qmldir
 %pluginsdir/bearer/libqgenericbearer.so
 %pluginsdir/bearer/libqnmbearer.so
+%pluginsdir/bearer/libqconnmanbearer.so
 %pluginsdir/designer/libqdeclarativeview.so
 
 #-------------------------------------------------------------------------
