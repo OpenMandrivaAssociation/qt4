@@ -23,7 +23,7 @@
 
 %define qtmajor 4
 %define qtminor 7
-%define qtsubminor 1
+%define qtsubminor 2
 
 %define qtversion %{qtmajor}.%{qtminor}.%{qtsubminor}
 
@@ -61,7 +61,7 @@
 %endif
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 4
+Release: %mkrel 1
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -79,14 +79,13 @@ Source4: mandriva-assistant-qt4.desktop
 Source5: mandriva-linguist-qt4.desktop
 Patch0:  qt-x11-opensource-src-4.6.0-qvfb.patch
 Patch1:  qt-everywhere-opensource-src-4.7.0-force-gb18030-for-gb2312.patch
-Patch2:  qt-everywhere-opensource-src-4.7.1-fix-str-fmt.patch
+Patch2:  qt-everywhere-opensource-src-4.7.2-fix-str-fmt.patch
 Patch4:  qt-everywhere-opensource-src-4.6.1-add_missing_bold_style.diff
 Patch5:  qt-everywhere-opensource-src-4.6.1-use_ft_glyph_embolden_to_fake_bold.diff
 #(nl): https://bugs.kde.org/180051
 Patch6:  qt-everywhere-opensource-src-4.6.1-improve-cups-support.patch
 Patch7:  qt-everywhere-opensource-src-gitc0887695-fix-QGraphicsView-crash.patch
 Patch8:  qt-everywhere-opensource-src-4.6.2-cups-QTBUG-6471.patch
-Patch9:  qt-everywhere-opensource-src-4.7.1-fix-crash-filtering-columns.patch
 BuildRequires: libxtst-devel
 BuildRequires: libxslt-devel
 BuildRequires: libalsa-devel
@@ -523,6 +522,7 @@ Qt4 qmlviewer utility.
 %pluginsdir/bearer/libqnmbearer.so
 %pluginsdir/bearer/libqconnmanbearer.so
 %pluginsdir/designer/libqdeclarativeview.so
+%pluginsdir/qmltooling/libtcpserver.so
 
 #-------------------------------------------------------------------------
 
@@ -1007,7 +1007,6 @@ Qt 4 documentation generator.
 #%patch6 -p0
 # REAPPLY ?
 ##%patch8 -p1
-%patch9 -p0
 
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" -i mkspecs/common/linux.conf
