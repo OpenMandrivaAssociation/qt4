@@ -1165,7 +1165,7 @@ done
 # Fix all buildroot paths
 find %buildroot/%_libdir -type f -name '*prl' -exec perl -pi -e "s, -L%_builddir/\S+,,g" {} \;
 find %buildroot/%_libdir -type f -name '*prl' -exec sed -i -e "/^QMAKE_PRL_BUILD_DIR/d" {} \;
-find %buildroot/%_libdir -type f -name '*la' -print -exec perl -pi -e "s, -L%_builddir/?\S+,,g" -e "s,-L../JavaScriptCore/release -L/usr/lib  -ljscore,,g" {} \;
+find %buildroot/%_libdir -type f -name '*la' -print -exec sed -i -e "s, -L%_builddir/?\S+,,g" -e "s,-L../JavaScriptCore/release,,g" -e "s,-ljscore,,g" {} \;
 find %buildroot/%qtdir/mkspecs -name 'qmake.conf' -exec chmod -x -- {} \;
 find %buildroot/%qtdir/mkspecs -name Info.plist.app -exec chmod -x -- {} \;
 
