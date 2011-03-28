@@ -61,7 +61,7 @@
 %endif
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 4
+Release: %mkrel 5
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -572,11 +572,11 @@ Requires:  %{libqthelp} = %epoch:%version
 Requires:  %{libqtmultimedia} = %epoch:%version
 %if %with local_phonon_package
 Requires:  %{libphonon} = %epoch:%version
+Requires:  qt4-designer-plugin-phonon = %epoch:%version
 %else
 Requires:  phonon-devel
 %endif
 Requires:  qt4-qtdbus = %epoch:%version
-Requires:  qt4-designer-plugin-phonon = %epoch:%version
 Requires:  qt4-designer-plugin-webkit = %epoch:%version
 Requires:  qt4-designer-plugin-qt3support = %epoch:%version
 Requires:  mesaglu-devel 
@@ -915,7 +915,7 @@ implementing user interfaces a lot easier.
 %endif
 
 #-------------------------------------------------------------------------
-
+%if %with local_phonon_package
 %package designer-plugin-phonon
 Summary: designer plugin for phonon Qt support
 Group: Development/KDE and Qt
@@ -926,7 +926,7 @@ designer plugin for phonon Qt support.
 %files designer-plugin-phonon
 %defattr(-,root,root,-)
 %pluginsdir/designer/libphonon*
-
+%endif
 #-------------------------------------------------------------------------
 
 %package designer-plugin-webkit
@@ -1202,6 +1202,7 @@ rm -rf %{buildroot}/%_libdir/libphonon.*
 rm -rf %{buildroot}/%{qtdir}/include/phonon
 rm -rf %{buildroot}/%{_libdir}/pkgconfig/phonon.pc
 rm -rf %{buildroot}/%{_libdir}/qt4/plugins/phonon_backend/libphonon_gstreamer.so
+rm -rf %{buildroot}/%{pluginsdir}/designer/libphonon*
 %endif
 
 %clean
