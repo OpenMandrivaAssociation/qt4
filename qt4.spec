@@ -1,4 +1,3 @@
-%define _default_patch_fuzz 1
 %define _disable_exceptions 1
 
 %bcond_without postgres
@@ -23,7 +22,7 @@
 
 %define qtmajor 4
 %define qtminor 7
-%define qtsubminor 2
+%define qtsubminor 3
 
 %define qtversion %{qtmajor}.%{qtminor}.%{qtsubminor}
 
@@ -61,7 +60,7 @@
 %endif
 Name: %{qtlib}
 Version: %{qtversion}
-Release: %mkrel 6
+Release: 1
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
