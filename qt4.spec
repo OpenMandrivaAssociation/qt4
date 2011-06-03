@@ -58,9 +58,10 @@
 %else
 %define qttarballdir qt-everywhere-opensource-src-%{qtversion}
 %endif
+
 Name: %{qtlib}
 Version: %{qtversion}
-Release: 1
+Release: 2
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -185,7 +186,6 @@ QT%{qtmajor} component library.
 Summary: QT%{qtmajor} component library
 Group: System/Libraries
 Requires(pre): %{name}-common = %epoch:%version
-Requires: %{name}-xmlpatterns = %epoch:%version
 
 %description -n %{libqtxmlpatterns}
 QT%{qtmajor} component library.
@@ -1009,7 +1009,7 @@ Qt 4 documentation generator.
 
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" -i mkspecs/common/linux.conf
-sed -e "s|^QMAKE_CFLAGS_RELEASE.*$|QMAKE_CFLAGS_RELEASE    += %{optflags}  -DPIC -fPIC|" \
+sed -e "s|^QMAKE_CFLAGS_RELEASE.*$|QMAKE_CFLAGS_RELEASE    += %{optflags}  -fno-strict-aliasing -DPIC -fPIC| " \
     -e "s|^QMAKE_LFLAGS	.*$|QMAKE_LFLAGS		+= %{ldflags}|" \
     -e "s|^QMAKE_LFLAGS_PLUGIN.*\+= |QMAKE_LFLAGS_PLUGIN += %(echo %ldflags|sed -e 's#-Wl,--no-undefined##') |" \
     -i mkspecs/common/g++.conf
