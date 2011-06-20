@@ -61,7 +61,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: 2
+Release: 3
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -1202,6 +1202,10 @@ rm -rf %{buildroot}/%{qtdir}/include/phonon
 rm -rf %{buildroot}/%{_libdir}/pkgconfig/phonon.pc
 rm -rf %{buildroot}/%{_libdir}/qt4/plugins/phonon_backend/libphonon_gstreamer.so
 rm -rf %{buildroot}/%{pluginsdir}/designer/libphonon*
+%endif
+
+%if "%{_lib}" == "lib64"
+perl -pi -e "s|-L/usr/lib\b|-L%{_libdir}|g" %{buildroot}%{_libdir}/*.la
 %endif
 
 %clean
