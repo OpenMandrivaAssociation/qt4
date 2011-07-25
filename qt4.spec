@@ -69,7 +69,7 @@ Patch2:  qt-everywhere-opensource-src-4.7.2-fix-str-fmt.patch
 Patch4:  qt-everywhere-opensource-src-4.6.1-add_missing_bold_style.diff
 Patch5:  qt-everywhere-opensource-src-4.6.1-use_ft_glyph_embolden_to_fake_bold.diff
 Patch7: qt-everywhere-opensource-src-4.8.0-tp-openssl.patch
-Patch7: qt-everywhere-opensource-src-4.8.0-beta1-fix-build.patch
+Patch8: qt-everywhere-opensource-src-4.8.0-beta1-fix-build.patch
 BuildRequires: libxtst-devel
 BuildRequires: libxslt-devel
 BuildRequires: libalsa-devel
