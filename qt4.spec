@@ -7,9 +7,9 @@
 %bcond_without sqlite
 %bcond_without tds
 %bcond_without cups
-%bcond_without qvfb
 %bcond_without docs
 
+%bcond_with qvfb
 %bcond_with odbc
 %bcond_with debug
 %bcond_with ibase
@@ -1099,7 +1099,6 @@ make INSTALL_ROOT=%buildroot \
     %if %with docs
     install_htmldocs \
     install_qchdocs \
-    install_translations \
     %endif
     install_qmake \
     install_mkspecs
