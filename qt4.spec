@@ -1,4 +1,6 @@
 %define _disable_exceptions 1
+%define _default_patch_flags -s -l
+%define _default_patch_fuzz 2
 
 %bcond_without postgres
 %bcond_without mysql
@@ -12,13 +14,6 @@
 %bcond_with debug
 %bcond_with ibase
 %bcond_with local_phonon_package
-
-#git clone git://gitorious.org/+kde-developers/qt/kde-qt.git
-#cd kde-qt
-#git archive --format=tar --prefix=kde-qt-everywhere-opensource-src-4.6.2/ master | bzip2 >/tmp/kde-qt-everywhere-opensource-src-4.6.2.tar.bz2
-%define with_kde_qt 0
-%define kdeqttarballdir kde-qt-everywhere-opensource-src-%{qtversion} 
-%define with_qt_snapshot 0
 
 %define qtmajor 4
 %define qtminor 8
@@ -53,11 +48,7 @@
 %define pluginsdir %_libdir/qt4/plugins
 %define translationdir %qtdir/translations
 
-%if %with_kde_qt
-%define qttarballdir kde-qt-everywhere-opensource-src-%{qtversion}
-%else
 %define qttarballdir qt-everywhere-opensource-src-%{qtversion}-beta1
-%endif
 
 Name: %{qtlib}
 Version: %{qtversion}
@@ -67,12 +58,7 @@ Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
 License: LGPLv2 with exceptions or GPLv3 with exceptions
 URL:     http://qt.nokia.com/
-%if %with_kde_qt
-Source0: http://get.qt.nokia.com/qt/source/%{kdeqttarballdir}.tar.bz2
-Source6: qt-everywhere-opensource-src-doc-4.6.2.tar.bz2
-%else
 Source0: http://get.qt.nokia.com/qt/source/%{qttarballdir}.tar.gz
-%endif
 Source2: qt4.macros
 Source3: mandriva-designer-qt4.desktop 
 Source4: mandriva-assistant-qt4.desktop 
@@ -82,10 +68,8 @@ Patch1:  qt-everywhere-opensource-src-4.7.0-force-gb18030-for-gb2312.patch
 Patch2:  qt-everywhere-opensource-src-4.7.2-fix-str-fmt.patch
 Patch4:  qt-everywhere-opensource-src-4.6.1-add_missing_bold_style.diff
 Patch5:  qt-everywhere-opensource-src-4.6.1-use_ft_glyph_embolden_to_fake_bold.diff
-#(nl): https://bugs.kde.org/180051
-Patch6:  qt-everywhere-opensource-src-4.6.1-improve-cups-support.patch
-Patch7:  qt-everywhere-opensource-src-gitc0887695-fix-QGraphicsView-crash.patch
-Patch8:  qt-everywhere-opensource-src-4.6.2-cups-QTBUG-6471.patch
+Patch7: qt-everywhere-opensource-src-4.8.0-tp-openssl.patch
+Patch7: qt-everywhere-opensource-src-4.8.0-beta1-fix-build.patch
 BuildRequires: libxtst-devel
 BuildRequires: libxslt-devel
 BuildRequires: libalsa-devel
@@ -143,9 +127,6 @@ This package contains all config file and language file.
 %if %with docs
 %dir %{qtdir}/translations
 %{qtdir}/translations/qt_*
-%endif
-%if %{with_kde_qt}
-#%_docdir/%name/README.kde-qt
 %endif
 
 #------------------------------------------------------------------------
@@ -993,19 +974,12 @@ Qt 4 documentation generator.
 #-------------------------------------------------------------------------
 
 %prep
-%if %with_kde_qt 
-%setup -q -n qt 
-#-a6
-%else
-%setup -q -n %{qttarballdir}
-%endif
+%setup -q -n qt-everywhere-opensource-src-4.8.0
 
-%patch1 -p0
 %patch2 -p1
 %patch4 -p0
-#%patch6 -p0
-# REAPPLY ?
-##%patch8 -p1
+%patch7 -p1 -b .ssl
+%patch8 -p1
 
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" -i mkspecs/common/linux.conf
@@ -1129,10 +1103,6 @@ make INSTALL_ROOT=%buildroot \
     %endif
     install_qmake \
     install_mkspecs
-
-%if %{with_kde_qt}
-#install -m 0644 README.kde-qt %buildroot%_docdir/%name
-%endif
 
 # recreate .qm files
 LD_LIBRARY_PATH=`pwd`/lib bin/lrelease translations/*.ts
