@@ -124,10 +124,6 @@ This package contains all config file and language file.
 %dir %{qtdir}/bin
 %dir %pluginsdir
 %{qtdir}/phrasebooks
-%if %with docs
-%dir %{qtdir}/translations
-%{qtdir}/translations/qt_*
-%endif
 
 #------------------------------------------------------------------------
 # CORE QT LIBRARIES
@@ -502,7 +498,6 @@ Qt4 qmlviewer utility.
 %pluginsdir/bearer/libqnmbearer.so
 %pluginsdir/bearer/libqconnmanbearer.so
 %pluginsdir/designer/libqdeclarativeview.so
-%pluginsdir/qmltooling/libtcpserver.so
 
 #-------------------------------------------------------------------------
 
@@ -639,9 +634,6 @@ fi
 %files qtconfig
 %defattr(-,root,root,-)
 %{qtdir}/bin/qtconf*
-%if %with docs
-%{qtdir}/translations/qtconfig*
-%endif
 
 #-------------------------------------------------------------------------
 
@@ -702,9 +694,6 @@ languages
 %{qtdir}/bin/lingu*
 %{qtdir}/bin/lconvert*
 %{_datadir}/applications/*linguist*.desktop
-%if %with docs
-%{qtdir}/translations/linguist*
-%endif
 
 #-------------------------------------------------------------------------
 
@@ -727,9 +716,6 @@ Qt Assistant provides a documentation Browser.
 %{qtdir}/bin/qhelpconv*
 %{qtdir}/bin/qhelpgen*
 %{_datadir}/applications/*assistant*.desktop
-%if %with docs
-%{qtdir}/translations/assistant*
-%endif
 
 #-------------------------------------------------------------------------
 
@@ -890,9 +876,6 @@ implementing user interfaces a lot easier.
 %defattr(-,root,root,-)
 %{qtdir}/bin/design*
 %{_datadir}/applications/*designer*.desktop
-%if %with docs
-%{qtdir}/translations/designer_*
-%endif
 
 #-------------------------------------------------------------------------
 %if %with local_phonon_package
@@ -948,9 +931,6 @@ Qt 4 Embedded Virtual Terminal.
 %files qvfb
 %defattr(-,root,root,-)
 %{qtdir}/bin/qvf*
-%if %with docs
-%{qtdir}/translations/qvfb*
-%endif
 
 %endif
 
