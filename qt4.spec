@@ -124,6 +124,7 @@ This package contains all config file and language file.
 %dir %{qtdir}/bin
 %dir %pluginsdir
 %{qtdir}/phrasebooks
+%{qtdir}/tests/qt4
 
 #------------------------------------------------------------------------
 # CORE QT LIBRARIES
@@ -491,6 +492,7 @@ Qt4 qmlviewer utility.
 %files qmlviewer
 %defattr(-,root,root,-)
 %{qtdir}/bin/qmlviewer
+%{qtdir}/bin/qmlplugindump
 %qtdir/imports/Qt
 %qtdir/imports/QtWebKit/libqmlwebkitplugin.so
 %qtdir/imports/QtWebKit/qmldir
@@ -498,6 +500,7 @@ Qt4 qmlviewer utility.
 %pluginsdir/bearer/libqnmbearer.so
 %pluginsdir/bearer/libqconnmanbearer.so
 %pluginsdir/designer/libqdeclarativeview.so
+%pluginsdir/qmltooling
 
 #-------------------------------------------------------------------------
 
