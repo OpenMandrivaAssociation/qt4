@@ -21,8 +21,8 @@
 %define with_qt_snapshot 0
 
 %define qtmajor 4
-%define qtminor 7
-%define qtsubminor 3
+%define qtminor 8
+%define qtsubminor 0
 
 %define qtversion %{qtmajor}.%{qtminor}.%{qtsubminor}
 
@@ -56,12 +56,12 @@
 %if %with_kde_qt
 %define qttarballdir kde-qt-everywhere-opensource-src-%{qtversion}
 %else
-%define qttarballdir qt-everywhere-opensource-src-%{qtversion}
+%define qttarballdir qt-everywhere-opensource-src-%{qtversion}-tp
 %endif
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: 3
+Release: 0.0.TP1.1
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
