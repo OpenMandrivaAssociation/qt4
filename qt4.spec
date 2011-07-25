@@ -56,12 +56,12 @@
 %if %with_kde_qt
 %define qttarballdir kde-qt-everywhere-opensource-src-%{qtversion}
 %else
-%define qttarballdir qt-everywhere-opensource-src-%{qtversion}-tp
+%define qttarballdir qt-everywhere-opensource-src-%{qtversion}-beta1
 %endif
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: 0.0.TP1.1
+Release: 0.beta1.1
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -1066,7 +1066,6 @@ perl -pi -e 's@/X11R6/@/@' mkspecs/linux-*/qmake.conf mkspecs/common/linux.conf
    -openssl-linked \
    -dbus-linked \
    -qvfb \
-   -qt-gif \
    -gtkstyle \
    -xmlpatterns \
    -opengl desktop \
