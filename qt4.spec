@@ -52,7 +52,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: 0.beta1.1
+Release: 0.beta1.2
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
@@ -94,8 +94,6 @@ BuildRequires: perl
 BuildRequires: glib2-devel
 BuildRequires: libxml2-devel
 BuildRequires: binutils >= 2.18 
-# For qtgtk style 
-BuildRequires: gtk+2-devel
 
 Provides: %{qtlib}
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
