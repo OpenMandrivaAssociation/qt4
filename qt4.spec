@@ -96,7 +96,7 @@ BuildRequires: libxml2-devel
 BuildRequires: binutils >= 2.18
 BuildRequires: libcursor-devel
 BuildRequires: libxrandr-devel
-BuildRequires: libxrener-devel
+BuildRequires: libxrender-devel
 BuildRequires: libxv-devel
 
 Provides: %{qtlib}
