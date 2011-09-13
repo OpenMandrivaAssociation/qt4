@@ -1028,6 +1028,7 @@ perl -pi -e 's@/X11R6/@/@' mkspecs/linux-*/qmake.conf mkspecs/common/linux.conf
    -xmlpatterns \
    -opengl desktop \
    -platform linux-g++ \
+   -no-gtkstyle \
 %if ! %{with_cups}
    -no-cups \
 %endif
