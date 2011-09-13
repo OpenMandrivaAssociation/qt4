@@ -76,9 +76,9 @@ BuildRequires: libalsa-devel
 BuildRequires: pulseaudio-devel
 BuildRequires: GL-devel
 BuildRequires: Mesa-common-devel
-BuildRequires: zlib-devel
+BuildRequires: zlib-devel 
 BuildRequires: openssl-devel
-BuildRequires: libpng-devel
+BuildRequires: libpng-devel 
 BuildRequires: libjpeg-devel
 BuildRequires: libmng-devel
 BuildRequires: lcms-devel
@@ -93,11 +93,7 @@ BuildRequires: readline-devel
 BuildRequires: perl
 BuildRequires: glib2-devel
 BuildRequires: libxml2-devel
-BuildRequires: binutils >= 2.18
-BuildRequires: libxcursor-devel
-BuildRequires: libxrandr-devel
-BuildRequires: libxrender-devel
-BuildRequires: libxv-devel
+BuildRequires: binutils >= 2.18 
 
 Provides: %{qtlib}
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
@@ -126,7 +122,7 @@ This package contains all config file and language file.
 %dir %{qtdir}/bin
 %dir %pluginsdir
 %{qtdir}/phrasebooks
-#%{qtdir}/tests/qt4
+%{qtdir}/tests/qt4
 
 #------------------------------------------------------------------------
 # CORE QT LIBRARIES
@@ -1029,7 +1025,6 @@ perl -pi -e 's@/X11R6/@/@' mkspecs/linux-*/qmake.conf mkspecs/common/linux.conf
    -xmlpatterns \
    -opengl desktop \
    -platform linux-g++ \
-   -continue \
 %if ! %{with_cups}
    -no-cups \
 %endif
