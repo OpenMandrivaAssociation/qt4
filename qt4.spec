@@ -52,7 +52,7 @@
 
 Name: %{qtlib}
 Version: %{qtversion}
-Release: 0.beta1.2
+Release: 0.beta1.3
 Epoch: 4
 Summary: Qt GUI toolkit
 Group: Development/KDE and Qt
