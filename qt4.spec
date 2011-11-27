@@ -84,9 +84,9 @@ BuildRequires: libmng-devel
 BuildRequires: lcms-devel
 BuildRequires: cups-devel
 BuildRequires: freetype2-devel
-BuildRequires: libfontconfig-devel
+BuildRequires: pkgconfig(fontconfig)
 BuildRequires: expat-devel
-BuildRequires: libdbus-devel >= 0.92
+BuildRequires: pkgconfig(dbus-1) >= 0.92
 BuildRequires: termcap-devel
 BuildRequires: libpam-devel
 BuildRequires: readline-devel
