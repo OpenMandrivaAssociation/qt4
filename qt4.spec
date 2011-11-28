@@ -69,6 +69,7 @@ Patch2:  qt-everywhere-opensource-src-4.7.2-fix-str-fmt.patch
 Patch4:  qt-everywhere-opensource-src-4.6.1-add_missing_bold_style.diff
 Patch5:  qt-everywhere-opensource-src-4.6.1-use_ft_glyph_embolden_to_fake_bold.diff
 Patch7: qt-everywhere-opensource-src-4.8.0-tp-openssl.patch
+Patch8: qt-everywhere-opensource-src-4.8.0-rc1-updates-from-git-fixing-build.patch
 BuildRequires: libxtst-devel
 BuildRequires: libxslt-devel
 BuildRequires: libalsa-devel
@@ -962,6 +963,7 @@ Qt 4 documentation generator.
 %patch2 -p1
 %patch4 -p0
 %patch7 -p1 -b .ssl
+%patch8 -p1
 
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" -i mkspecs/common/linux.conf
