@@ -599,7 +599,6 @@ fi
 %{qtdir}/include
 %{qtdir}/mkspecs
 %_libdir/*.so
-%_libdir/*.la
 %_libdir/*.a
 %_libdir/*.prl
 %_libdir/pkgconfig/*
@@ -1159,9 +1158,8 @@ rm -rf %{buildroot}/%{_libdir}/qt4/plugins/phonon_backend/libphonon_gstreamer.so
 rm -rf %{buildroot}/%{pluginsdir}/designer/libphonon*
 %endif
 
-%if "%{_lib}" == "lib64"
-perl -pi -e "s|-L/usr/lib\b|-L%{_libdir}|g" %{buildroot}%{_libdir}/*.la
-%endif
+# cleanup
+rm -f %{buildroot}%{_libdir}/*.la
 
 %clean
 rm -rf %buildroot
