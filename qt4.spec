@@ -126,7 +126,7 @@ This package contains all config file and language file.
 %dir %{qtdir}/bin
 %dir %pluginsdir
 %{qtdir}/phrasebooks
-%{qtdir}/tests/qt4
+%{qtdir}/tests
 
 #------------------------------------------------------------------------
 # CORE QT LIBRARIES
