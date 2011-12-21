@@ -8,57 +8,61 @@
 %bcond_without tds
 %bcond_without cups
 %bcond_without docs
+%bcond_without openvg
+%bcond_without webkit
+%bcond_without qvfb
 
-%bcond_with qvfb
 %bcond_with odbc
 %bcond_with debug
 %bcond_with ibase
-%bcond_with local_phonon_package
+%bcond_with phonon
 
-%define qtmajor 4
-%define qtminor 8
-%define qtsubminor 0
+%define major 4
 
-%define qtversion %{qtmajor}.%{qtminor}.%{qtsubminor}
+%define _qt4_datadir		%{_prefix}/lib/qt4
+%define _qt4_bindir		%{_qt4_datadir}/bin
+%define _qt4_docdir		%{_docdir}/qt4
+%define _qt4_libdir		%{_libdir}
+%define _qt4_includedir		%{_qt4_datadir}/include
+%define _qt4_plugindir		%{_libdir}/qt4/plugins
+%define _qt4_demodir		%{_qt4_datadir}/demos
+%define _qt4_exampledir		%{_qt4_datadir}/examples
+%define _qt4_importdir		%{_qt4_datadir}/imports
+%define _qt4_translationdir	%{_qt4_datadir}/translations
 
-%define libqt %mklibname qt %qtmajor
-%define libqtdevel %mklibname qt %qtmajor -d
-%define libqt3support %mklibname qt3support %qtmajor
-%define libqtcore %mklibname qtcore %qtmajor
-%define libqtdesigner %mklibname qtdesigner %qtmajor
-%define libqtgui %mklibname qtgui %qtmajor
-%define libqtnetwork %mklibname qtnetwork %qtmajor
-%define libqtopengl %mklibname qtopengl %qtmajor
-%define libqtsql %mklibname qtsql %qtmajor
-%define libqtxml %mklibname qtxml %qtmajor
-%define libqtscripttools %mklibname qtscripttools %qtmajor
-%define libqtxmlpatterns %mklibname qtxmlpatterns %qtmajor
-%define libqtsvg %mklibname qtsvg %qtmajor
-%define libqttest %mklibname qttest %qtmajor
-%define libqdbus %mklibname qtdbus %qtmajor
-%define libqtscript %mklibname qtscript %qtmajor
-%define libqtclucene %mklibname qtclucene %qtmajor
-%define libqthelp %mklibname qthelp %qtmajor
-%define libqtwebkit %mklibname qtwebkit %qtmajor
-%define libqtmultimedia %mklibname qtmultimedia %qtmajor
-%define libphonon %mklibname phonon %qtmajor
-%define libqtdeclarative %mklibname qtdeclarative %qtmajor
-%define qtlib qt4
-%define qtdir %_prefix/lib/qt4
-%define pluginsdir %_libdir/qt4/plugins
-%define translationdir %qtdir/translations
+%define libqt %mklibname qt %{major}
+%define libqtdevel %mklibname qt %{major} -d
+%define libqt3support %mklibname qt3support %{major}
+%define libqtcore %mklibname qtcore %{major}
+%define libqtdesigner %mklibname qtdesigner %{major}
+%define libqtgui %mklibname qtgui %{major}
+%define libqtnetwork %mklibname qtnetwork %{major}
+%define libqtopengl %mklibname qtopengl %{major}
+%define libqtsql %mklibname qtsql %{major}
+%define libqtxml %mklibname qtxml %{major}
+%define libqtscripttools %mklibname qtscripttools %{major}
+%define libqtxmlpatterns %mklibname qtxmlpatterns %{major}
+%define libqtsvg %mklibname qtsvg %{major}
+%define libqttest %mklibname qttest %{major}
+%define libqdbus %mklibname qtdbus %{major}
+%define libqtscript %mklibname qtscript %{major}
+%define libqtclucene %mklibname qtclucene %{major}
+%define libqthelp %mklibname qthelp %{major}
+%define libqtwebkit %mklibname qtwebkit %{major}
+%define libqtmultimedia %mklibname qtmultimedia %{major}
+%define libphonon %mklibname phonon %{major}
+%define libqtdeclarative %mklibname qtdeclarative %{major}
 
-%define qttarballdir qt-everywhere-opensource-src-%{qtversion}-rc1
 
-Name: %{qtlib}
-Version: %{qtversion}
-Release: 0.rc1.3
-Epoch: 4
-Summary: Qt GUI toolkit
-Group: Development/KDE and Qt
-License: LGPLv2 with exceptions or GPLv3 with exceptions
-URL:     http://qt.nokia.com/
-Source0: http://get.qt.nokia.com/qt/source/%{qttarballdir}.tar.gz
+Name:		qt4
+Summary:	Qt GUI toolkit
+Group:		Development/KDE and Qt
+Version:	4.8.0
+Release:	1
+Epoch:		4
+License:	LGPLv2 with exceptions or GPLv3 with exceptions
+URL:		http://qt.nokia.com/
+Source0: http://get.qt.nokia.com/qt/source/qt-everywhere-opensource-src-%{version}.tar.gz
 Source2: qt4.macros
 Source3: mandriva-designer-qt4.desktop 
 Source4: mandriva-assistant-qt4.desktop 
@@ -69,19 +73,23 @@ Patch2:  qt-everywhere-opensource-src-4.7.2-fix-str-fmt.patch
 Patch4:  qt-everywhere-opensource-src-4.6.1-add_missing_bold_style.diff
 Patch5:  qt-everywhere-opensource-src-4.6.1-use_ft_glyph_embolden_to_fake_bold.diff
 Patch7: qt-everywhere-opensource-src-4.8.0-tp-openssl.patch
-Patch8: qt-everywhere-opensource-src-4.8.0-rc1-updates-from-git-fixing-build.patch
 Patch9: qt-everywhere-opensource-src-4.8.0-rc1-fix-build-with-glib-2.31.patch
+Patch10: 	qt-4.8.0-fix-qvfb-build.patch
+
 BuildRequires: libxtst-devel
 BuildRequires: libxslt-devel
 BuildRequires: libalsa-devel
 BuildRequires: pulseaudio-devel
 BuildRequires: GL-devel
 BuildRequires: Mesa-common-devel
+%if %{with openvg}
+BuildRequires:	mesaopenvg-devel
+%endif
 BuildRequires: zlib-devel 
 BuildRequires: openssl-devel
-BuildRequires: libpng-devel 
-BuildRequires: libjpeg-devel
-BuildRequires: libmng-devel
+BuildRequires: png-devel 
+BuildRequires: jpeg-devel
+BuildRequires: mng-devel
 BuildRequires: lcms-devel
 BuildRequires: cups-devel
 BuildRequires: freetype2-devel
@@ -89,7 +97,7 @@ BuildRequires: pkgconfig(fontconfig)
 BuildRequires: expat-devel
 BuildRequires: pkgconfig(dbus-1) >= 0.92
 BuildRequires: termcap-devel
-BuildRequires: libpam-devel
+BuildRequires: pam-devel
 BuildRequires: readline-devel
 BuildRequires: perl
 BuildRequires: glib2-devel
@@ -99,8 +107,29 @@ BuildRequires: libxcursor-devel
 BuildRequires: libxrandr-devel
 BuildRequires: libxrender-devel
 BuildRequires: libxv-devel
-
-Provides: %{qtlib}
+%if %{with phonon}
+BuildRequires: libgstreamer-devel
+BuildRequires: libgstreamer-plugins-base-devel
+%endif
+%if %{with mysql}
+BuildRequires: mysql-devel
+%endif
+%if %{with odbc}
+BuildRequires: unixODBC-devel
+%endif
+%if %{with sqlite}
+BuildRequires: sqlite3-devel
+%endif
+%if %{with tds}
+BuildRequires: freetds-devel
+%endif
+%if %{with ibase}
+BuildRequires: firebird-devel
+%endif
+%if %{with postgres}
+BuildRequires: postgresql-devel
+BuildRequires: libpq-devel
+%endif
 
 %description
 Qt is a GUI software toolkit which simplifies the task of writing and
@@ -120,399 +149,390 @@ Summary: config, language file for Qt
 This package contains all config file and language file.
 
 %files common
-%defattr(-,root,root,-)
 %attr(0755,root,root) %_sysconfdir/profile.d/*
-%dir %{qtdir}
-%dir %{qtdir}/bin
-%dir %pluginsdir
-%{qtdir}/phrasebooks
-%{qtdir}/tests
+%dir %{_qt4_bindir}
+%dir %{_qt4_datadir}
+%dir %{_qt4_plugindir}
+%{_qt4_datadir}/phrasebooks/
+%dir %{_qt4_translationdir}
+%{_qt4_translationdir}/qt_*
 
 #------------------------------------------------------------------------
 # CORE QT LIBRARIES
-#-------------------------------------------------------------------------
+#--------------------------------------------------------------------
 
 %package -n %{libqtxml}
-Summary: QT%{qtmajor} component library
-Group: System/Libraries
-Requires(pre): %{name}-common = %epoch:%version
-Provides:	qtxmllib = %epoch:%version
+Summary:	Qt%{major} component library
+Group:		System/Libraries
+Requires:	%{name}-common = %{epoch}:%{version}
+Provides:	qtxmllib = %{epoch}:%{version}-%{release}
 
 %description -n %{libqtxml}
-QT%{qtmajor} component library.
+Qt%{major} component library.
 
 %files -n %{libqtxml}
-%defattr(-,root,root,-)
-%_libdir/libQtXml.so.%{qtmajor}*
+%{_libdir}/libQtXml.so.%{major}*
 
-#-------------------------------------------------------------------------
-
+#--------------------------------------------------------------------
 %package -n %{libqtscripttools}
-Summary: QT%{qtmajor} component library
-Group: System/Libraries
-Requires(pre): %{name}-common = %epoch:%version
-Provides: qtscripttoolslib = %epoch:%version
+Summary:	Qt%{major} component library
+Group:		System/Libraries
+Requires:	%{name}-common = %{epoch}:%{version}
+Provides:	qtscripttoolslib = %{epoch}:%{version}-%{release}
 
 %description -n %{libqtscripttools}
-QT%{qtmajor} component library.
+Qt%{major} component library.
 
 %files -n %{libqtscripttools}
-%defattr(-,root,root,-)
-%_libdir/libQtScriptTools.so.%{qtmajor}*
+%{_libdir}/libQtScriptTools.so.%{major}*
 
-#-------------------------------------------------------------------------
-
+#--------------------------------------------------------------------
 %package -n %{libqtxmlpatterns}
-Summary: QT%{qtmajor} component library
-Group: System/Libraries
-Requires(pre): %{name}-common = %epoch:%version
+Summary:	Qt%{major} component library
+Group:		System/Libraries
+Requires:	%{name}-common = %{epoch}:%{version}
 
 %description -n %{libqtxmlpatterns}
-QT%{qtmajor} component library.
+Qt%{major} component library.
 
 %files -n %{libqtxmlpatterns}
-%defattr(-,root,root,-)
-%_libdir/libQtXmlPatterns.so.%{qtmajor}*
+%{_libdir}/libQtXmlPatterns.so.%{major}*
 
-#-------------------------------------------------------------------------
-
+#--------------------------------------------------------------------
 %package -n %{libqtsql}
-Summary: QT%{qtmajor} component library
-Group: System/Libraries
-Requires(pre): %{name}-common = %epoch:%version
-Provides:	qtsqllib = %epoch:%version 
+Summary:	Qt%{major} component library
+Group:		System/Libraries
+Requires:	%{name}-common = %{epoch}:%{version}
+Provides:	qtsqllib = %{epoch}:%{version}-%{release}
 
 %description -n %{libqtsql}
-QT%{qtmajor} component library.
+Qt%{major} component library.
 
 %files -n %{libqtsql}
-%defattr(-,root,root,-)
-%_libdir/libQtSql.so.%{qtmajor}*
+%{_libdir}/libQtSql.so.%{major}*
 
-#-------------------------------------------------------------------------
-
+#--------------------------------------------------------------------
 %package -n %{libqtnetwork}
-Summary: QT%{qtmajor} component library
-Group: System/Libraries
-Requires(pre): %{name}-common = %epoch:%version
-Provides: qtnetworklib = %epoch:%version
+Summary:	Qt%{major} component library
+Group:		System/Libraries
+Requires:	%{name}-common = %{epoch}:%{version}
+Provides:	qtnetworklib = %{epoch}:%{version}-%{release}
 
 %description -n %{libqtnetwork}
-QT%{qtmajor} component library.
+Qt%{major} component library.
 
 %files -n %{libqtnetwork}
-%defattr(-,root,root,-)
-%_libdir/libQtNetwork.so.%{qtmajor}*
+%{_libdir}/libQtNetwork.so.%{major}*
 
-#-------------------------------------------------------------------------
-
+#--------------------------------------------------------------------
 %package -n %{libqtscript}
-Summary: QT%{qtmajor} component library
-Group: System/Libraries
-Requires(pre): %{name}-common = %epoch:%version
-Provides: libqtscript = %epoch:%version
+Summary:	Qt%{major} component library
+Group:		System/Libraries
+Requires:	%{name}-common = %{epoch}:%{version}
+Provides:	libqtscript = %{epoch}:%{version}-%{release}
 
 %description -n %{libqtscript}
-QT%{qtmajor} component library.
+Qt%{major} component library.
 
 %files -n %{libqtscript}
-%defattr(-,root,root,-)
-%_libdir/libQtScript.so.%{qtmajor}*
-%pluginsdir/script
+%{_libdir}/libQtScript.so.%{major}*
+%{_qt4_plugindir}/script/
 
-#-------------------------------------------------------------------------
-
+#--------------------------------------------------------------------
 %package -n %{libqtgui}
-Summary: QT%{qtmajor} component library
-Group: System/Libraries
-Requires(pre): %{name}-common = %epoch:%version
-Conflicts: %{libqtcore} <= 2:4.2.2-%mkrel 2
-Provides: qtguilib = %epoch:%version
+Summary:	Qt%{major} component library
+Group:		System/Libraries
+Requires:	%{name}-common = %{epoch}:%{version}
+Provides:	qtguilib = %{epoch}:%{version}-%{release}
+Conflicts:	%{libqtcore} <= 2:4.2.2-%mkrel 2
 
 %description -n %{libqtgui}
-QT%{qtmajor} component library.
+Qt%{major} component library.
 
 %files -n %{libqtgui}
-%defattr(-,root,root,-)
-%_libdir/libQtGui.so.%{qtmajor}*
-%pluginsdir/imageformats
-%pluginsdir/inputmethods/libqimsw-multi.so*
+%{_libdir}/libQtGui.so.%{major}*
+%{_qt4_plugindir}/imageformats/
+%{_qt4_plugindir}/inputmethods/libqimsw-multi.so*
 
-#-------------------------------------------------------------------------
-
+#--------------------------------------------------------------------
 %package -n %{libqtsvg}
-Summary: QT%{qtmajor} component library
-Group: System/Libraries
-Requires(pre): %{name}-common = %epoch:%version
-Provides: qtsvglib = %epoch:%version
+Summary:	Qt%{major} component library
+Group:		System/Libraries
+Requires:	%{name}-common = %{epoch}:%{version}
+Provides:	qtsvglib = %{epoch}:%{version}-%{release}
 
 %description -n %{libqtsvg}
-QT%{qtmajor} component library.
+Qt%{major} component library.
 
 %files -n %{libqtsvg}
-%defattr(-,root,root,-)
-%_libdir/libQtSvg.so.%{qtmajor}*
-%pluginsdir/iconengines/libqsvgicon.*
+%{_libdir}/libQtSvg.so.%{major}*
+%{_qt4_plugindir}/iconengines/
 
-#-------------------------------------------------------------------------
-
+#--------------------------------------------------------------------
 %package -n %{libqttest}
-Summary: QT%{qtmajor} component library
-Group: System/Libraries
-Requires(pre): %{name}-common = %epoch:%version
-Provides: qttestlib = %epoch:%version
+Summary:	Qt%{major} component library
+Group:		System/Libraries
+Requires:	%{name}-common = %{epoch}:%{version}
+Provides:	qttestlib = %{epoch}:%{version}-%{release}
 
 %description -n %{libqttest}
-QT%{qtmajor} component library.
+Qt%{major} component library.
 
 %files -n %{libqttest}
-%defattr(-,root,root,-)
-%_libdir/libQtTest.so.%{qtmajor}*
+%{_libdir}/libQtTest.so.%{major}*
 
-#-------------------------------------------------------------------------
-
+#--------------------------------------------------------------------
 %package -n %{libqtwebkit}
-Summary: QT%{qtmajor} component library
-Group: System/Libraries
-Requires(pre): %{name}-common = %epoch:%version
-Provides: qtwebkitlib = %epoch:%version
+Summary:	Qt%{major} component library
+Group:		System/Libraries
+Requires:	%{name}-common = %{epoch}:%{version}
+Provides:	qtwebkitlib = %{epoch}:%{version}-%{release}
 
 %description -n %{libqtwebkit}
-QT%{qtmajor} component library.
+Qt%{major} component library.
 
 %files -n %{libqtwebkit}
-%defattr(-,root,root,-)
-%_libdir/libQtWebKit.so.%{qtmajor}*
+%{_libdir}/libQtWebKit.so.%{major}*
 
-#-------------------------------------------------------------------------
-
+#--------------------------------------------------------------------
 %package -n %{libqthelp}
-Summary: QT%{qtmajor} component library
-Group: System/Libraries
-Requires(pre): %{name}-common = %epoch:%version
-Provides: qthelplib = %epoch:%version
+Summary:	Qt%{major} component library
+Group:		System/Libraries
+Requires:	%{name}-common = %{epoch}:%{version}
+Provides:	qthelplib = %{epoch}:%{version}-%{release}
 
 %description -n %{libqthelp}
-QT%{qtmajor} component library.
+Qt%{major} component library.
 
 %files -n %{libqthelp}
-%defattr(-,root,root,-)
-%_libdir/libQtHelp.so.%{qtmajor}*
+%{_libdir}/libQtHelp.so.%{major}*
 
-#-------------------------------------------------------------------------
-
+#--------------------------------------------------------------------
 %package -n %{libqtclucene}
-Summary: QT%{qtmajor} component library
-Group: System/Libraries
-Requires(pre): %{name}-common = %epoch:%version
-Provides: qtclucenelib = %epoch:%version
+Summary:	Qt%{major} component library
+Group:		System/Libraries
+Requires:	%{name}-common = %{epoch}:%{version}
+Provides:	qtclucenelib = %{epoch}:%{version}-%{release}
 
 %description -n %{libqtclucene}
-QT%{qtmajor} component library.
+Qt%{major} component library.
 
 %files -n %{libqtclucene}
-%defattr(-,root,root,-)
-%_libdir/libQtCLucene.so.%{qtmajor}*
+%{_libdir}/libQtCLucene.so.%{major}*
 
-#-------------------------------------------------------------------------
-
+#--------------------------------------------------------------------
 %package -n %{libqtcore}
-Summary: QT%{qtmajor} component library
-Group: System/Libraries
-Requires(pre): %{name}-common = %epoch:%version
-Conflicts: %{libqtgui} <= 2:4.2.2-%mkrel 2
-Provides: qtcorelib = %epoch:%version
-Obsoletes: %{_lib}qtuitools4
-Obsoletes: qt4-codecs-plugin-%_lib
+Summary:	Qt%{major} component library
+Group:		System/Libraries
+Requires:	%{name}-common = %{epoch}:%{version}
+Provides:	qtcorelib = %{epoch}:%{version}-%{release}
+Conflicts:	%{libqtgui} <= 2:4.2.2-%mkrel 2
+Obsoletes:	%{_lib}qtuitools4
+Obsoletes:	qt4-codecs-plugin-%_lib
 
 %description -n %{libqtcore}
-QT%{qtmajor} component library.
+Qt%{major} component library.
 
 %files -n %{libqtcore}
-%defattr(-,root,root,-)
-%_libdir/libQtCore.so.%{qtmajor}*
-%dir %pluginsdir/codecs
-%pluginsdir/codecs/*.so*
+%{_libdir}/libQtCore.so.%{major}*
+%{_qt4_plugindir}/codecs/
 
-#-------------------------------------------------------------------------
-
+#--------------------------------------------------------------------
 %package -n %{libqt3support}
-Summary: QT%{qtmajor} component library
-Group: System/Libraries
-Requires(pre): %{name}-common = %epoch:%version
-Provides: qt3supportlib = %epoch:%version
+Summary:	Qt%{major} component library
+Group:		System/Libraries
+Requires:	%{name}-common = %{epoch}:%{version}
+Provides:	qt3supportlib = %{epoch}:%{version}-%{release}
 
 %description -n %{libqt3support}
-QT%{qtmajor} component library.
+Qt%{major} component library.
 
 %files -n %{libqt3support}
-%defattr(-,root,root,-)
-%_libdir/libQt3Support.so.%{qtmajor}*
+%{_libdir}/libQt3Support.so.%{major}*
 
-#-------------------------------------------------------------------------
-
+#--------------------------------------------------------------------
 %package -n %{libqtopengl}
-Summary: QT%{qtmajor} component library
-Group: System/Libraries
-Requires(pre): %{name}-common = %epoch:%version
-Provides: qtopengllib = %epoch:%version
+Summary:	Qt%{major} component library
+Group:		System/Libraries
+Requires:	%{name}-common = %{epoch}:%{version}
+Provides:	qtopengllib = %{epoch}:%{version}-%{release}
 
 %description -n %{libqtopengl}
-QT%{qtmajor} component library.
+Qt%{major} component library.
 
 %files -n %{libqtopengl}
-%defattr(-,root,root,-)
-%_libdir/libQtOpenGL.so.%{qtmajor}*
+%{_libdir}/libQtOpenGL.so.%{major}*
 
-#-------------------------------------------------------------------------
-
+#--------------------------------------------------------------------
 %package -n %{libqtdesigner}
-Summary: QT%{qtmajor} component library
-Group: System/Libraries
-Requires(pre): %{name}-common = %epoch:%version
-Provides: qtdesignerlib = %epoch:%version
+Summary:	Qt%{major} component library
+Group:		System/Libraries
+Requires:	%{name}-common = %{epoch}:%{version}
+Provides:	qtdesignerlib = %{epoch}:%{version}-%{release}
 # Had wrong major:
-Obsoletes: %{_lib}qtdesigner1 < 2:4.3.4-4
+Obsoletes:	%{_lib}qtdesigner1 < 2:4.3.4-4
 
 %description -n %{libqtdesigner}
-QT%{qtmajor} component library.
+Qt%{major} component library.
 
 %files -n %{libqtdesigner}
-%defattr(-,root,root,-)
-%_libdir/libQtDesigner.so.%{qtmajor}*
-%_libdir/libQtDesignerComponents.so.%{qtmajor}*
+%{_libdir}/libQtDesigner.so.%{major}*
+%{_libdir}/libQtDesignerComponents.so.%{major}*
 
-#-------------------------------------------------------------------------
-
+#--------------------------------------------------------------------
 %package -n %{libqdbus}
-Summary: QT dbus lib
-Group: System/Libraries
-Requires(pre): %{name}-common = %epoch:%version
-Provides: qdbuslib = %epoch:%version
+Summary:	Qt%{major} dbus library
+Group:		System/Libraries
+Requires:	%{name}-common = %{epoch}:%{version}
+Provides:	qdbuslib = %{epoch}:%{version}-%{release}
 
 %description -n %{libqdbus}
-QT dbus lib.
+Qt dbus library.
 
 %files -n %{libqdbus}
-%defattr(-,root,root,-)
-%_libdir/libQtDBus.so.%{qtmajor}*
+%{_libdir}/libQtDBus.so.%{major}*
 
-#-------------------------------------------------------------------------
-
+#--------------------------------------------------------------------
 %package -n %{libqtmultimedia}
-Summary: QT multimedia lib
-Group: System/Libraries
-Requires(pre): %{name}-common = %epoch:%version
+Summary:	Qt%{major} multimedia library
+Group:		System/Libraries
+Requires:	%{name}-common = %{epoch}:%{version}
 
 %description -n %{libqtmultimedia}
-QT multimedia lib.
+Qt multimedia library.
 
 %files -n %{libqtmultimedia}
-%defattr(-,root,root,-)
-%_libdir/libQtMultimedia.so.%{qtmajor}*
+%{_libdir}/libQtMultimedia.so.%{major}*
 
-#-------------------------------------------------------------------------
-
-%if %with local_phonon_package
-
+#--------------------------------------------------------------------
+%if %{with phonon}
 %package -n %{libphonon}
-Summary: QT phonon library
-Group: System/Libraries
-Requires(pre): %{name}-common = %epoch:%version
+Summary:	Qt%{major} Phonon Library
+Group:		System/Libraries
+Requires:	%{name}-common = %{epoch}:%{version}
 
 %description -n %{libphonon}
-Qt phonon library.
+Phonon library for Qt.
 
 %files -n %{libphonon}
-%defattr(-,root,root,-)
-%_libdir/libphonon.so.%{qtmajor}*
+%{_libdir}/libphonon.so.%{major}*
 
-#-------------------------------------------------------------------------
-
+#--------------------------------------------------------------------
 %package -n phonon-gstreamer
-Summary: QT phonon gstreamer backend
-Group: System/Libraries
-Provides: phonon-backend = %{epoch}:%{version}
-BuildRequires: libgstreamer-devel
-BuildRequires: libgstreamer-plugins-base-devel
-Requires: gstreamer0.10-plugins-good
-Requires: gstreamer0.10-pulse
-Suggests: gstreamer0.10-ffmpeg
-Suggests: gstreamer0.10-soup
+Summary:	Qt%{major} Phonon Gstreamer Backend
+Group:		System/Libraries
+Provides:	phonon-backend = %{epoch}:%{version}-%{release}
+Requires:	gstreamer0.10-plugins-good
+Requires:	gstreamer0.10-pulse
+Suggests:	gstreamer0.10-ffmpeg
+Suggests:	gstreamer0.10-soup
 %if %mdkversion >= 201000
 Obsoletes: arts
 Obsoletes: arts3
 %endif
 
 %description -n phonon-gstreamer
-Qt phonon library.
+Phonon gstreamer backend fot Qt.
 
 %files -n phonon-gstreamer
-%defattr(-,root,root,-)
-%pluginsdir/phonon_backend/libphonon_gstreamer.so
+%{_qt4_plugindir}/phonon_backend/libphonon_gstreamer.so
 
+#--------------------------------------------------------------------
+%package designer-plugin-phonon
+Summary:	Qt%{major} Designer Phonon Plugin for Qt
+Group:		Development/KDE and Qt
+
+%description designer-plugin-phonon
+Designer phonon plugin for Qt support.
+
+%files designer-plugin-phonon
+%{_qt4_plugindir}/designer/libphononwidgets.so
 %endif
 
-#-------------------------------------------------------------------------
-
+#--------------------------------------------------------------------
 %package qtdbus
-Summary: QT dbus binary
-Group: Development/KDE and Qt
-Requires(pre): %{libqdbus} >= 4:4.5.2
+Summary:	Qt%{major} DBus Binary
+Group:		Development/KDE and Qt
+Requires:	%{libqdbus} = %{epoch}:%{version}
 
 %description qtdbus
-QT dbus binary.
+Dbus binary for Qt.
 
 %files qtdbus
-%defattr(-,root,root,-)
-%{qtdir}/bin/qdbus
-%{qtdir}/bin/qdbusviewer
+%{_qt4_bindir}/qdbus
+%{_qt4_bindir}/qdbusviewer
 
-#-------------------------------------------------------------------------
-
+#--------------------------------------------------------------------
 %package -n %{libqtdeclarative}
-Summary: QT phonon library
-Group: System/Libraries
-Requires(pre): %{name}-common = %epoch:%version
+Summary:	Qt%{major} phonon library
+Group:		System/Libraries
+Requires:	%{name}-common = %{epoch}:%{version}
 
 %description -n %{libqtdeclarative}
 Qt phonon library.
 
 %files -n %{libqtdeclarative}
-%defattr(-,root,root,-)
-%_libdir/libQtDeclarative.so.%{qtmajor}*
+%{_libdir}/libQtDeclarative.so.%{major}*
 
-#-------------------------------------------------------------------------
-
+#--------------------------------------------------------------------
 %package qmlviewer
-Summary: Qt4 qmlviewer utility
-Group: Development/KDE and Qt
+Summary:	Qt%{major} Qmlviewer Utility
+Group:		Development/KDE and Qt
 
 %description qmlviewer
-Qt4 qmlviewer utility.
+Qmlviewer utility for Qt.
 
 %files qmlviewer
-%defattr(-,root,root,-)
-%{qtdir}/bin/qmlviewer
-%{qtdir}/bin/qmlplugindump
-%qtdir/imports/Qt
-%qtdir/imports/QtWebKit/libqmlwebkitplugin.so
-%qtdir/imports/QtWebKit/qmldir
-%pluginsdir/bearer/libqgenericbearer.so
-%pluginsdir/bearer/libqnmbearer.so
-%pluginsdir/bearer/libqconnmanbearer.so
-%pluginsdir/designer/libqdeclarativeview.so
-%pluginsdir/qmltooling
+%{_qt4_bindir}/qmlviewer
+%{_qt4_bindir}/qmlplugindump
+%{_qt4_importdir}/Qt/
+%{_qt4_importdir}/QtWebKit/libqmlwebkitplugin.so
+%{_qt4_importdir}/QtWebKit/qmldir
+%{_qt4_plugindir}/bearer/libqgenericbearer.so
+%{_qt4_plugindir}/bearer/libqnmbearer.so
+%{_qt4_plugindir}/bearer/libqconnmanbearer.so
+%{_qt4_plugindir}/designer/libqdeclarativeview.so
+%dir %{_qt4_plugindir}/qmltooling/
+%{_qt4_plugindir}/qmltooling/libqmldbg_tcp.so
+%{_qt4_plugindir}/qmltooling/libqmldbg_inspector.so
 
-#-------------------------------------------------------------------------
-
+#--------------------------------------------------------------------
 %package -n %{libqtdevel}
 Summary:   Development files for the Qt GUI toolkit
 Group:     Development/KDE and Qt
-Requires:  %{name}-common = %epoch:%version
-Requires:  qt4-qtconfig
-Provides:  qt4-devel = %epoch:%version-%release
-Provides:  libqt4-devel = %epoch:%version-%release
+Requires:  %{name}-common = %{epoch}:%{version}
+Requires:  qt4-qtconfig = %{epoch}:%{version}
+Provides:  qt4-devel = %{epoch}:%{version}-%{release}
+Provides:  libqt4-devel = %{epoch}:%{version}-%{release}
+Requires:  %{libqtdeclarative} = %{epoch}:%{version}
+Requires:  %{libqt3support} = %{epoch}:%{version}
+Requires:  %{libqt3support} = %{epoch}:%{version}
+Requires:  %{libqtcore} = %{epoch}:%{version}
+Requires:  %{libqtdesigner} = %{epoch}:%{version}
+Requires:  %{libqtgui} = %{epoch}:%{version}
+Requires:  %{libqtnetwork} = %{epoch}:%{version}
+Requires:  %{libqtopengl} = %{epoch}:%{version}
+Requires:  %{libqtsql} = %{epoch}:%{version}
+Requires:  %{libqtxml} = %{epoch}:%{version}
+Requires:  %{libqtscripttools} = %{epoch}:%{version}
+Requires:  %{libqtxmlpatterns} = %{epoch}:%{version}
+Requires:  %{libqtsvg} = %{epoch}:%{version}
+Requires:  %{libqtclucene} = %{epoch}:%{version}
+Requires:  %{libqttest} = %{epoch}:%{version}
+Requires:  %{libqdbus} = %{epoch}:%{version}
+Requires:  %{libqtwebkit} = %{epoch}:%{version}
+Requires:  %{libqtscript} = %{epoch}:%{version}
+Requires:  %{libqthelp} = %{epoch}:%{version}
+Requires:  %{libqtmultimedia} = %{epoch}:%{version}
+%if %{with phonon}
+Requires:  qt4-designer-plugin-phonon = %{epoch}:%{version}
+%endif
+Requires:  qt4-qtdbus = %{epoch}:%{version}
+Requires:  qt4-designer-plugin-webkit = %{epoch}:%{version}
+Requires:  qt4-designer-plugin-qt3support = %{epoch}:%{version}
+Requires(post):	update-alternatives
+Requires(postun):update-alternatives
+Conflicts:	qt4-common <= 2:4.3.3
 Obsoletes: %{mklibname -d QtWebKit} < %version
 Conflicts: %{_lib}qtxml4 < 2:4.3.4-3
 Conflicts: %{_lib}qtsql4 < 2:4.3.4-3
@@ -530,441 +550,374 @@ Conflicts: %{_lib}qassistant1 < 2:4.3.4-3
 Conflicts: %{_lib}qttest4 < 2:4.3.4-3
 Conflicts: %{_lib}qtcore4 < 2:4.3.4-3
 Conflicts: qt4-linguist < 2:4.4.3-3
-Requires:  %{libqtdeclarative} = %epoch:%version
-Requires:  %{libqt3support} = %epoch:%version
-Requires:  %{libqt3support} = %epoch:%version
-Requires:  %{libqtcore} = %epoch:%version
-Requires:  %{libqtdesigner} = %epoch:%version
-Requires:  %{libqtgui} = %epoch:%version
-Requires:  %{libqtnetwork} = %epoch:%version
-Requires:  %{libqtopengl} = %epoch:%version
-Requires:  %{libqtsql} = %epoch:%version
-Requires:  %{libqtxml} = %epoch:%version
-Requires:  %{libqtscripttools} = %epoch:%version
-Requires:  %{libqtxmlpatterns} = %epoch:%version
-Requires:  %{libqtsvg} = %epoch:%version
-Requires:  %{libqtclucene} = %epoch:%version
-Requires:  %{libqttest} = %epoch:%version
-Requires:  %{libqdbus} = %epoch:%version
-Requires:  %{libqtwebkit} = %epoch:%version
-Requires:  %{libqtscript} = %epoch:%version
-Requires:  %{libqthelp} = %epoch:%version
-Requires:  %{libqtmultimedia} = %epoch:%version
-%if %with local_phonon_package
-Requires:  %{libphonon} = %epoch:%version
-Requires:  qt4-designer-plugin-phonon = %epoch:%version
-%else
-Requires:  phonon-devel
-%endif
-Requires:  qt4-qtdbus = %epoch:%version
-Requires:  qt4-designer-plugin-webkit = %epoch:%version
-Requires:  qt4-designer-plugin-qt3support = %epoch:%version
-Requires:  mesaglu-devel 
-Requires:  png-devel
-Requires:  jpeg-devel
-Requires:  make
 
 %description -n %{libqtdevel}
-The %{qtlib}-devel package contains the files necessary to develop
+The %{name}-devel package contains the files necessary to develop
 applications using the Qt GUI toolkit: the header files, the Qt
 meta object compiler, and the static libraries.  See the address
 http://qt.nokia.com/ for more information about Qt.
 
-Install %{qtlib}-devel if you want to develop GUI applications using the Qt
+Install %{name}-devel if you want to develop GUI applications using the Qt
 toolkit.
 
 %post -n %{libqtdevel}
-update-alternatives --install %_bindir/qmake qmake %qtdir/bin/qmake 20
+update-alternatives --install %{_bindir}/qmake qmake %{_qt4_bindir}/qmake 20
 
 %postun -n %{libqtdevel}
 if ! [ -e %qtdir/bin/qmake ]; then
-  update-alternatives --remove qmake %qtdir/bin/qmake
+  update-alternatives --remove qmake %{_qt4_bindir}/qmake
 fi
 
 %files -n %{libqtdevel}
-%defattr(-,root,root,-)
-%{qtdir}/bin/moc*
-%{qtdir}/bin/qmake*
-%{qtdir}/bin/uic*
-%{qtdir}/bin/rcc*
-%{qtdir}/bin/qt3to4*
-%{qtdir}/bin/pixeltool*
-%{qtdir}/bin/lreleas*
-%{qtdir}/bin/lupdat*
-%{qtdir}/bin/qdbusxml2cpp
-%{qtdir}/bin/qdbuscpp2xml
-%{qtdir}/bin/xmlpatternsvalidator
-%{qtdir}/bin/qttracereplay
-%_sysconfdir/rpm/macros.d/*
-%{qtdir}/include
-%{qtdir}/mkspecs
-%_libdir/*.so
-%_libdir/*.a
-%_libdir/*.prl
-%_libdir/pkgconfig/*
-%{qtdir}/q3porting.xml
+%{_sysconfdir}/rpm/macros.d/qt4.macros
+%{_qt4_bindir}/lrelease
+%{_qt4_bindir}/lupdate
+%{_qt4_bindir}/moc
+%{_qt4_bindir}/pixeltool
+%{_qt4_bindir}/qdbusxml2cpp
+%{_qt4_bindir}/qdbuscpp2xml
+%{_qt4_bindir}/qmake
+%{_qt4_bindir}/qt3to4
+%{_qt4_bindir}/qttracereplay
+%{_qt4_bindir}/rcc
+%{_qt4_bindir}/uic*
+%{_qt4_bindir}/xmlpatternsvalidator
+%{_qt4_includedir}/Qt*/
+%{_qt4_datadir}/mkspecs/
+%{_qt4_datadir}/q3porting.xml
+%{_libdir}/*.so
+%{_libdir}/*.a
+%{_libdir}/*.prl
+%{_libdir}/pkgconfig/Qt*.pc
 
-#-------------------------------------------------------------------------
-
+#--------------------------------------------------------------------
 %package xmlpatterns
-Summary: Qt4 xmlpatterns utility
-Group: Development/KDE and Qt
+Summary:	Qt%{major} Xmlpatterns Utility
+Group:		Development/KDE and Qt
 
 %description xmlpatterns
-Qt4 xmlpatterns utility.
+Xmlpatterns utility for Qt.
 
 %files xmlpatterns
-%defattr(-,root,root,-)
-%{qtdir}/bin/xmlpatterns
+%{_qt4_bindir}/xmlpatterns
 
-#-------------------------------------------------------------------------
-
+#--------------------------------------------------------------------
 %package qtconfig
-Summary: Main Qt4 configuration utility
-Group: Development/KDE and Qt
-Conflicts: qt4-common <= 2:4.3.3
+Summary:	Qt%{major} Configuration Utility
+Group:		Development/KDE and Qt
+Conflicts:	qt4-common <= 2:4.3.3
+Requires(post):	update-alternatives
+Requires(postun):update-alternatives
 
 %description qtconfig
-Main Qt 4.3 configuration utility.
+Main configuration utility for Qt.
 
 %post qtconfig
-update-alternatives --install %_bindir/qtconfig qtconfig %qtdir/bin/qtconfig 20
+update-alternatives --install %{_bindir}/qtconfig qtconfig %{_qt4_bindir}/qtconfig 20
 
 %postun qtconfig
 if ! [ -e %qtdir/bin/qtconfig ]; then
-  update-alternatives --remove qtconfig %qtdir/bin/qtconfig 
+  update-alternatives --remove qtconfig %{_qt4_bindir}/qtconfig 
 fi
 
 %files qtconfig
-%defattr(-,root,root,-)
-%{qtdir}/bin/qtconf*
+%{_qt4_bindir}/qtconf*
+%{_qt4_translationdir}/qtconfig*
 
-#-------------------------------------------------------------------------
-
-%if %with docs
-
+#--------------------------------------------------------------------
+%if %{with docs}
 %package doc
-Summary: HTML Documentation for Qt version %{version}
-Group: Books/Computer books
-BuildArch: noarch
+Summary:	Qt%{major} HTML Documentation
+Group:		Books/Computer books
+BuildArch:	noarch
 
 %description doc
 HTML documentation for the Qt toolkit. To view the documentation,
-please load up the file /usr/lib/%{qtlib}/doc/html/index.html in your
+please load up the file /usr/lib/%{name}/doc/html/index.html in your
 favourite browser.
 
 %post doc
 # Remove old qt4 doc directories
-find %_docdir -maxdepth 1 -type d -name qt-4.\* -exec rm -rf {} \;
+find %{_docdir} -maxdepth 1 -type d -name qt-4.\* -exec rm -rf {} \;
 
 %files doc
-%defattr(-,root,root,-)
-%_docdir/%name/doc/html
-%_docdir/%name/doc/qch
-
+%{_qt4_docdir}/html/
+%{_qt4_docdir}/qch/
+%{_qt4_docdir}/src/
 %endif
 
-#-------------------------------------------------------------------------
+#--------------------------------------------------------------------
+%if %{with demos}
+%package demos
+Summary:	Qt%{major} Demonstration Applications
+Group:		Development/KDE and Qt
+Obsoletes:	%{name}-demos < 4:4.8.0
+%if %{with docs}
+Requires:	%{name}-doc = %{epoch}:%{version}
+%endif
+%if %{with examples}
+Suggests:	%{name}-examples = %{epoch}:%{version}
+%endif
 
+%description demos
+Demonstration applications made with Qt %{version}.
+
+%files demos
+%{_qt4_bindir}/qtdemo
+%{_qt4_demodir}/
+%{_qt4_plugindir}/designer/libarthurplugin.so
+%endif
+
+#--------------------------------------------------------------------
+%if %{with examples}
 %package examples
-Summary: Example programs made with Qt version %{version}
-Group: Books/Computer books
-Obsoletes: qt4-tutorial
-Obsoletes: %{name}-examples < 4:4.7.0-3
+Summary:	Qt%{major} Examples Programs
+Group:		Books/Computer books
+Obsoletes:	qt4-tutorial
+Obsoletes:	%{name}-examples < 4:4.7.0-3
 
 %description examples
-Example programs made with Qt version %{version}.
+Example programs made with Qt %{version}.
 
 %files examples
-%defattr(-,root,root,-)
-%{qtdir}/examples
-%{qtdir}/demos
+%{_qt4_exampledir}/
+%{_qt4_plugindir}/designer/libcontainerextension.so
+%{_qt4_plugindir}/designer/libcustomwidgetplugin.so
+%{_qt4_plugindir}/designer/libtaskmenuextension.so
+%{_qt4_plugindir}/designer/libworldtimeclockplugin.so
+%endif
 
-#-------------------------------------------------------------------------
-
+#--------------------------------------------------------------------
 %package linguist
-Summary: QT linguist translation utility
-Group: Books/Computer books
-Requires(post): desktop-file-utils
-Requires(postun): desktop-file-utils
-Conflicts:  %name-common <= 4.3.3-4
+Summary:	Qt%{major} Linguist Translation Utility
+Group:		Books/Computer books
+Conflicts:	%name-common <= 4.3.3-4
 
 %description linguist
 Qt Linguist provides easy translation of Qt GUIs to different.
 languages
 
 %files linguist
-%defattr(-,root,root,-)
-%{qtdir}/bin/lingu*
-%{qtdir}/bin/lconvert*
+%{_qt4_bindir}/linguist
+%{_qt4_bindir}/lconvert
 %{_datadir}/applications/*linguist*.desktop
+%{_qt4_translationdir}/linguist*
 
-#-------------------------------------------------------------------------
-
+#--------------------------------------------------------------------
 %package assistant
-Summary: QT assistantion doc utility
-Group: Books/Computer books
-Requires: qt4-database-plugin-sqlite
-Suggests: qt4-doc
-Requires(post): desktop-file-utils
-Requires(postun): desktop-file-utils
-Conflicts:  %name-common <= 4.3.3-4
+Summary:	Qt%{major} Assistantion Doc Utility
+Group:		Books/Computer books
+Requires:	qt4-database-plugin-sqlite = %{epoch}:%{version}
+Suggests:	qt4-doc = %{epoch}:%{version}
+Conflicts:	%name-common <= 4.3.3-4
 
 %description assistant
 Qt Assistant provides a documentation Browser.
 
 %files assistant
-%defattr(-,root,root,-)
-%{qtdir}/bin/assistant*
-%{qtdir}/bin/qcollectiongen*
-%{qtdir}/bin/qhelpconv*
-%{qtdir}/bin/qhelpgen*
+%{_qt4_bindir}/assistant*
+%{_qt4_bindir}/qcollectiongen*
+%{_qt4_bindir}/qhelpconv*
+%{_qt4_bindir}/qhelpgen*
 %{_datadir}/applications/*assistant*.desktop
+%{_qt4_translationdir}/assistant*
 
-#-------------------------------------------------------------------------
-
-%if ! %without odbc
-
+#--------------------------------------------------------------------
+%if %{with odbc}
 %package database-plugin-odbc
-Summary: Database plugin for ODBC Qt support
-Group: Development/KDE and Qt
-Obsoletes: qt4-database-plugin-odbc-%_lib
-BuildRequires: unixODBC-devel
+Summary:	Qt%{major} Database ODBC Plugin
+Group:		Development/KDE and Qt
+Obsoletes:	qt4-database-plugin-odbc-%_lib
  
 %description database-plugin-odbc
 Database plugin for ODBC Qt support.
 
 %files database-plugin-odbc
-%defattr(-,root,root,-)
-%pluginsdir/sqldrivers/libqsqlodbc*
-
+%{_qt4_plugindir}/sqldrivers/libqsqlodbc.so
 %endif
 
-#-------------------------------------------------------------------------
-
-%if ! %without mysql
-
+#--------------------------------------------------------------------
+%if %{with mysql}
 %package database-plugin-mysql
-Summary: Database plugin for mysql Qt support
-Group: Development/KDE and Qt
-Obsoletes: qt4-database-plugin-mysql-%_lib
-BuildRequires: mysql-devel
+Summary:	Qt%{major} Database MYSQL Plugin
+Group:		Development/KDE and Qt
+Obsoletes:	qt4-database-plugin-mysql-%_lib
 
 %description database-plugin-mysql
 Database plugin for mysql Qt support.
 
 %files database-plugin-mysql
-%defattr(-,root,root,-)
-%pluginsdir/sqldrivers/libqsqlmysql*
-
+%{_qt4_plugindir}/sqldrivers/libqsqlmysql.so
 %endif
 
-#-------------------------------------------------------------------------
-
-%if ! %without sqlite
-
+#--------------------------------------------------------------------
+%if %{with sqlite}
 %package database-plugin-sqlite
-Summary: Database plugin for sqlite Qt support
-Group: Databases
-Obsoletes: qt4-database-plugin-sqlite-%_lib
-BuildRequires: sqlite3-devel
+Summary:	Qt%{major} Database SQLITE Plugin
+Group:		Databases
+Obsoletes:	qt4-database-plugin-sqlite-%_lib
 
 %description database-plugin-sqlite
 Database plugin for sqlite Qt support.
 
 %files database-plugin-sqlite
-%defattr(-,root,root,-)
-%pluginsdir/sqldrivers/libqsqlite*
+%{_qt4_plugindir}/sqldrivers/libqsqlite.so
 %endif
 
-#-------------------------------------------------------------------------
-
-%if ! %without tds
-
+#--------------------------------------------------------------------
+%if %{with tds}
 %package database-plugin-tds
-Summary: Database plugin for freetds Qt support
-Group: Databases
-Obsoletes: qt4-database-plugin-tds-%_lib
-BuildRequires: freetds-devel
+Summary:	Q%{major} Database FREETDS Plugin
+Group:		Databases
+Obsoletes:	qt4-database-plugin-tds-%_lib
 
 %description database-plugin-tds
 Database plugin for freetds Qt support.
 
 %files database-plugin-tds
-%defattr(-,root,root,-)
-%pluginsdir/sqldrivers/libqsqltds*
-
+%{_qt4_plugindir}/sqldrivers/libqsqltds.so
 %endif
 
-#-------------------------------------------------------------------------
-
-%if %with ibase
-
+#--------------------------------------------------------------------
+%if %{with ibase}
 %package database-plugin-ibase
-Summary: Database plugin for interbase Qt support
-Group: Development/KDE and Qt
-Obsoletes: qt4-database-plugin-ibase-%_lib
-BuildRequires: firebird-devel
+Summary:	Qt%{major} Database Interbase Plugin
+Group:		Development/KDE and Qt
+Obsoletes:	qt4-database-plugin-ibase-%_lib
 
 %description database-plugin-ibase
 Database plugin for interbase Qt support.
 
 %files database-plugin-ibase
-%defattr(-,root,root,-)
-%pluginsdir/sqldrivers/libqsqlibase*
+%{_qt4_plugindir}/sqldrivers/libqsqlibase.so
 %endif
 
-#-------------------------------------------------------------------------
-
-%if ! %without postgres
-
+#--------------------------------------------------------------------
+%if %{with postgres}
 %package database-plugin-pgsql
-Summary: Database plugin for pgsql Qt support
-Group: Development/KDE and Qt
-Obsoletes: qt4-database-plugin-pgsql-%_lib
-BuildRequires: postgresql-devel
-BuildRequires: libpq-devel
+Summary:	Qt%{major} Database PGSQL Plugin
+Group:		Development/KDE and Qt
+Obsoletes:	qt4-database-plugin-pgsql-%_lib
 
 %description database-plugin-pgsql
 Database plugin for pgsql Qt support.
 
 %files database-plugin-pgsql
-%defattr(-,root,root,-)
-%pluginsdir/sqldrivers/libqsqlpsql*
-
+%{_qt4_plugindir}/sqldrivers/libqsqlpsql.so
 %endif
 
-#-------------------------------------------------------------------------
-
+#--------------------------------------------------------------------
 %package graphicssystems-plugin
-Summary: Graphicssystems plugins for Qt4
-Group: Development/KDE and Qt
-Obsoletes: qt4-graphicssystems-plugin-%_lib
+Summary:	Qt%{major} Graphicssystems Plugin
+Group:		Development/KDE and Qt
+Obsoletes:	qt4-graphicssystems-plugin-%_lib
 
 %description graphicssystems-plugin
 Graphicssystems plugins for Qt4.
 
 %files graphicssystems-plugin
-%defattr(-,root,root,-)
-%dir %pluginsdir/graphicssystems
-%pluginsdir/graphicssystems/*
+%dir %{_qt4_plugindir}/graphicssystems/
+%{_qt4_plugindir}/graphicssystems/libqglgraphicssystem.so
+%{_qt4_plugindir}/graphicssystems/libqtracegraphicssystem.so
+%{_qt4_plugindir}/graphicssystems/libqvggraphicssystem.so
 
-#-------------------------------------------------------------------------
-
+#--------------------------------------------------------------------
 %package accessibility-plugin
-Summary: Accessibility plugins for Qt4
-Group: Development/KDE and Qt
-Obsoletes: qt4-accessibility-plugin-%_lib
+Summary:	Qt%{major} Accessibility Plugin
+Group:		Development/KDE and Qt
+Obsoletes:	qt4-accessibility-plugin-%_lib
 
 %description accessibility-plugin
 Acessibility plugins for Qt4.
 
 %files accessibility-plugin
-%defattr(-,root,root,-)
-%dir %pluginsdir/accessible
-%pluginsdir/accessible/*
+%{_qt4_plugindir}/accessible/
 
-#-------------------------------------------------------------------------
-
+#--------------------------------------------------------------------
 %package designer
-Summary: %{qtlib} visual design tool
-Group: Development/KDE and Qt
-Requires: %{libqtdevel} = %epoch:%version
-Conflicts:  %name-common <= 4.3.3-4
+Summary:	Qt%{major} Visual Design Tool
+Group:		Development/KDE and Qt
+Requires:	%{libqtdevel} = %{epoch}:%{version}
+Conflicts:	%name-common <= 4.3.3-4
 
 %description designer
 The Qt Designer is a visual design tool that makes designing and
 implementing user interfaces a lot easier.
 
 %files designer
-%defattr(-,root,root,-)
-%{qtdir}/bin/design*
+%{_qt4_bindir}/design*
 %{_datadir}/applications/*designer*.desktop
+%{_qt4_translationdir}/designer_*
 
-#-------------------------------------------------------------------------
-%if %with local_phonon_package
-%package designer-plugin-phonon
-Summary: designer plugin for phonon Qt support
-Group: Development/KDE and Qt
-
-%description designer-plugin-phonon
-designer plugin for phonon Qt support.
-
-%files designer-plugin-phonon
-%defattr(-,root,root,-)
-%pluginsdir/designer/libphonon*
-%endif
-#-------------------------------------------------------------------------
-
+#--------------------------------------------------------------------
+%if %{with webkit}
 %package designer-plugin-webkit
-Summary: designer plugin for webkit Qt support
-Group: Development/KDE and Qt
+Summary:	Qt%{major} Designer Webkit Plugin
+Group:		Development/KDE and Qt
 
 %description designer-plugin-webkit
-designer plugin for webkit Qt support.
+Designer plugin for webkit Qt support.
 
 %files designer-plugin-webkit
-%defattr(-,root,root,-)
-%pluginsdir/designer/libqwebview*
-
-#-------------------------------------------------------------------------
-
-%package designer-plugin-qt3support
-Summary: designer plugin for qt3support Qt support
-Group: Development/KDE and Qt
-
-%description designer-plugin-qt3support
-designer plugin for qt3support Qt support.
-
-%files designer-plugin-qt3support
-%defattr(-,root,root,-)
-%pluginsdir/designer/libqt3supportwidget*
-
-#-------------------------------------------------------------------------
-
-%if ! %without qvfb
-
-%package qvfb
-Summary: %{qtlib} embedded virtual terminal
-Group: Development/KDE and Qt
-Conflicts:  %name-common <= 4.3.3-4
-
-%description qvfb
-Qt 4 Embedded Virtual Terminal.
-
-%files qvfb
-%defattr(-,root,root,-)
-%{qtdir}/bin/qvf*
-
+%{_qt4_plugindir}/designer/libqwebview.so
 %endif
 
-#-------------------------------------------------------------------------
-#%if %with docs
+#--------------------------------------------------------------------
+%package designer-plugin-qt3support
+Summary:	Qt%{major} designer qt3support plugin
+Group:		Development/KDE and Qt
 
+%description designer-plugin-qt3support
+Designer plugin for qt3support Qt support.
+
+%files designer-plugin-qt3support
+%{_qt4_plugindir}/designer/libqt3supportwidgets.so
+
+#--------------------------------------------------------------------
+%if %{with qvfb}
+%package qvfb
+Summary:	Qt%{major} Embedded Virtual Terminal
+Group:		Development/KDE and Qt
+Conflicts:	%name-common <= 4.3.3-4
+
+%description qvfb
+Embedded virtual terminal for Qt support.
+
+%files qvfb
+%dir %{_qt4_bindir}
+%{_qt4_bindir}/qvfb
+%dir %{_qt4_translationdir}
+%{_qt4_translationdir}/qvfb*
+%endif
+
+#--------------------------------------------------------------------
 %package qdoc3
-Summary: %{qtlib} documentation generator
-Group: Development/KDE and Qt
-Conflicts:  %name-common <= 4.3.3-4
+Summary:	Qt%{major} Documentation Generator
+Group:		Development/KDE and Qt
+Conflicts:	%name-common <= 4.3.3-4
 
 %description qdoc3
 Qt 4 documentation generator.
 
 %files qdoc3
-%defattr(-,root,root,-)
-%{qtdir}/bin/qdoc3
+%{_qt4_bindir}/qdoc3
 
-#%endif
- 
-#-------------------------------------------------------------------------
-
+#--------------------------------------------------------------------
 %prep
-%setup -q -n qt-everywhere-opensource-src-4.8.0
+%setup -q -n qt-everywhere-opensource-src-%{version}
 
 %patch2 -p1
-%patch4 -p0
+#%patch4 -p0
 %patch7 -p1 -b .ssl
-%patch8 -p1
+%if %{with webkit}
 %patch9 -p1
+%endif
+%patch10 -p1 -b .fix-qvfb-build
+
+# let makefile create missing .qm files, the .qm files should be included in qt upstream
+for f in translations/*.ts ; do
+  touch ${f%.ts}.qm
+done
 
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" -i mkspecs/common/linux.conf
@@ -972,11 +925,6 @@ sed -e "s|^QMAKE_CFLAGS_RELEASE.*$|QMAKE_CFLAGS_RELEASE    += %{optflags}  -fno-
     -e "s|^QMAKE_LFLAGS	.*$|QMAKE_LFLAGS		+= %{ldflags}|" \
     -e "s|^QMAKE_LFLAGS_PLUGIN.*\+= |QMAKE_LFLAGS_PLUGIN += %(echo %ldflags|sed -e 's#-Wl,--no-undefined##') |" \
     -i mkspecs/common/g++.conf
-
-# let makefile create missing .qm files, the .qm files should be included in qt upstream
-for f in translations/*.ts ; do
-  touch ${f%.ts}.qm
-done
 
 %build
 export QTDIR=`/bin/pwd`
@@ -987,27 +935,14 @@ perl -pi -e 's@/X11R6/@/@' mkspecs/linux-*/qmake.conf mkspecs/common/linux.conf
 
 #--------------------------------------------------------
 
-# Removed options from configure
-# lets check if it is still necessary
-# -L%_prefix/%_lib crashs current build
-#
-#-L%_prefix/%_lib \
-#
-#%if ! %without postgres
-#-I%{_includedir}/pgsql \
-#-I%{_includedir}/pgsql/server \
-#
-#%if ! %without mysql
-#-I%{_includedir}/mysql \
-
 ./configure \
-   -prefix %{qtdir} \
-   -sysconfdir %_sysconfdir \
-   -libdir %_libdir \
-   -docdir %_docdir/%name/doc \
-   -plugindir %pluginsdir \
-   -translationdir %translationdir \
-%if %with debug
+   -prefix %{_qt4_datadir} \
+   -sysconfdir %{_sysconfdir} \
+   -libdir %{_libdir} \
+   -docdir %{_qt4_docdir} \
+   -plugindir %{_qt4_plugindir} \
+   -translationdir %{_qt4_translationdir} \
+%if %{with debug}
    -debug \
    -verbose \
 %else
@@ -1024,103 +959,127 @@ perl -pi -e 's@/X11R6/@/@' mkspecs/linux-*/qmake.conf mkspecs/common/linux.conf
    -reduce-relocations \
    -openssl-linked \
    -dbus-linked \
-   -qvfb \
    -gtkstyle \
    -xmlpatterns \
    -opengl desktop \
    -platform linux-g++ \
    -no-gtkstyle \
-%if ! %{with_cups}
+%if %{with qvfb}
+    -qvfb \
+%endif
+%if !%{with cups}
    -no-cups \
 %endif
-%if ! %with local_phonon_package
+%if !%{with phonon}
+    -no-phonon \
     -no-phonon-backend \
 %endif
-%if ! %without postgres
-   -plugin-sql-psql \
+%if %{with postgres}
+    -plugin-sql-psql \
 %endif
-%if ! %without mysql
-   -plugin-sql-mysql \
+%if %{with mysql}
+    -plugin-sql-mysql \
 %else
-   -no-sql-mysql \
+    -no-sql-mysql \
 %endif
-%if %with ibase
-   -plugin-sql-ibase \
+%if %{with ibase}
+    -plugin-sql-ibase \
 %else
-   -no-sql-ibase \
+    -no-sql-ibase \
 %endif
-%if ! %without sqlite
-   -plugin-sql-sqlite \
-   -system-sqlite \
-   -no-sql-sqlite2 \
+%if %{with sqlite}
+    -plugin-sql-sqlite \
+    -system-sqlite \
+    -no-sql-sqlite2 \
 %else
-   -no-sql-sqlite \
-   -no-sql-sqlite2 \
+    -no-sql-sqlite \
+    -no-sql-sqlite2 \
 %endif
-%if ! %without odbc
-   -plugin-sql-odbc \
+%if %{with odbc}
+    -plugin-sql-odbc \
 %else
-   -no-sql-odbc \
+    -no-sql-odbc \
 %endif
-%if  %without docs
-   -nomake demos \
-   -nomake examples
+%if %{with tds}
+    -plugin-sql-tds \
+%else
+    -no-sql-tds \
+%endif
+%if %{with openvg}
+    -openvg \
+%else
+    -no-openvg \
+%endif
+%if !%{with webkit}
+    -no-webkit \
+%endif
+%if !%{with docs}
+    -nomake docs \
+%endif
+%if !%{with demos}
+    -nomake demos \
+%endif
+%if !%{with examples}
+    -nomake examples
 %endif
 
 %make
 
-%if ! %without qvfb
-    make -C tools/qvfb
+%if %{with qvfb}
+    pushd tools/qvfb
+    %{_builddir}/qt-everywhere-opensource-src-%{version}/bin/qmake
+    %make
+    popd
 %endif
 
 %install
-rm -rf %buildroot
-install -d %buildroot%_bindir
-install -d %buildroot%_docdir/%name
-install -d %buildroot%_sysconfdir
-install -d %buildroot%_sysconfdir/profile.d
-
-make INSTALL_ROOT=%buildroot \
-    sub-tools-install_subtargets-ordered \
-    %if %with docs
-    install_htmldocs \
-    install_qchdocs \
-    %endif
-    install_qmake \
-    install_mkspecs
+rm -rf %{buildroot}
+install -d %{buildroot}%{_bindir}
+install -d %{buildroot}%{_docdir}/%{name}
+install -d %{buildroot}%{_sysconfdir}/profile.d
 
 # recreate .qm files
-LD_LIBRARY_PATH=`pwd`/lib bin/lrelease translations/*.ts
+#LD_LIBRARY_PATH=`pwd`/lib bin/lrelease translations/*.ts
 
-%if ! %without qvfb
-    # Install qvfb
-    %make -C tools/qvfb INSTALL_ROOT=%buildroot install
+%makeinstall INSTALL_ROOT=%{buildroot}
+
+%if %{with qvfb}
+# Install qvfb
+%makeinstall -C tools/qvfb INSTALL_ROOT=%{buildroot}
+%else
+# Remove qvfb translation files that are installed by default
+rm -f %{buildroot}%{_qt4_translationdir}/qvfb_*.qm
 %endif
 
-mkdir -p %buildroot%_datadir/applications
-install -m 644 %SOURCE3 %buildroot%_datadir/applications
-install -m 644 %SOURCE4 %buildroot%_datadir/applications
-install -m 644 %SOURCE5 %buildroot%_datadir/applications
+%if !%{with docs}
+# Remove these doc src files that are installed even if using -nomake-docs
+rm -f %{buildroot}%{_qt4_docdir}/src/
+%endif
+
+mkdir -p %{buildroot}%{_datadir}/applications
+install -m 644 %{SOURCE3} %{buildroot}%{_datadir}/applications
+install -m 644 %{SOURCE4} %{buildroot}%{_datadir}/applications
+install -m 644 %{SOURCE5} %{buildroot}%{_datadir}/applications
 
 # Fix mkspec link
-pushd  %buildroot%{qtdir}/mkspecs
+pushd  %{buildroot}%{_qt4_datadir}/mkspecs
 rm -f default
-ln -sf %{qtdir}/mkspecs/linux-g++ default
+ln -sf %{_qt4_datadir}/mkspecs/linux-g++ default
 popd
 
 # Copy examples/tutorial and demos
 for subdir in examples demos; do
    for dir in `find $subdir -type d -name .obj`; do rm -rf $dir; done
    for dir in `find $subdir -type d -name .moc`; do rm -rf $dir; done
-   cp -a $subdir %buildroot/%{qtdir}
+   cp -a $subdir %{buildroot}/%{_qt4_datadir}
 done
 
 # Fix all buildroot paths
-find %buildroot/%_libdir -type f -name '*prl' -exec perl -pi -e "s, -L%_builddir/\S+,,g" {} \;
-find %buildroot/%_libdir -type f -name '*prl' -exec sed -i -e "/^QMAKE_PRL_BUILD_DIR/d" {} \;
-find %buildroot/%_libdir -type f -name '*la' -print -exec sed -i -e "s, -L%_builddir/?\S+,,g" -e "s,-L../JavaScriptCore/release,,g" -e "s,-ljscore,,g" {} \;
-find %buildroot/%qtdir/mkspecs -name 'qmake.conf' -exec chmod -x -- {} \;
-find %buildroot/%qtdir/mkspecs -name Info.plist.app -exec chmod -x -- {} \;
+find %{buildroot}%{_libdir} -type f -name '*prl' -exec perl -pi -e "s, -L%{_builddir}/\S+,,g" {} \;
+find %{buildroot}%{_libdir} -type f -name '*prl' -exec sed -i -e "/^QMAKE_PRL_BUILD_DIR/d" {} \;
+find %{buildroot}%{_libdir} -type f -name '*la' -print -exec sed -i -e "s, -L%{_builddir}/?\S+,,g" -e "s,-L../JavaScriptCore/release,,g" -e "s,-ljscore,,g" {} \;
+find %{buildroot}/%{_qt4_datadir}/mkspecs -name 'qmake.conf' -exec chmod -x -- {} \;
+find %{buildroot}/%{_qt4_datadir}/mkspecs -name Info.plist.app -exec chmod -x -- {} \;
 
 # Don't reference %{builddir} neither /usr(/X11R6)?/ in .pc files.
 perl -pi -e '\
@@ -1130,36 +1089,28 @@ s@-L/%{_builddir}\S+@@g'\
     `find . -name \*.pc`
 
 # Install rpm macros
-mkdir -p %buildroot/%_sysconfdir/rpm/macros.d
-install -m 0644 %SOURCE2 %buildroot/%_sysconfdir/rpm/macros.d
+mkdir -p %{buildroot}%{_sysconfdir}/rpm/macros.d
+install -m 0644 %{SOURCE2} %{buildroot}%{_sysconfdir}/rpm/macros.d
 
 # Profiles
-cat > %buildroot%_sysconfdir/profile.d/60qt4.sh << EOF
+cat > %{buildroot}%{_sysconfdir}/profile.d/60qt4.sh << EOF
 #!/bin/bash
 
 # Qt4 is the main Qt on system
-export QTDIR=%qtdir
+export QTDIR=%{_qt4_datadir}
 
-[ -z \$QT4DOCDIR ] && export QT4DOCDIR=%_docdir/qt4/doc
+[ -z \$QT4DOCDIR ] && export QT4DOCDIR=%{_qt4_docdir}
 
-if [ -z \$(echo \$PATH | grep "%{qtdir}/bin") ]; then
-    PATH=\${PATH}:%{qtdir}/bin
+if [ -z \$(echo \$PATH | grep "%{_qt4_bindir}") ]; then
+    PATH=\${PATH}:%{_qt4_bindir}
     export PATH
 fi
 
 EOF
 
-# We need a proper removal
-%if ! %with local_phonon_package
-rm -rf %{buildroot}/%_libdir/libphonon.*
-rm -rf %{buildroot}/%{qtdir}/include/phonon
-rm -rf %{buildroot}/%{_libdir}/pkgconfig/phonon.pc
-rm -rf %{buildroot}/%{_libdir}/qt4/plugins/phonon_backend/libphonon_gstreamer.so
-rm -rf %{buildroot}/%{pluginsdir}/designer/libphonon*
-%endif
+# Clean WEBKIT test files
+rm -fr %{buildroot}%{_qt4_datadir}/tests/qt4/tst_*/
 
 # cleanup
 rm -f %{buildroot}%{_libdir}/*.la
 
-%clean
-rm -rf %buildroot
