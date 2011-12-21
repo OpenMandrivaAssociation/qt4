@@ -1047,7 +1047,7 @@ make install INSTALL_ROOT=%{buildroot}
 
 %if %{with qvfb}
 # Install qvfb
-%makeinstall -C tools/qvfb INSTALL_ROOT=%{buildroot}
+make install -C tools/qvfb INSTALL_ROOT=%{buildroot}
 %else
 # Remove qvfb translation files that are installed by default
 rm -f %{buildroot}%{_qt4_translationdir}/qvfb_*.qm
