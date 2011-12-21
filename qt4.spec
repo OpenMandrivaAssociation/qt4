@@ -1039,9 +1039,9 @@ install -d %{buildroot}%{_docdir}/%{name}
 install -d %{buildroot}%{_sysconfdir}/profile.d
 
 # recreate .qm files
-#LD_LIBRARY_PATH=`pwd`/lib bin/lrelease translations/*.ts
+LD_LIBRARY_PATH=`pwd`/lib bin/lrelease translations/*.ts
 
-%makeinstall INSTALL_ROOT=%{buildroot}
+make install INSTALL_ROOT=%{buildroot}
 
 %if %{with qvfb}
 # Install qvfb
