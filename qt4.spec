@@ -7,10 +7,12 @@
 %bcond_without sqlite
 %bcond_without tds
 %bcond_without cups
-%bcond_without docs
 %bcond_without openvg
 %bcond_without webkit
 %bcond_without qvfb
+%bcond_without docs
+%bcond_without demos
+%bcond_without examples
 
 %bcond_with odbc
 %bcond_with debug
@@ -19,16 +21,16 @@
 
 %define major 4
 
-%define _qt4_datadir		%{_prefix}/lib/qt4
-%define _qt4_bindir		%{_qt4_datadir}/bin
-%define _qt4_docdir		%{_docdir}/qt4
+%define _qt4_datadir		%{_prefix}/lib/qt4/
+%define _qt4_bindir		%{_qt4_datadir}/bin/
+%define _qt4_docdir		%{_docdir}/qt4/
 %define _qt4_libdir		%{_libdir}
-%define _qt4_includedir		%{_qt4_datadir}/include
-%define _qt4_plugindir		%{_libdir}/qt4/plugins
-%define _qt4_demodir		%{_qt4_datadir}/demos
-%define _qt4_exampledir		%{_qt4_datadir}/examples
-%define _qt4_importdir		%{_qt4_datadir}/imports
-%define _qt4_translationdir	%{_qt4_datadir}/translations
+%define _qt4_includedir		%{_qt4_datadir}/include/
+%define _qt4_plugindir		%{_libdir}/qt4/plugins/
+%define _qt4_demodir		%{_qt4_datadir}/demos/
+%define _qt4_exampledir		%{_qt4_datadir}/examples/
+%define _qt4_importdir		%{_qt4_datadir}/imports/
+%define _qt4_translationdir	%{_qt4_datadir}/translations/
 
 %define libqt %mklibname qt %{major}
 %define libqtdevel %mklibname qt %{major} -d
