@@ -61,7 +61,7 @@ Name:		qt4
 Summary:	Qt GUI Toolkit
 Group:		Development/KDE and Qt
 Version:	4.8.0
-Release:	1
+Release:	2
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 URL:		http://qt.nokia.com/
@@ -1120,4 +1120,3 @@ rm -fr %{buildroot}%{_qt_datadir}/tests/qt4/tst_*/
 
 # cleanup
 rm -f %{buildroot}%{_libdir}/*.la
-
