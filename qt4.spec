@@ -21,16 +21,16 @@
 
 %define major 4
 
-%define _qt4_datadir		%{_prefix}/lib/qt4/
-%define _qt4_bindir		%{_qt4_datadir}/bin/
-%define _qt4_docdir		%{_docdir}/qt4/
-%define _qt4_libdir		%{_libdir}
-%define _qt4_includedir		%{_qt4_datadir}/include/
-%define _qt4_plugindir		%{_libdir}/qt4/plugins/
-%define _qt4_demodir		%{_qt4_datadir}/demos/
-%define _qt4_exampledir		%{_qt4_datadir}/examples/
-%define _qt4_importdir		%{_qt4_datadir}/imports/
-%define _qt4_translationdir	%{_qt4_datadir}/translations/
+%define _qt_datadir		%{_prefix}/lib/qt4/
+%define _qt_bindir		%{_qt_datadir}/bin/
+%define _qt_docdir		%{_docdir}/qt4/
+%define _qt_libdir		%{_libdir}
+%define _qt_includedir		%{_qt_datadir}/include/
+%define _qt_plugindir		%{_libdir}/qt4/plugins/
+%define _qt_demodir		%{_qt_datadir}/demos/
+%define _qt_exampledir		%{_qt_datadir}/examples/
+%define _qt_importdir		%{_qt_datadir}/imports/
+%define _qt_translationdir	%{_qt_datadir}/translations/
 
 %define libqt %mklibname qt %{major}
 %define libqtdevel %mklibname qt %{major} -d
@@ -153,12 +153,12 @@ Configuration and language files for Qt.
 
 %files common
 %attr(0755,root,root) %{_sysconfdir}/profile.d/60qt4.sh
-%dir %{_qt4_bindir}
-%dir %{_qt4_datadir}
-%dir %{_qt4_plugindir}
-%{_qt4_datadir}/phrasebooks/
-%dir %{_qt4_translationdir}
-%{_qt4_translationdir}/qt_*.qm
+%dir %{_qt_bindir}
+%dir %{_qt_datadir}
+%dir %{_qt_plugindir}
+%{_qt_datadir}/phrasebooks/
+%dir %{_qt_translationdir}
+%{_qt_translationdir}/qt_*.qm
 
 #------------------------------------------------------------------------
 # CORE QT LIBRARIES
@@ -230,7 +230,7 @@ Qt component library.
 
 %files -n %{libqtscript}
 %{_libdir}/libQtScript.so.%{major}*
-%{_qt4_plugindir}/script/
+%{_qt_plugindir}/script/
 
 #--------------------------------------------------------------------
 %package -n %{libqtgui}
@@ -245,8 +245,8 @@ Qt component library.
 
 %files -n %{libqtgui}
 %{_libdir}/libQtGui.so.%{major}*
-%{_qt4_plugindir}/imageformats/
-%{_qt4_plugindir}/inputmethods/libqimsw-multi.so*
+%{_qt_plugindir}/imageformats/
+%{_qt_plugindir}/inputmethods/libqimsw-multi.so*
 
 #--------------------------------------------------------------------
 %package -n %{libqtsvg}
@@ -258,7 +258,7 @@ Qt component library.
 
 %files -n %{libqtsvg}
 %{_libdir}/libQtSvg.so.%{major}*
-%{_qt4_plugindir}/iconengines/
+%{_qt_plugindir}/iconengines/
 
 #--------------------------------------------------------------------
 %package -n %{libqttest}
@@ -318,7 +318,7 @@ Qt component library.
 
 %files -n %{libqtcore}
 %{_libdir}/libQtCore.so.%{major}*
-%{_qt4_plugindir}/codecs/
+%{_qt_plugindir}/codecs/
 
 #--------------------------------------------------------------------
 %package -n %{libqt3support}
@@ -422,7 +422,7 @@ Obsoletes: arts3
 Phonon gstreamer backend for Qt.
 
 %files -n phonon-gstreamer
-%{_qt4_plugindir}/phonon_backend/libphonon_gstreamer.so
+%{_qt_plugindir}/phonon_backend/libphonon_gstreamer.so
 
 #--------------------------------------------------------------------
 %package designer-plugin-phonon
@@ -433,7 +433,7 @@ Group:		Development/KDE and Qt
 Designer phonon plugin for Qt.
 
 %files designer-plugin-phonon
-%{_qt4_plugindir}/designer/libphononwidgets.so
+%{_qt_plugindir}/designer/libphononwidgets.so
 %endif
 
 #--------------------------------------------------------------------
@@ -446,8 +446,8 @@ Requires:	%{name}-common = %{epoch}:%{version}
 Dbus interface for Qt.
 
 %files qtdbus
-%{_qt4_bindir}/qdbus
-%{_qt4_bindir}/qdbusviewer
+%{_qt_bindir}/qdbus
+%{_qt_bindir}/qdbusviewer
 
 #--------------------------------------------------------------------
 %package -n %{libqtdeclarative}
@@ -459,7 +459,7 @@ Qt multimedia library.
 
 %files -n %{libqtdeclarative}
 %{_libdir}/libQtDeclarative.so.%{major}*
-%{_qt4_plugindir}/designer/libqdeclarativeview.so
+%{_qt_plugindir}/designer/libqdeclarativeview.so
 
 #--------------------------------------------------------------------
 %package qmlviewer
@@ -471,19 +471,19 @@ Requires:	%{name}-common = %{epoch}:%{version}
 Qmlviewer utility for Qt.
 
 %files qmlviewer
-%{_qt4_bindir}/qmlviewer
-%{_qt4_bindir}/qmlplugindump
-%{_qt4_importdir}/Qt/
+%{_qt_bindir}/qmlviewer
+%{_qt_bindir}/qmlplugindump
+%{_qt_importdir}/Qt/
 %if %{with webkit}
-%{_qt4_importdir}/QtWebKit/libqmlwebkitplugin.so
-%{_qt4_importdir}/QtWebKit/qmldir
+%{_qt_importdir}/QtWebKit/libqmlwebkitplugin.so
+%{_qt_importdir}/QtWebKit/qmldir
 %endif
-%{_qt4_plugindir}/bearer/libqgenericbearer.so
-%{_qt4_plugindir}/bearer/libqnmbearer.so
-%{_qt4_plugindir}/bearer/libqconnmanbearer.so
-%dir %{_qt4_plugindir}/qmltooling/
-%{_qt4_plugindir}/qmltooling/libqmldbg_tcp.so
-%{_qt4_plugindir}/qmltooling/libqmldbg_inspector.so
+%{_qt_plugindir}/bearer/libqgenericbearer.so
+%{_qt_plugindir}/bearer/libqnmbearer.so
+%{_qt_plugindir}/bearer/libqconnmanbearer.so
+%dir %{_qt_plugindir}/qmltooling/
+%{_qt_plugindir}/qmltooling/libqmldbg_tcp.so
+%{_qt_plugindir}/qmltooling/libqmldbg_inspector.so
 
 #--------------------------------------------------------------------
 %package -n %{libqtdevel}
@@ -553,30 +553,30 @@ Install %{name}-devel if you want to develop GUI applications using
 the Qt toolkit.
 
 %post -n %{libqtdevel}
-update-alternatives --install %{_bindir}/qmake qmake %{_qt4_bindir}/qmake 20
+update-alternatives --install %{_bindir}/qmake qmake %{_qt_bindir}/qmake 20
 
 %postun -n %{libqtdevel}
 if ! [ -e %qtdir/bin/qmake ]; then
-  update-alternatives --remove qmake %{_qt4_bindir}/qmake
+  update-alternatives --remove qmake %{_qt_bindir}/qmake
 fi
 
 %files -n %{libqtdevel}
 %{_sysconfdir}/rpm/macros.d/qt4.macros
-%{_qt4_bindir}/lrelease
-%{_qt4_bindir}/lupdate
-%{_qt4_bindir}/moc
-%{_qt4_bindir}/pixeltool
-%{_qt4_bindir}/qdbusxml2cpp
-%{_qt4_bindir}/qdbuscpp2xml
-%{_qt4_bindir}/qmake
-%{_qt4_bindir}/qt3to4
-%{_qt4_bindir}/qttracereplay
-%{_qt4_bindir}/rcc
-%{_qt4_bindir}/uic*
-%{_qt4_bindir}/xmlpatternsvalidator
-%{_qt4_includedir}/Qt*/
-%{_qt4_datadir}/mkspecs/
-%{_qt4_datadir}/q3porting.xml
+%{_qt_bindir}/lrelease
+%{_qt_bindir}/lupdate
+%{_qt_bindir}/moc
+%{_qt_bindir}/pixeltool
+%{_qt_bindir}/qdbusxml2cpp
+%{_qt_bindir}/qdbuscpp2xml
+%{_qt_bindir}/qmake
+%{_qt_bindir}/qt3to4
+%{_qt_bindir}/qttracereplay
+%{_qt_bindir}/rcc
+%{_qt_bindir}/uic*
+%{_qt_bindir}/xmlpatternsvalidator
+%{_qt_includedir}/Qt*/
+%{_qt_datadir}/mkspecs/
+%{_qt_datadir}/q3porting.xml
 %{_libdir}/*.so
 %{_libdir}/*.a
 %{_libdir}/*.prl
@@ -592,7 +592,7 @@ Requires:	%{name}-common = %{epoch}:%{version}
 Xmlpatterns utility for Qt.
 
 %files xmlpatterns
-%{_qt4_bindir}/xmlpatterns
+%{_qt_bindir}/xmlpatterns
 
 #--------------------------------------------------------------------
 %package qtconfig
@@ -607,16 +607,16 @@ Requires(postun):update-alternatives
 Main configuration utility for Qt.
 
 %post qtconfig
-update-alternatives --install %{_bindir}/qtconfig qtconfig %{_qt4_bindir}/qtconfig 20
+update-alternatives --install %{_bindir}/qtconfig qtconfig %{_qt_bindir}/qtconfig 20
 
 %postun qtconfig
 if ! [ -e %qtdir/bin/qtconfig ]; then
-  update-alternatives --remove qtconfig %{_qt4_bindir}/qtconfig 
+  update-alternatives --remove qtconfig %{_qt_bindir}/qtconfig 
 fi
 
 %files qtconfig
-%{_qt4_bindir}/qtconfig
-%{_qt4_translationdir}/qtconfig*
+%{_qt_bindir}/qtconfig
+%{_qt_translationdir}/qtconfig*
 
 #--------------------------------------------------------------------
 %if %{with docs}
@@ -627,7 +627,7 @@ BuildArch:	noarch
 
 %description doc
 HTML documentation for the Qt toolkit. To view the documentation,
-please load up the file %{_qt4_docdir}/html/index.html in your
+please load up the file %{_qt_docdir}/html/index.html in your
 favourite browser.
 
 %post doc
@@ -635,9 +635,9 @@ favourite browser.
 find %{_docdir} -maxdepth 1 -type d -name qt-4.\* -exec rm -rf {} \;
 
 %files doc
-%{_qt4_docdir}/html/
-%{_qt4_docdir}/qch/
-%{_qt4_docdir}/src/
+%{_qt_docdir}/html/
+%{_qt_docdir}/qch/
+%{_qt_docdir}/src/
 %endif
 
 #--------------------------------------------------------------------
@@ -658,9 +658,9 @@ Suggests:	%{name}-examples = %{epoch}:%{version}
 Demonstration applications made with Qt %{version}.
 
 %files demos
-%{_qt4_bindir}/qtdemo
-%{_qt4_demodir}/
-%{_qt4_plugindir}/designer/libarthurplugin.so
+%{_qt_bindir}/qtdemo
+%{_qt_demodir}/
+%{_qt_plugindir}/designer/libarthurplugin.so
 %endif
 
 #--------------------------------------------------------------------
@@ -676,11 +676,11 @@ Obsoletes:	%{name}-examples < 4:4.7.0-3
 Programs examples made with Qt %{version}.
 
 %files examples
-%{_qt4_exampledir}/
-%{_qt4_plugindir}/designer/libcontainerextension.so
-%{_qt4_plugindir}/designer/libcustomwidgetplugin.so
-%{_qt4_plugindir}/designer/libtaskmenuextension.so
-%{_qt4_plugindir}/designer/libworldtimeclockplugin.so
+%{_qt_exampledir}/
+%{_qt_plugindir}/designer/libcontainerextension.so
+%{_qt_plugindir}/designer/libcustomwidgetplugin.so
+%{_qt_plugindir}/designer/libtaskmenuextension.so
+%{_qt_plugindir}/designer/libworldtimeclockplugin.so
 %endif
 
 #--------------------------------------------------------------------
@@ -694,10 +694,10 @@ Conflicts:	%name-common <= 4.3.3-4
 Linguist provides easy translation for Qt GUI's in severall languages.
 
 %files linguist
-%{_qt4_bindir}/linguist
-%{_qt4_bindir}/lconvert
+%{_qt_bindir}/linguist
+%{_qt_bindir}/lconvert
 %{_datadir}/applications/mandriva-linguist-qt4.desktop
-%{_qt4_translationdir}/linguist*
+%{_qt_translationdir}/linguist*
 
 #--------------------------------------------------------------------
 %package assistant
@@ -712,12 +712,12 @@ Conflicts:	%name-common <= 4.3.3-4
 Qt Assistant provides a documentation Browser.
 
 %files assistant
-%{_qt4_bindir}/assistant
-%{_qt4_bindir}/qcollectiongenerator
-%{_qt4_bindir}/qhelpconverter
-%{_qt4_bindir}/qhelpgenerator
+%{_qt_bindir}/assistant
+%{_qt_bindir}/qcollectiongenerator
+%{_qt_bindir}/qhelpconverter
+%{_qt_bindir}/qhelpgenerator
 %{_datadir}/applications/mandriva-assistant-qt4.desktop
-%{_qt4_translationdir}/assistant*
+%{_qt_translationdir}/assistant*
 
 #--------------------------------------------------------------------
 %if %{with odbc}
@@ -730,7 +730,7 @@ Obsoletes:	qt4-database-plugin-odbc-%_lib
 Database plugin for ODBC Qt support.
 
 %files database-plugin-odbc
-%{_qt4_plugindir}/sqldrivers/libqsqlodbc.so
+%{_qt_plugindir}/sqldrivers/libqsqlodbc.so
 %endif
 
 #--------------------------------------------------------------------
@@ -744,7 +744,7 @@ Obsoletes:	qt4-database-plugin-mysql-%_lib
 Database plugin for mysql Qt support.
 
 %files database-plugin-mysql
-%{_qt4_plugindir}/sqldrivers/libqsqlmysql.so
+%{_qt_plugindir}/sqldrivers/libqsqlmysql.so
 %endif
 
 #--------------------------------------------------------------------
@@ -758,7 +758,7 @@ Obsoletes:	qt4-database-plugin-sqlite-%_lib
 Database plugin for sqlite Qt support.
 
 %files database-plugin-sqlite
-%{_qt4_plugindir}/sqldrivers/libqsqlite.so
+%{_qt_plugindir}/sqldrivers/libqsqlite.so
 %endif
 
 #--------------------------------------------------------------------
@@ -772,7 +772,7 @@ Obsoletes:	qt4-database-plugin-tds-%_lib
 Database plugin for freetds Qt support.
 
 %files database-plugin-tds
-%{_qt4_plugindir}/sqldrivers/libqsqltds.so
+%{_qt_plugindir}/sqldrivers/libqsqltds.so
 %endif
 
 #--------------------------------------------------------------------
@@ -786,7 +786,7 @@ Obsoletes:	qt4-database-plugin-ibase-%_lib
 Database plugin for interbase Qt support.
 
 %files database-plugin-ibase
-%{_qt4_plugindir}/sqldrivers/libqsqlibase.so
+%{_qt_plugindir}/sqldrivers/libqsqlibase.so
 %endif
 
 #--------------------------------------------------------------------
@@ -800,7 +800,7 @@ Obsoletes:	qt4-database-plugin-pgsql-%_lib
 Database plugin for pgsql Qt support.
 
 %files database-plugin-pgsql
-%{_qt4_plugindir}/sqldrivers/libqsqlpsql.so
+%{_qt_plugindir}/sqldrivers/libqsqlpsql.so
 %endif
 
 #--------------------------------------------------------------------
@@ -813,10 +813,10 @@ Obsoletes:	qt4-graphicssystems-plugin-%_lib
 Graphicssystems plugins for Qt.
 
 %files graphicssystems-plugin
-%dir %{_qt4_plugindir}/graphicssystems/
-%{_qt4_plugindir}/graphicssystems/libqglgraphicssystem.so
-%{_qt4_plugindir}/graphicssystems/libqtracegraphicssystem.so
-%{_qt4_plugindir}/graphicssystems/libqvggraphicssystem.so
+%dir %{_qt_plugindir}/graphicssystems/
+%{_qt_plugindir}/graphicssystems/libqglgraphicssystem.so
+%{_qt_plugindir}/graphicssystems/libqtracegraphicssystem.so
+%{_qt_plugindir}/graphicssystems/libqvggraphicssystem.so
 
 #--------------------------------------------------------------------
 %package accessibility-plugin
@@ -828,7 +828,7 @@ Obsoletes:	qt4-accessibility-plugin-%_lib
 Acessibility plugins for Qt.
 
 %files accessibility-plugin
-%{_qt4_plugindir}/accessible/
+%{_qt_plugindir}/accessible/
 
 #--------------------------------------------------------------------
 %package designer
@@ -855,9 +855,9 @@ The Qt Designer is a visual design tool that makes designing and
 implementing user interfaces a lot easier.
 
 %files designer
-%{_qt4_bindir}/designer
+%{_qt_bindir}/designer
 %{_datadir}/applications/mandriva-designer-qt4.desktop
-%{_qt4_translationdir}/designer_*
+%{_qt_translationdir}/designer_*
 
 #--------------------------------------------------------------------
 %if %{with webkit}
@@ -869,7 +869,7 @@ Group:		Development/KDE and Qt
 Designer plugin for webkit Qt support.
 
 %files designer-plugin-webkit
-%{_qt4_plugindir}/designer/libqwebview.so
+%{_qt_plugindir}/designer/libqwebview.so
 %endif
 
 #--------------------------------------------------------------------
@@ -881,7 +881,7 @@ Group:		Development/KDE and Qt
 Designer plugin for qt3support Qt support.
 
 %files designer-plugin-qt3support
-%{_qt4_plugindir}/designer/libqt3supportwidgets.so
+%{_qt_plugindir}/designer/libqt3supportwidgets.so
 
 #--------------------------------------------------------------------
 %if %{with qvfb}
@@ -895,8 +895,8 @@ Conflicts:	%name-common <= 4.3.3-4
 Embedded virtual terminal for Qt support.
 
 %files qvfb
-%{_qt4_bindir}/qvfb
-%{_qt4_translationdir}/qvfb*
+%{_qt_bindir}/qvfb
+%{_qt_translationdir}/qvfb*
 %endif
 
 #--------------------------------------------------------------------
@@ -910,7 +910,7 @@ Conflicts:	%name-common <= 4.3.3-4
 Qt 4 documentation generator.
 
 %files qdoc3
-%{_qt4_bindir}/qdoc3
+%{_qt_bindir}/qdoc3
 
 #--------------------------------------------------------------------
 %prep
@@ -946,12 +946,12 @@ perl -pi -e 's@/X11R6/@/@' mkspecs/linux-*/qmake.conf mkspecs/common/linux.conf
 #--------------------------------------------------------
 
 ./configure \
-   -prefix %{_qt4_datadir} \
+   -prefix %{_qt_datadir} \
    -sysconfdir %{_sysconfdir} \
    -libdir %{_libdir} \
-   -docdir %{_qt4_docdir} \
-   -plugindir %{_qt4_plugindir} \
-   -translationdir %{_qt4_translationdir} \
+   -docdir %{_qt_docdir} \
+   -plugindir %{_qt_plugindir} \
+   -translationdir %{_qt_translationdir} \
 %if %{with debug}
    -debug \
    -verbose \
@@ -1058,12 +1058,12 @@ make install INSTALL_ROOT=%{buildroot}
 make install -C tools/qvfb INSTALL_ROOT=%{buildroot}
 %else
 # Remove qvfb translation files that are installed by default
-rm -f %{buildroot}%{_qt4_translationdir}/qvfb_*.qm
+rm -f %{buildroot}%{_qt_translationdir}/qvfb_*.qm
 %endif
 
 %if !%{with docs}
 # Remove these doc src files that are installed even if using -nomake-docs
-rm -f %{buildroot}%{_qt4_docdir}/src/
+rm -f %{buildroot}%{_qt_docdir}/src/
 %endif
 
 mkdir -p %{buildroot}%{_datadir}/applications
@@ -1072,24 +1072,24 @@ install -m 644 %{SOURCE4} %{buildroot}%{_datadir}/applications
 install -m 644 %{SOURCE5} %{buildroot}%{_datadir}/applications
 
 # Fix mkspec link
-pushd  %{buildroot}%{_qt4_datadir}/mkspecs
+pushd  %{buildroot}%{_qt_datadir}/mkspecs
 rm -f default
-ln -sf %{_qt4_datadir}/mkspecs/linux-g++ default
+ln -sf %{_qt_datadir}/mkspecs/linux-g++ default
 popd
 
 # Copy examples/tutorial and demos
 for subdir in examples demos; do
    for dir in `find $subdir -type d -name .obj`; do rm -rf $dir; done
    for dir in `find $subdir -type d -name .moc`; do rm -rf $dir; done
-   cp -a $subdir %{buildroot}/%{_qt4_datadir}
+   cp -a $subdir %{buildroot}/%{_qt_datadir}
 done
 
 # Fix all buildroot paths
 find %{buildroot}%{_libdir} -type f -name '*prl' -exec perl -pi -e "s, -L%{_builddir}/\S+,,g" {} \;
 find %{buildroot}%{_libdir} -type f -name '*prl' -exec sed -i -e "/^QMAKE_PRL_BUILD_DIR/d" {} \;
 find %{buildroot}%{_libdir} -type f -name '*la' -print -exec sed -i -e "s, -L%{_builddir}/?\S+,,g" -e "s,-L../JavaScriptCore/release,,g" -e "s,-ljscore,,g" {} \;
-find %{buildroot}/%{_qt4_datadir}/mkspecs -name 'qmake.conf' -exec chmod -x -- {} \;
-find %{buildroot}/%{_qt4_datadir}/mkspecs -name Info.plist.app -exec chmod -x -- {} \;
+find %{buildroot}/%{_qt_datadir}/mkspecs -name 'qmake.conf' -exec chmod -x -- {} \;
+find %{buildroot}/%{_qt_datadir}/mkspecs -name Info.plist.app -exec chmod -x -- {} \;
 
 # Don't reference %{builddir} neither /usr(/X11R6)?/ in .pc files.
 perl -pi -e '\
@@ -1107,19 +1107,19 @@ cat > %{buildroot}%{_sysconfdir}/profile.d/60qt4.sh << EOF
 #!/bin/bash
 
 # Qt4 is the main Qt on system
-export QTDIR=%{_qt4_datadir}
+export QTDIR=%{_qt_datadir}
 
-[ -z \$QT4DOCDIR ] && export QT4DOCDIR=%{_qt4_docdir}
+[ -z \$QT4DOCDIR ] && export QT4DOCDIR=%{_qt_docdir}
 
-if [ -z \$(echo \$PATH | grep "%{_qt4_bindir}") ]; then
-    PATH=\${PATH}:%{_qt4_bindir}
+if [ -z \$(echo \$PATH | grep "%{_qt_bindir}") ]; then
+    PATH=\${PATH}:%{_qt_bindir}
     export PATH
 fi
 
 EOF
 
 # Clean WEBKIT test files
-rm -fr %{buildroot}%{_qt4_datadir}/tests/qt4/tst_*/
+rm -fr %{buildroot}%{_qt_datadir}/tests/qt4/tst_*/
 
 # cleanup
 rm -f %{buildroot}%{_libdir}/*.la
