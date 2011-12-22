@@ -143,7 +143,6 @@ This package contains the shared library needed to run Qt
 applications, as well as the README files for Qt.
 
 #------------------------------------------------------------------------
-
 %package common
 Group:		Development/KDE and Qt
 Summary:	Qt%{major} Config and Language Files
@@ -222,8 +221,6 @@ Qt component library.
 %package -n %{libqtscript}
 Summary:	Qt%{major} Component Library
 Group:		System/Libraries
-Requires:	%{name}-common = %{epoch}:%{version}
-Provides:	libqtscript = %{epoch}:%{version}-%{release}
 
 %description -n %{libqtscript}
 Qt component library.
@@ -236,8 +233,6 @@ Qt component library.
 %package -n %{libqtgui}
 Summary:	Qt%{major} Component Library
 Group:		System/Libraries
-Requires:	%{name}-common = %{epoch}:%{version}
-Provides:	qtguilib = %{epoch}:%{version}-%{release}
 Conflicts:	%{libqtcore} <= 2:4.2.2-%mkrel 2
 
 %description -n %{libqtgui}
@@ -308,7 +303,6 @@ Qt component library.
 %package -n %{libqtcore}
 Summary:	Qt%{major} Component Library
 Group:		System/Libraries
-Provides:	qtcorelib = %{epoch}:%{version}-%{release}
 Conflicts:	%{libqtgui} <= 2:4.2.2-%mkrel 2
 Obsoletes:	%{_lib}qtuitools4
 Obsoletes:	qt4-codecs-plugin-%_lib
@@ -360,7 +354,6 @@ Qt component library.
 %package -n %{libqdbus}
 Summary:	Qt%{major} DBus Library
 Group:		System/Libraries
-Provides:	qdbuslib = %{epoch}:%{version}-%{release}
 
 %description -n %{libqdbus}
 Qt dbus library.
@@ -453,6 +446,7 @@ Dbus interface for Qt.
 %package -n %{libqtdeclarative}
 Summary:	Qt%{major} Multimedia Library
 Group:		System/Libraries
+Conflicts:	qt4-qmlviewer < 4:4.8.0-2
 
 %description -n %{libqtdeclarative}
 Qt multimedia library.
@@ -491,6 +485,7 @@ Summary:   Development files for the Qt GUI toolkit
 Group:     Development/KDE and Qt
 Requires:  %{name}-common = %{epoch}:%{version}
 Requires:  qt4-qtconfig = %{epoch}:%{version}
+Provides:  qt-devel = %{epoch}:%{version}-%{release}
 Provides:  qt4-devel = %{epoch}:%{version}-%{release}
 Provides:  libqt4-devel = %{epoch}:%{version}-%{release}
 Requires:  %{libqtdeclarative} = %{epoch}:%{version}
@@ -509,7 +504,9 @@ Requires:  %{libqtsvg} = %{epoch}:%{version}
 Requires:  %{libqtclucene} = %{epoch}:%{version}
 Requires:  %{libqttest} = %{epoch}:%{version}
 Requires:  %{libqdbus} = %{epoch}:%{version}
+%if %{with webkit}
 Requires:  %{libqtwebkit} = %{epoch}:%{version}
+%endif
 Requires:  %{libqtscript} = %{epoch}:%{version}
 Requires:  %{libqthelp} = %{epoch}:%{version}
 Requires:  %{libqtmultimedia} = %{epoch}:%{version}
