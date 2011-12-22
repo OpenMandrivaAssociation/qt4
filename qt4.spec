@@ -7,9 +7,9 @@
 %bcond_without sqlite
 %bcond_without tds
 %bcond_without cups
-%bcond_without openvg
 %bcond_without webkit
 %bcond_without qvfb
+%bcond_without openvg
 %bcond_without docs
 %bcond_without demos
 %bcond_without examples
@@ -54,6 +54,7 @@
 %define libqtmultimedia %mklibname qtmultimedia %{major}
 %define libphonon %mklibname phonon %{major}
 %define libqtdeclarative %mklibname qtdeclarative %{major}
+%define libqtopenvg %mklibname qtopenvg %{major}
 
 
 Name:		qt4
@@ -144,14 +145,14 @@ applications, as well as the README files for Qt.
 #------------------------------------------------------------------------
 
 %package common
-Group: Development/KDE and Qt
-Summary: config, language file for Qt
+Group:		Development/KDE and Qt
+Summary:	Qt%{major} config and language files
 
 %description common
-This package contains all config file and language file.
+Configuration and language files for Qt.
 
 %files common
-%attr(0755,root,root) %_sysconfdir/profile.d/*
+%attr(0755,root,root) %{_sysconfdir}/profile.d/60qt4.sh
 %dir %{_qt4_bindir}
 %dir %{_qt4_datadir}
 %dir %{_qt4_plugindir}
@@ -166,8 +167,6 @@ This package contains all config file and language file.
 %package -n %{libqtxml}
 Summary:	Qt%{major} component library
 Group:		System/Libraries
-Requires:	%{name}-common = %{epoch}:%{version}
-Provides:	qtxmllib = %{epoch}:%{version}-%{release}
 
 %description -n %{libqtxml}
 Qt%{major} component library.
@@ -179,8 +178,6 @@ Qt%{major} component library.
 %package -n %{libqtscripttools}
 Summary:	Qt%{major} component library
 Group:		System/Libraries
-Requires:	%{name}-common = %{epoch}:%{version}
-Provides:	qtscripttoolslib = %{epoch}:%{version}-%{release}
 
 %description -n %{libqtscripttools}
 Qt%{major} component library.
@@ -192,7 +189,6 @@ Qt%{major} component library.
 %package -n %{libqtxmlpatterns}
 Summary:	Qt%{major} component library
 Group:		System/Libraries
-Requires:	%{name}-common = %{epoch}:%{version}
 
 %description -n %{libqtxmlpatterns}
 Qt%{major} component library.
@@ -204,8 +200,6 @@ Qt%{major} component library.
 %package -n %{libqtsql}
 Summary:	Qt%{major} component library
 Group:		System/Libraries
-Requires:	%{name}-common = %{epoch}:%{version}
-Provides:	qtsqllib = %{epoch}:%{version}-%{release}
 
 %description -n %{libqtsql}
 Qt%{major} component library.
@@ -217,8 +211,6 @@ Qt%{major} component library.
 %package -n %{libqtnetwork}
 Summary:	Qt%{major} component library
 Group:		System/Libraries
-Requires:	%{name}-common = %{epoch}:%{version}
-Provides:	qtnetworklib = %{epoch}:%{version}-%{release}
 
 %description -n %{libqtnetwork}
 Qt%{major} component library.
@@ -260,8 +252,6 @@ Qt%{major} component library.
 %package -n %{libqtsvg}
 Summary:	Qt%{major} component library
 Group:		System/Libraries
-Requires:	%{name}-common = %{epoch}:%{version}
-Provides:	qtsvglib = %{epoch}:%{version}-%{release}
 
 %description -n %{libqtsvg}
 Qt%{major} component library.
@@ -274,8 +264,6 @@ Qt%{major} component library.
 %package -n %{libqttest}
 Summary:	Qt%{major} component library
 Group:		System/Libraries
-Requires:	%{name}-common = %{epoch}:%{version}
-Provides:	qttestlib = %{epoch}:%{version}-%{release}
 
 %description -n %{libqttest}
 Qt%{major} component library.
@@ -287,8 +275,6 @@ Qt%{major} component library.
 %package -n %{libqtwebkit}
 Summary:	Qt%{major} component library
 Group:		System/Libraries
-Requires:	%{name}-common = %{epoch}:%{version}
-Provides:	qtwebkitlib = %{epoch}:%{version}-%{release}
 
 %description -n %{libqtwebkit}
 Qt%{major} component library.
@@ -300,8 +286,6 @@ Qt%{major} component library.
 %package -n %{libqthelp}
 Summary:	Qt%{major} component library
 Group:		System/Libraries
-Requires:	%{name}-common = %{epoch}:%{version}
-Provides:	qthelplib = %{epoch}:%{version}-%{release}
 
 %description -n %{libqthelp}
 Qt%{major} component library.
@@ -313,8 +297,6 @@ Qt%{major} component library.
 %package -n %{libqtclucene}
 Summary:	Qt%{major} component library
 Group:		System/Libraries
-Requires:	%{name}-common = %{epoch}:%{version}
-Provides:	qtclucenelib = %{epoch}:%{version}-%{release}
 
 %description -n %{libqtclucene}
 Qt%{major} component library.
@@ -326,7 +308,6 @@ Qt%{major} component library.
 %package -n %{libqtcore}
 Summary:	Qt%{major} component library
 Group:		System/Libraries
-Requires:	%{name}-common = %{epoch}:%{version}
 Provides:	qtcorelib = %{epoch}:%{version}-%{release}
 Conflicts:	%{libqtgui} <= 2:4.2.2-%mkrel 2
 Obsoletes:	%{_lib}qtuitools4
@@ -343,8 +324,6 @@ Qt%{major} component library.
 %package -n %{libqt3support}
 Summary:	Qt%{major} component library
 Group:		System/Libraries
-Requires:	%{name}-common = %{epoch}:%{version}
-Provides:	qt3supportlib = %{epoch}:%{version}-%{release}
 
 %description -n %{libqt3support}
 Qt%{major} component library.
@@ -356,8 +335,6 @@ Qt%{major} component library.
 %package -n %{libqtopengl}
 Summary:	Qt%{major} component library
 Group:		System/Libraries
-Requires:	%{name}-common = %{epoch}:%{version}
-Provides:	qtopengllib = %{epoch}:%{version}-%{release}
 
 %description -n %{libqtopengl}
 Qt%{major} component library.
@@ -369,8 +346,6 @@ Qt%{major} component library.
 %package -n %{libqtdesigner}
 Summary:	Qt%{major} component library
 Group:		System/Libraries
-Requires:	%{name}-common = %{epoch}:%{version}
-Provides:	qtdesignerlib = %{epoch}:%{version}-%{release}
 # Had wrong major:
 Obsoletes:	%{_lib}qtdesigner1 < 2:4.3.4-4
 
@@ -385,7 +360,6 @@ Qt%{major} component library.
 %package -n %{libqdbus}
 Summary:	Qt%{major} dbus library
 Group:		System/Libraries
-Requires:	%{name}-common = %{epoch}:%{version}
 Provides:	qdbuslib = %{epoch}:%{version}-%{release}
 
 %description -n %{libqdbus}
@@ -398,7 +372,6 @@ Qt dbus library.
 %package -n %{libqtmultimedia}
 Summary:	Qt%{major} multimedia library
 Group:		System/Libraries
-Requires:	%{name}-common = %{epoch}:%{version}
 
 %description -n %{libqtmultimedia}
 Qt multimedia library.
@@ -407,11 +380,22 @@ Qt multimedia library.
 %{_libdir}/libQtMultimedia.so.%{major}*
 
 #--------------------------------------------------------------------
+%package -n %{libqtopenvg}
+Summary:	Qt%{major} multimedia library
+Group:		System/Libraries
+
+%description -n %{libqtopenvg}
+Qt multimedia library.
+
+%files -n %{libqtopenvg}
+%{_libdir}/libQtOpenVG.so.%{major}*
+
+
+#--------------------------------------------------------------------
 %if %{with phonon}
 %package -n %{libphonon}
 Summary:	Qt%{major} Phonon Library
 Group:		System/Libraries
-Requires:	%{name}-common = %{epoch}:%{version}
 
 %description -n %{libphonon}
 Phonon library for Qt.
@@ -455,7 +439,7 @@ Designer phonon plugin for Qt support.
 %package qtdbus
 Summary:	Qt%{major} DBus Binary
 Group:		Development/KDE and Qt
-Requires:	%{libqdbus} = %{epoch}:%{version}
+Requires:	%{name}-common = %{epoch}:%{version}
 
 %description qtdbus
 Dbus binary for Qt.
@@ -468,7 +452,6 @@ Dbus binary for Qt.
 %package -n %{libqtdeclarative}
 Summary:	Qt%{major} phonon library
 Group:		System/Libraries
-Requires:	%{name}-common = %{epoch}:%{version}
 
 %description -n %{libqtdeclarative}
 Qt phonon library.
@@ -480,6 +463,7 @@ Qt phonon library.
 %package qmlviewer
 Summary:	Qt%{major} Qmlviewer Utility
 Group:		Development/KDE and Qt
+Requires:	%{name}-common = %{epoch}:%{version}
 
 %description qmlviewer
 Qmlviewer utility for Qt.
@@ -526,8 +510,12 @@ Requires:  %{libqtwebkit} = %{epoch}:%{version}
 Requires:  %{libqtscript} = %{epoch}:%{version}
 Requires:  %{libqthelp} = %{epoch}:%{version}
 Requires:  %{libqtmultimedia} = %{epoch}:%{version}
+%if %{with openvg}
+Requires:  %{libqtopenvg} = %{epoch}:%{version}
+%endif
 %if %{with phonon}
 Requires:  qt4-designer-plugin-phonon = %{epoch}:%{version}
+Requires:  %{libphonon} = %{epoch}:%{version}
 %endif
 Requires:  qt4-qtdbus = %{epoch}:%{version}
 Requires:  qt4-designer-plugin-webkit = %{epoch}:%{version}
@@ -596,6 +584,7 @@ fi
 %package xmlpatterns
 Summary:	Qt%{major} Xmlpatterns Utility
 Group:		Development/KDE and Qt
+Requires:	%{name}-common = %{epoch}:%{version}
 
 %description xmlpatterns
 Xmlpatterns utility for Qt.
@@ -607,6 +596,7 @@ Xmlpatterns utility for Qt.
 %package qtconfig
 Summary:	Qt%{major} Configuration Utility
 Group:		Development/KDE and Qt
+Requires:	%{name}-common = %{epoch}:%{version}
 Conflicts:	qt4-common <= 2:4.3.3
 Requires(post):	update-alternatives
 Requires(postun):update-alternatives
@@ -623,7 +613,7 @@ if ! [ -e %qtdir/bin/qtconfig ]; then
 fi
 
 %files qtconfig
-%{_qt4_bindir}/qtconf*
+%{_qt4_bindir}/qtconfig
 %{_qt4_translationdir}/qtconfig*
 
 #--------------------------------------------------------------------
@@ -653,6 +643,7 @@ find %{_docdir} -maxdepth 1 -type d -name qt-4.\* -exec rm -rf {} \;
 %package demos
 Summary:	Qt%{major} Demonstration Applications
 Group:		Development/KDE and Qt
+Requires:	%{name}-common = %{epoch}:%{version}
 Obsoletes:	%{name}-demos < 4:4.8.0
 %if %{with docs}
 Requires:	%{name}-doc = %{epoch}:%{version}
@@ -675,6 +666,7 @@ Demonstration applications made with Qt %{version}.
 %package examples
 Summary:	Qt%{major} Examples Programs
 Group:		Books/Computer books
+Requires:	%{name}-common = %{epoch}:%{version}
 Obsoletes:	qt4-tutorial
 Obsoletes:	%{name}-examples < 4:4.7.0-3
 
@@ -693,6 +685,7 @@ Example programs made with Qt %{version}.
 %package linguist
 Summary:	Qt%{major} Linguist Translation Utility
 Group:		Books/Computer books
+Requires:	%{name}-common = %{epoch}:%{version}
 Conflicts:	%name-common <= 4.3.3-4
 
 %description linguist
@@ -709,6 +702,7 @@ languages
 %package assistant
 Summary:	Qt%{major} Assistantion Doc Utility
 Group:		Books/Computer books
+Requires:	%{name}-common = %{epoch}:%{version}
 Requires:	qt4-database-plugin-sqlite = %{epoch}:%{version}
 Suggests:	qt4-doc = %{epoch}:%{version}
 Conflicts:	%name-common <= 4.3.3-4
