@@ -158,7 +158,7 @@ Configuration and language files for Qt.
 %dir %{_qt4_plugindir}
 %{_qt4_datadir}/phrasebooks/
 %dir %{_qt4_translationdir}
-%{_qt4_translationdir}/qt_*
+%{_qt4_translationdir}/qt_*.qm
 
 #------------------------------------------------------------------------
 # CORE QT LIBRARIES
@@ -379,6 +379,7 @@ Qt multimedia library.
 %files -n %{libqtmultimedia}
 %{_libdir}/libQtMultimedia.so.%{major}*
 
+%if %{with openvg}
 #--------------------------------------------------------------------
 %package -n %{libqtopenvg}
 Summary:	Qt%{major} multimedia library
@@ -389,10 +390,10 @@ Qt multimedia library.
 
 %files -n %{libqtopenvg}
 %{_libdir}/libQtOpenVG.so.%{major}*
+%endif
 
-
-#--------------------------------------------------------------------
 %if %{with phonon}
+#--------------------------------------------------------------------
 %package -n %{libphonon}
 Summary:	Qt%{major} Phonon Library
 Group:		System/Libraries
@@ -834,6 +835,11 @@ Acessibility plugins for Qt4.
 Summary:	Qt%{major} Visual Design Tool
 Group:		Development/KDE and Qt
 Requires:	%{libqtdevel} = %{epoch}:%{version}
+Requires:	qt4-designer-plugin-qt3support = %{epoch}:%{version}
+Requires:	qt4-designer-plugin-webkit = %{epoch}:%{version}
+%if %{with examples}
+Suggests:	qt4-examples = %{epoch}:%{version}
+%endif
 Conflicts:	%name-common <= 4.3.3-4
 
 %description designer
@@ -841,8 +847,8 @@ The Qt Designer is a visual design tool that makes designing and
 implementing user interfaces a lot easier.
 
 %files designer
-%{_qt4_bindir}/design*
-%{_datadir}/applications/*designer*.desktop
+%{_qt4_bindir}/designer
+%{_datadir}/applications/mandriva-designer-qt4.desktop
 %{_qt4_translationdir}/designer_*
 
 #--------------------------------------------------------------------
@@ -874,13 +880,13 @@ Designer plugin for qt3support Qt support.
 %package qvfb
 Summary:	Qt%{major} Embedded Virtual Terminal
 Group:		Development/KDE and Qt
+Requires:	%{name}-common = %{epoch}:%{version}
 Conflicts:	%name-common <= 4.3.3-4
 
 %description qvfb
 Embedded virtual terminal for Qt support.
 
 %files qvfb
-%dir %{_qt4_bindir}
 %{_qt4_bindir}/qvfb
 %dir %{_qt4_translationdir}
 %{_qt4_translationdir}/qvfb*
@@ -890,6 +896,7 @@ Embedded virtual terminal for Qt support.
 %package qdoc3
 Summary:	Qt%{major} Documentation Generator
 Group:		Development/KDE and Qt
+Requires:	%{name}-common = %{epoch}:%{version}
 Conflicts:	%name-common <= 4.3.3-4
 
 %description qdoc3
