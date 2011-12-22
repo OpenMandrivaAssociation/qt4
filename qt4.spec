@@ -169,7 +169,7 @@ Summary:	Qt%{major} component library
 Group:		System/Libraries
 
 %description -n %{libqtxml}
-Qt%{major} component library.
+Qt component library.
 
 %files -n %{libqtxml}
 %{_libdir}/libQtXml.so.%{major}*
@@ -180,7 +180,7 @@ Summary:	Qt%{major} component library
 Group:		System/Libraries
 
 %description -n %{libqtscripttools}
-Qt%{major} component library.
+Qt component library.
 
 %files -n %{libqtscripttools}
 %{_libdir}/libQtScriptTools.so.%{major}*
@@ -191,7 +191,7 @@ Summary:	Qt%{major} component library
 Group:		System/Libraries
 
 %description -n %{libqtxmlpatterns}
-Qt%{major} component library.
+Qt component library.
 
 %files -n %{libqtxmlpatterns}
 %{_libdir}/libQtXmlPatterns.so.%{major}*
@@ -202,7 +202,7 @@ Summary:	Qt%{major} component library
 Group:		System/Libraries
 
 %description -n %{libqtsql}
-Qt%{major} component library.
+Qt component library.
 
 %files -n %{libqtsql}
 %{_libdir}/libQtSql.so.%{major}*
@@ -213,7 +213,7 @@ Summary:	Qt%{major} component library
 Group:		System/Libraries
 
 %description -n %{libqtnetwork}
-Qt%{major} component library.
+Qt component library.
 
 %files -n %{libqtnetwork}
 %{_libdir}/libQtNetwork.so.%{major}*
@@ -226,7 +226,7 @@ Requires:	%{name}-common = %{epoch}:%{version}
 Provides:	libqtscript = %{epoch}:%{version}-%{release}
 
 %description -n %{libqtscript}
-Qt%{major} component library.
+Qt component library.
 
 %files -n %{libqtscript}
 %{_libdir}/libQtScript.so.%{major}*
@@ -241,7 +241,7 @@ Provides:	qtguilib = %{epoch}:%{version}-%{release}
 Conflicts:	%{libqtcore} <= 2:4.2.2-%mkrel 2
 
 %description -n %{libqtgui}
-Qt%{major} component library.
+Qt component library.
 
 %files -n %{libqtgui}
 %{_libdir}/libQtGui.so.%{major}*
@@ -254,7 +254,7 @@ Summary:	Qt%{major} component library
 Group:		System/Libraries
 
 %description -n %{libqtsvg}
-Qt%{major} component library.
+Qt component library.
 
 %files -n %{libqtsvg}
 %{_libdir}/libQtSvg.so.%{major}*
@@ -266,7 +266,7 @@ Summary:	Qt%{major} component library
 Group:		System/Libraries
 
 %description -n %{libqttest}
-Qt%{major} component library.
+Qt component library.
 
 %files -n %{libqttest}
 %{_libdir}/libQtTest.so.%{major}*
@@ -277,7 +277,7 @@ Summary:	Qt%{major} component library
 Group:		System/Libraries
 
 %description -n %{libqtwebkit}
-Qt%{major} component library.
+Qt component library.
 
 %files -n %{libqtwebkit}
 %{_libdir}/libQtWebKit.so.%{major}*
@@ -288,7 +288,7 @@ Summary:	Qt%{major} component library
 Group:		System/Libraries
 
 %description -n %{libqthelp}
-Qt%{major} component library.
+Qt component library.
 
 %files -n %{libqthelp}
 %{_libdir}/libQtHelp.so.%{major}*
@@ -299,7 +299,7 @@ Summary:	Qt%{major} component library
 Group:		System/Libraries
 
 %description -n %{libqtclucene}
-Qt%{major} component library.
+Qt component library.
 
 %files -n %{libqtclucene}
 %{_libdir}/libQtCLucene.so.%{major}*
@@ -314,7 +314,7 @@ Obsoletes:	%{_lib}qtuitools4
 Obsoletes:	qt4-codecs-plugin-%_lib
 
 %description -n %{libqtcore}
-Qt%{major} component library.
+Qt component library.
 
 %files -n %{libqtcore}
 %{_libdir}/libQtCore.so.%{major}*
@@ -326,7 +326,7 @@ Summary:	Qt%{major} component library
 Group:		System/Libraries
 
 %description -n %{libqt3support}
-Qt%{major} component library.
+Qt component library.
 
 %files -n %{libqt3support}
 %{_libdir}/libQt3Support.so.%{major}*
@@ -337,7 +337,7 @@ Summary:	Qt%{major} component library
 Group:		System/Libraries
 
 %description -n %{libqtopengl}
-Qt%{major} component library.
+Qt component library.
 
 %files -n %{libqtopengl}
 %{_libdir}/libQtOpenGL.so.%{major}*
@@ -350,7 +350,7 @@ Group:		System/Libraries
 Obsoletes:	%{_lib}qtdesigner1 < 2:4.3.4-4
 
 %description -n %{libqtdesigner}
-Qt%{major} component library.
+Qt component library.
 
 %files -n %{libqtdesigner}
 %{_libdir}/libQtDesigner.so.%{major}*
@@ -419,18 +419,18 @@ Obsoletes: arts3
 %endif
 
 %description -n phonon-gstreamer
-Phonon gstreamer backend fot Qt.
+Phonon gstreamer backend for Qt.
 
 %files -n phonon-gstreamer
 %{_qt4_plugindir}/phonon_backend/libphonon_gstreamer.so
 
 #--------------------------------------------------------------------
 %package designer-plugin-phonon
-Summary:	Qt%{major} Designer Phonon Plugin for Qt
+Summary:	Qt%{major} Designer Phonon Plugin
 Group:		Development/KDE and Qt
 
 %description designer-plugin-phonon
-Designer phonon plugin for Qt support.
+Designer phonon plugin for Qt.
 
 %files designer-plugin-phonon
 %{_qt4_plugindir}/designer/libphononwidgets.so
@@ -443,7 +443,7 @@ Group:		Development/KDE and Qt
 Requires:	%{name}-common = %{epoch}:%{version}
 
 %description qtdbus
-Dbus binary for Qt.
+Dbus interface for Qt.
 
 %files qtdbus
 %{_qt4_bindir}/qdbus
@@ -455,7 +455,7 @@ Summary:	Qt%{major} phonon library
 Group:		System/Libraries
 
 %description -n %{libqtdeclarative}
-Qt phonon library.
+Phonon library for Qt.
 
 %files -n %{libqtdeclarative}
 %{_libdir}/libQtDeclarative.so.%{major}*
@@ -543,13 +543,12 @@ Conflicts: %{_lib}qtcore4 < 2:4.3.4-3
 Conflicts: qt4-linguist < 2:4.4.3-3
 
 %description -n %{libqtdevel}
-The %{name}-devel package contains the files necessary to develop
-applications using the Qt GUI toolkit: the header files, the Qt
-meta object compiler, and the static libraries.  See the address
-http://qt.nokia.com/ for more information about Qt.
+Necessary files to develop applications using the Qt GUI toolkit:
+the header files, the Qt meta object compiler, and static libraries.
+Enter in http://qt.nokia.com/ for more information about Qt.
 
-Install %{name}-devel if you want to develop GUI applications using the Qt
-toolkit.
+Install %{name}-devel if you want to develop GUI applications using
+the Qt toolkit.
 
 %post -n %{libqtdevel}
 update-alternatives --install %{_bindir}/qmake qmake %{_qt4_bindir}/qmake 20
@@ -626,7 +625,7 @@ BuildArch:	noarch
 
 %description doc
 HTML documentation for the Qt toolkit. To view the documentation,
-please load up the file /usr/lib/%{name}/doc/html/index.html in your
+please load up the file %{_qt4_docdir}/html/index.html in your
 favourite browser.
 
 %post doc
@@ -665,14 +664,14 @@ Demonstration applications made with Qt %{version}.
 #--------------------------------------------------------------------
 %if %{with examples}
 %package examples
-Summary:	Qt%{major} Examples Programs
+Summary:	Qt%{major} Programs Examples
 Group:		Books/Computer books
 Requires:	%{name}-common = %{epoch}:%{version}
 Obsoletes:	qt4-tutorial
 Obsoletes:	%{name}-examples < 4:4.7.0-3
 
 %description examples
-Example programs made with Qt %{version}.
+Programs examples made with Qt %{version}.
 
 %files examples
 %{_qt4_exampledir}/
@@ -690,8 +689,7 @@ Requires:	%{name}-common = %{epoch}:%{version}
 Conflicts:	%name-common <= 4.3.3-4
 
 %description linguist
-Qt Linguist provides easy translation of Qt GUIs to different.
-languages
+Linguist provides easy translation for Qt GUI's in severall languages.
 
 %files linguist
 %{_qt4_bindir}/linguist
@@ -810,7 +808,7 @@ Group:		Development/KDE and Qt
 Obsoletes:	qt4-graphicssystems-plugin-%_lib
 
 %description graphicssystems-plugin
-Graphicssystems plugins for Qt4.
+Graphicssystems plugins for Qt.
 
 %files graphicssystems-plugin
 %dir %{_qt4_plugindir}/graphicssystems/
@@ -825,7 +823,7 @@ Group:		Development/KDE and Qt
 Obsoletes:	qt4-accessibility-plugin-%_lib
 
 %description accessibility-plugin
-Acessibility plugins for Qt4.
+Acessibility plugins for Qt.
 
 %files accessibility-plugin
 %{_qt4_plugindir}/accessible/
