@@ -888,7 +888,6 @@ Embedded virtual terminal for Qt support.
 
 %files qvfb
 %{_qt4_bindir}/qvfb
-%dir %{_qt4_translationdir}
 %{_qt4_translationdir}/qvfb*
 %endif
 
