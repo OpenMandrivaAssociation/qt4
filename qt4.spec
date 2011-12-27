@@ -577,7 +577,7 @@ Group:		Books/Computer books
 Requires:	%{name}-common = %{epoch}:%{version}
 Requires:	qt4-database-plugin-sqlite = %{epoch}:%{version}
 Suggests:	qt4-doc = %{epoch}:%{version}
-Conflicts:	%name-common <= 4.3.3-4
+Conflicts:	%{name}-common <= 4.3.3-4
 
 %description assistant
 Qt Assistant provides a documentation Browser.
@@ -608,7 +608,7 @@ Suggests:	qt4-examples = %{epoch}:%{version}
 %if %{with demos}
 Suggests:	qt4-demos = %{epoch}:%{version}-%{release}
 %endif
-Conflicts:	%name-common <= 4.3.3-4
+Conflicts:	%{name}-common <= 4.3.3-4
 
 %description designer
 The Qt Designer is a visual design tool that makes designing and
@@ -624,7 +624,7 @@ implementing user interfaces a lot easier.
 Summary:	Qt%{major} Linguist Translation Utility
 Group:		Books/Computer books
 Requires:	%{name}-common = %{epoch}:%{version}
-Conflicts:	%name-common <= 4.3.3-4
+Conflicts:	%{name}-common <= 4.3.3-4
 
 %description linguist
 Linguist provides easy translation for Qt GUI's in severall languages.
@@ -640,7 +640,7 @@ Linguist provides easy translation for Qt GUI's in severall languages.
 Summary:	Qt%{major} Documentation Generator
 Group:		Development/KDE and Qt
 Requires:	%{name}-common = %{epoch}:%{version}
-Conflicts:	%name-common <= 4.3.3-4
+Conflicts:	%{name}-common <= 4.3.3-4
 
 %description qdoc3
 Qt 4 documentation generator.
@@ -715,7 +715,7 @@ fi
 Summary:	Qt%{major} Embedded Virtual Terminal
 Group:		Development/KDE and Qt
 Requires:	%{name}-common = %{epoch}:%{version}
-Conflicts:	%name-common <= 4.3.3-4
+Conflicts:	%{name}-common <= 4.3.3-4
 
 %description qvfb
 Embedded virtual terminal for Qt support.
@@ -1141,6 +1141,10 @@ if [ -z \$(echo \$PATH | grep "%{_qt_bindir}") ]; then
 fi
 
 EOF
+
+# identical binaries are copied, not linked:
+rm -f %{buildroot}%{_qt_exampledir}/declarative/cppextensions/qwidgets/QWidgets/libqmlqwidgetsplugin.so
+ln -s %{buildroot}%{_qt_exampledir}/declarative/cppextensions/plugins/libqmlqwidgetsplugin.so %{buildroot}%{_qt_exampledir}/declarative/cppextensions/qwidgets/QWidgets/libqmlqwidgetsplugin.so
 
 # Clean WEBKIT test files
 rm -fr %{buildroot}%{_qt_datadir}/tests/qt4/tst_*/
