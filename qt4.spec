@@ -61,7 +61,7 @@ Name:		qt4
 Summary:	Qt GUI Toolkit
 Group:		Development/KDE and Qt
 Version:	4.8.0
-Release:	3
+Release:	4
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 URL:		http://qt.nokia.com/
@@ -75,8 +75,8 @@ Patch1:  qt-everywhere-opensource-src-4.7.0-force-gb18030-for-gb2312.patch
 Patch2:  qt-everywhere-opensource-src-4.7.2-fix-str-fmt.patch
 Patch4:  qt-everywhere-opensource-src-4.6.1-add_missing_bold_style.diff
 Patch5:  qt-everywhere-opensource-src-4.6.1-use_ft_glyph_embolden_to_fake_bold.diff
-Patch7: qt-everywhere-opensource-src-4.8.0-tp-openssl.patch
-Patch9: qt-everywhere-opensource-src-4.8.0-rc1-fix-build-with-glib-2.31.patch
+Patch7:		qt-everywhere-opensource-src-4.8.0-tp-openssl.patch
+Patch9:		qt-everywhere-opensource-src-4.8.0-rc1-fix-build-with-glib-2.31.patch
 Patch10: 	qt-4.8.0-fix-qvfb-build.patch
 
 BuildRequires: libxtst-devel
@@ -163,130 +163,15 @@ Configuration and language files for Qt.
 # CORE QT LIBRARIES
 #--------------------------------------------------------------------
 
-%package -n %{libqtxml}
+%package -n %{libqt3support}
 Summary:	Qt%{major} Component Library
 Group:		System/Libraries
 
-%description -n %{libqtxml}
+%description -n %{libqt3support}
 Qt component library.
 
-%files -n %{libqtxml}
-%{_libdir}/libQtXml.so.%{major}*
-
-#--------------------------------------------------------------------
-%package -n %{libqtscripttools}
-Summary:	Qt%{major} Component Library
-Group:		System/Libraries
-
-%description -n %{libqtscripttools}
-Qt component library.
-
-%files -n %{libqtscripttools}
-%{_libdir}/libQtScriptTools.so.%{major}*
-
-#--------------------------------------------------------------------
-%package -n %{libqtxmlpatterns}
-Summary:	Qt%{major} Component Library
-Group:		System/Libraries
-
-%description -n %{libqtxmlpatterns}
-Qt component library.
-
-%files -n %{libqtxmlpatterns}
-%{_libdir}/libQtXmlPatterns.so.%{major}*
-
-#--------------------------------------------------------------------
-%package -n %{libqtsql}
-Summary:	Qt%{major} Component Library
-Group:		System/Libraries
-
-%description -n %{libqtsql}
-Qt component library.
-
-%files -n %{libqtsql}
-%{_libdir}/libQtSql.so.%{major}*
-
-#--------------------------------------------------------------------
-%package -n %{libqtnetwork}
-Summary:	Qt%{major} Component Library
-Group:		System/Libraries
-
-%description -n %{libqtnetwork}
-Qt component library.
-
-%files -n %{libqtnetwork}
-%{_libdir}/libQtNetwork.so.%{major}*
-
-#--------------------------------------------------------------------
-%package -n %{libqtscript}
-Summary:	Qt%{major} Component Library
-Group:		System/Libraries
-
-%description -n %{libqtscript}
-Qt component library.
-
-%files -n %{libqtscript}
-%{_libdir}/libQtScript.so.%{major}*
-%{_qt_plugindir}/script/
-
-#--------------------------------------------------------------------
-%package -n %{libqtgui}
-Summary:	Qt%{major} Component Library
-Group:		System/Libraries
-Conflicts:	%{libqtcore} <= 2:4.2.2-%mkrel 2
-
-%description -n %{libqtgui}
-Qt component library.
-
-%files -n %{libqtgui}
-%{_libdir}/libQtGui.so.%{major}*
-%{_qt_plugindir}/imageformats/
-%{_qt_plugindir}/inputmethods/libqimsw-multi.so*
-
-#--------------------------------------------------------------------
-%package -n %{libqtsvg}
-Summary:	Qt%{major} Component Library
-Group:		System/Libraries
-
-%description -n %{libqtsvg}
-Qt component library.
-
-%files -n %{libqtsvg}
-%{_libdir}/libQtSvg.so.%{major}*
-%{_qt_plugindir}/iconengines/
-
-#--------------------------------------------------------------------
-%package -n %{libqttest}
-Summary:	Qt%{major} Component Library
-Group:		System/Libraries
-
-%description -n %{libqttest}
-Qt component library.
-
-%files -n %{libqttest}
-%{_libdir}/libQtTest.so.%{major}*
-
-#--------------------------------------------------------------------
-%package -n %{libqtwebkit}
-Summary:	Qt%{major} Component Library
-Group:		System/Libraries
-
-%description -n %{libqtwebkit}
-Qt component library.
-
-%files -n %{libqtwebkit}
-%{_libdir}/libQtWebKit.so.%{major}*
-
-#--------------------------------------------------------------------
-%package -n %{libqthelp}
-Summary:	Qt%{major} Component Library
-Group:		System/Libraries
-
-%description -n %{libqthelp}
-Qt component library.
-
-%files -n %{libqthelp}
-%{_libdir}/libQtHelp.so.%{major}*
+%files -n %{libqt3support}
+%{_libdir}/libQt3Support.so.%{major}*
 
 #--------------------------------------------------------------------
 %package -n %{libqtclucene}
@@ -315,26 +200,28 @@ Qt component library.
 %{_qt_plugindir}/codecs/
 
 #--------------------------------------------------------------------
-%package -n %{libqt3support}
-Summary:	Qt%{major} Component Library
+%package -n %{libqdbus}
+Summary:	Qt%{major} DBus Library
 Group:		System/Libraries
 
-%description -n %{libqt3support}
-Qt component library.
+%description -n %{libqdbus}
+Qt dbus library.
 
-%files -n %{libqt3support}
-%{_libdir}/libQt3Support.so.%{major}*
+%files -n %{libqdbus}
+%{_libdir}/libQtDBus.so.%{major}*
 
 #--------------------------------------------------------------------
-%package -n %{libqtopengl}
-Summary:	Qt%{major} Component Library
+%package -n %{libqtdeclarative}
+Summary:	Qt%{major} Multimedia Library
 Group:		System/Libraries
+Conflicts:	qt4-qmlviewer < 4:4.8.0-2
 
-%description -n %{libqtopengl}
-Qt component library.
+%description -n %{libqtdeclarative}
+Qt multimedia library.
 
-%files -n %{libqtopengl}
-%{_libdir}/libQtOpenGL.so.%{major}*
+%files -n %{libqtdeclarative}
+%{_libdir}/libQtDeclarative.so.%{major}*
+%{_qt_plugindir}/designer/libqdeclarativeview.so
 
 #--------------------------------------------------------------------
 %package -n %{libqtdesigner}
@@ -351,15 +238,30 @@ Qt component library.
 %{_libdir}/libQtDesignerComponents.so.%{major}*
 
 #--------------------------------------------------------------------
-%package -n %{libqdbus}
-Summary:	Qt%{major} DBus Library
+%package -n %{libqtgui}
+Summary:	Qt%{major} Component Library
+Group:		System/Libraries
+Conflicts:	%{libqtcore} <= 2:4.2.2-%mkrel 2
+
+%description -n %{libqtgui}
+Qt component library.
+
+%files -n %{libqtgui}
+%{_libdir}/libQtGui.so.%{major}*
+%{_qt_plugindir}/imageformats/
+%dir %{_qt_plugindir}/inputmethods/
+%{_qt_plugindir}/inputmethods/libqimsw-multi.so
+
+#--------------------------------------------------------------------
+%package -n %{libqthelp}
+Summary:	Qt%{major} Component Library
 Group:		System/Libraries
 
-%description -n %{libqdbus}
-Qt dbus library.
+%description -n %{libqthelp}
+Qt component library.
 
-%files -n %{libqdbus}
-%{_libdir}/libQtDBus.so.%{major}*
+%files -n %{libqthelp}
+%{_libdir}/libQtHelp.so.%{major}*
 
 #--------------------------------------------------------------------
 %package -n %{libqtmultimedia}
@@ -372,6 +274,28 @@ Qt multimedia library.
 %files -n %{libqtmultimedia}
 %{_libdir}/libQtMultimedia.so.%{major}*
 
+#--------------------------------------------------------------------
+%package -n %{libqtnetwork}
+Summary:	Qt%{major} Component Library
+Group:		System/Libraries
+
+%description -n %{libqtnetwork}
+Qt component library.
+
+%files -n %{libqtnetwork}
+%{_libdir}/libQtNetwork.so.%{major}*
+
+#--------------------------------------------------------------------
+%package -n %{libqtopengl}
+Summary:	Qt%{major} Component Library
+Group:		System/Libraries
+
+%description -n %{libqtopengl}
+Qt component library.
+
+%files -n %{libqtopengl}
+%{_libdir}/libQtOpenGL.so.%{major}*
+
 %if %{with openvg}
 #--------------------------------------------------------------------
 %package -n %{libqtopenvg}
@@ -383,6 +307,99 @@ Qt multimedia library.
 
 %files -n %{libqtopenvg}
 %{_libdir}/libQtOpenVG.so.%{major}*
+%endif
+
+#--------------------------------------------------------------------
+%package -n %{libqtscript}
+Summary:	Qt%{major} Component Library
+Group:		System/Libraries
+
+%description -n %{libqtscript}
+Qt component library.
+
+%files -n %{libqtscript}
+%{_libdir}/libQtScript.so.%{major}*
+%{_qt_plugindir}/script/
+
+#--------------------------------------------------------------------
+%package -n %{libqtscripttools}
+Summary:	Qt%{major} Component Library
+Group:		System/Libraries
+
+%description -n %{libqtscripttools}
+Qt component library.
+
+%files -n %{libqtscripttools}
+%{_libdir}/libQtScriptTools.so.%{major}*
+
+#--------------------------------------------------------------------
+%package -n %{libqtsql}
+Summary:	Qt%{major} Component Library
+Group:		System/Libraries
+
+%description -n %{libqtsql}
+Qt component library.
+
+%files -n %{libqtsql}
+%{_libdir}/libQtSql.so.%{major}*
+
+#--------------------------------------------------------------------
+%package -n %{libqtsvg}
+Summary:	Qt%{major} Component Library
+Group:		System/Libraries
+
+%description -n %{libqtsvg}
+Qt component library.
+
+%files -n %{libqtsvg}
+%{_libdir}/libQtSvg.so.%{major}*
+%{_qt_plugindir}/iconengines/
+
+#--------------------------------------------------------------------
+%package -n %{libqttest}
+Summary:	Qt%{major} Component Library
+Group:		System/Libraries
+
+%description -n %{libqttest}
+Qt component library.
+
+%files -n %{libqttest}
+%{_libdir}/libQtTest.so.%{major}*
+
+#--------------------------------------------------------------------
+%package -n %{libqtxml}
+Summary:	Qt%{major} Component Library
+Group:		System/Libraries
+
+%description -n %{libqtxml}
+Qt component library.
+
+%files -n %{libqtxml}
+%{_libdir}/libQtXml.so.%{major}*
+
+#--------------------------------------------------------------------
+%package -n %{libqtxmlpatterns}
+Summary:	Qt%{major} Component Library
+Group:		System/Libraries
+
+%description -n %{libqtxmlpatterns}
+Qt component library.
+
+%files -n %{libqtxmlpatterns}
+%{_libdir}/libQtXmlPatterns.so.%{major}*
+
+
+%if %{with webkit}
+#--------------------------------------------------------------------
+%package -n %{libqtwebkit}
+Summary:	Qt%{major} Component Library
+Group:		System/Libraries
+
+%description -n %{libqtwebkit}
+Qt component library.
+
+%files -n %{libqtwebkit}
+%{_libdir}/libQtWebKit.so.%{major}*
 %endif
 
 %if %{with phonon}
@@ -428,56 +445,6 @@ Designer phonon plugin for Qt.
 %files designer-plugin-phonon
 %{_qt_plugindir}/designer/libphononwidgets.so
 %endif
-
-#--------------------------------------------------------------------
-%package qtdbus
-Summary:	Qt%{major} DBus Binary
-Group:		Development/KDE and Qt
-Requires:	%{name}-common = %{epoch}:%{version}
-
-%description qtdbus
-Dbus interface for Qt.
-
-%files qtdbus
-%{_qt_bindir}/qdbus
-%{_qt_bindir}/qdbusviewer
-
-#--------------------------------------------------------------------
-%package -n %{libqtdeclarative}
-Summary:	Qt%{major} Multimedia Library
-Group:		System/Libraries
-Conflicts:	qt4-qmlviewer < 4:4.8.0-2
-
-%description -n %{libqtdeclarative}
-Qt multimedia library.
-
-%files -n %{libqtdeclarative}
-%{_libdir}/libQtDeclarative.so.%{major}*
-%{_qt_plugindir}/designer/libqdeclarativeview.so
-
-#--------------------------------------------------------------------
-%package qmlviewer
-Summary:	Qt%{major} Qmlviewer Utility
-Group:		Development/KDE and Qt
-Requires:	%{name}-common = %{epoch}:%{version}
-
-%description qmlviewer
-Qmlviewer utility for Qt.
-
-%files qmlviewer
-%{_qt_bindir}/qmlviewer
-%{_qt_bindir}/qmlplugindump
-%{_qt_importdir}/Qt/
-%if %{with webkit}
-%{_qt_importdir}/QtWebKit/libqmlwebkitplugin.so
-%{_qt_importdir}/QtWebKit/qmldir
-%endif
-%{_qt_plugindir}/bearer/libqgenericbearer.so
-%{_qt_plugindir}/bearer/libqnmbearer.so
-%{_qt_plugindir}/bearer/libqconnmanbearer.so
-%dir %{_qt_plugindir}/qmltooling/
-%{_qt_plugindir}/qmltooling/libqmldbg_tcp.so
-%{_qt_plugindir}/qmltooling/libqmldbg_inspector.so
 
 #--------------------------------------------------------------------
 %package -n %{libqtdevel}
@@ -553,7 +520,7 @@ the Qt toolkit.
 update-alternatives --install %{_bindir}/qmake qmake %{_qt_bindir}/qmake 20
 
 %postun -n %{libqtdevel}
-if ! [ -e %qtdir/bin/qmake ]; then
+if ! [ -e %{_qt_bindir}/qmake ]; then
   update-alternatives --remove qmake %{_qt_bindir}/qmake
 fi
 
@@ -574,22 +541,149 @@ fi
 %{_qt_includedir}/Qt*/
 %{_qt_datadir}/mkspecs/
 %{_qt_datadir}/q3porting.xml
-%{_libdir}/*.so
+%{_libdir}/libQt3Support.so
+%{_libdir}/libQtCLucene.so
+%{_libdir}/libQtCore.so
+%{_libdir}/libQtDBus.so
+%{_libdir}/libQtDeclarative.so
+%{_libdir}/libQtDesigner.so
+%{_libdir}/libQtDesignerComponents.so
+%{_libdir}/libQtGui.so
+%{_libdir}/libQtHelp.so
+%{_libdir}/libQtMultimedia.so
+%{_libdir}/libQtNetwork.so
+%{_libdir}/libQtOpenGL.so
+%if %{with openvg}
+%{_libdir}/libQtOpenVG.so
+%endif
+%{_libdir}/libQtScript.so
+%{_libdir}/libQtScriptTools.so
+%{_libdir}/libQtSql.so
+%{_libdir}/libQtSvg.so
+%{_libdir}/libQtTest.so
+%{_libdir}/libQtXml.so
+%{_libdir}/libQtXmlPatterns.so
+%if %{with webkit}
+%{_libdir}/libQtWebKit.so
+%endif
 %{_libdir}/*.a
 %{_libdir}/*.prl
 %{_libdir}/pkgconfig/Qt*.pc
 
 #--------------------------------------------------------------------
-%package xmlpatterns
-Summary:	Qt%{major} Xmlpatterns Utility
+%package assistant
+Summary:	Qt%{major} Assistantion Doc Utility
+Group:		Books/Computer books
+Requires:	%{name}-common = %{epoch}:%{version}
+Requires:	qt4-database-plugin-sqlite = %{epoch}:%{version}
+Suggests:	qt4-doc = %{epoch}:%{version}
+Conflicts:	%name-common <= 4.3.3-4
+
+%description assistant
+Qt Assistant provides a documentation Browser.
+
+%files assistant
+%{_qt_bindir}/assistant
+%{_qt_bindir}/qcollectiongenerator
+%{_qt_bindir}/qhelpconverter
+%{_qt_bindir}/qhelpgenerator
+%{_datadir}/applications/mandriva-assistant-qt4.desktop
+%{_qt_translationdir}/assistant*
+
+#--------------------------------------------------------------------
+%package designer
+Summary:	Qt%{major} Visual Design Tool
+Group:		Development/KDE and Qt
+Requires:	%{libqtdevel} = %{epoch}:%{version}
+Requires:	qt4-designer-plugin-qt3support = %{epoch}:%{version}
+%if %{with webkit}
+Requires:	qt4-designer-plugin-webkit = %{epoch}:%{version}
+%endif
+%if %{with phonon}
+Requires:	qt4-designer-plugin-phonon
+%endif
+%if %{with examples}
+Suggests:	qt4-examples = %{epoch}:%{version}
+%endif
+%if %{with demos}
+Suggests:	qt4-demos = %{epoch}:%{version}-%{release}
+%endif
+Conflicts:	%name-common <= 4.3.3-4
+
+%description designer
+The Qt Designer is a visual design tool that makes designing and
+implementing user interfaces a lot easier.
+
+%files designer
+%{_qt_bindir}/designer
+%{_datadir}/applications/mandriva-designer-qt4.desktop
+%{_qt_translationdir}/designer_*
+
+#--------------------------------------------------------------------
+%package linguist
+Summary:	Qt%{major} Linguist Translation Utility
+Group:		Books/Computer books
+Requires:	%{name}-common = %{epoch}:%{version}
+Conflicts:	%name-common <= 4.3.3-4
+
+%description linguist
+Linguist provides easy translation for Qt GUI's in severall languages.
+
+%files linguist
+%{_qt_bindir}/linguist
+%{_qt_bindir}/lconvert
+%{_datadir}/applications/mandriva-linguist-qt4.desktop
+%{_qt_translationdir}/linguist*
+
+#--------------------------------------------------------------------
+%package qdoc3
+Summary:	Qt%{major} Documentation Generator
+Group:		Development/KDE and Qt
+Requires:	%{name}-common = %{epoch}:%{version}
+Conflicts:	%name-common <= 4.3.3-4
+
+%description qdoc3
+Qt 4 documentation generator.
+
+%files qdoc3
+%{_qt_bindir}/qdoc3
+
+#--------------------------------------------------------------------
+%package qtdbus
+Summary:	Qt%{major} DBus Binary
 Group:		Development/KDE and Qt
 Requires:	%{name}-common = %{epoch}:%{version}
 
-%description xmlpatterns
-Xmlpatterns utility for Qt.
+%description qtdbus
+Dbus interface for Qt.
 
-%files xmlpatterns
-%{_qt_bindir}/xmlpatterns
+%files qtdbus
+%{_qt_bindir}/qdbus
+%{_qt_bindir}/qdbusviewer
+
+#--------------------------------------------------------------------
+%package qmlviewer
+Summary:	Qt%{major} Qmlviewer Utility
+Group:		Development/KDE and Qt
+Requires:	%{name}-common = %{epoch}:%{version}
+
+%description qmlviewer
+Qmlviewer utility for Qt.
+
+%files qmlviewer
+%{_qt_bindir}/qmlviewer
+%{_qt_bindir}/qmlplugindump
+%{_qt_importdir}/Qt/
+%if %{with webkit}
+%{_qt_importdir}/QtWebKit/libqmlwebkitplugin.so
+%{_qt_importdir}/QtWebKit/qmldir
+%endif
+%{_qt_plugindir}/bearer/libqgenericbearer.so
+%{_qt_plugindir}/bearer/libqnmbearer.so
+%{_qt_plugindir}/bearer/libqconnmanbearer.so
+%dir %{_qt_plugindir}/qmltooling/
+%{_qt_plugindir}/qmltooling/libqmldbg_tcp.so
+%{_qt_plugindir}/qmltooling/libqmldbg_inspector.so
 
 #--------------------------------------------------------------------
 %package qtconfig
@@ -607,13 +701,176 @@ Main configuration utility for Qt.
 update-alternatives --install %{_bindir}/qtconfig qtconfig %{_qt_bindir}/qtconfig 20
 
 %postun qtconfig
-if ! [ -e %qtdir/bin/qtconfig ]; then
+if ! [ -e %{_qt_bindir}/qtconfig ]; then
   update-alternatives --remove qtconfig %{_qt_bindir}/qtconfig 
 fi
 
 %files qtconfig
 %{_qt_bindir}/qtconfig
 %{_qt_translationdir}/qtconfig*
+
+#--------------------------------------------------------------------
+%if %{with qvfb}
+%package qvfb
+Summary:	Qt%{major} Embedded Virtual Terminal
+Group:		Development/KDE and Qt
+Requires:	%{name}-common = %{epoch}:%{version}
+Conflicts:	%name-common <= 4.3.3-4
+
+%description qvfb
+Embedded virtual terminal for Qt support.
+
+%files qvfb
+%{_qt_bindir}/qvfb
+%{_qt_translationdir}/qvfb*
+%endif
+
+#--------------------------------------------------------------------
+%package xmlpatterns
+Summary:	Qt%{major} Xmlpatterns Utility
+Group:		Development/KDE and Qt
+Requires:	%{name}-common = %{epoch}:%{version}
+
+%description xmlpatterns
+Xmlpatterns utility for Qt.
+
+%files xmlpatterns
+%{_qt_bindir}/xmlpatterns
+
+#--------------------------------------------------------------------
+%package accessibility-plugin
+Summary:	Qt%{major} Accessibility Plugin
+Group:		Development/KDE and Qt
+Obsoletes:	qt4-accessibility-plugin-%_lib
+
+%description accessibility-plugin
+Acessibility plugins for Qt.
+
+%files accessibility-plugin
+%{_qt_plugindir}/accessible/
+
+#--------------------------------------------------------------------
+%package designer-plugin-qt3support
+Summary:	Qt%{major} designer qt3support plugin
+Group:		Development/KDE and Qt
+
+%description designer-plugin-qt3support
+Designer plugin for qt3support Qt support.
+
+%files designer-plugin-qt3support
+%{_qt_plugindir}/designer/libqt3supportwidgets.so
+
+#--------------------------------------------------------------------
+%if %{with webkit}
+%package designer-plugin-webkit
+Summary:	Qt%{major} Designer Webkit Plugin
+Group:		Development/KDE and Qt
+
+%description designer-plugin-webkit
+Designer plugin for webkit Qt support.
+
+%files designer-plugin-webkit
+%{_qt_plugindir}/designer/libqwebview.so
+%endif
+
+#--------------------------------------------------------------------
+%package graphicssystems-plugin
+Summary:	Qt%{major} Graphicssystems Plugin
+Group:		Development/KDE and Qt
+Obsoletes:	qt4-graphicssystems-plugin-%_lib
+
+%description graphicssystems-plugin
+Graphicssystems plugins for Qt.
+
+%files graphicssystems-plugin
+%dir %{_qt_plugindir}/graphicssystems/
+%{_qt_plugindir}/graphicssystems/libqglgraphicssystem.so
+%{_qt_plugindir}/graphicssystems/libqtracegraphicssystem.so
+%{_qt_plugindir}/graphicssystems/libqvggraphicssystem.so
+
+#--------------------------------------------------------------------
+%if %{with ibase}
+%package database-plugin-ibase
+Summary:	Qt%{major} Database Interbase Plugin
+Group:		Development/KDE and Qt
+Obsoletes:	qt4-database-plugin-ibase-%_lib
+
+%description database-plugin-ibase
+Database plugin for interbase Qt support.
+
+%files database-plugin-ibase
+%{_qt_plugindir}/sqldrivers/libqsqlibase.so
+%endif
+
+#--------------------------------------------------------------------
+%if %{with mysql}
+%package database-plugin-mysql
+Summary:	Qt%{major} Database MYSQL Plugin
+Group:		Development/KDE and Qt
+Obsoletes:	qt4-database-plugin-mysql-%_lib
+
+%description database-plugin-mysql
+Database plugin for mysql Qt support.
+
+%files database-plugin-mysql
+%{_qt_plugindir}/sqldrivers/libqsqlmysql.so
+%endif
+
+#--------------------------------------------------------------------
+%if %{with odbc}
+%package database-plugin-odbc
+Summary:	Qt%{major} Database ODBC Plugin
+Group:		Development/KDE and Qt
+Obsoletes:	qt4-database-plugin-odbc-%_lib
+ 
+%description database-plugin-odbc
+Database plugin for ODBC Qt support.
+
+%files database-plugin-odbc
+%{_qt_plugindir}/sqldrivers/libqsqlodbc.so
+%endif
+
+#--------------------------------------------------------------------
+%if %{with postgres}
+%package database-plugin-pgsql
+Summary:	Qt%{major} Database PGSQL Plugin
+Group:		Development/KDE and Qt
+Obsoletes:	qt4-database-plugin-pgsql-%_lib
+
+%description database-plugin-pgsql
+Database plugin for pgsql Qt support.
+
+%files database-plugin-pgsql
+%{_qt_plugindir}/sqldrivers/libqsqlpsql.so
+%endif
+
+#--------------------------------------------------------------------
+%if %{with sqlite}
+%package database-plugin-sqlite
+Summary:	Qt%{major} Database SQLITE Plugin
+Group:		Databases
+Obsoletes:	qt4-database-plugin-sqlite-%_lib
+
+%description database-plugin-sqlite
+Database plugin for sqlite Qt support.
+
+%files database-plugin-sqlite
+%{_qt_plugindir}/sqldrivers/libqsqlite.so
+%endif
+
+#--------------------------------------------------------------------
+%if %{with tds}
+%package database-plugin-tds
+Summary:	Q%{major} Database FREETDS Plugin
+Group:		Databases
+Obsoletes:	qt4-database-plugin-tds-%_lib
+
+%description database-plugin-tds
+Database plugin for freetds Qt support.
+
+%files database-plugin-tds
+%{_qt_plugindir}/sqldrivers/libqsqltds.so
+%endif
 
 #--------------------------------------------------------------------
 %if %{with docs}
@@ -681,235 +938,6 @@ Programs examples made with Qt %{version}.
 %endif
 
 #--------------------------------------------------------------------
-%package linguist
-Summary:	Qt%{major} Linguist Translation Utility
-Group:		Books/Computer books
-Requires:	%{name}-common = %{epoch}:%{version}
-Conflicts:	%name-common <= 4.3.3-4
-
-%description linguist
-Linguist provides easy translation for Qt GUI's in severall languages.
-
-%files linguist
-%{_qt_bindir}/linguist
-%{_qt_bindir}/lconvert
-%{_datadir}/applications/mandriva-linguist-qt4.desktop
-%{_qt_translationdir}/linguist*
-
-#--------------------------------------------------------------------
-%package assistant
-Summary:	Qt%{major} Assistantion Doc Utility
-Group:		Books/Computer books
-Requires:	%{name}-common = %{epoch}:%{version}
-Requires:	qt4-database-plugin-sqlite = %{epoch}:%{version}
-Suggests:	qt4-doc = %{epoch}:%{version}
-Conflicts:	%name-common <= 4.3.3-4
-
-%description assistant
-Qt Assistant provides a documentation Browser.
-
-%files assistant
-%{_qt_bindir}/assistant
-%{_qt_bindir}/qcollectiongenerator
-%{_qt_bindir}/qhelpconverter
-%{_qt_bindir}/qhelpgenerator
-%{_datadir}/applications/mandriva-assistant-qt4.desktop
-%{_qt_translationdir}/assistant*
-
-#--------------------------------------------------------------------
-%if %{with odbc}
-%package database-plugin-odbc
-Summary:	Qt%{major} Database ODBC Plugin
-Group:		Development/KDE and Qt
-Obsoletes:	qt4-database-plugin-odbc-%_lib
- 
-%description database-plugin-odbc
-Database plugin for ODBC Qt support.
-
-%files database-plugin-odbc
-%{_qt_plugindir}/sqldrivers/libqsqlodbc.so
-%endif
-
-#--------------------------------------------------------------------
-%if %{with mysql}
-%package database-plugin-mysql
-Summary:	Qt%{major} Database MYSQL Plugin
-Group:		Development/KDE and Qt
-Obsoletes:	qt4-database-plugin-mysql-%_lib
-
-%description database-plugin-mysql
-Database plugin for mysql Qt support.
-
-%files database-plugin-mysql
-%{_qt_plugindir}/sqldrivers/libqsqlmysql.so
-%endif
-
-#--------------------------------------------------------------------
-%if %{with sqlite}
-%package database-plugin-sqlite
-Summary:	Qt%{major} Database SQLITE Plugin
-Group:		Databases
-Obsoletes:	qt4-database-plugin-sqlite-%_lib
-
-%description database-plugin-sqlite
-Database plugin for sqlite Qt support.
-
-%files database-plugin-sqlite
-%{_qt_plugindir}/sqldrivers/libqsqlite.so
-%endif
-
-#--------------------------------------------------------------------
-%if %{with tds}
-%package database-plugin-tds
-Summary:	Q%{major} Database FREETDS Plugin
-Group:		Databases
-Obsoletes:	qt4-database-plugin-tds-%_lib
-
-%description database-plugin-tds
-Database plugin for freetds Qt support.
-
-%files database-plugin-tds
-%{_qt_plugindir}/sqldrivers/libqsqltds.so
-%endif
-
-#--------------------------------------------------------------------
-%if %{with ibase}
-%package database-plugin-ibase
-Summary:	Qt%{major} Database Interbase Plugin
-Group:		Development/KDE and Qt
-Obsoletes:	qt4-database-plugin-ibase-%_lib
-
-%description database-plugin-ibase
-Database plugin for interbase Qt support.
-
-%files database-plugin-ibase
-%{_qt_plugindir}/sqldrivers/libqsqlibase.so
-%endif
-
-#--------------------------------------------------------------------
-%if %{with postgres}
-%package database-plugin-pgsql
-Summary:	Qt%{major} Database PGSQL Plugin
-Group:		Development/KDE and Qt
-Obsoletes:	qt4-database-plugin-pgsql-%_lib
-
-%description database-plugin-pgsql
-Database plugin for pgsql Qt support.
-
-%files database-plugin-pgsql
-%{_qt_plugindir}/sqldrivers/libqsqlpsql.so
-%endif
-
-#--------------------------------------------------------------------
-%package graphicssystems-plugin
-Summary:	Qt%{major} Graphicssystems Plugin
-Group:		Development/KDE and Qt
-Obsoletes:	qt4-graphicssystems-plugin-%_lib
-
-%description graphicssystems-plugin
-Graphicssystems plugins for Qt.
-
-%files graphicssystems-plugin
-%dir %{_qt_plugindir}/graphicssystems/
-%{_qt_plugindir}/graphicssystems/libqglgraphicssystem.so
-%{_qt_plugindir}/graphicssystems/libqtracegraphicssystem.so
-%{_qt_plugindir}/graphicssystems/libqvggraphicssystem.so
-
-#--------------------------------------------------------------------
-%package accessibility-plugin
-Summary:	Qt%{major} Accessibility Plugin
-Group:		Development/KDE and Qt
-Obsoletes:	qt4-accessibility-plugin-%_lib
-
-%description accessibility-plugin
-Acessibility plugins for Qt.
-
-%files accessibility-plugin
-%{_qt_plugindir}/accessible/
-
-#--------------------------------------------------------------------
-%package designer
-Summary:	Qt%{major} Visual Design Tool
-Group:		Development/KDE and Qt
-Requires:	%{libqtdevel} = %{epoch}:%{version}
-Requires:	qt4-designer-plugin-qt3support = %{epoch}:%{version}
-%if %{with webkit}
-Requires:	qt4-designer-plugin-webkit = %{epoch}:%{version}
-%endif
-%if %{with phonon}
-Requires:	qt4-designer-plugin-phonon
-%endif
-%if %{with examples}
-Suggests:	qt4-examples = %{epoch}:%{version}
-%endif
-%if %{with demos}
-Suggests:	qt4-demos = %{epoch}:%{version}-%{release}
-%endif
-Conflicts:	%name-common <= 4.3.3-4
-
-%description designer
-The Qt Designer is a visual design tool that makes designing and
-implementing user interfaces a lot easier.
-
-%files designer
-%{_qt_bindir}/designer
-%{_datadir}/applications/mandriva-designer-qt4.desktop
-%{_qt_translationdir}/designer_*
-
-#--------------------------------------------------------------------
-%if %{with webkit}
-%package designer-plugin-webkit
-Summary:	Qt%{major} Designer Webkit Plugin
-Group:		Development/KDE and Qt
-
-%description designer-plugin-webkit
-Designer plugin for webkit Qt support.
-
-%files designer-plugin-webkit
-%{_qt_plugindir}/designer/libqwebview.so
-%endif
-
-#--------------------------------------------------------------------
-%package designer-plugin-qt3support
-Summary:	Qt%{major} designer qt3support plugin
-Group:		Development/KDE and Qt
-
-%description designer-plugin-qt3support
-Designer plugin for qt3support Qt support.
-
-%files designer-plugin-qt3support
-%{_qt_plugindir}/designer/libqt3supportwidgets.so
-
-#--------------------------------------------------------------------
-%if %{with qvfb}
-%package qvfb
-Summary:	Qt%{major} Embedded Virtual Terminal
-Group:		Development/KDE and Qt
-Requires:	%{name}-common = %{epoch}:%{version}
-Conflicts:	%name-common <= 4.3.3-4
-
-%description qvfb
-Embedded virtual terminal for Qt support.
-
-%files qvfb
-%{_qt_bindir}/qvfb
-%{_qt_translationdir}/qvfb*
-%endif
-
-#--------------------------------------------------------------------
-%package qdoc3
-Summary:	Qt%{major} Documentation Generator
-Group:		Development/KDE and Qt
-Requires:	%{name}-common = %{epoch}:%{version}
-Conflicts:	%name-common <= 4.3.3-4
-
-%description qdoc3
-Qt 4 documentation generator.
-
-%files qdoc3
-%{_qt_bindir}/qdoc3
-
-#--------------------------------------------------------------------
 %prep
 %setup -q -n qt-everywhere-opensource-src-%{version}
 
@@ -941,41 +969,40 @@ export PATH=$QTDIR/bin:$PATH
 perl -pi -e 's@/X11R6/@/@' mkspecs/linux-*/qmake.conf mkspecs/common/linux.conf
 
 #--------------------------------------------------------
-
 ./configure \
-   -prefix %{_qt_datadir} \
-   -sysconfdir %{_sysconfdir} \
-   -libdir %{_libdir} \
-   -docdir %{_qt_docdir} \
-   -plugindir %{_qt_plugindir} \
-   -translationdir %{_qt_translationdir} \
+    -prefix %{_qt_datadir} \
+    -sysconfdir %{_sysconfdir} \
+    -libdir %{_libdir} \
+    -docdir %{_qt_docdir} \
+    -plugindir %{_qt_plugindir} \
+    -translationdir %{_qt_translationdir} \
 %if %{with debug}
-   -debug \
-   -verbose \
+    -debug \
+    -verbose \
 %else
-   -release \
-   -silent \
+    -release \
+    -silent \
 %endif
-   -opensource \
-   -confirm-license \
-   -shared \
-   -no-separate-debug-info \
-   -no-rpath \
-   -no-pch \
-   -optimized-qmake \
-   -reduce-relocations \
-   -openssl-linked \
-   -dbus-linked \
-   -gtkstyle \
-   -xmlpatterns \
-   -opengl desktop \
-   -platform linux-g++ \
-   -no-gtkstyle \
+    -opensource \
+    -confirm-license \
+    -shared \
+    -no-separate-debug-info \
+    -no-rpath \
+    -no-pch \
+    -optimized-qmake \
+    -reduce-relocations \
+    -openssl-linked \
+    -dbus-linked \
+    -gtkstyle \
+    -xmlpatterns \
+    -opengl desktop \
+    -platform linux-g++ \
+    -no-gtkstyle \
 %if %{with qvfb}
     -qvfb \
 %endif
 %if !%{with cups}
-   -no-cups \
+    -no-cups \
 %endif
 %if !%{with phonon}
     -no-phonon \
