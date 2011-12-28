@@ -632,6 +632,9 @@ Linguist provides easy translation for Qt GUI's in severall languages.
 %files linguist
 %{_qt_bindir}/linguist
 %{_qt_bindir}/lconvert
+# This ugly hack is needed untill rpm5 gets fixed else compplains
+# about unpackaged dir
+%dir %{_datadir}/applications
 %{_datadir}/applications/mandriva-linguist-qt4.desktop
 %{_qt_translationdir}/linguist*
 
