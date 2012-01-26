@@ -36,29 +36,29 @@
 %define _qt_importdir		%{_qt_datadir}/imports/
 %define _qt_translationdir	%{_qt_datadir}/translations/
 
-%define libqt %mklibname qt %{major}
-%define libqtdevel %mklibname qt %{major} -d
-%define libqt3support %mklibname qt3support %{major}
-%define libqtcore %mklibname qtcore %{major}
-%define libqtdesigner %mklibname qtdesigner %{major}
-%define libqtgui %mklibname qtgui %{major}
-%define libqtnetwork %mklibname qtnetwork %{major}
-%define libqtopengl %mklibname qtopengl %{major}
-%define libqtsql %mklibname qtsql %{major}
-%define libqtxml %mklibname qtxml %{major}
-%define libqtscripttools %mklibname qtscripttools %{major}
-%define libqtxmlpatterns %mklibname qtxmlpatterns %{major}
-%define libqtsvg %mklibname qtsvg %{major}
-%define libqttest %mklibname qttest %{major}
-%define libqdbus %mklibname qtdbus %{major}
-%define libqtscript %mklibname qtscript %{major}
-%define libqtclucene %mklibname qtclucene %{major}
-%define libqthelp %mklibname qthelp %{major}
-%define libqtwebkit %mklibname qtwebkit %{major}
-%define libqtmultimedia %mklibname qtmultimedia %{major}
-%define libphonon %mklibname phonon %{major}
-%define libqtdeclarative %mklibname qtdeclarative %{major}
-%define libqtopenvg %mklibname qtopenvg %{major}
+%define libqt			%mklibname qt %{major}
+%define libqtdevel		%mklibname qt %{major} -d
+%define libqt3support		%mklibname qt3support %{major}
+%define libqtcore		%mklibname qtcore %{major}
+%define libqtdesigner		%mklibname qtdesigner %{major}
+%define libqtgui		%mklibname qtgui %{major}
+%define libqtnetwork		%mklibname qtnetwork %{major}
+%define libqtopengl		%mklibname qtopengl %{major}
+%define libqtsql		%mklibname qtsql %{major}
+%define libqtxml		%mklibname qtxml %{major}
+%define libqtscripttools	%mklibname qtscripttools %{major}
+%define libqtxmlpatterns	%mklibname qtxmlpatterns %{major}
+%define libqtsvg		%mklibname qtsvg %{major}
+%define libqttest		%mklibname qttest %{major}
+%define libqdbus		%mklibname qtdbus %{major}
+%define libqtscript		%mklibname qtscript %{major}
+%define libqtclucene		%mklibname qtclucene %{major}
+%define libqthelp		%mklibname qthelp %{major}
+%define libqtwebkit		%mklibname qtwebkit %{major}
+%define libqtmultimedia		%mklibname qtmultimedia %{major}
+%define libphonon		%mklibname phonon %{major}
+%define libqtdeclarative	%mklibname qtdeclarative %{major}
+%define libqtopenvg		%mklibname qtopenvg %{major}
 
 
 Name:		qt4
@@ -69,73 +69,73 @@ Release:	5
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 URL:		http://qt.nokia.com/
-Source0: http://get.qt.nokia.com/qt/source/qt-everywhere-opensource-src-%{version}.tar.gz
-Source2: qt4.macros
-Source3: mandriva-designer-qt4.desktop 
-Source4: mandriva-assistant-qt4.desktop 
-Source5: mandriva-linguist-qt4.desktop
-Patch0:  qt-x11-opensource-src-4.6.0-qvfb.patch
-Patch1:  qt-everywhere-opensource-src-4.7.0-force-gb18030-for-gb2312.patch
-Patch2:  qt-everywhere-opensource-src-4.7.2-fix-str-fmt.patch
-Patch4:  qt-everywhere-opensource-src-4.6.1-add_missing_bold_style.diff
-Patch5:  qt-everywhere-opensource-src-4.6.1-use_ft_glyph_embolden_to_fake_bold.diff
+Source0:	http://get.qt.nokia.com/qt/source/qt-everywhere-opensource-src-%{version}.tar.gz
+Source2:	qt4.macros
+Source3:	mandriva-designer-qt4.desktop 
+Source4:	mandriva-assistant-qt4.desktop 
+Source5:	mandriva-linguist-qt4.desktop
+Patch0:		qt-x11-opensource-src-4.6.0-qvfb.patch
+Patch1:		qt-everywhere-opensource-src-4.7.0-force-gb18030-for-gb2312.patch
+Patch2:		qt-everywhere-opensource-src-4.7.2-fix-str-fmt.patch
+Patch4:		qt-everywhere-opensource-src-4.6.1-add_missing_bold_style.diff
+Patch5:		qt-everywhere-opensource-src-4.6.1-use_ft_glyph_embolden_to_fake_bold.diff
 Patch7:		qt-everywhere-opensource-src-4.8.0-tp-openssl.patch
 Patch9:		qt-everywhere-opensource-src-4.8.0-rc1-fix-build-with-glib-2.31.patch
-Patch10: 	qt-4.8.0-fix-qvfb-build.patch
+Patch10:	qt-4.8.0-fix-qvfb-build.patch
 
-BuildRequires: libxtst-devel
-BuildRequires: libxslt-devel
-BuildRequires: libalsa-devel
-BuildRequires: pulseaudio-devel
-BuildRequires: GL-devel
-BuildRequires: Mesa-common-devel
+BuildRequires:	libxtst-devel
+BuildRequires:	libxslt-devel
+BuildRequires:	libalsa-devel
+BuildRequires:	pulseaudio-devel
+BuildRequires:	GL-devel
+BuildRequires:	Mesa-common-devel
 %if %{with openvg}
-BuildRequires:	mesaopenvg-devel
+BuildRequires:	pkgconfig(vg)
 %endif
-BuildRequires: zlib-devel 
-BuildRequires: openssl-devel
-BuildRequires: png-devel 
-BuildRequires: jpeg-devel
-BuildRequires: mng-devel
-BuildRequires: lcms-devel
-BuildRequires: cups-devel
-BuildRequires: freetype2-devel
-BuildRequires: pkgconfig(fontconfig)
-BuildRequires: expat-devel
-BuildRequires: pkgconfig(dbus-1) >= 0.92
-BuildRequires: termcap-devel
-BuildRequires: pam-devel
-BuildRequires: readline-devel
-BuildRequires: perl
-BuildRequires: glib2-devel
-BuildRequires: libxml2-devel
-BuildRequires: binutils >= 2.18 
-BuildRequires: libxcursor-devel
-BuildRequires: libxrandr-devel
-BuildRequires: libxrender-devel
-BuildRequires: libxv-devel
+BuildRequires:	zlib-devel
+BuildRequires:	openssl-devel
+BuildRequires:	png-devel
+BuildRequires:	jpeg-devel
+BuildRequires:	mng-devel
+BuildRequires:	lcms-devel
+BuildRequires:	cups-devel
+BuildRequires:	freetype2-devel
+BuildRequires:	pkgconfig(fontconfig)
+BuildRequires:	expat-devel
+BuildRequires:	pkgconfig(dbus-1) >= 0.92
+BuildRequires:	termcap-devel
+BuildRequires:	pam-devel
+BuildRequires:	readline-devel
+BuildRequires:	perl
+BuildRequires:	glib2-devel
+BuildRequires:	libxml2-devel
+BuildRequires:	binutils >= 2.18 
+BuildRequires:	libxcursor-devel
+BuildRequires:	libxrandr-devel
+BuildRequires:	libxrender-devel
+BuildRequires:	libxv-devel
 %if %{with phonon}
-BuildRequires: libgstreamer-devel
-BuildRequires: libgstreamer-plugins-base-devel
+BuildRequires:	libgstreamer-devel
+BuildRequires:	libgstreamer-plugins-base-devel
 %endif
 %if %{with mysql}
-BuildRequires: mysql-devel
+BuildRequires:	mysql-devel
 %endif
 %if %{with odbc}
-BuildRequires: unixODBC-devel
+BuildRequires:	unixODBC-devel
 %endif
 %if %{with sqlite}
-BuildRequires: sqlite3-devel
+BuildRequires:	sqlite3-devel
 %endif
 %if %{with tds}
-BuildRequires: freetds-devel
+BuildRequires:	freetds-devel
 %endif
 %if %{with ibase}
 BuildRequires: firebird-devel
 %endif
 %if %{with postgres}
-BuildRequires: postgresql-devel
-BuildRequires: libpq-devel
+BuildRequires:	postgresql-devel
+BuildRequires:	libpq-devel
 %endif
 
 %description
@@ -192,9 +192,9 @@ Qt component library.
 %package -n %{libqtcore}
 Summary:	Qt%{major} Component Library
 Group:		System/Libraries
-Conflicts:	%{libqtgui} <= 2:4.2.2-%mkrel 2
+Conflicts:	%{libqtgui} <= 2:4.2.2
 Obsoletes:	%{_lib}qtuitools4
-Obsoletes:	qt4-codecs-plugin-%_lib
+Obsoletes:	qt4-codecs-plugin-%{_lib}
 
 %description -n %{libqtcore}
 Qt component library.
@@ -245,7 +245,7 @@ Qt component library.
 %package -n %{libqtgui}
 Summary:	Qt%{major} Component Library
 Group:		System/Libraries
-Conflicts:	%{libqtcore} <= 2:4.2.2-%mkrel 2
+Conflicts:	%{libqtcore} <= 2:4.2.2
 
 %description -n %{libqtgui}
 Qt component library.
@@ -428,8 +428,8 @@ Requires:	gstreamer0.10-pulse
 Suggests:	gstreamer0.10-ffmpeg
 Suggests:	gstreamer0.10-soup
 %if %mdkversion >= 201000
-Obsoletes: arts
-Obsoletes: arts3
+Obsoletes:	arts
+Obsoletes:	arts3
 %endif
 
 %description -n phonon-gstreamer
@@ -452,65 +452,65 @@ Designer phonon plugin for Qt.
 
 #--------------------------------------------------------------------
 %package -n %{libqtdevel}
-Summary:   Development files for the Qt GUI toolkit
-Group:     Development/KDE and Qt
-Requires:  %{name}-common = %{epoch}:%{version}
-Requires:  qt4-qtconfig = %{epoch}:%{version}
-Provides:  qt-devel = %{epoch}:%{version}-%{release}
-Provides:  qt4-devel = %{epoch}:%{version}-%{release}
-Provides:  libqt4-devel = %{epoch}:%{version}-%{release}
-Requires:  %{libqtdeclarative} = %{epoch}:%{version}
-Requires:  %{libqt3support} = %{epoch}:%{version}
-Requires:  %{libqt3support} = %{epoch}:%{version}
-Requires:  %{libqtcore} = %{epoch}:%{version}
-Requires:  %{libqtdesigner} = %{epoch}:%{version}
-Requires:  %{libqtgui} = %{epoch}:%{version}
-Requires:  %{libqtnetwork} = %{epoch}:%{version}
-Requires:  %{libqtopengl} = %{epoch}:%{version}
-Requires:  %{libqtsql} = %{epoch}:%{version}
-Requires:  %{libqtxml} = %{epoch}:%{version}
-Requires:  %{libqtscripttools} = %{epoch}:%{version}
-Requires:  %{libqtxmlpatterns} = %{epoch}:%{version}
-Requires:  %{libqtsvg} = %{epoch}:%{version}
-Requires:  %{libqtclucene} = %{epoch}:%{version}
-Requires:  %{libqttest} = %{epoch}:%{version}
-Requires:  %{libqdbus} = %{epoch}:%{version}
+Summary:	Development files for the Qt GUI toolkit
+Group:		Development/KDE and Qt
+Requires:	%{name}-common = %{epoch}:%{version}
+Requires:	qt4-qtconfig = %{epoch}:%{version}
+Provides:	qt-devel = %{epoch}:%{version}-%{release}
+Provides:	qt4-devel = %{epoch}:%{version}-%{release}
+Provides:	libqt4-devel = %{epoch}:%{version}-%{release}
+Requires:	%{libqtdeclarative} = %{epoch}:%{version}
+Requires:	%{libqt3support} = %{epoch}:%{version}
+Requires:	%{libqt3support} = %{epoch}:%{version}
+Requires:	%{libqtcore} = %{epoch}:%{version}
+Requires:	%{libqtdesigner} = %{epoch}:%{version}
+Requires:	%{libqtgui} = %{epoch}:%{version}
+Requires:	%{libqtnetwork} = %{epoch}:%{version}
+Requires:	%{libqtopengl} = %{epoch}:%{version}
+Requires:	%{libqtsql} = %{epoch}:%{version}
+Requires:	%{libqtxml} = %{epoch}:%{version}
+Requires:	%{libqtscripttools} = %{epoch}:%{version}
+Requires:	%{libqtxmlpatterns} = %{epoch}:%{version}
+Requires:	%{libqtsvg} = %{epoch}:%{version}
+Requires:	%{libqtclucene} = %{epoch}:%{version}
+Requires:	%{libqttest} = %{epoch}:%{version}
+Requires:	%{libqdbus} = %{epoch}:%{version}
 %if %{with webkit}
-Requires:  %{libqtwebkit} = %{epoch}:%{version}
+Requires:	%{libqtwebkit} = %{epoch}:%{version}
 %endif
-Requires:  %{libqtscript} = %{epoch}:%{version}
-Requires:  %{libqthelp} = %{epoch}:%{version}
-Requires:  %{libqtmultimedia} = %{epoch}:%{version}
+Requires:	%{libqtscript} = %{epoch}:%{version}
+Requires:	%{libqthelp} = %{epoch}:%{version}
+Requires:	%{libqtmultimedia} = %{epoch}:%{version}
 %if %{with openvg}
-Requires:  %{libqtopenvg} = %{epoch}:%{version}
+Requires:	%{libqtopenvg} = %{epoch}:%{version}
 %endif
 %if %{with phonon}
-Requires:  qt4-designer-plugin-phonon = %{epoch}:%{version}
-Requires:  %{libphonon} = %{epoch}:%{version}
+Requires:	qt4-designer-plugin-phonon = %{epoch}:%{version}
+Requires:	%{libphonon} = %{epoch}:%{version}
 %endif
-Requires:  qt4-qtdbus = %{epoch}:%{version}
-Requires:  qt4-designer-plugin-webkit = %{epoch}:%{version}
-Requires:  qt4-designer-plugin-qt3support = %{epoch}:%{version}
+Requires:	qt4-qtdbus = %{epoch}:%{version}
+Requires:	qt4-designer-plugin-webkit = %{epoch}:%{version}
+Requires:	qt4-designer-plugin-qt3support = %{epoch}:%{version}
 Requires(post):	update-alternatives
 Requires(postun):update-alternatives
 Conflicts:	qt4-common <= 2:4.3.3
-Obsoletes: %{mklibname -d QtWebKit} < %version
-Conflicts: %{_lib}qtxml4 < 2:4.3.4-3
-Conflicts: %{_lib}qtsql4 < 2:4.3.4-3
-Conflicts: %{_lib}qtnetwork4 < 2:4.3.4-3
-Conflicts: %{_lib}qtscript4 < 2:4.3.4-3
-Conflicts: %{_lib}qtgui4 < 2:4.3.4-3
-Conflicts: %{_lib}qtsvg4 < 2:4.3.4-3
-Conflicts: %{_lib}qttest4 < 2:4.3.4-3
-Conflicts: %{_lib}qtcore4 < 2:4.3.4-3
-Conflicts: %{_lib}qt3support4 < 2:4.3.4-3
-Conflicts: %{_lib}qtopengl4 < 2:4.3.4-3
-Conflicts: %{_lib}qtdesigner1 < 2:4.3.4-3
-Conflicts: %{_lib}qtdbus4 < 2:4.3.4-3
-Conflicts: %{_lib}qassistant1 < 2:4.3.4-3
-Conflicts: %{_lib}qttest4 < 2:4.3.4-3
-Conflicts: %{_lib}qtcore4 < 2:4.3.4-3
-Conflicts: qt4-linguist < 2:4.4.3-3
+Obsoletes:	%{mklibname -d QtWebKit} < %{version}
+Conflicts:	%{_lib}qtxml4 < 2:4.3.4-3
+Conflicts:	%{_lib}qtsql4 < 2:4.3.4-3
+Conflicts:	%{_lib}qtnetwork4 < 2:4.3.4-3
+Conflicts:	%{_lib}qtscript4 < 2:4.3.4-3
+Conflicts:	%{_lib}qtgui4 < 2:4.3.4-3
+Conflicts:	%{_lib}qtsvg4 < 2:4.3.4-3
+Conflicts:	%{_lib}qttest4 < 2:4.3.4-3
+Conflicts:	%{_lib}qtcore4 < 2:4.3.4-3
+Conflicts:	%{_lib}qt3support4 < 2:4.3.4-3
+Conflicts:	%{_lib}qtopengl4 < 2:4.3.4-3
+Conflicts:	%{_lib}qtdesigner1 < 2:4.3.4-3
+Conflicts:	%{_lib}qtdbus4 < 2:4.3.4-3
+Conflicts:	%{_lib}qassistant1 < 2:4.3.4-3
+Conflicts:	%{_lib}qttest4 < 2:4.3.4-3
+Conflicts:	%{_lib}qtcore4 < 2:4.3.4-3
+Conflicts:	qt4-linguist < 2:4.4.3-3
 
 %description -n %{libqtdevel}
 Necessary files to develop applications using the Qt GUI toolkit:
@@ -808,7 +808,7 @@ Designer plugin for webkit Qt support.
 %package graphicssystems-plugin
 Summary:	Qt%{major} Graphicssystems Plugin
 Group:		Development/KDE and Qt
-Obsoletes:	qt4-graphicssystems-plugin-%_lib
+Obsoletes:	qt4-graphicssystems-plugin-%{_lib}
 
 %description graphicssystems-plugin
 Graphicssystems plugins for Qt.
@@ -824,7 +824,7 @@ Graphicssystems plugins for Qt.
 %package database-plugin-ibase
 Summary:	Qt%{major} Database Interbase Plugin
 Group:		Development/KDE and Qt
-Obsoletes:	qt4-database-plugin-ibase-%_lib
+Obsoletes:	qt4-database-plugin-ibase-%{_lib}
 
 %description database-plugin-ibase
 Database plugin for interbase Qt support.
@@ -838,7 +838,7 @@ Database plugin for interbase Qt support.
 %package database-plugin-mysql
 Summary:	Qt%{major} Database MYSQL Plugin
 Group:		Development/KDE and Qt
-Obsoletes:	qt4-database-plugin-mysql-%_lib
+Obsoletes:	qt4-database-plugin-mysql-%{_lib}
 
 %description database-plugin-mysql
 Database plugin for mysql Qt support.
@@ -852,7 +852,7 @@ Database plugin for mysql Qt support.
 %package database-plugin-odbc
 Summary:	Qt%{major} Database ODBC Plugin
 Group:		Development/KDE and Qt
-Obsoletes:	qt4-database-plugin-odbc-%_lib
+Obsoletes:	qt4-database-plugin-odbc-%{_lib}
  
 %description database-plugin-odbc
 Database plugin for ODBC Qt support.
@@ -866,7 +866,7 @@ Database plugin for ODBC Qt support.
 %package database-plugin-pgsql
 Summary:	Qt%{major} Database PGSQL Plugin
 Group:		Development/KDE and Qt
-Obsoletes:	qt4-database-plugin-pgsql-%_lib
+Obsoletes:	qt4-database-plugin-pgsql-%{_lib}
 
 %description database-plugin-pgsql
 Database plugin for pgsql Qt support.
@@ -880,7 +880,7 @@ Database plugin for pgsql Qt support.
 %package database-plugin-sqlite
 Summary:	Qt%{major} Database SQLITE Plugin
 Group:		Databases
-Obsoletes:	qt4-database-plugin-sqlite-%_lib
+Obsoletes:	qt4-database-plugin-sqlite-%{_lib}
 
 %description database-plugin-sqlite
 Database plugin for sqlite Qt support.
@@ -894,7 +894,7 @@ Database plugin for sqlite Qt support.
 %package database-plugin-tds
 Summary:	Q%{major} Database FREETDS Plugin
 Group:		Databases
-Obsoletes:	qt4-database-plugin-tds-%_lib
+Obsoletes:	qt4-database-plugin-tds-%{_lib}
 
 %description database-plugin-tds
 Database plugin for freetds Qt support.
