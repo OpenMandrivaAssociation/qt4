@@ -137,6 +137,9 @@ BuildRequires: firebird-devel
 BuildRequires:	postgresql-devel
 BuildRequires:	libpq-devel
 %endif
+%if %{with_private_headers}
+BuildRequires:	rsync
+%endif
 
 %description
 Qt is a GUI software toolkit which simplifies the task of writing and
