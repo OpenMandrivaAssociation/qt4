@@ -577,7 +577,7 @@ fi
 %{_libdir}/*.prl
 %{_libdir}/pkgconfig/Qt*.pc
 %if %{with_private_headers}
-%exclude %{_qt4_includedir}/*/private/
+%exclude %{_qt_includedir}/*/private/
 %endif
 
 #-------------------------------------------------------------------------
@@ -594,14 +594,14 @@ toolkit. It is needed to build Qt Creator with all features.
 
 %files devel-private
 %defattr(-,root,root,-)
-%{_qt4_includedir}/QtCore/private/
-%{_qt4_includedir}/QtDeclarative/private/
-%{_qt4_includedir}/QtGui/private/
-%{_qt4_includedir}/QtScript/private/
-%{_qt4_includedir}/../src/corelib/
-%{_qt4_includedir}/../src/declarative/
-%{_qt4_includedir}/../src/gui/
-%{_qt4_includedir}/../src/script/
+%{_qt_includedir}/QtCore/private/
+%{_qt_includedir}/QtDeclarative/private/
+%{_qt_includedir}/QtGui/private/
+%{_qt_includedir}/QtScript/private/
+%{_qt_includedir}/../src/corelib/
+%{_qt_includedir}/../src/declarative/
+%{_qt_includedir}/../src/gui/
+%{_qt_includedir}/../src/script/
 %endif
 
 #--------------------------------------------------------------------
@@ -1118,7 +1118,7 @@ make install INSTALL_ROOT=%{buildroot}
 rsync -aR \
   include/Qt{Core,Declarative,Gui,Script}/private \
   src/{corelib,declarative,gui,script}/*/*_p.h \
-  %{buildroot}%{_qt4_datadir}
+  %{buildroot}%{_qt_datadir}
 %endif
 
 %if %{with qvfb}
