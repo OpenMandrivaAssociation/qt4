@@ -2,6 +2,10 @@
 %define _default_patch_flags -s -l
 %define _default_patch_fuzz 2
 
+# we need private headers to build qt-creator
+# but it may change in future so we use condition
+%define with_private_headers 1
+
 %bcond_without postgres
 %bcond_without mysql
 %bcond_without sqlite
@@ -61,7 +65,7 @@ Name:		qt4
 Summary:	Qt GUI Toolkit
 Group:		Development/KDE and Qt
 Version:	4.8.0
-Release:	4
+Release:	5
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 URL:		http://qt.nokia.com/
@@ -569,6 +573,33 @@ fi
 %{_libdir}/*.a
 %{_libdir}/*.prl
 %{_libdir}/pkgconfig/Qt*.pc
+%if %{with_private_headers}
+%exclude %{_qt4_includedir}/*/private/
+%endif
+
+#-------------------------------------------------------------------------
+%if %{with_private_headers}
+%package devel-private
+Summary:	Private headers for Qt toolkit
+Group:		Development/KDE and Qt
+Requires:	qt4-devel = %{epoch}:%{version}-%{release}
+BuildArch:	noarch
+
+%description devel-private
+The %{name}-devel-private package contains the private headres for Qt4
+toolkit. It is needed to build Qt Creator with all features.
+
+%files devel-private
+%defattr(-,root,root,-)
+%{_qt4_includedir}/QtCore/private/
+%{_qt4_includedir}/QtDeclarative/private/
+%{_qt4_includedir}/QtGui/private/
+%{_qt4_includedir}/QtScript/private/
+%{_qt4_includedir}/../src/corelib/
+%{_qt4_includedir}/../src/declarative/
+%{_qt4_includedir}/../src/gui/
+%{_qt4_includedir}/../src/script/
+%endif
 
 #--------------------------------------------------------------------
 %package assistant
@@ -1076,6 +1107,16 @@ install -d %{buildroot}%{_sysconfdir}/profile.d
 LD_LIBRARY_PATH=`pwd`/lib bin/lrelease translations/*.ts
 
 make install INSTALL_ROOT=%{buildroot}
+
+%if %{with_private_headers}
+# install private headers
+# using rsync -R as easy way to preserve relative path names
+# we're little cheating here with destination dir to keep things simple
+rsync -aR \
+  include/Qt{Core,Declarative,Gui,Script}/private \
+  src/{corelib,declarative,gui,script}/*/*_p.h \
+  %{buildroot}%{_qt4_datadir}
+%endif
 
 %if %{with qvfb}
 # Install qvfb
