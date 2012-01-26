@@ -88,7 +88,7 @@ BuildRequires:	libxslt-devel
 BuildRequires:	libalsa-devel
 BuildRequires:	pulseaudio-devel
 BuildRequires:	GL-devel
-BuildRequires:	Mesa-common-devel
+BuildRequires:	mesa-common-devel
 %if %{with openvg}
 BuildRequires:	pkgconfig(vg)
 %endif
