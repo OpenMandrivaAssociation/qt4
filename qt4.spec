@@ -820,7 +820,9 @@ Graphicssystems plugins for Qt.
 %dir %{_qt_plugindir}/graphicssystems/
 %{_qt_plugindir}/graphicssystems/libqglgraphicssystem.so
 %{_qt_plugindir}/graphicssystems/libqtracegraphicssystem.so
+%if %{with openvg}
 %{_qt_plugindir}/graphicssystems/libqvggraphicssystem.so
+%endif
 
 #--------------------------------------------------------------------
 %if %{with ibase}
