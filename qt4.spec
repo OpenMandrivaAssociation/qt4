@@ -65,7 +65,7 @@ Name:		qt4
 Summary:	Qt GUI Toolkit
 Group:		Development/KDE and Qt
 Version:	4.8.0
-Release:	5
+Release:	6
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 URL:		http://qt.nokia.com/
@@ -82,6 +82,7 @@ Patch5:		qt-everywhere-opensource-src-4.6.1-use_ft_glyph_embolden_to_fake_bold.d
 Patch7:		qt-everywhere-opensource-src-4.8.0-tp-openssl.patch
 Patch9:		qt-everywhere-opensource-src-4.8.0-rc1-fix-build-with-glib-2.31.patch
 Patch10:	qt-4.8.0-fix-qvfb-build.patch
+Patch11:	qt-everywhere-opensource-src-4.8.0-filter_event.patch
 
 BuildRequires:	libxtst-devel
 BuildRequires:	libxslt-devel
@@ -984,6 +985,7 @@ Programs examples made with Qt %{version}.
 %patch9 -p1
 %endif
 %patch10 -p1 -b .fix-qvfb-build
+%patch11 -p1
 
 # let makefile create missing .qm files, the .qm files should be included in qt upstream
 for f in translations/*.ts ; do
