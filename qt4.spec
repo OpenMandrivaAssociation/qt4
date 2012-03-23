@@ -25,16 +25,16 @@
 
 %define major 4
 
-%define _qt_datadir		%{_prefix}/lib/qt4/
-%define _qt_bindir		%{_qt_datadir}/bin/
-%define _qt_docdir		%{_docdir}/qt4/
+%define _qt_datadir		%{_prefix}/lib/qt4
+%define _qt_bindir		%{_qt_datadir}/bin
+%define _qt_docdir		%{_docdir}/qt4
 %define _qt_libdir		%{_libdir}
-%define _qt_includedir		%{_qt_datadir}/include/
-%define _qt_plugindir		%{_libdir}/qt4/plugins/
-%define _qt_demodir		%{_qt_datadir}/demos/
-%define _qt_exampledir		%{_qt_datadir}/examples/
-%define _qt_importdir		%{_qt_datadir}/imports/
-%define _qt_translationdir	%{_qt_datadir}/translations/
+%define _qt_includedir		%{_qt_datadir}/include
+%define _qt_plugindir		%{_libdir}/qt4/plugins
+%define _qt_demodir		%{_qt_datadir}/demos
+%define _qt_exampledir		%{_qt_datadir}/examples
+%define _qt_importdir		%{_qt_datadir}/imports
+%define _qt_translationdir	%{_qt_datadir}/translations
 
 %define libqt			%mklibname qt %{major}
 %define libqtdevel		%mklibname qt %{major} -d
@@ -65,7 +65,7 @@ Name:		qt4
 Summary:	Qt GUI Toolkit
 Group:		Development/KDE and Qt
 Version:	4.8.0
-Release:	6
+Release:	7
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 URL:		http://qt.nokia.com/
