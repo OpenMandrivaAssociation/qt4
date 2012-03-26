@@ -110,11 +110,12 @@ BuildRequires:	readline-devel
 BuildRequires:	perl
 BuildRequires:	glib2-devel
 BuildRequires:	libxml2-devel
-BuildRequires:	binutils >= 2.18 
+BuildRequires:	binutils >= 2.18
 BuildRequires:	libxcursor-devel
 BuildRequires:	libxrandr-devel
 BuildRequires:	libxrender-devel
 BuildRequires:	libxv-devel
+BuildRequires:	pkgconfig(xinerama)
 %if %{with phonon}
 BuildRequires:	libgstreamer-devel
 BuildRequires:	libgstreamer-plugins-base-devel
