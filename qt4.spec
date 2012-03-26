@@ -65,7 +65,7 @@ Name:		qt4
 Summary:	Qt GUI Toolkit
 Group:		Development/KDE and Qt
 Version:	4.8.0
-Release:	7
+Release:	8
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 URL:		http://qt.nokia.com/
@@ -1036,6 +1036,8 @@ perl -pi -e 's@/X11R6/@/@' mkspecs/linux-*/qmake.conf mkspecs/common/linux.conf
     -opengl desktop \
     -platform linux-g++ \
     -no-gtkstyle \
+    -xinerama \
+    -xrandr \
 %if %{with qvfb}
     -qvfb \
 %endif
