@@ -74,9 +74,6 @@ Source2:	qt4.macros
 Source3:	mandriva-designer-qt4.desktop 
 Source4:	mandriva-assistant-qt4.desktop 
 Source5:	mandriva-linguist-qt4.desktop
-Patch0:		qt-x11-opensource-src-4.6.0-qvfb.patch
-Patch1:		qt-everywhere-opensource-src-4.7.0-force-gb18030-for-gb2312.patch
-Patch5:		qt-everywhere-opensource-src-4.6.1-use_ft_glyph_embolden_to_fake_bold.diff
 Patch7:		qt-everywhere-opensource-src-4.8.0-tp-openssl.patch
 Patch9:		qt-everywhere-opensource-src-4.8.0-rc1-fix-build-with-glib-2.31.patch
 Patch10:	qt-4.8.0-fix-qvfb-build.patch
