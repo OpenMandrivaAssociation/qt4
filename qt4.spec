@@ -65,7 +65,7 @@ Name:		qt4
 Summary:	Qt GUI Toolkit
 Group:		Development/KDE and Qt
 Version:	4.8.1
-Release:	1
+Release:	2
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 URL:		http://qt.nokia.com/
@@ -74,6 +74,8 @@ Source2:	qt4.macros
 Source3:	mandriva-designer-qt4.desktop 
 Source4:	mandriva-assistant-qt4.desktop 
 Source5:	mandriva-linguist-qt4.desktop
+# From calligra, will be in upstream 4.8.2
+Patch0:		qt48setx.patch
 Patch7:		qt-everywhere-opensource-src-4.8.0-tp-openssl.patch
 Patch9:		qt-everywhere-opensource-src-4.8.0-rc1-fix-build-with-glib-2.31.patch
 Patch10:	qt-4.8.0-fix-qvfb-build.patch
@@ -972,7 +974,7 @@ Programs examples made with Qt %{version}.
 #--------------------------------------------------------------------
 %prep
 %setup -q -n qt-everywhere-opensource-src-%{version}
-
+%patch1 -p1 -b .cursorToXCrash~
 %patch7 -p1 -b .ssl
 %if %{with webkit}
 %patch9 -p1
