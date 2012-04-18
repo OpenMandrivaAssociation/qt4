@@ -974,7 +974,7 @@ Programs examples made with Qt %{version}.
 #--------------------------------------------------------------------
 %prep
 %setup -q -n qt-everywhere-opensource-src-%{version}
-%patch1 -p1 -b .cursorToXCrash~
+%patch0 -p1 -b .cursorToXCrash~
 %patch7 -p1 -b .ssl
 %if %{with webkit}
 %patch9 -p1
