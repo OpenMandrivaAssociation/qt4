@@ -65,7 +65,7 @@ Name:		qt4
 Summary:	Qt GUI Toolkit
 Group:		Development/KDE and Qt
 Version:	4.8.1
-Release:	2
+Release:	3
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 URL:		http://qt.nokia.com/
@@ -74,8 +74,13 @@ Source2:	qt4.macros
 Source3:	mandriva-designer-qt4.desktop 
 Source4:	mandriva-assistant-qt4.desktop 
 Source5:	mandriva-linguist-qt4.desktop
+Source10:	qt4.rpmlintrc
 # From calligra, will be in upstream 4.8.2
 Patch0:		qt48setx.patch
+# Make OpenVG build with -std=gnu++0x
+Patch1:		qt-4.8.1-OpenVG-stdc++11.patch
+# Disable -std=gnu++0x for WebKit - it isn't ready
+Patch2:		qt-4.8.1-WebKit-no-stdc++11.patch
 Patch7:		qt-everywhere-opensource-src-4.8.0-tp-openssl.patch
 Patch9:		qt-everywhere-opensource-src-4.8.0-rc1-fix-build-with-glib-2.31.patch
 Patch10:	qt-4.8.0-fix-qvfb-build.patch
@@ -975,6 +980,8 @@ Programs examples made with Qt %{version}.
 %prep
 %setup -q -n qt-everywhere-opensource-src-%{version}
 %patch0 -p1 -b .cursorToXCrash~
+%patch1 -p1 -b .c++11-1~
+%patch2 -p1 -b .c++11-1~
 %patch7 -p1 -b .ssl
 %if %{with webkit}
 %patch9 -p1
@@ -988,10 +995,11 @@ done
 
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" -i mkspecs/common/linux.conf
-sed -e "s|^QMAKE_CFLAGS_RELEASE.*$|QMAKE_CFLAGS_RELEASE    += %{optflags}  -fno-strict-aliasing -DPIC -fPIC| " \
+sed -e "s|^QMAKE_CFLAGS_RELEASE .*$|QMAKE_CFLAGS_RELEASE    += %{optflags}  -fno-strict-aliasing -DPIC -fPIC| " \
     -e "s|^QMAKE_LFLAGS	.*$|QMAKE_LFLAGS		+= %{ldflags}|" \
     -e "s|^QMAKE_LFLAGS_PLUGIN.*\+= |QMAKE_LFLAGS_PLUGIN += %(echo %ldflags|sed -e 's#-Wl,--no-undefined##') |" \
-    -i mkspecs/common/g++.conf
+    -e 's|^QMAKE_CXXFLAGS .*|& -std=gnu++0x|' \
+    -i mkspecs/common/gcc-base.conf mkspecs/common/gcc-base-unix.conf
 
 %build
 export QTDIR=`/bin/pwd`
