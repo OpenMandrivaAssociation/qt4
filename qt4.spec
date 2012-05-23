@@ -75,8 +75,6 @@ Source3:	mandriva-designer-qt4.desktop
 Source4:	mandriva-assistant-qt4.desktop 
 Source5:	mandriva-linguist-qt4.desktop
 Source10:	qt4.rpmlintrc
-# From calligra, will be in upstream 4.8.2
-Patch0:		qt48setx.patch
 # Make OpenVG build with -std=gnu++0x
 Patch1:		qt-4.8.1-OpenVG-stdc++11.patch
 # Disable -std=gnu++0x for WebKit - it isn't ready
@@ -979,7 +977,6 @@ Programs examples made with Qt %{version}.
 #--------------------------------------------------------------------
 %prep
 %setup -q -n qt-everywhere-opensource-src-%{version}
-%patch0 -p1 -b .cursorToXCrash~
 %patch1 -p1 -b .c++11-1~
 %patch2 -p1 -b .c++11-1~
 %patch7 -p1 -b .ssl
