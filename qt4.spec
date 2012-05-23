@@ -64,8 +64,8 @@
 Name:		qt4
 Summary:	Qt GUI Toolkit
 Group:		Development/KDE and Qt
-Version:	4.8.1
-Release:	3
+Version:	4.8.2
+Release:	1
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 URL:		http://qt.nokia.com/
@@ -83,7 +83,7 @@ Patch1:		qt-4.8.1-OpenVG-stdc++11.patch
 Patch2:		qt-4.8.1-WebKit-no-stdc++11.patch
 Patch7:		qt-everywhere-opensource-src-4.8.0-tp-openssl.patch
 Patch9:		qt-everywhere-opensource-src-4.8.0-rc1-fix-build-with-glib-2.31.patch
-Patch10:	qt-4.8.0-fix-qvfb-build.patch
+Patch10:	qt-4.8.2-fix-qvfb-build.patch
 
 BuildRequires:	libxtst-devel
 BuildRequires:	libxslt-devel
