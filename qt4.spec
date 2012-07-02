@@ -1155,10 +1155,9 @@ ln -sf %{_qt_datadir}/mkspecs/linux-g++ default
 popd
 
 # Copy examples/tutorial and demos
-for subdir in examples demos; do
-   for dir in `find $subdir -type d -name .obj`; do rm -rf $dir; done
-   for dir in `find $subdir -type d -name .moc`; do rm -rf $dir; done
-   cp -a $subdir %{buildroot}/%{_qt_datadir}
+for d in %{?with_demos:demos} %{?with_examples:examples}; do
+   tar --exclude=.obj --exclude=.moc -cf - $d | \
+   tar -C %{buildroot}/%{_qt_datadir}/ -xf -
 done
 
 # Fix all buildroot paths
