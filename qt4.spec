@@ -978,7 +978,7 @@ Programs examples made with Qt %{version}.
 %prep
 %setup -q -n qt-everywhere-opensource-src-%{version}
 %patch1 -p1 -b .c++11-1~
-%patch2 -p1 -b .c++11-1~
+%patch2 -p1 -b .c++11-2~
 %patch7 -p1 -b .ssl
 %if %{with webkit}
 %patch9 -p1
@@ -992,7 +992,9 @@ done
 
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" -i mkspecs/common/linux.conf
-sed -e "s|^QMAKE_CFLAGS_RELEASE .*$|QMAKE_CFLAGS_RELEASE    += %{optflags}  -fno-strict-aliasing -DPIC -fPIC| " \
+# We use -g1 to override -gdwarf-4 -- the latter needs more
+# RAM during QtWebKit build than x86_32 can handle.
+sed -e "s|^QMAKE_CFLAGS_RELEASE .*$|QMAKE_CFLAGS_RELEASE    += %{optflags}  -fno-strict-aliasing -DPIC -fPIC -g1| " \
     -e "s|^QMAKE_LFLAGS	.*$|QMAKE_LFLAGS		+= %{ldflags}|" \
     -e "s|^QMAKE_LFLAGS_PLUGIN.*\+= |QMAKE_LFLAGS_PLUGIN += %(echo %ldflags|sed -e 's#-Wl,--no-undefined##') |" \
     -e 's|^QMAKE_CXXFLAGS .*|& -std=gnu++0x|' \
@@ -1096,9 +1098,6 @@ perl -pi -e 's@/X11R6/@/@' mkspecs/linux-*/qmake.conf mkspecs/common/linux.conf
     -nomake examples
 %endif
 
-# ld.bfd exceeds th 2GB memory limit on x86_32, so let's link with gold
-ln -s %_bindir/ld.gold .
-export PATH=`pwd`:$PATH
 %make
 
 %if %{with qvfb}
@@ -1116,7 +1115,7 @@ install -d %{buildroot}%{_sysconfdir}/profile.d
 
 # recreate .qm files
 LD_LIBRARY_PATH=`pwd`/lib bin/lrelease translations/*.ts
-export PATH=`pwd`:$PATH
+export PATH=`pwd`/bin:$PATH
 
 make install INSTALL_ROOT=%{buildroot}
 
