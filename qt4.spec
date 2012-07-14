@@ -82,6 +82,7 @@ Patch2:		qt-4.8.1-WebKit-no-stdc++11.patch
 Patch7:		qt-everywhere-opensource-src-4.8.0-tp-openssl.patch
 Patch9:		qt-everywhere-opensource-src-4.8.0-rc1-fix-build-with-glib-2.31.patch
 Patch10:	qt-4.8.2-fix-qvfb-build.patch
+Patch11:	qt-everywhere-opensource-src-4.8.0-rc1-moc-boost148.patch
 
 BuildRequires:	libxtst-devel
 BuildRequires:	libxslt-devel
@@ -984,6 +985,7 @@ Programs examples made with Qt %{version}.
 %patch9 -p1
 %endif
 %patch10 -p1 -b .fix-qvfb-build
+%patch11 -p1 -b .moc-boost148
 
 # let makefile create missing .qm files, the .qm files should be included in qt upstream
 for f in translations/*.ts ; do
