@@ -64,8 +64,8 @@
 Name:		qt4
 Summary:	Qt GUI Toolkit
 Group:		Development/KDE and Qt
-Version:	4.8.2
-Release:	2
+Version:	4.8.3
+Release:	1
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 URL:		http://qt.nokia.com/
@@ -80,7 +80,6 @@ Patch1:		qt-4.8.1-OpenVG-stdc++11.patch
 # Disable -std=gnu++0x for WebKit - it isn't ready
 Patch2:		qt-4.8.1-WebKit-no-stdc++11.patch
 Patch7:		qt-everywhere-opensource-src-4.8.0-tp-openssl.patch
-Patch9:		qt-everywhere-opensource-src-4.8.0-rc1-fix-build-with-glib-2.31.patch
 Patch10:	qt-4.8.2-fix-qvfb-build.patch
 Patch11:	qt-everywhere-opensource-src-4.8.0-rc1-moc-boost148.patch
 
@@ -980,12 +979,9 @@ Programs examples made with Qt %{version}.
 %setup -q -n qt-everywhere-opensource-src-%{version}
 %patch1 -p1 -b .c++11-1~
 %patch2 -p1 -b .c++11-2~
-%patch7 -p1 -b .ssl
-%if %{with webkit}
-%patch9 -p1
-%endif
-%patch10 -p1 -b .fix-qvfb-build
-%patch11 -p1 -b .moc-boost148
+%patch7 -p1 -b .ssl~
+%patch10 -p1 -b .fix-qvfb-build~
+%patch11 -p1 -b .moc-boost148~
 
 # let makefile create missing .qm files, the .qm files should be included in qt upstream
 for f in translations/*.ts ; do
