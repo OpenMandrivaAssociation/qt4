@@ -35,6 +35,11 @@
 %define _qt_exampledir		%{_qt_datadir}/examples
 %define _qt_importdir		%{_qt_datadir}/imports
 %define _qt_translationdir	%{_qt_datadir}/translations
+%ifarch %ix86
+%define _qt_platform		linux-g++-32
+%else
+%define _qt_platform		linux-g++
+%endif
 
 %define libqt			%mklibname qt %{major}
 %define libqtdevel		%mklibname qt %{major} -d
@@ -1033,7 +1038,7 @@ perl -pi -e 's@/X11R6/@/@' mkspecs/linux-*/qmake.conf mkspecs/common/linux.conf
     -gtkstyle \
     -xmlpatterns \
     -opengl desktop \
-    -platform linux-g++ \
+    -platform %_qt_platform \
     -no-gtkstyle \
     -xinerama \
     -xrandr \
