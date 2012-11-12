@@ -1,0 +1,36 @@
+diff -urN qt-everywhere-opensource-src-4.8.2/tools/qvfb/qvfb.pro qt-everywhere-opensource-src-4.8.2-patched/tools/qvfb/qvfb.pro
+--- qt-everywhere-opensource-src-4.8.2/tools/qvfb/qvfb.pro	2012-04-27 06:45:51.000000000 +1100
++++ qt-everywhere-opensource-src-4.8.2-patched/tools/qvfb/qvfb.pro	2012-05-23 17:42:59.993307179 +1100
+@@ -8,9 +8,6 @@
+ target.path=$$[QT_INSTALL_BINS]
+ INSTALLS += target
+ 
+-DEPENDPATH      += ../../include
+-INCLUDEPATH     += ../../src/gui/embedded
+-
+ FORMS           = config.ui
+ HEADERS         = qvfb.h \
+ 		  qvfbview.h \
+@@ -36,10 +33,6 @@
+                   ../../src/gui/embedded/qwslock.cpp \
+                   ../../src/gui/embedded/qwssignalhandler.cpp
+ 
+-!embedded {
+-    DEFINES         += QT_NO_QWS_SIGNALHANDLER
+-}
+-
+ include(../shared/deviceskin/deviceskin.pri)
+ 
+ contains(QT_CONFIG, opengl) {
+diff -urN qt-everywhere-opensource-src-4.8.2/tools/qvfb/qvfbshmem.cpp qt-everywhere-opensource-src-4.8.2-patched/tools/qvfb/qvfbshmem.cpp
+--- qt-everywhere-opensource-src-4.8.2/tools/qvfb/qvfbshmem.cpp	2012-04-27 06:45:51.000000000 +1100
++++ qt-everywhere-opensource-src-4.8.2-patched/tools/qvfb/qvfbshmem.cpp	2012-05-23 17:41:55.755307839 +1100
+@@ -43,7 +43,7 @@
+ 
+ #include "qvfbshmem.h"
+ #include "qvfbhdr.h"
+-#include "qlock_p.h"
++#include "private/qlock_p.h"
+ 
+ #include <QFile>
+ #include <QTimer>
