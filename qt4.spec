@@ -13,7 +13,7 @@
 %bcond_without cups
 %bcond_without webkit
 %bcond_without qvfb
-%bcond_without openvg
+%bcond_with openvg
 %bcond_without docs
 %bcond_without demos
 %bcond_without examples
@@ -35,11 +35,6 @@
 %define _qt_exampledir		%{_qt_datadir}/examples
 %define _qt_importdir		%{_qt_datadir}/imports
 %define _qt_translationdir	%{_qt_datadir}/translations
-%ifarch %ix86
-%define _qt_platform		linux-g++-32
-%else
-%define _qt_platform		linux-g++
-%endif
 
 %define libqt			%mklibname qt %{major}
 %define libqtdevel		%mklibname qt %{major} -d
@@ -69,12 +64,12 @@
 Name:		qt4
 Summary:	Qt GUI Toolkit
 Group:		Development/KDE and Qt
-Version:	4.8.3
+Version:	4.8.4
 Release:	1
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 URL:		http://qt.nokia.com/
-Source0:	http://get.qt.nokia.com/qt/source/qt-everywhere-opensource-src-%{version}.tar.gz
+Source0:	http://releases.qt-project.org/qt4/source/qt-everywhere-opensource-src-%{version}.tar.gz
 Source2:	qt4.macros
 Source3:	mandriva-designer-qt4.desktop 
 Source4:	mandriva-assistant-qt4.desktop 
@@ -84,45 +79,55 @@ Source10:	qt4.rpmlintrc
 Patch1:		qt-4.8.1-OpenVG-stdc++11.patch
 # Disable -std=gnu++0x for WebKit - it isn't ready
 Patch2:		qt-4.8.1-WebKit-no-stdc++11.patch
+# https://bugs.kde.org/show_bug.cgi?id=256475
+Patch3:		qt-4.8.1-transculent-drag-pixmap.patch
 Patch7:		qt-everywhere-opensource-src-4.8.0-tp-openssl.patch
 Patch10:	qt-4.8.2-fix-qvfb-build.patch
-Patch11:	qt-everywhere-opensource-src-4.8.0-rc1-moc-boost148.patch
+Patch11:	patches_r113848_r93631.patch
+Patch12:	qt-everywhere-opensource-src-4.8.0-rc1-moc-boost148.patch
+# This patch reverts patch from Debian that caused some crashes in Qt4 4.8.3
+# Looks like in Qt4 4.8.4 the issue is fixed. But let's keep patch for a while,
+# not apply it.
+#Patch13:	qt-everywhere-opensource-src-4.8.3.disable.debian.patch
 
-BuildRequires:	libxtst-devel
-BuildRequires:	libxslt-devel
-BuildRequires:	libalsa-devel
-BuildRequires:	pulseaudio-devel
-BuildRequires:	GL-devel
-BuildRequires:	mesa-common-devel
+BuildRequires:	pkgconfig(xtst)
+BuildRequires:	pkgconfig(libxslt)
+BuildRequires:	pkgconfig(alsa)
+BuildRequires:	pkgconfig(libpulse)
+BuildRequires:	pkgconfig(xi)
+BuildRequires:	pkgconfig(gl)
+# Make sure we don't link with egl
+BuildConflicts:	pkgconfig(egl)
 %if %{with openvg}
 BuildRequires:	pkgconfig(vg)
 %endif
-BuildRequires:	zlib-devel
-BuildRequires:	openssl-devel
-BuildRequires:	png-devel
+BuildRequires:	pkgconfig(zlib)
+BuildRequires:	pkgconfig(openssl)
+BuildRequires:	pkgconfig(libpng)
 BuildRequires:	jpeg-devel
 BuildRequires:	mng-devel
 BuildRequires:	lcms-devel
 BuildRequires:	cups-devel
-BuildRequires:	freetype2-devel
+BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	pkgconfig(fontconfig)
-BuildRequires:	expat-devel
+BuildRequires:	pkgconfig(expat)
 BuildRequires:	pkgconfig(dbus-1) >= 0.92
 BuildRequires:	termcap-devel
 BuildRequires:	pam-devel
 BuildRequires:	readline-devel
 BuildRequires:	perl
-BuildRequires:	glib2-devel
-BuildRequires:	libxml2-devel
+BuildRequires:	pkgconfig(glib-2.0)
+BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	binutils >= 2.18
-BuildRequires:	libxcursor-devel
-BuildRequires:	libxrandr-devel
-BuildRequires:	libxrender-devel
-BuildRequires:	libxv-devel
+BuildRequires:	pkgconfig(xcursor)
+BuildRequires:	pkgconfig(xrandr)
+BuildRequires:	pkgconfig(xrender)
+BuildRequires:	pkgconfig(xv)
 BuildRequires:	pkgconfig(xinerama)
+BuildRequires:	pkgconfig(gtk+-2.0)
 %if %{with phonon}
-BuildRequires:	libgstreamer-devel
-BuildRequires:	libgstreamer-plugins-base-devel
+BuildRequires:	pkgconfig(gstreamer-0.10)
+BuildRequires:	pkgconfig(gstreamer-plugins-base-0.10)
 %endif
 %if %{with mysql}
 BuildRequires:	mysql-devel
@@ -599,7 +604,6 @@ The %{name}-devel-private package contains the private headres for Qt4
 toolkit. It is needed to build Qt Creator with all features.
 
 %files devel-private
-%defattr(-,root,root,-)
 %{_qt_includedir}/QtCore/private/
 %{_qt_includedir}/QtDeclarative/private/
 %{_qt_includedir}/QtGui/private/
@@ -984,9 +988,12 @@ Programs examples made with Qt %{version}.
 %setup -q -n qt-everywhere-opensource-src-%{version}
 %patch1 -p1 -b .c++11-1~
 %patch2 -p1 -b .c++11-2~
-%patch7 -p1 -b .ssl~
-%patch10 -p1 -b .fix-qvfb-build~
-%patch11 -p1 -b .moc-boost148~
+%patch3 -p1 -b .kde-bug-256475
+%patch7 -p1 -b .ssl
+%patch10 -p1 -b .fix-qvfb-build
+%patch11 -p1
+%patch12 -p1 -b .moc-boost148
+#patch13 -p1
 
 # let makefile create missing .qm files, the .qm files should be included in qt upstream
 for f in translations/*.ts ; do
@@ -1038,8 +1045,7 @@ perl -pi -e 's@/X11R6/@/@' mkspecs/linux-*/qmake.conf mkspecs/common/linux.conf
     -gtkstyle \
     -xmlpatterns \
     -opengl desktop \
-    -platform %_qt_platform \
-    -no-gtkstyle \
+    -platform linux-g++ \
     -xinerama \
     -xrandr \
 %if %{with qvfb}
@@ -1203,5 +1209,3 @@ ln -s %{buildroot}%{_qt_exampledir}/declarative/cppextensions/plugins/libqmlqwid
 # Clean WEBKIT test files
 rm -fr %{buildroot}%{_qt_datadir}/tests/qt4/tst_*/
 
-# cleanup
-rm -f %{buildroot}%{_libdir}/*.la

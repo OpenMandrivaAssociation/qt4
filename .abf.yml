@@ -1,7 +1,3 @@
+---
 sources:
-  "mandriva-assistant-qt4.desktop:"	0de8115192b049f87be86a3c91d12bed9132dd75
-  "mandriva-designer-qt4.desktop:"	e4428a8ebf9f6bc123dd9361258448ad6872f404
-  "mandriva-linguist-qt4.desktop:"	88442ee98b28f151b07fd25982a6c865d0786d01
-  "qt4.macros:"	2ce1d8b7bbe57bc7cf323d0cbd484503567dbf0b
-  "qt4.rpmlintrc:"	6b0b56dca3db1f75386b076f909265578941910f
-  "qt-everywhere-opensource-src-4.8.3.tar.gz:"	bc352a283610e0cd2fe0dbedbc45613844090fcb
+  qt-everywhere-opensource-src-4.8.4.tar.gz: f5880f11c139d7d8d01ecb8d874535f7d9553198

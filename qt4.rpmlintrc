@@ -1,0 +1,8 @@
+# For builds outside the build system
+addFilter("E: no-packager-tag")
+# False positives on *.pro files
+addFilter("E: wrong-script-interpreter")
+addFilter("E: script-without-shebang")
+addFilter("E: non-executable-script")
+# rpath use is intentional while we're in non-standard paths
+addFilter("E: binary-or-shlib-defines-rpath")

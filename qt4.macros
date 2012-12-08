@@ -1,0 +1,45 @@
+# Old qt4 macros
+%qt4dir         %{_prefix}/lib/qt4
+%qt4bin         %{qt4dir}/bin
+%qt4lib         %{_libdir}
+%qt4include     %{qt4dir}/include
+%qt4plugins     %{_libdir}/qt4/plugins
+
+# New qt macros (do not include soversion)
+%_qt_datadir           %{_prefix}/lib/qt4
+%_qt_bindir            %{_qt_datadir}/bin
+%_qt_docdir            %{_docdir}/qt4
+%_qt_libdir            %{_libdir}
+%_qt_includedir        %{_qt_datadir}/include
+%_qt_plugindir         %{_libdir}/qt4/plugins
+%_qt_demodir           %{_qt_datadir}/demos
+%_qt_exampledir        %{_qt_datadir}/examples
+%_qt_importdir         %{_qt_datadir}/imports
+%_qt_translationdir    %{_qt_datadir}/translations
+
+%qmake_qt4 \
+  CPPFLAGS="${CPPFLAGS:-%optflags -DPIC -fPIC}" ; export CPPFLAGS ; \
+  %{_qt_bindir}/qmake \\\
+    %if "%{_lib}" != "lib" \
+       libsuff=64 \\\
+    %endif \
+    QMAKE_CFLAGS="${CFLAGS:-%optflags -DPIC -fPIC}" \\\
+    QMAKE_CXXFLAGS="${CXXFLAGS:-%optflags -DPIC -fPIC}" \\\
+    QMAKE_LFLAGS="%{?ldflags}"
+
+%cmake_qt4 \
+  QTDIR="%" ; export QTDIR ; \
+  PATH="%{_qt_bindir}:$PATH" ; export PATH ; \
+  CPPFLAGS="${CPPFLAGS:-%optflags -DPIC -fPIC}" ; export CPPFLAGS ; \
+  %setup_compile_flags \
+  mkdir -p build \
+  cd build \
+  %__cmake .. \\\
+  %if "%{_lib}" != "lib" \
+    -DLIB_SUFFIX=64 \\\
+  %endif \
+  -DCMAKE_INSTALL_PREFIX=%{_prefix} \\\
+  -DCMAKE_INSTALL_LIBDIR:PATH=%{_libdir} \\\
+  -DCMAKE_MODULE_LINKER_FLAGS="%(echo %ldflags|sed -e 's#-Wl,--no-undefined##')" \\\
+  -DDBUS_SERVICES_DIR=%{_datadir}/dbus-1/services \\\
+  -DDBUS_INTERFACES_DIR=%{_datadir}/dbus-1/interfaces
