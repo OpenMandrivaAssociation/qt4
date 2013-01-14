@@ -17,8 +17,8 @@
 %bcond_without docs
 %bcond_without demos
 %bcond_without examples
+%bcond_without odbc
 
-%bcond_with odbc
 %bcond_with debug
 %bcond_with ibase
 %bcond_with phonon
@@ -112,7 +112,7 @@ BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	pkgconfig(fontconfig)
 BuildRequires:	pkgconfig(expat)
 BuildRequires:	pkgconfig(dbus-1) >= 0.92
-BuildRequires:	termcap-devel
+BuildRequires:	pkgconfig(ncurses)
 BuildRequires:	pam-devel
 BuildRequires:	readline-devel
 BuildRequires:	perl
@@ -133,10 +133,10 @@ BuildRequires:	pkgconfig(gstreamer-plugins-base-0.10)
 BuildRequires:	mysql-devel
 %endif
 %if %{with odbc}
-BuildRequires:	unixODBC-devel
+BuildRequires:	pkgconfig(libiodbc)
 %endif
 %if %{with sqlite}
-BuildRequires:	sqlite3-devel
+BuildRequires:	pkgconfig(sqlite3)
 %endif
 %if %{with tds}
 BuildRequires:	freetds-devel
