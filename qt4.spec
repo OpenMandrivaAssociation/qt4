@@ -1204,7 +1204,7 @@ EOF
 
 # identical binaries are copied, not linked:
 rm -f %{buildroot}%{_qt_exampledir}/declarative/cppextensions/qwidgets/QWidgets/libqmlqwidgetsplugin.so
-ln -s %{buildroot}%{_qt_exampledir}/declarative/cppextensions/plugins/libqmlqwidgetsplugin.so %{buildroot}%{_qt_exampledir}/declarative/cppextensions/qwidgets/QWidgets/libqmlqwidgetsplugin.so
+ln -sf %{_qt_exampledir}/declarative/cppextensions/plugins/libqmlqwidgetsplugin.so %{buildroot}%{_qt_exampledir}/declarative/cppextensions/qwidgets/QWidgets/libqmlqwidgetsplugin.so
 
 # Clean WEBKIT test files
 rm -fr %{buildroot}%{_qt_datadir}/tests/qt4/tst_*/
