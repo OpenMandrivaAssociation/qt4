@@ -96,10 +96,11 @@ BuildRequires:	pkgconfig(alsa)
 BuildRequires:	pkgconfig(libpulse)
 BuildRequires:	pkgconfig(xi)
 BuildRequires:	pkgconfig(gl)
+%if %{with openvg}
+BuildRequires:	pkgconfig(vg) pkgconfig(egl)
+%else
 # Make sure we don't link with egl
 BuildConflicts:	pkgconfig(egl)
-%if %{with openvg}
-BuildRequires:	pkgconfig(vg)
 %endif
 BuildRequires:	pkgconfig(zlib)
 BuildRequires:	pkgconfig(openssl)
@@ -1015,7 +1016,7 @@ export QTDIR=`/bin/pwd`
 export PATH=$QTDIR/bin:$PATH
 
 # Don't include headers or link with /usr/X11R6/{include,lib}
-perl -pi -e 's@/X11R6/@/@' mkspecs/linux-*/qmake.conf mkspecs/common/linux.conf
+perl -pi -e 's@/X11R6/lib@/%_lib@g;s@/X11R6/@/@' mkspecs/linux-*/qmake.conf mkspecs/common/linux.conf
 
 #--------------------------------------------------------
 ./configure \
@@ -1046,6 +1047,7 @@ perl -pi -e 's@/X11R6/@/@' mkspecs/linux-*/qmake.conf mkspecs/common/linux.conf
     -xmlpatterns \
     -opengl desktop \
     -platform linux-g++ \
+    -verbose \
     -xinerama \
     -xrandr \
 %if %{with qvfb}
