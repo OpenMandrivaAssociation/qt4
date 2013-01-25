@@ -65,7 +65,7 @@ Name:		qt4
 Summary:	Qt GUI Toolkit
 Group:		Development/KDE and Qt
 Version:	4.8.4
-Release:	1
+Release:	2
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 URL:		http://qt.nokia.com/
@@ -90,42 +90,43 @@ Patch12:	qt-everywhere-opensource-src-4.8.0-rc1-moc-boost148.patch
 # not apply it.
 #Patch13:	qt-everywhere-opensource-src-4.8.3.disable.debian.patch
 
-BuildRequires:	pkgconfig(xtst)
-BuildRequires:	pkgconfig(libxslt)
-BuildRequires:	pkgconfig(alsa)
-BuildRequires:	pkgconfig(libpulse)
-BuildRequires:	pkgconfig(xi)
-BuildRequires:	pkgconfig(gl)
+BuildRequires:	binutils >= 2.18
+BuildRequires:	perl
+BuildRequires:	cups-devel
+BuildRequires:	jpeg-devel
+BuildRequires:	lcms-devel
+BuildRequires:	mng-devel
+BuildRequires:	pam-devel
+BuildRequires:	readline-devel
 %if %{with openvg}
 BuildRequires:	pkgconfig(vg) pkgconfig(egl)
 %else
 # Make sure we don't link with egl
 BuildConflicts:	pkgconfig(egl)
 %endif
-BuildRequires:	pkgconfig(zlib)
-BuildRequires:	pkgconfig(openssl)
-BuildRequires:	pkgconfig(libpng)
-BuildRequires:	jpeg-devel
-BuildRequires:	mng-devel
-BuildRequires:	lcms-devel
-BuildRequires:	cups-devel
+BuildRequires:	pkgconfig(alsa)
 BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	pkgconfig(fontconfig)
-BuildRequires:	pkgconfig(expat)
 BuildRequires:	pkgconfig(dbus-1) >= 0.92
-BuildRequires:	pkgconfig(ncurses)
-BuildRequires:	pam-devel
-BuildRequires:	readline-devel
-BuildRequires:	perl
+BuildRequires:	pkgconfig(expat)
+BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glib-2.0)
+BuildRequires:	pkgconfig(gtk+-2.0)
+BuildRequires:	pkgconfig(libpng)
+BuildRequires:	pkgconfig(libpulse)
 BuildRequires:	pkgconfig(libxml-2.0)
-BuildRequires:	binutils >= 2.18
+BuildRequires:	pkgconfig(libxslt)
+BuildRequires:	pkgconfig(openssl)
+BuildRequires:	pkgconfig(ncurses)
+BuildRequires:	pkgconfig(sm)
 BuildRequires:	pkgconfig(xcursor)
+BuildRequires:	pkgconfig(xi)
+BuildRequires:	pkgconfig(xinerama)
 BuildRequires:	pkgconfig(xrandr)
 BuildRequires:	pkgconfig(xrender)
+BuildRequires:	pkgconfig(xtst)
 BuildRequires:	pkgconfig(xv)
-BuildRequires:	pkgconfig(xinerama)
-BuildRequires:	pkgconfig(gtk+-2.0)
+BuildRequires:	pkgconfig(zlib)
 %if %{with phonon}
 BuildRequires:	pkgconfig(gstreamer-0.10)
 BuildRequires:	pkgconfig(gstreamer-plugins-base-0.10)
