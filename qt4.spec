@@ -65,7 +65,7 @@ Name:		qt4
 Summary:	Qt GUI Toolkit
 Group:		Development/KDE and Qt
 Version:	4.8.4
-Release:	3
+Release:	4
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 URL:		http://qt.nokia.com/
@@ -84,7 +84,7 @@ Patch3:		qt-4.8.1-transculent-drag-pixmap.patch
 Patch7:		qt-everywhere-opensource-src-4.8.0-tp-openssl.patch
 Patch10:	qt-4.8.2-fix-qvfb-build.patch
 Patch11:	patches_r113848_r93631.patch
-Patch12:	qt-everywhere-opensource-src-4.8.0-rc1-moc-boost148.patch
+Patch12:	qt-everywhere-opensource-src-4.8.4-QTBUG-22829.patch
 # This patch reverts patch from Debian that caused some crashes in Qt4 4.8.3
 # Looks like in Qt4 4.8.4 the issue is fixed. But let's keep patch for a while,
 # not apply it.
