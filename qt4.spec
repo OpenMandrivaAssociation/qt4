@@ -148,7 +148,6 @@ BuildRequires: firebird-devel
 %endif
 %if %{with postgres}
 BuildRequires:	postgresql-devel
-BuildRequires:	libpq-devel
 %endif
 %if %{with_private_headers}
 BuildRequires:	rsync
