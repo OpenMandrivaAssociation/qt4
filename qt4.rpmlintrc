@@ -6,3 +6,5 @@ addFilter("E: script-without-shebang")
 addFilter("E: non-executable-script")
 # rpath use is intentional while we're in non-standard paths
 addFilter("E: binary-or-shlib-defines-rpath")
+# temporary disable
+addFilter("E: debuginfo-without-sources")
