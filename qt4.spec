@@ -17,8 +17,8 @@
 %bcond_without docs
 %bcond_without demos
 %bcond_without examples
-%bcond_without odbc
 
+%bcond_with odbc
 %bcond_with debug
 %bcond_with ibase
 %bcond_with phonon
@@ -60,21 +60,21 @@
 %define libqtdeclarative	%mklibname qtdeclarative %{major}
 %define libqtopenvg		%mklibname qtopenvg %{major}
 
-
-Name:		qt4
 Summary:	Qt GUI Toolkit
-Group:		Development/KDE and Qt
-Version:	4.8.4
-Release:	5
+Name:		qt4
+Version:	4.8.5
+Release:	1
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
-URL:		http://qt.nokia.com/
+Group:		Development/KDE and Qt
+Url:		http://qt.nokia.com/
 Source0:	http://releases.qt-project.org/qt4/source/qt-everywhere-opensource-src-%{version}.tar.gz
 Source2:	qt4.macros
 Source3:	mandriva-designer-qt4.desktop 
 Source4:	mandriva-assistant-qt4.desktop 
 Source5:	mandriva-linguist-qt4.desktop
 Source10:	qt4.rpmlintrc
+Patch0:		qt-everywhere-opensource-src-4.8.5-moc-boost.patch
 # Make OpenVG build with -std=gnu++0x
 Patch1:		qt-4.8.1-OpenVG-stdc++11.patch
 # Disable -std=gnu++0x for WebKit - it isn't ready
@@ -84,41 +84,29 @@ Patch3:		qt-4.8.1-transculent-drag-pixmap.patch
 Patch7:		qt-everywhere-opensource-src-4.8.0-tp-openssl.patch
 Patch10:	qt-4.8.2-fix-qvfb-build.patch
 Patch11:	patches_r113848_r93631.patch
-Patch12:	qt-everywhere-opensource-src-4.8.4-QTBUG-22829.patch
-# This patch reverts patch from Debian that caused some crashes in Qt4 4.8.3
-# Looks like in Qt4 4.8.4 the issue is fixed. But let's keep patch for a while,
-# not apply it.
-#Patch13:	qt-everywhere-opensource-src-4.8.3.disable.debian.patch
 
 BuildRequires:	binutils >= 2.18
-BuildRequires:	perl
 BuildRequires:	cups-devel
 BuildRequires:	jpeg-devel
-BuildRequires:	lcms-devel
 BuildRequires:	mng-devel
 BuildRequires:	pam-devel
 BuildRequires:	readline-devel
-%if %{with openvg}
-BuildRequires:	pkgconfig(vg) pkgconfig(egl)
-%else
-# Make sure we don't link with egl
-BuildConflicts:	pkgconfig(egl)
-%endif
+BuildRequires:	termcap-devel
+
 BuildRequires:	pkgconfig(alsa)
-BuildRequires:	pkgconfig(freetype2)
-BuildRequires:	pkgconfig(fontconfig)
 BuildRequires:	pkgconfig(dbus-1) >= 0.92
 BuildRequires:	pkgconfig(expat)
+BuildRequires:	pkgconfig(fontconfig)
+BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(gtk+-2.0)
+BuildRequires:	pkgconfig(lcms)
 BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(libpulse)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(libxslt)
 BuildRequires:	pkgconfig(openssl)
-BuildRequires:	pkgconfig(ncurses)
-BuildRequires:	pkgconfig(sm)
 BuildRequires:	pkgconfig(xcursor)
 BuildRequires:	pkgconfig(xi)
 BuildRequires:	pkgconfig(xinerama)
@@ -127,15 +115,20 @@ BuildRequires:	pkgconfig(xrender)
 BuildRequires:	pkgconfig(xtst)
 BuildRequires:	pkgconfig(xv)
 BuildRequires:	pkgconfig(zlib)
+# Make sure we don't link with egl
+BuildConflicts:	pkgconfig(egl)
 %if %{with phonon}
 BuildRequires:	pkgconfig(gstreamer-0.10)
 BuildRequires:	pkgconfig(gstreamer-plugins-base-0.10)
+%endif
+%if %{with openvg}
+BuildRequires:	pkgconfig(vg)
 %endif
 %if %{with mysql}
 BuildRequires:	mysql-devel
 %endif
 %if %{with odbc}
-BuildRequires:	pkgconfig(libiodbc)
+BuildRequires:	unixODBC-devel
 %endif
 %if %{with sqlite}
 BuildRequires:	pkgconfig(sqlite3)
@@ -144,10 +137,11 @@ BuildRequires:	pkgconfig(sqlite3)
 BuildRequires:	freetds-devel
 %endif
 %if %{with ibase}
-BuildRequires: firebird-devel
+BuildRequires:	firebird-devel
 %endif
 %if %{with postgres}
 BuildRequires:	postgresql-devel
+BuildRequires:	libpq-devel
 %endif
 %if %{with_private_headers}
 BuildRequires:	rsync
@@ -207,9 +201,6 @@ Qt component library.
 %package -n %{libqtcore}
 Summary:	Qt%{major} Component Library
 Group:		System/Libraries
-Conflicts:	%{libqtgui} <= 2:4.2.2
-Obsoletes:	%{_lib}qtuitools4
-Obsoletes:	qt4-codecs-plugin-%{_lib}
 
 %description -n %{libqtcore}
 Qt component library.
@@ -246,8 +237,6 @@ Qt multimedia library.
 %package -n %{libqtdesigner}
 Summary:	Qt%{major} Component Library
 Group:		System/Libraries
-# Had wrong major:
-Obsoletes:	%{_lib}qtdesigner1 < 2:4.3.4-4
 
 %description -n %{libqtdesigner}
 Qt component library.
@@ -260,7 +249,6 @@ Qt component library.
 %package -n %{libqtgui}
 Summary:	Qt%{major} Component Library
 Group:		System/Libraries
-Conflicts:	%{libqtcore} <= 2:4.2.2
 
 %description -n %{libqtgui}
 Qt component library.
@@ -437,15 +425,11 @@ Phonon library for Qt.
 %package -n phonon-gstreamer
 Summary:	Qt%{major} Phonon Gstreamer Backend
 Group:		System/Libraries
-Provides:	phonon-backend = %{epoch}:%{version}-%{release}
+Provides:	phonon-backend = %{EVRD}
 Requires:	gstreamer0.10-plugins-good
 Requires:	gstreamer0.10-pulse
 Suggests:	gstreamer0.10-ffmpeg
 Suggests:	gstreamer0.10-soup
-%if %mdkversion >= 201000
-Obsoletes:	arts
-Obsoletes:	arts3
-%endif
 
 %description -n phonon-gstreamer
 Phonon gstreamer backend for Qt.
@@ -469,63 +453,46 @@ Designer phonon plugin for Qt.
 %package -n %{libqtdevel}
 Summary:	Development files for the Qt GUI toolkit
 Group:		Development/KDE and Qt
-Requires:	%{name}-common = %{epoch}:%{version}
-Requires:	qt4-qtconfig = %{epoch}:%{version}
-Provides:	qt-devel = %{epoch}:%{version}-%{release}
-Provides:	qt4-devel = %{epoch}:%{version}-%{release}
-Provides:	libqt4-devel = %{epoch}:%{version}-%{release}
-Requires:	%{libqtdeclarative} = %{epoch}:%{version}
-Requires:	%{libqt3support} = %{epoch}:%{version}
-Requires:	%{libqt3support} = %{epoch}:%{version}
-Requires:	%{libqtcore} = %{epoch}:%{version}
-Requires:	%{libqtdesigner} = %{epoch}:%{version}
-Requires:	%{libqtgui} = %{epoch}:%{version}
-Requires:	%{libqtnetwork} = %{epoch}:%{version}
-Requires:	%{libqtopengl} = %{epoch}:%{version}
-Requires:	%{libqtsql} = %{epoch}:%{version}
-Requires:	%{libqtxml} = %{epoch}:%{version}
-Requires:	%{libqtscripttools} = %{epoch}:%{version}
-Requires:	%{libqtxmlpatterns} = %{epoch}:%{version}
-Requires:	%{libqtsvg} = %{epoch}:%{version}
-Requires:	%{libqtclucene} = %{epoch}:%{version}
-Requires:	%{libqttest} = %{epoch}:%{version}
-Requires:	%{libqdbus} = %{epoch}:%{version}
+Requires:	%{name}-common = %{EVRD}
+Requires:	qt4-qtconfig = %{EVRD}
+Provides:	qt-devel = %{EVRD}
+Provides:	qt4-devel = %{EVRD}
+Provides:	libqt4-devel = %{EVRD}
+Requires:	%{libqtdeclarative} = %{EVRD}
+Requires:	%{libqt3support} = %{EVRD}
+Requires:	%{libqt3support} = %{EVRD}
+Requires:	%{libqtcore} = %{EVRD}
+Requires:	%{libqtdesigner} = %{EVRD}
+Requires:	%{libqtgui} = %{EVRD}
+Requires:	%{libqtnetwork} = %{EVRD}
+Requires:	%{libqtopengl} = %{EVRD}
+Requires:	%{libqtsql} = %{EVRD}
+Requires:	%{libqtxml} = %{EVRD}
+Requires:	%{libqtscripttools} = %{EVRD}
+Requires:	%{libqtxmlpatterns} = %{EVRD}
+Requires:	%{libqtsvg} = %{EVRD}
+Requires:	%{libqtclucene} = %{EVRD}
+Requires:	%{libqttest} = %{EVRD}
+Requires:	%{libqdbus} = %{EVRD}
 %if %{with webkit}
-Requires:	%{libqtwebkit} = %{epoch}:%{version}
+Requires:	%{libqtwebkit} = %{EVRD}
 %endif
-Requires:	%{libqtscript} = %{epoch}:%{version}
-Requires:	%{libqthelp} = %{epoch}:%{version}
-Requires:	%{libqtmultimedia} = %{epoch}:%{version}
+Requires:	%{libqtscript} = %{EVRD}
+Requires:	%{libqthelp} = %{EVRD}
+Requires:	%{libqtmultimedia} = %{EVRD}
 %if %{with openvg}
-Requires:	%{libqtopenvg} = %{epoch}:%{version}
+Requires:	%{libqtopenvg} = %{EVRD}
 %endif
 %if %{with phonon}
-Requires:	qt4-designer-plugin-phonon = %{epoch}:%{version}
-Requires:	%{libphonon} = %{epoch}:%{version}
+Requires:	qt4-designer-plugin-phonon = %{EVRD}
+Requires:	%{libphonon} = %{EVRD}
 %endif
-Requires:	qt4-qtdbus = %{epoch}:%{version}
-Requires:	qt4-designer-plugin-webkit = %{epoch}:%{version}
-Requires:	qt4-designer-plugin-qt3support = %{epoch}:%{version}
+Requires:	qt4-qtdbus = %{EVRD}
+Requires:	qt4-designer-plugin-webkit = %{EVRD}
+Requires:	qt4-designer-plugin-qt3support = %{EVRD}
 Requires(post):	update-alternatives
 Requires(postun):update-alternatives
-Conflicts:	qt4-common <= 2:4.3.3
 Obsoletes:	%{mklibname -d QtWebKit} < %{version}
-Conflicts:	%{_lib}qtxml4 < 2:4.3.4-3
-Conflicts:	%{_lib}qtsql4 < 2:4.3.4-3
-Conflicts:	%{_lib}qtnetwork4 < 2:4.3.4-3
-Conflicts:	%{_lib}qtscript4 < 2:4.3.4-3
-Conflicts:	%{_lib}qtgui4 < 2:4.3.4-3
-Conflicts:	%{_lib}qtsvg4 < 2:4.3.4-3
-Conflicts:	%{_lib}qttest4 < 2:4.3.4-3
-Conflicts:	%{_lib}qtcore4 < 2:4.3.4-3
-Conflicts:	%{_lib}qt3support4 < 2:4.3.4-3
-Conflicts:	%{_lib}qtopengl4 < 2:4.3.4-3
-Conflicts:	%{_lib}qtdesigner1 < 2:4.3.4-3
-Conflicts:	%{_lib}qtdbus4 < 2:4.3.4-3
-Conflicts:	%{_lib}qassistant1 < 2:4.3.4-3
-Conflicts:	%{_lib}qttest4 < 2:4.3.4-3
-Conflicts:	%{_lib}qtcore4 < 2:4.3.4-3
-Conflicts:	qt4-linguist < 2:4.4.3-3
 
 %description -n %{libqtdevel}
 Necessary files to develop applications using the Qt GUI toolkit:
@@ -597,7 +564,7 @@ fi
 %package devel-private
 Summary:	Private headers for Qt toolkit
 Group:		Development/KDE and Qt
-Requires:	qt4-devel = %{epoch}:%{version}-%{release}
+Requires:	qt4-devel = %{EVRD}
 BuildArch:	noarch
 
 %description devel-private
@@ -619,10 +586,9 @@ toolkit. It is needed to build Qt Creator with all features.
 %package assistant
 Summary:	Qt%{major} Assistantion Doc Utility
 Group:		Books/Computer books
-Requires:	%{name}-common = %{epoch}:%{version}
-Requires:	qt4-database-plugin-sqlite = %{epoch}:%{version}
-Suggests:	qt4-doc = %{epoch}:%{version}
-Conflicts:	%{name}-common <= 4.3.3-4
+Requires:	%{name}-common = %{EVRD}
+Requires:	qt4-database-plugin-sqlite = %{EVRD}
+Suggests:	qt4-doc = %{EVRD}
 
 %description assistant
 Qt Assistant provides a documentation Browser.
@@ -639,21 +605,20 @@ Qt Assistant provides a documentation Browser.
 %package designer
 Summary:	Qt%{major} Visual Design Tool
 Group:		Development/KDE and Qt
-Requires:	%{libqtdevel} = %{epoch}:%{version}
-Requires:	qt4-designer-plugin-qt3support = %{epoch}:%{version}
+Requires:	%{libqtdevel} = %{EVRD}
+Requires:	qt4-designer-plugin-qt3support = %{EVRD}
 %if %{with webkit}
-Requires:	qt4-designer-plugin-webkit = %{epoch}:%{version}
+Requires:	qt4-designer-plugin-webkit = %{EVRD}
 %endif
 %if %{with phonon}
 Requires:	qt4-designer-plugin-phonon
 %endif
 %if %{with examples}
-Suggests:	qt4-examples = %{epoch}:%{version}
+Suggests:	qt4-examples = %{EVRD}
 %endif
 %if %{with demos}
-Suggests:	qt4-demos = %{epoch}:%{version}-%{release}
+Suggests:	qt4-demos = %{EVRD}
 %endif
-Conflicts:	%{name}-common <= 4.3.3-4
 
 %description designer
 The Qt Designer is a visual design tool that makes designing and
@@ -668,8 +633,7 @@ implementing user interfaces a lot easier.
 %package linguist
 Summary:	Qt%{major} Linguist Translation Utility
 Group:		Books/Computer books
-Requires:	%{name}-common = %{epoch}:%{version}
-Conflicts:	%{name}-common <= 4.3.3-4
+Requires:	%{name}-common = %{EVRD}
 
 %description linguist
 Linguist provides easy translation for Qt GUI's in severall languages.
@@ -684,8 +648,7 @@ Linguist provides easy translation for Qt GUI's in severall languages.
 %package qdoc3
 Summary:	Qt%{major} Documentation Generator
 Group:		Development/KDE and Qt
-Requires:	%{name}-common = %{epoch}:%{version}
-Conflicts:	%{name}-common <= 4.3.3-4
+Requires:	%{name}-common = %{EVRD}
 
 %description qdoc3
 Qt 4 documentation generator.
@@ -697,7 +660,7 @@ Qt 4 documentation generator.
 %package qtdbus
 Summary:	Qt%{major} DBus Binary
 Group:		Development/KDE and Qt
-Requires:	%{name}-common = %{epoch}:%{version}
+Requires:	%{name}-common = %{EVRD}
 
 %description qtdbus
 Dbus interface for Qt.
@@ -710,7 +673,7 @@ Dbus interface for Qt.
 %package qmlviewer
 Summary:	Qt%{major} Qmlviewer Utility
 Group:		Development/KDE and Qt
-Requires:	%{name}-common = %{epoch}:%{version}
+Requires:	%{name}-common = %{EVRD}
 
 %description qmlviewer
 Qmlviewer utility for Qt.
@@ -734,8 +697,7 @@ Qmlviewer utility for Qt.
 %package qtconfig
 Summary:	Qt%{major} Configuration Utility
 Group:		Development/KDE and Qt
-Requires:	%{name}-common = %{epoch}:%{version}
-Conflicts:	qt4-common <= 2:4.3.3
+Requires:	%{name}-common = %{EVRD}
 Requires(post):	update-alternatives
 Requires(postun):update-alternatives
 
@@ -759,8 +721,7 @@ fi
 %package qvfb
 Summary:	Qt%{major} Embedded Virtual Terminal
 Group:		Development/KDE and Qt
-Requires:	%{name}-common = %{epoch}:%{version}
-Conflicts:	%{name}-common <= 4.3.3-4
+Requires:	%{name}-common = %{EVRD}
 
 %description qvfb
 Embedded virtual terminal for Qt support.
@@ -774,7 +735,7 @@ Embedded virtual terminal for Qt support.
 %package xmlpatterns
 Summary:	Qt%{major} Xmlpatterns Utility
 Group:		Development/KDE and Qt
-Requires:	%{name}-common = %{epoch}:%{version}
+Requires:	%{name}-common = %{EVRD}
 
 %description xmlpatterns
 Xmlpatterns utility for Qt.
@@ -786,7 +747,6 @@ Xmlpatterns utility for Qt.
 %package accessibility-plugin
 Summary:	Qt%{major} Accessibility Plugin
 Group:		Development/KDE and Qt
-Obsoletes:	qt4-accessibility-plugin-%_lib
 
 %description accessibility-plugin
 Acessibility plugins for Qt.
@@ -822,7 +782,6 @@ Designer plugin for webkit Qt support.
 %package graphicssystems-plugin
 Summary:	Qt%{major} Graphicssystems Plugin
 Group:		Development/KDE and Qt
-Obsoletes:	qt4-graphicssystems-plugin-%{_lib}
 
 %description graphicssystems-plugin
 Graphicssystems plugins for Qt.
@@ -840,7 +799,6 @@ Graphicssystems plugins for Qt.
 %package database-plugin-ibase
 Summary:	Qt%{major} Database Interbase Plugin
 Group:		Development/KDE and Qt
-Obsoletes:	qt4-database-plugin-ibase-%{_lib}
 
 %description database-plugin-ibase
 Database plugin for interbase Qt support.
@@ -854,7 +812,6 @@ Database plugin for interbase Qt support.
 %package database-plugin-mysql
 Summary:	Qt%{major} Database MYSQL Plugin
 Group:		Development/KDE and Qt
-Obsoletes:	qt4-database-plugin-mysql-%{_lib}
 
 %description database-plugin-mysql
 Database plugin for mysql Qt support.
@@ -868,8 +825,7 @@ Database plugin for mysql Qt support.
 %package database-plugin-odbc
 Summary:	Qt%{major} Database ODBC Plugin
 Group:		Development/KDE and Qt
-Obsoletes:	qt4-database-plugin-odbc-%{_lib}
- 
+
 %description database-plugin-odbc
 Database plugin for ODBC Qt support.
 
@@ -882,7 +838,6 @@ Database plugin for ODBC Qt support.
 %package database-plugin-pgsql
 Summary:	Qt%{major} Database PGSQL Plugin
 Group:		Development/KDE and Qt
-Obsoletes:	qt4-database-plugin-pgsql-%{_lib}
 
 %description database-plugin-pgsql
 Database plugin for pgsql Qt support.
@@ -896,7 +851,6 @@ Database plugin for pgsql Qt support.
 %package database-plugin-sqlite
 Summary:	Qt%{major} Database SQLITE Plugin
 Group:		Databases
-Obsoletes:	qt4-database-plugin-sqlite-%{_lib}
 
 %description database-plugin-sqlite
 Database plugin for sqlite Qt support.
@@ -910,7 +864,6 @@ Database plugin for sqlite Qt support.
 %package database-plugin-tds
 Summary:	Q%{major} Database FREETDS Plugin
 Group:		Databases
-Obsoletes:	qt4-database-plugin-tds-%{_lib}
 
 %description database-plugin-tds
 Database plugin for freetds Qt support.
@@ -946,13 +899,13 @@ find %{_docdir} -maxdepth 1 -type d -name qt-4.\* -exec rm -rf {} \;
 %package demos
 Summary:	Qt%{major} Demonstration Applications
 Group:		Development/KDE and Qt
-Requires:	%{name}-common = %{epoch}:%{version}
+Requires:	%{name}-common = %{EVRD}
 Obsoletes:	%{name}-demos < 4:4.8.0
 %if %{with docs}
-Requires:	%{name}-doc = %{epoch}:%{version}
+Requires:	%{name}-doc = %{EVRD}
 %endif
 %if %{with examples}
-Suggests:	%{name}-examples = %{epoch}:%{version}
+Suggests:	%{name}-examples = %{EVRD}
 %endif
 
 %description demos
@@ -969,9 +922,7 @@ Demonstration applications made with Qt %{version}.
 %package examples
 Summary:	Qt%{major} Programs Examples
 Group:		Development/KDE and Qt
-Requires:	%{name}-common = %{epoch}:%{version}
-Obsoletes:	qt4-tutorial
-Obsoletes:	%{name}-examples < 4:4.7.0-3
+Requires:	%{name}-common = %{EVRD}
 
 %description examples
 Programs examples made with Qt %{version}.
@@ -987,14 +938,13 @@ Programs examples made with Qt %{version}.
 #--------------------------------------------------------------------
 %prep
 %setup -q -n qt-everywhere-opensource-src-%{version}
+%patch0 -p1 -b .boost
 %patch1 -p1 -b .c++11-1~
 %patch2 -p1 -b .c++11-2~
 %patch3 -p1 -b .kde-bug-256475
 %patch7 -p1 -b .ssl
 %patch10 -p1 -b .fix-qvfb-build
 %patch11 -p1
-%patch12 -p1 -b .moc-boost148
-#patch13 -p1
 
 # let makefile create missing .qm files, the .qm files should be included in qt upstream
 for f in translations/*.ts ; do
@@ -1016,7 +966,7 @@ export QTDIR=`/bin/pwd`
 export PATH=$QTDIR/bin:$PATH
 
 # Don't include headers or link with /usr/X11R6/{include,lib}
-perl -pi -e 's@/X11R6/lib@/%_lib@g;s@/X11R6/@/@' mkspecs/linux-*/qmake.conf mkspecs/common/linux.conf
+perl -pi -e 's@/X11R6/@/@' mkspecs/linux-*/qmake.conf mkspecs/common/linux.conf
 
 #--------------------------------------------------------
 ./configure \
@@ -1047,7 +997,6 @@ perl -pi -e 's@/X11R6/lib@/%_lib@g;s@/X11R6/@/@' mkspecs/linux-*/qmake.conf mksp
     -xmlpatterns \
     -opengl desktop \
     -platform linux-g++ \
-    -verbose \
     -xinerama \
     -xrandr \
 %if %{with qvfb}
@@ -1119,7 +1068,6 @@ perl -pi -e 's@/X11R6/lib@/%_lib@g;s@/X11R6/@/@' mkspecs/linux-*/qmake.conf mksp
 %endif
 
 %install
-rm -rf %{buildroot}
 install -d %{buildroot}%{_bindir}
 install -d %{buildroot}%{_docdir}/%{name}
 install -d %{buildroot}%{_sysconfdir}/profile.d
@@ -1207,6 +1155,7 @@ EOF
 # identical binaries are copied, not linked:
 rm -f %{buildroot}%{_qt_exampledir}/declarative/cppextensions/qwidgets/QWidgets/libqmlqwidgetsplugin.so
 ln -sf %{_qt_exampledir}/declarative/cppextensions/plugins/libqmlqwidgetsplugin.so %{buildroot}%{_qt_exampledir}/declarative/cppextensions/qwidgets/QWidgets/libqmlqwidgetsplugin.so
+
 
 # Clean WEBKIT test files
 rm -fr %{buildroot}%{_qt_datadir}/tests/qt4/tst_*/
