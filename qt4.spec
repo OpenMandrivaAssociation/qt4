@@ -91,8 +91,9 @@ BuildRequires:	jpeg-devel
 BuildRequires:	mng-devel
 BuildRequires:	pam-devel
 BuildRequires:	readline-devel
+%if %{mdvver} < 201300
 BuildRequires:	termcap-devel
-
+%endif
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	pkgconfig(dbus-1) >= 0.92
 BuildRequires:	pkgconfig(expat)
