@@ -12,6 +12,11 @@
 %bcond_without tds
 %bcond_without cups
 %bcond_without webkit
+# If webkit is set, but package_webkit isn't, QtWebKit will be built
+# but not packaged. This enables support for QtWebKit features in
+# Qt Designer and the likes while grabbing QtWebKit from the external
+# package.
+%bcond_with package_webkit
 %bcond_without qvfb
 %bcond_with openvg
 %bcond_without docs
@@ -63,7 +68,7 @@
 Summary:	Qt GUI Toolkit
 Name:		qt4
 Version:	4.8.5
-Release:	2
+Release:	3
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 Group:		Development/KDE and Qt
@@ -398,7 +403,7 @@ Qt component library.
 %{_libdir}/libQtXmlPatterns.so.%{major}*
 
 
-%if %{with webkit}
+%if %{with webkit} && %{with package_webkit}
 #--------------------------------------------------------------------
 %package -n %{libqtwebkit}
 Summary:	Qt%{major} Component Library
@@ -477,7 +482,11 @@ Requires:	%{libqtclucene} = %{EVRD}
 Requires:	%{libqttest} = %{EVRD}
 Requires:	%{libqdbus} = %{EVRD}
 %if %{with webkit}
+%if %{with package_webkit}
 Requires:	%{libqtwebkit} = %{EVRD}
+%else
+Requires:	%{libqtwebkit} >= %{EVRD}
+%endif
 %endif
 Requires:	%{libqtscript} = %{EVRD}
 Requires:	%{libqthelp} = %{EVRD}
@@ -551,7 +560,7 @@ fi
 %{_libdir}/libQtTest.so
 %{_libdir}/libQtXml.so
 %{_libdir}/libQtXmlPatterns.so
-%if %{with webkit}
+%if %{with webkit} && %{with package_webkit}
 %{_libdir}/libQtWebKit.so
 %endif
 %{_libdir}/*.a
@@ -676,6 +685,9 @@ Dbus interface for Qt.
 Summary:	Qt%{major} Qmlviewer Utility
 Group:		Development/KDE and Qt
 Requires:	%{name}-common = %{EVRD}
+%if %{with webkit} && ! %{with package_webkit}
+Requires:	qtwebkit-qml
+%endif
 
 %description qmlviewer
 Qmlviewer utility for Qt.
@@ -684,7 +696,7 @@ Qmlviewer utility for Qt.
 %{_qt_bindir}/qmlviewer
 %{_qt_bindir}/qmlplugindump
 %{_qt_importdir}/Qt/
-%if %{with webkit}
+%if %{with webkit} && %{with package_webkit}
 %{_qt_importdir}/QtWebKit/libqmlwebkitplugin.so
 %{_qt_importdir}/QtWebKit/qmldir
 %endif
@@ -1162,3 +1174,9 @@ ln -sf %{_qt_exampledir}/declarative/cppextensions/plugins/libqmlqwidgetsplugin.
 # Clean WEBKIT test files
 rm -fr %{buildroot}%{_qt_datadir}/tests/qt4/tst_*/
 
+%if %{with webkit} && ! %{with package_webkit}
+# Remove WebKit files so the external qtwebkit package can take over
+rm -rf %{buildroot}%{_libdir}/libQtWebKit* \
+	%{buildroot}%{_qt_importdir}/QtWebKit \
+	%{buildroot}%{_qt_includedir}/QtWebKit
+%endif
