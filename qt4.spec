@@ -1178,5 +1178,6 @@ rm -fr %{buildroot}%{_qt_datadir}/tests/qt4/tst_*/
 # Remove WebKit files so the external qtwebkit package can take over
 rm -rf %{buildroot}%{_libdir}/libQtWebKit* \
 	%{buildroot}%{_qt_importdir}/QtWebKit \
-	%{buildroot}%{_qt_includedir}/QtWebKit
+	%{buildroot}%{_qt_includedir}/QtWebKit \
+	%{buildroot}%{_libdir}/pkgconfig/QtWebKit.pc
 %endif
