@@ -63,7 +63,7 @@
 Summary:	Qt GUI Toolkit
 Name:		qt4
 Version:	4.8.5
-Release:	1
+Release:	2
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 Group:		Development/KDE and Qt
@@ -107,7 +107,9 @@ BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(libpulse)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(libxslt)
+BuildRequires:	pkgconfig(ncurses)
 BuildRequires:	pkgconfig(openssl)
+BuildRequires:	pkgconfig(sm)
 BuildRequires:	pkgconfig(xcursor)
 BuildRequires:	pkgconfig(xi)
 BuildRequires:	pkgconfig(xinerama)
