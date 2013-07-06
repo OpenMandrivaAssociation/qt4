@@ -68,7 +68,7 @@
 Summary:	Qt GUI Toolkit
 Name:		qt4
 Version:	4.8.5
-Release:	4
+Release:	5
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 Group:		Development/KDE and Qt
@@ -482,11 +482,7 @@ Requires:	%{libqtclucene} = %{EVRD}
 Requires:	%{libqttest} = %{EVRD}
 Requires:	%{libqdbus} = %{EVRD}
 %if %{with webkit}
-%if %{with package_webkit}
-Requires:	%{libqtwebkit} = %{EVRD}
-%else
 Requires:	%{libqtwebkit} >= %{EVRD}
-%endif
 %endif
 Requires:	%{libqtscript} = %{EVRD}
 Requires:	%{libqthelp} = %{EVRD}
@@ -499,7 +495,7 @@ Requires:	qt4-designer-plugin-phonon = %{EVRD}
 Requires:	%{libphonon} = %{EVRD}
 %endif
 Requires:	qt4-qtdbus = %{EVRD}
-Requires:	qt4-designer-plugin-webkit = %{EVRD}
+Requires:	qt4-designer-plugin-webkit >= %{EVRD}
 Requires:	qt4-designer-plugin-qt3support = %{EVRD}
 Requires(post):	update-alternatives
 Requires(postun):update-alternatives
@@ -619,7 +615,7 @@ Group:		Development/KDE and Qt
 Requires:	%{libqtdevel} = %{EVRD}
 Requires:	qt4-designer-plugin-qt3support = %{EVRD}
 %if %{with webkit}
-Requires:	qt4-designer-plugin-webkit = %{EVRD}
+Requires:	qt4-designer-plugin-webkit >= %{EVRD}
 %endif
 %if %{with phonon}
 Requires:	qt4-designer-plugin-phonon
@@ -686,7 +682,7 @@ Summary:	Qt%{major} Qmlviewer Utility
 Group:		Development/KDE and Qt
 Requires:	%{name}-common = %{EVRD}
 %if %{with webkit} && ! %{with package_webkit}
-Requires:	qtwebkit-qml
+Requires:	qtwebkit-qml >= %{EVRD}
 %endif
 
 %description qmlviewer
