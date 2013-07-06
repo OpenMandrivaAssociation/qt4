@@ -68,7 +68,7 @@
 Summary:	Qt GUI Toolkit
 Name:		qt4
 Version:	4.8.5
-Release:	3
+Release:	4
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 Group:		Development/KDE and Qt
@@ -1179,5 +1179,6 @@ rm -fr %{buildroot}%{_qt_datadir}/tests/qt4/tst_*/
 rm -rf %{buildroot}%{_libdir}/libQtWebKit* \
 	%{buildroot}%{_qt_importdir}/QtWebKit \
 	%{buildroot}%{_qt_includedir}/QtWebKit \
-	%{buildroot}%{_libdir}/pkgconfig/QtWebKit.pc
+	%{buildroot}%{_libdir}/pkgconfig/QtWebKit.pc \
+	%{buildroot}%{_qt_datadir}/mkspecs/modules/qt_webkit_version.pri
 %endif
