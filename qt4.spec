@@ -11,7 +11,7 @@
 %bcond_without sqlite
 %bcond_without tds
 %bcond_without cups
-%bcond_with webkit
+%bcond_without webkit
 # If webkit is set, but package_webkit isn't, QtWebKit will be built
 # but not packaged. This enables support for QtWebKit features in
 # Qt Designer and the likes while grabbing QtWebKit from the external
@@ -68,15 +68,15 @@
 Summary:	Qt GUI Toolkit
 Name:		qt4
 Version:	4.8.5
-Release:	6
+Release:	6.1
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 Group:		Development/KDE and Qt
 Url:		http://qt.nokia.com/
 Source0:	http://releases.qt-project.org/qt4/source/qt-everywhere-opensource-src-%{version}.tar.gz
 Source2:	qt4.macros
-Source3:	mandriva-designer-qt4.desktop 
-Source4:	mandriva-assistant-qt4.desktop 
+Source3:	mandriva-designer-qt4.desktop
+Source4:	mandriva-assistant-qt4.desktop
 Source5:	mandriva-linguist-qt4.desktop
 Source10:	qt4.rpmlintrc
 Patch0:		qt-everywhere-opensource-src-4.8.5-moc-boost.patch
@@ -88,7 +88,7 @@ Patch2:		qt-4.8.1-WebKit-no-stdc++11.patch
 Patch3:		qt-4.8.1-transculent-drag-pixmap.patch
 # Revert http://qt.gitorious.org/qt/qt/commit/f45cdeda88796830b3fe71aff7ceb1919d00400d/diffs
 # See https://bugreports.qt-project.org/browse/QTBUG-32274
-Patch4:                qt-everywhere-opensource-src-4.8.5-qkeymapper.patch
+Patch4:		qt-everywhere-opensource-src-4.8.5-qkeymapper.patch
 Patch7:		qt-everywhere-opensource-src-4.8.0-tp-openssl.patch
 Patch10:	qt-4.8.2-fix-qvfb-build.patch
 Patch11:	patches_r113848_r93631.patch
