@@ -29,7 +29,7 @@
     QMAKE_LFLAGS="%{?ldflags}"
 
 %cmake_qt4 \
-  QTDIR="%" ; export QTDIR ; \
+  QTDIR="%qt4dir" ; export QTDIR ; \
   PATH="%{_qt_bindir}:$PATH" ; export PATH ; \
   CPPFLAGS="${CPPFLAGS:-%optflags -DPIC -fPIC}" ; export CPPFLAGS ; \
   %setup_compile_flags \
