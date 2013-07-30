@@ -126,8 +126,10 @@ BuildRequires:	pkgconfig(xrender)
 BuildRequires:	pkgconfig(xtst)
 BuildRequires:	pkgconfig(xv)
 BuildRequires:	pkgconfig(zlib)
+%ifnarch %arm aarch64
 # Make sure we don't link with egl
 BuildConflicts:	pkgconfig(egl)
+%endif
 %if %{with phonon}
 BuildRequires:	pkgconfig(gstreamer-0.10)
 BuildRequires:	pkgconfig(gstreamer-plugins-base-0.10)
