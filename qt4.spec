@@ -11,7 +11,7 @@
 %bcond_without sqlite
 %bcond_without tds
 %bcond_without cups
-%bcond_with webkit
+%bcond_without webkit
 # If webkit is set, but package_webkit isn't, QtWebKit will be built
 # but not packaged. This enables support for QtWebKit features in
 # Qt Designer and the likes while grabbing QtWebKit from the external
@@ -68,7 +68,7 @@
 Summary:	Qt GUI Toolkit
 Name:		qt4
 Version:	4.8.5
-Release:	6.2
+Release:	6.3
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 Group:		Development/KDE and Qt
