@@ -1,0 +1,60 @@
+diff --git a/src/corelib/global/qglobal.cpp b/src/corelib/global/qglobal.cpp
+index e6df16e..1fa019c 100644
+--- a/src/corelib/global/qglobal.cpp
++++ b/src/corelib/global/qglobal.cpp
+@@ -3064,6 +3064,8 @@ bool QInternal::activateCallbacks(Callback cb, void **parameters)
+ }
+ 
+ extern void qt_set_current_thread_to_main_thread();
++extern int (*qt_unix_select_function)(int nfds, fd_set *fdread, fd_set *fdwrite, fd_set *fdexcept,
++   const struct timeval *orig_timeout);
+ 
+ bool QInternal::callFunction(InternalFunction func, void **args)
+ {
+@@ -3111,6 +3113,14 @@ bool QInternal::callFunction(InternalFunction func, void **args)
+         delete sender;
+         return true;
+     }
++    case QInternal::SetUnixSelectFunction: {
++        qt_unix_select_function = reinterpret_cast<int (*)(int, fd_set*, fd_set*, fd_set*, const timeval*)>( args );
++        return true;
++    }
++    case QInternal::GetUnixSelectFunction: {
++        *args = reinterpret_cast< void* >( qt_unix_select_function );
++        return true;
++    }
+ 
+     default:
+         break;
+diff --git a/src/corelib/global/qnamespace.h b/src/corelib/global/qnamespace.h
+index 0ebd6b3..c3bf65b 100644
+--- a/src/corelib/global/qnamespace.h
++++ b/src/corelib/global/qnamespace.h
+@@ -1836,6 +1836,8 @@ public:
+         SetQObjectSender,
+         GetQObjectSender,
+         ResetQObjectSender,
++        GetUnixSelectFunction,
++        SetUnixSelectFunction,
+         LastInternalFunction
+     };
+ 
+diff --git a/src/corelib/kernel/qeventdispatcher_unix.cpp b/src/corelib/kernel/qeventdispatcher_unix.cpp
+index 1acaf2f..3ba46db 100644
+--- a/src/corelib/kernel/qeventdispatcher_unix.cpp
++++ b/src/corelib/kernel/qeventdispatcher_unix.cpp
+@@ -625,10 +625,13 @@ QEventDispatcherUNIX::~QEventDispatcherUNIX()
+     d->threadData->eventDispatcher = 0;
+ }
+ 
++int (*qt_unix_select_function)(int nfds, fd_set *fdread, fd_set *fdwrite, fd_set *fdexcept,
++   const struct timeval *orig_timeout) = qt_safe_select;
++
+ int QEventDispatcherUNIX::select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds,
+                                  timeval *timeout)
+ {
+-    return qt_safe_select(nfds, readfds, writefds, exceptfds, timeout);
++    return qt_unix_select_function(nfds, readfds, writefds, exceptfds, timeout);
+ }
+ 
+ /*!
