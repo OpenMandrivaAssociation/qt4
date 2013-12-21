@@ -8,3 +8,5 @@ addFilter("E: non-executable-script")
 addFilter("E: binary-or-shlib-defines-rpath")
 # temporary disable
 addFilter("E: debuginfo-without-sources")
+# For the -examples subpackage...
+addFilter("E: devel-file-in-non-devel-package")
