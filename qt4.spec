@@ -68,7 +68,7 @@
 Summary:	Qt GUI Toolkit
 Name:		qt4
 Version:	4.8.5
-Release:	6.9
+Release:	7
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 Group:		Development/KDE and Qt
@@ -224,6 +224,7 @@ Qt component library.
 %files -n %{libqtcore}
 %{_libdir}/libQtCore.so.%{major}*
 %{_qt_plugindir}/codecs/
+%{_sysconfdir}/xdg/qtchooser/*
 
 #--------------------------------------------------------------------
 %package -n %{libqdbus}
@@ -506,8 +507,6 @@ Requires:	%{libphonon} = %{EVRD}
 Requires:	qt4-qtdbus = %{EVRD}
 Requires:	qt4-designer-plugin-webkit >= %{EVRD}
 Requires:	qt4-designer-plugin-qt3support = %{EVRD}
-Requires(post):	update-alternatives
-Requires(postun):update-alternatives
 Obsoletes:	%{mklibname -d QtWebKit} < %{version}
 
 %description -n %{libqtdevel}
@@ -517,14 +516,6 @@ Enter in http://qt.nokia.com/ for more information about Qt.
 
 Install %{name}-devel if you want to develop GUI applications using
 the Qt toolkit.
-
-%post -n %{libqtdevel}
-update-alternatives --install %{_bindir}/qmake qmake %{_qt_bindir}/qmake 20
-
-%postun -n %{libqtdevel}
-if ! [ -e %{_qt_bindir}/qmake ]; then
-  update-alternatives --remove qmake %{_qt_bindir}/qmake
-fi
 
 %files -n %{libqtdevel}
 %{_sysconfdir}/rpm/macros.d/qt4.macros
@@ -717,19 +708,9 @@ Qmlviewer utility for Qt.
 Summary:	Qt%{major} Configuration Utility
 Group:		Development/KDE and Qt
 Requires:	%{name}-common = %{EVRD}
-Requires(post):	update-alternatives
-Requires(postun):update-alternatives
 
 %description qtconfig
 Main configuration utility for Qt.
-
-%post qtconfig
-update-alternatives --install %{_bindir}/qtconfig qtconfig %{_qt_bindir}/qtconfig 20
-
-%postun qtconfig
-if ! [ -e %{_qt_bindir}/qtconfig ]; then
-  update-alternatives --remove qtconfig %{_qt_bindir}/qtconfig 
-fi
 
 %files qtconfig
 %{_qt_bindir}/qtconfig
@@ -1177,6 +1158,13 @@ EOF
 rm -f %{buildroot}%{_qt_exampledir}/declarative/cppextensions/qwidgets/QWidgets/libqmlqwidgetsplugin.so
 ln -sf %{_qt_exampledir}/declarative/cppextensions/plugins/libqmlqwidgetsplugin.so %{buildroot}%{_qt_exampledir}/declarative/cppextensions/qwidgets/QWidgets/libqmlqwidgetsplugin.so
 
+# qtchooser configs
+mkdir -p %{buildroot}%{_sysconfdir}/xdg/qtchooser
+cat >%{buildroot}%{_sysconfdir}/xdg/qtchooser/qt4.conf <<'EOF'
+%{_qt_bindir}
+%{_qt_libdir}
+EOF
+ln -s qt4.conf %{buildroot}%{_sysconfdir}/xdg/qtchooser/default.conf
 
 # Clean WEBKIT test files
 rm -fr %{buildroot}%{_qt_datadir}/tests/qt4/tst_*/
