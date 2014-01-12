@@ -68,7 +68,7 @@
 Summary:	Qt GUI Toolkit
 Name:		qt4
 Version:	4.8.5
-Release:	7
+Release:	8
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 Group:		Development/KDE and Qt
@@ -130,10 +130,7 @@ BuildRequires:	pkgconfig(xrender)
 BuildRequires:	pkgconfig(xtst)
 BuildRequires:	pkgconfig(xv)
 BuildRequires:	pkgconfig(zlib)
-%ifnarch %arm aarch64
-# Make sure we don't link with egl
-BuildConflicts:	pkgconfig(egl)
-%endif
+BuildRequires:	pkgconfig(egl)
 %if %{with phonon}
 BuildRequires:	pkgconfig(gstreamer-0.10)
 BuildRequires:	pkgconfig(gstreamer-plugins-base-0.10)
@@ -142,7 +139,7 @@ BuildRequires:	pkgconfig(gstreamer-plugins-base-0.10)
 BuildRequires:	pkgconfig(vg)
 %endif
 %if %{with mysql}
-BuildRequires:	mysql-devel
+BuildRequires:	mariadb-devel mariadb-common
 %endif
 %if %{with odbc}
 BuildRequires:	unixODBC-devel
@@ -810,11 +807,11 @@ Database plugin for interbase Qt support.
 #--------------------------------------------------------------------
 %if %{with mysql}
 %package database-plugin-mysql
-Summary:	Qt%{major} Database MYSQL Plugin
+Summary:	Qt%{major} Database MYSQL/MariaDB Plugin
 Group:		Development/KDE and Qt
 
 %description database-plugin-mysql
-Database plugin for mysql Qt support.
+Database plugin for mysql/mariadb Qt support.
 
 %files database-plugin-mysql
 %{_qt_plugindir}/sqldrivers/libqsqlmysql.so
