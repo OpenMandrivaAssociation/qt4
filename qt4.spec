@@ -67,13 +67,13 @@
 
 Summary:	Qt GUI Toolkit
 Name:		qt4
-Version:	4.8.5
-Release:	9
+Version:	4.8.6
+Release:	1
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 Group:		Development/KDE and Qt
 Url:		http://qt.nokia.com/
-Source0:	http://releases.qt-project.org/qt4/source/qt-everywhere-opensource-src-%{version}.tar.gz
+Source0:	http://download.qt-project.org/official_releases/qt/4.8/%{version}/qt-everywhere-opensource-src-%{version}.tar.gz
 Source2:	qt4.macros
 Source3:	mandriva-designer-qt4.desktop
 Source4:	mandriva-assistant-qt4.desktop
@@ -86,16 +86,12 @@ Patch1:		qt-4.8.1-OpenVG-stdc++11.patch
 Patch2:		qt-4.8.1-WebKit-no-stdc++11.patch
 # https://bugs.kde.org/show_bug.cgi?id=256475
 Patch3:		qt-4.8.1-transculent-drag-pixmap.patch
-# Revert http://qt.gitorious.org/qt/qt/commit/f45cdeda88796830b3fe71aff7ceb1919d00400d/diffs
-# See https://bugreports.qt-project.org/browse/QTBUG-32274
-Patch4:		qt-everywhere-opensource-src-4.8.5-qkeymapper.patch
 # Allow applications (esp. libreoffice) to override the select() call in
 # the event loop
 # See https://bugreports.qt-project.org/browse/QTBUG-16934
 Patch5:		qt_unix_select.diff
 Patch7:		qt-everywhere-opensource-src-4.8.0-tp-openssl.patch
 Patch10:	qt-4.8.2-fix-qvfb-build.patch
-Patch11:	patches_r113848_r93631.patch
 
 BuildRequires:	binutils >= 2.18
 BuildRequires:	cups-devel
@@ -184,6 +180,7 @@ Configuration and language files for Qt.
 %{_qt_datadir}/phrasebooks/
 %dir %{_qt_translationdir}
 %{_qt_translationdir}/qt_*.qm
+%{_qt_translationdir}/qtscript_*.qm
 
 #------------------------------------------------------------------------
 # CORE QT LIBRARIES
@@ -935,15 +932,7 @@ Programs examples made with Qt %{version}.
 #--------------------------------------------------------------------
 %prep
 %setup -q -n qt-everywhere-opensource-src-%{version}
-%patch0 -p1 -b .boost
-%patch1 -p1 -b .c++11-1~
-%patch2 -p1 -b .c++11-2~
-%patch3 -p1 -b .kde-bug-256475
-%patch4 -p1 -b .qkeymapper
-%patch5 -p1 -b .select~
-%patch7 -p1 -b .ssl
-%patch10 -p1 -b .fix-qvfb-build
-%patch11 -p1
+%apply_patches
 
 # let makefile create missing .qm files, the .qm files should be included in qt upstream
 for f in translations/*.ts ; do
