@@ -1,0 +1,33 @@
+--- qt-everywhere-opensource-src-4.8.6/src/plugins/accessible/widgets/itemviews.cpp.omv~	2014-06-07 12:26:59.253966245 +0200
++++ qt-everywhere-opensource-src-4.8.6/src/plugins/accessible/widgets/itemviews.cpp	2014-06-07 12:28:15.563012251 +0200
+@@ -393,7 +393,7 @@ bool QAccessibleTable2::unselectColumn(i
+     QModelIndex index = view()->model()->index(0, column, view()->rootIndex());
+     if (!index.isValid() || view()->selectionMode() & QAbstractItemView::NoSelection)
+         return false;
+-    view()->selectionModel()->select(index, QItemSelectionModel::Columns & QItemSelectionModel::Deselect);
++    view()->selectionModel()->select(index, (QItemSelectionModel::SelectionFlags)(QItemSelectionModel::Columns & QItemSelectionModel::Deselect));
+     return true;
+ }
+ 
+--- qt-everywhere-opensource-src-4.8.6/src/scripttools/debugging/qscriptdebuggerconsole.cpp.omv~	2014-06-07 12:23:32.398552294 +0200
++++ qt-everywhere-opensource-src-4.8.6/src/scripttools/debugging/qscriptdebuggerconsole.cpp	2014-06-07 12:23:48.706348418 +0200
+@@ -489,7 +489,7 @@ QScriptDebuggerConsoleCommandJob *QScrip
+     d->input += QLatin1Char('\n');
+     QScriptSyntaxCheckResult check = QScriptEngine::checkSyntax(d->input);
+     if (check.state() == QScriptSyntaxCheckResult::Intermediate)
+-        return false;
++        return 0;
+     d->input.chop(1); // remove the last \n
+     cmd = QString();
+     cmd.append(d->commandPrefix);
+--- qt-everywhere-opensource-src-4.8.6/tools/designer/src/lib/shared/previewmanager.cpp.omv~	2014-06-07 12:42:58.045979696 +0200
++++ qt-everywhere-opensource-src-4.8.6/tools/designer/src/lib/shared/previewmanager.cpp	2014-06-07 12:43:04.595897810 +0200
+@@ -817,7 +817,7 @@ QWidget *PreviewManager::raise(const QDe
+ {
+     typedef PreviewManagerPrivate::PreviewDataList PreviewDataList;
+     if (d->m_previews.empty())
+-        return false;
++        return 0;
+ 
+     // find matching window
+     const PreviewDataList::const_iterator cend =  d->m_previews.constEnd();
