@@ -31,3 +31,14 @@
  
      // find matching window
      const PreviewDataList::const_iterator cend =  d->m_previews.constEnd();
+--- qt-everywhere-opensource-src-4.8.6/src/gui/kernel/qx11embed_x11.cpp.omv~	2014-06-08 08:34:49.547537784 +0000
++++ qt-everywhere-opensource-src-4.8.6/src/gui/kernel/qx11embed_x11.cpp	2014-06-08 08:35:20.753147660 +0000
+@@ -275,7 +275,7 @@ public:
+     QTLWExtra* topData() { return d_func()->topData(); }
+ };
+ 
+-static unsigned int XEMBED_VERSION = 0;
++static constexpr long XEMBED_VERSION = 0;
+ 
+ enum QX11EmbedMessageType {
+     XEMBED_EMBEDDED_NOTIFY = 0,
