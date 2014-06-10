@@ -68,7 +68,7 @@
 Summary:	Qt GUI Toolkit
 Name:		qt4
 Version:	4.8.6
-Release:	3
+Release:	4
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 Group:		Development/KDE and Qt
@@ -212,6 +212,7 @@ Qt component library.
 %package -n %{libqtcore}
 Summary:	Qt%{major} Component Library
 Group:		System/Libraries
+Requires:	%{name}-qtchooser = %{EVRD}
 
 %description -n %{libqtcore}
 Qt component library.
@@ -219,6 +220,16 @@ Qt component library.
 %files -n %{libqtcore}
 %{_libdir}/libQtCore.so.%{major}*
 %{_qt_plugindir}/codecs/
+
+#--------------------------------------------------------------------
+%package qtchooser
+Summary:	qtchooser integration for Qt 4.x
+Group:		System/Libraries
+
+%description qtchooser
+qtchooser integration for Qt 4.x
+
+%files qtchooser
 %{_sysconfdir}/xdg/qtchooser/*
 
 #--------------------------------------------------------------------
