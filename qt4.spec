@@ -97,7 +97,7 @@ Patch10:	qt-4.8.2-fix-qvfb-build.patch
 BuildRequires:	binutils >= 2.18
 BuildRequires:	cups-devel
 BuildRequires:	jpeg-devel
-BuildRequires:	pkgconfig(libmng)
+BuildRequires:	mng-devel
 BuildRequires:	pam-devel
 BuildRequires:	readline-devel
 %if %{mdvver} < 201300
