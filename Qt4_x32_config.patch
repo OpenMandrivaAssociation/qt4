@@ -1,0 +1,51 @@
+Index: qt-everywhere-opensource-src-4.8.2/src/3rdparty/javascriptcore/JavaScriptCore/wtf/Platform.h
+===================================================================
+--- qt-everywhere-opensource-src-4.8.2.orig/src/3rdparty/javascriptcore/JavaScriptCore/wtf/Platform.h	2012-04-26 19:46:22.000000000 +0000
++++ qt-everywhere-opensource-src-4.8.2/src/3rdparty/javascriptcore/JavaScriptCore/wtf/Platform.h	2012-07-04 21:22:42.000000000 +0000
+@@ -201,8 +201,12 @@
+ /* CPU(X86_64) - AMD64 / Intel64 / x86_64 64-bit */
+ #if   defined(__x86_64__) \
+     || defined(_M_X64)
++#ifdef __ILP32__
++#define WTF_CPU_X86_64_32 1
++#else
+ #define WTF_CPU_X86_64 1
+ #endif
++#endif
+ 
+ /* 64-bit mode on AIX */
+ #ifdef __64BIT__
+Index: qt-everywhere-opensource-src-4.8.2/src/corelib/arch/qatomic_arch.h
+===================================================================
+--- qt-everywhere-opensource-src-4.8.2.orig/src/corelib/arch/qatomic_arch.h	2012-04-26 19:46:08.000000000 +0000
++++ qt-everywhere-opensource-src-4.8.2/src/corelib/arch/qatomic_arch.h	2012-07-04 21:24:27.000000000 +0000
+@@ -83,7 +83,11 @@
+ #elif defined(QT_ARCH_WINDOWSCE)
+ #  include "QtCore/qatomic_windowsce.h"
+ #elif defined(QT_ARCH_X86_64)
+-#  include "QtCore/qatomic_x86_64.h"
++#  ifdef __ILP32__
++#    include "QtCore/qatomic_i386.h"
++#  else
++#    include "QtCore/qatomic_x86_64.h"
++#  endif
+ #elif defined(QT_ARCH_SYMBIAN)
+ #  include "QtCore/qatomic_symbian.h"
+ #elif defined(QT_ARCH_SH)
+Index: qt-everywhere-opensource-src-4.8.2/src/3rdparty/webkit/Source/JavaScriptCore/wtf/Platform.h
+===================================================================
+--- qt-everywhere-opensource-src-4.8.2.orig/src/3rdparty/webkit/Source/JavaScriptCore/wtf/Platform.h	2012-04-26 19:46:13.000000000 +0000
++++ qt-everywhere-opensource-src-4.8.2/src/3rdparty/webkit/Source/JavaScriptCore/wtf/Platform.h	2012-07-04 22:36:45.000000000 +0000
+@@ -229,8 +229,12 @@
+ /* CPU(X86_64) - AMD64 / Intel64 / x86_64 64-bit */
+ #if   defined(__x86_64__) \
+     || defined(_M_X64)
++#ifdef __ILP32__
++#define WTF_CPU_X86_64_32 1
++#else
+ #define WTF_CPU_X86_64 1
+ #endif
++#endif
+ 
+ /* CPU(ARM) - ARM, any version*/
+ #if   defined(arm) \

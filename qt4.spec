@@ -93,9 +93,11 @@ Patch5:		qt_unix_select.diff
 Patch7:		qt-everywhere-opensource-src-4.8.0-tp-openssl.patch
 Patch8:		qt-4.8.6-clang-buildfixes.patch
 Patch10:	qt-4.8.2-fix-qvfb-build.patch
+Patch12:	qt-aarch64.patch
+Patch11:	Qt4_x32_config.patch
 
 BuildRequires:	binutils >= 2.18
-BuildRequires:	cups-devel
+#BuildRequires:	cups-devel
 BuildRequires:	jpeg-devel
 BuildRequires:	pkgconfig(libmng)
 BuildRequires:	pam-devel
@@ -961,7 +963,7 @@ sed -e "s|^QMAKE_CFLAGS_RELEASE .*$|QMAKE_CFLAGS_RELEASE    += %{optflags}  -fno
     -e 's|^QMAKE_CXXFLAGS .*|& -std=gnu++0x|' \
     -i mkspecs/common/gcc-base.conf mkspecs/common/gcc-base-unix.conf
 
-sed -e "s|^QMAKE_CC .*|QMAKE_CC = %{__cc}|;s|^QMAKE_CXX .*|QMAKE_CXX = %{__cxx}|" -i mkspecs/common/g++-base.conf
+sed -e "s|^QMAKE_CC .*|QMAKE_CC = gcc|;s|^QMAKE_CXX .*|QMAKE_CXX = g++|" -i mkspecs/common/g++-base.conf
 
 %build
 export QTDIR=`/bin/pwd`
