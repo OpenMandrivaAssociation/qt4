@@ -1,0 +1,96 @@
+diff -urN qt-everywhere-opensource-src-4.8.6/src/corelib/kernel/qeventdispatcher_glib.cpp qt-everywhere-opensource-src-4.8.6-patched/src/corelib/kernel/qeventdispatcher_glib.cpp
+--- qt-everywhere-opensource-src-4.8.6/src/corelib/kernel/qeventdispatcher_glib.cpp	2014-04-11 05:37:11.000000000 +1100
++++ qt-everywhere-opensource-src-4.8.6-patched/src/corelib/kernel/qeventdispatcher_glib.cpp	2014-09-05 02:26:13.255377787 +1100
+@@ -248,22 +248,30 @@
+     GSource source;
+     QAtomicInt serialNumber;
+     int lastSerialNumber;
++    QEventLoop::ProcessEventsFlags processEventsFlags;
+     QEventDispatcherGlibPrivate *d;
+ };
+ 
+ static gboolean postEventSourcePrepare(GSource *s, gint *timeout)
+ {
++    GPostEventSource *source = reinterpret_cast<GPostEventSource *>(s);
+     QThreadData *data = QThreadData::current();
+     if (!data)
+         return false;
+ 
++    QEventLoop::ProcessEventsFlags excludeAllFlags
++        = QEventLoop::ExcludeUserInputEvents
++        | QEventLoop::ExcludeSocketNotifiers
++        | QEventLoop::X11ExcludeTimers;
++    if ((source->processEventsFlags & excludeAllFlags) == excludeAllFlags)
++        return false;
++
+     gint dummy;
+     if (!timeout)
+         timeout = &dummy;
+     const bool canWait = data->canWaitLocked();
+     *timeout = canWait ? -1 : 0;
+ 
+-    GPostEventSource *source = reinterpret_cast<GPostEventSource *>(s);
+     return (!canWait
+             || (source->serialNumber != source->lastSerialNumber));
+ }
+@@ -277,8 +285,14 @@
+ {
+     GPostEventSource *source = reinterpret_cast<GPostEventSource *>(s);
+     source->lastSerialNumber = source->serialNumber;
+-    QCoreApplication::sendPostedEvents();
+-    source->d->runTimersOnceWithNormalPriority();
++    QEventLoop::ProcessEventsFlags excludeAllFlags
++        = QEventLoop::ExcludeUserInputEvents
++        | QEventLoop::ExcludeSocketNotifiers
++        | QEventLoop::X11ExcludeTimers;
++    if ((source->processEventsFlags & excludeAllFlags) != excludeAllFlags) {
++        QCoreApplication::sendPostedEvents();
++        source->d->runTimersOnceWithNormalPriority();
++    }
+     return true; // i dunno, george...
+ }
+ 
+@@ -322,6 +336,7 @@
+     postEventSource = reinterpret_cast<GPostEventSource *>(g_source_new(&postEventSourceFuncs,
+                                                                         sizeof(GPostEventSource)));
+     postEventSource->serialNumber = 1;
++    postEventSource->processEventsFlags = QEventLoop::AllEvents;
+     postEventSource->d = this;
+     g_source_set_can_recurse(&postEventSource->source, true);
+     g_source_attach(&postEventSource->source, mainContext);
+@@ -415,6 +430,7 @@
+ 
+     // tell postEventSourcePrepare() and timerSource about any new flags
+     QEventLoop::ProcessEventsFlags savedFlags = d->timerSource->processEventsFlags;
++    d->postEventSource->processEventsFlags = flags;
+     d->timerSource->processEventsFlags = flags;
+ 
+     if (!(flags & QEventLoop::EventLoopExec)) {
+@@ -426,6 +442,7 @@
+     while (!result && canWait)
+         result = g_main_context_iteration(d->mainContext, canWait);
+ 
++    d->postEventSource->processEventsFlags = savedFlags;
+     d->timerSource->processEventsFlags = savedFlags;
+ 
+     if (canWait)
+diff -urN qt-everywhere-opensource-src-4.8.6/src/corelib/kernel/qeventdispatcher_unix.cpp qt-everywhere-opensource-src-4.8.6-patched/src/corelib/kernel/qeventdispatcher_unix.cpp
+--- qt-everywhere-opensource-src-4.8.6/src/corelib/kernel/qeventdispatcher_unix.cpp	2014-04-11 05:37:11.000000000 +1100
++++ qt-everywhere-opensource-src-4.8.6-patched/src/corelib/kernel/qeventdispatcher_unix.cpp	2014-09-05 02:26:13.257377820 +1100
+@@ -905,7 +905,15 @@
+ 
+     // we are awake, broadcast it
+     emit awake();
+-    QCoreApplicationPrivate::sendPostedEvents(0, 0, d->threadData);
++
++    QEventLoop::ProcessEventsFlags excludeAllFlags
++        = QEventLoop::ExcludeUserInputEvents
++        | QEventLoop::ExcludeSocketNotifiers
++        | QEventLoop::X11ExcludeTimers;
++    if ((flags & excludeAllFlags) == excludeAllFlags)
++        return false;
++    if(( flags & excludeAllFlags ) != excludeAllFlags )
++        QCoreApplicationPrivate::sendPostedEvents(0, 0, d->threadData);
+ 
+     int nevents = 0;
+     const bool canWait = (d->threadData->canWaitLocked()
