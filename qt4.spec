@@ -68,7 +68,7 @@
 Summary:	Qt GUI Toolkit
 Name:		qt4
 Version:	4.8.6
-Release:	1
+Release:	1.1
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 Group:		Development/KDE and Qt
@@ -86,12 +86,15 @@ Patch1:		qt-4.8.1-OpenVG-stdc++11.patch
 Patch2:		qt-4.8.1-WebKit-no-stdc++11.patch
 # https://bugs.kde.org/show_bug.cgi?id=256475
 Patch3:		qt-4.8.1-transculent-drag-pixmap.patch
+Patch4:		qt-everywhere-opensource-src-4.8.0-tp-openssl.patch
 # Allow applications (esp. libreoffice) to override the select() call in
 # the event loop
 # See https://bugreports.qt-project.org/browse/QTBUG-16934
 Patch5:		qt_unix_select.diff
-Patch7:		qt-everywhere-opensource-src-4.8.0-tp-openssl.patch
-Patch8:		qt-4.8.6-clang-buildfixes.patch
+Patch6:		QTBUG-34614-l-qclipboard_fix_recursive.patch
+Patch7:		QTBUG-37380-glib-honor-ExcludeSocketNotifiers-flag.patch
+Patch8:		QTBUG-38585-l-qclipboard_delay.patch
+Patch9:		qt-4.8.6-clang-buildfixes.patch
 Patch10:	qt-4.8.2-fix-qvfb-build.patch
 
 BuildRequires:	binutils >= 2.18
