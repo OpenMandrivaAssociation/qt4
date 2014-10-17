@@ -19,7 +19,8 @@
 %bcond_with package_webkit
 %bcond_without qvfb
 %bcond_with openvg
-%bcond_without docs
+# (tpg) docs wiegth 128MiB
+%bcond_with docs
 %bcond_without demos
 %bcond_without examples
 
@@ -68,7 +69,7 @@
 Summary:	Qt GUI Toolkit
 Name:		qt4
 Version:	4.8.6
-Release:	10
+Release:	11
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 Group:		Development/KDE and Qt
@@ -160,6 +161,10 @@ BuildRequires:	postgresql-devel
 %endif
 %if %{with_private_headers}
 BuildRequires:	rsync
+%endif
+
+%if !%{with docs}
+Obsoletes:	%{name}-doc <= %{EVRD}
 %endif
 
 %description
