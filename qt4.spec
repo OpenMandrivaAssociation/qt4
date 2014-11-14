@@ -509,6 +509,7 @@ Requires:	%{libqttest} = %{EVRD}
 Requires:	%{libqdbus} = %{EVRD}
 %if %{with webkit}
 Requires:	%{libqtwebkit} >= %{EVRD}
+Requires:	qt4-designer-plugin-webkit >= %{EVRD}
 %endif
 Requires:	%{libqtscript} = %{EVRD}
 Requires:	%{libqthelp} = %{EVRD}
@@ -521,7 +522,6 @@ Requires:	qt4-designer-plugin-phonon = %{EVRD}
 Requires:	%{libphonon} = %{EVRD}
 %endif
 Requires:	qt4-qtdbus = %{EVRD}
-Requires:	qt4-designer-plugin-webkit >= %{EVRD}
 Requires:	qt4-designer-plugin-qt3support = %{EVRD}
 Obsoletes:	%{mklibname -d QtWebKit} < %{version}
 
