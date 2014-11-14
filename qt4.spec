@@ -983,7 +983,7 @@ sed -e "s|^QMAKE_CFLAGS_RELEASE .*$|QMAKE_CFLAGS_RELEASE    += %{optflags}  -fno
     -e 's|^QMAKE_CXXFLAGS .*|& -std=gnu++0x|' \
     -i mkspecs/common/gcc-base.conf mkspecs/common/gcc-base-unix.conf
 
-%ifnarch %armx
+%ifnarch aarch64
 sed -e "s|^QMAKE_CC .*|QMAKE_CC = %{__cc}|;s|^QMAKE_CXX .*|QMAKE_CXX = %{__cxx}|" -i mkspecs/common/g++-base.conf
 %else
 sed -e "s|^QMAKE_CC .*|QMAKE_CC = gcc|;s|^QMAKE_CXX .*|QMAKE_CXX = g++|" -i mkspecs/common/g++-base.conf
