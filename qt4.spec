@@ -99,8 +99,8 @@ Patch9:		qt-4.8.6-clang-buildfixes.patch
 Patch10:	qt-4.8.2-fix-qvfb-build.patch
 Patch12:	qt-aarch64.patch
 Patch11:	Qt4_x32_config.patch
-# build against systemd clucene
-Patch13:	qt-everywhere-opensource-src-4.8.6-system-clucene.patch
+# build against system clucene
+#Patch13:	qt-everywhere-opensource-src-4.8.6-system-clucene.patch
 
 # upstream patches
 # backported from Qt5 (essentially)
@@ -978,7 +978,7 @@ Programs examples made with Qt %{version}.
 %apply_patches
 
 # delete bundled copy
-rm -rf src/3rdparty/clucene
+#rm -rf src/3rdparty/clucene
 
 # let makefile create missing .qm files, the .qm files should be included in qt upstream
 for f in translations/*.ts ; do
