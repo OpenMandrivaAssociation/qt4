@@ -101,6 +101,7 @@ Patch12:	qt-aarch64.patch
 Patch11:	Qt4_x32_config.patch
 # build against system clucene
 #Patch13:	qt-everywhere-opensource-src-4.8.6-system-clucene.patch
+Patch14:	qt-everywhere-opensource-src-4.8.6-tchar-buf.patch
 
 # upstream patches
 # backported from Qt5 (essentially)

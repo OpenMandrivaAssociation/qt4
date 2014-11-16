@@ -1,0 +1,40 @@
+diff --git a/src/3rdparty/clucene/src/CLucene/queryParser/Lexer.cpp b/src/3rdparty/clucene/src/CLucene/queryParser/Lexer.cpp
+index 861c5d3..d147f8b 100644
+--- a/src/3rdparty/clucene/src/CLucene/queryParser/Lexer.cpp
++++ b/src/3rdparty/clucene/src/CLucene/queryParser/Lexer.cpp
+@@ -117,7 +117,7 @@ bool Lexer::GetNextToken(QueryToken* token) {
+       if( _istspace(ch)!=0 ) {
+          continue;
+       }
+-      TCHAR buf[2] = {ch,'\0'};
++      TCHAR buf[2] = {TCHAR(ch),'\0'};
+       switch(ch) {
+          case '+':
+             token->set(buf, QueryToken::PLUS);
+
+diff --git a/src/3rdparty/clucene/src/CLucene/StdHeader.cpp b/src/3rdparty/clucene/src/CLucene/StdHeader.cpp
+index d64c51f..4318c7d 100644
+--- a/src/3rdparty/clucene/src/CLucene/StdHeader.cpp
++++ b/src/3rdparty/clucene/src/CLucene/StdHeader.cpp
+@@ -4,7 +4,7 @@
+ * Distributable under the terms of either the Apache License (Version 2.0) or 
+ * the GNU Lesser General Public License, as specified in the COPYING file.
+ *
+-* Changes are Copyright (C) 2009 Nokia Corporation and/or its subsidiary(-ies).
++* Changes are Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
+ ------------------------------------------------------------------------------*/
+ #include "CLucene/StdHeader.h"
+ #include "CLucene/util/Misc.h"
+@@ -24,8 +24,10 @@
+ 
+ CL_NS_USE(util)
+ 
+-TCHAR* _LUCENE_BLANK_STRING = _T("");
+-char* _LUCENE_BLANK_ASTRING = "";
++const TCHAR *_CONST_LUCENE_BLANK_STRING = _T("");
++const char *_CONST_LUCENE_BLANK_ASTRING = "";
++TCHAR* _LUCENE_BLANK_STRING = const_cast<TCHAR *>(_CONST_LUCENE_BLANK_STRING);
++char* _LUCENE_BLANK_ASTRING = const_cast<char *>(_CONST_LUCENE_BLANK_ASTRING);
+ 
+ #ifndef Q_CC_MIPS
+ #if defined(_LUCENE_THREADMUTEX_USINGDEFAULT)
