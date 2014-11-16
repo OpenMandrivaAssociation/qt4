@@ -99,6 +99,26 @@ Patch9:		qt-4.8.6-clang-buildfixes.patch
 Patch10:	qt-4.8.2-fix-qvfb-build.patch
 Patch12:	qt-aarch64.patch
 Patch11:	Qt4_x32_config.patch
+# build against systemd clucene
+Patch13:	qt-everywhere-opensource-src-4.8.6-system-clucene.patch
+
+# upstream patches
+# backported from Qt5 (essentially)
+# http://bugzilla.redhat.com/702493
+# https://bugreports.qt-project.org/browse/QTBUG-5545
+Patch102:	qt-everywhere-opensource-src-4.8.5-qgtkstyle_disable_gtk_theme_check.patch
+
+## upstream git
+Patch210:	0010-QDbus-Fix-a-b-comparison.patch
+Patch223:	0023-Don-t-crash-on-broken-GIF-images.patch
+Patch225:	0025-Fix-visual-index-lookup-in-QTreeViewPrivate-adjustVi.patch
+Patch230:	0030-Memory-and-file-descriptor-leak-in-QFontCache.patch
+Patch234:	0034-Fix-raster-graphics-on-X11-RGB30.patch
+Patch247:	0047-QSslCertificate-blacklist-NIC-certificates-from-Indi.patch
+Patch265:	0065-Fix-QPainter-drawPolyline-painting-errors-with-cosme.patch
+Patch266:	0066-Allow-Qt4-to-also-build-in-ppc64-el-le.patch
+Patch267:	0067-Fix-AArch64-arm64-detection.patch
+Patch272:	0072-Fix-font-cache-check-in-QFontEngineFT-recalcAdvances.patch
 
 BuildRequires:	binutils >= 2.18
 BuildRequires:	cups-devel
@@ -134,6 +154,7 @@ BuildRequires:	pkgconfig(xtst)
 BuildRequires:	pkgconfig(xv)
 BuildRequires:	pkgconfig(zlib)
 BuildRequires:	pkgconfig(egl)
+BuildRequires:	pkgconfig(libclucene-core)
 %if %{with phonon}
 BuildRequires:	pkgconfig(gstreamer-0.10)
 BuildRequires:	pkgconfig(gstreamer-plugins-base-0.10)
@@ -954,19 +975,10 @@ Programs examples made with Qt %{version}.
 #--------------------------------------------------------------------
 %prep
 %setup -q -n qt-everywhere-opensource-src-%{version}
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p0
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
+%apply_patches
+
+# delete bundled copy
+rm -rf src/3rdparty/clucene
 
 # let makefile create missing .qm files, the .qm files should be included in qt upstream
 for f in translations/*.ts ; do
