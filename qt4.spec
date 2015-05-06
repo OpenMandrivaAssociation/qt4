@@ -68,7 +68,7 @@
 Summary:	Qt GUI Toolkit
 Name:		qt4
 Version:	4.8.6
-Release:	1.2
+Release:	1.3
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 Group:		Development/KDE and Qt
@@ -100,7 +100,7 @@ Patch10:	qt-4.8.2-fix-qvfb-build.patch
 BuildRequires:	binutils >= 2.18
 BuildRequires:	cups-devel
 BuildRequires:	jpeg-devel
-BuildRequires:	mng-devel
+BuildRequires:	pkgconfig(libmng)
 BuildRequires:	pam-devel
 BuildRequires:	readline-devel
 %if %{mdvver} < 201300
