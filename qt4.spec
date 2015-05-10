@@ -69,7 +69,7 @@
 Summary:	Qt GUI Toolkit
 Name:		qt4
 Version:	4.8.6
-Release:	13
+Release:	14
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 Group:		Development/KDE and Qt
@@ -102,6 +102,9 @@ Patch11:	Qt4_x32_config.patch
 # build against system clucene
 #Patch13:	qt-everywhere-opensource-src-4.8.6-system-clucene.patch
 Patch14:	qt-everywhere-opensource-src-4.8.6-tchar-buf.patch
+# systemtrayicon plugin support (for appindicators)
+# See http://blog.martin-graesslin.com/blog/2014/06/where-are-my-systray-icons/
+Patch15:	qt-everywhere-opensource-src-4.8.6-systemtrayicon.patch
 
 # upstream patches
 # backported from Qt5 (essentially)
@@ -127,9 +130,6 @@ BuildRequires:	jpeg-devel
 BuildRequires:	pkgconfig(libmng)
 BuildRequires:	pam-devel
 BuildRequires:	readline-devel
-%if %{mdvver} < 201300
-BuildRequires:	termcap-devel
-%endif
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	pkgconfig(dbus-1) >= 0.92
 BuildRequires:	pkgconfig(expat)
