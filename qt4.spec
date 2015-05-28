@@ -94,7 +94,6 @@ Patch5:		qt_unix_select.diff
 Patch6:		QTBUG-34614-l-qclipboard_fix_recursive.patch
 Patch7:		QTBUG-37380-glib-honor-ExcludeSocketNotifiers-flag.patch
 Patch8:		QTBUG-38585-l-qclipboard_delay.patch
-Patch9:		qt-4.8.6-clang-buildfixes.patch
 Patch10:	qt-4.8.2-fix-qvfb-build.patch
 
 BuildRequires:	binutils >= 2.18
