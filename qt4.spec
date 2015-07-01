@@ -103,6 +103,8 @@ Patch14:	qt-everywhere-opensource-src-4.8.6-tchar-buf.patch
 # systemtrayicon plugin support (for appindicators)
 # See http://blog.martin-graesslin.com/blog/2014/06/where-are-my-systray-icons/
 Patch15:	qt-everywhere-opensource-src-4.8.6-systemtrayicon.patch
+# invalid conversion from 'const void*' to 'void*'
+Patch16:	add_check_for_aarch64_32.patch
 
 # upstream patches
 # backported from Qt5 (essentially)
