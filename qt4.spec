@@ -1009,7 +1009,6 @@ perl -pi -e 's@/X11R6/@/@' mkspecs/linux-*/qmake.conf mkspecs/common/linux.conf
     -verbose \
 %else
     -release \
-    -silent \
 %endif
     -opensource \
     -confirm-license \
