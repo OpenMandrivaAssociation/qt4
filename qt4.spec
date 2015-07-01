@@ -112,6 +112,7 @@ Patch102:	qt-everywhere-opensource-src-4.8.5-qgtkstyle_disable_gtk_theme_check.p
 
 BuildRequires:	binutils >= 2.18
 BuildRequires:	cups-devel
+BuildRequires:	diffutils
 BuildRequires:	jpeg-devel
 BuildRequires:	pkgconfig(libmng)
 BuildRequires:	pam-devel
