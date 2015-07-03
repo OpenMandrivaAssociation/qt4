@@ -16,7 +16,7 @@
 # but not packaged. This enables support for QtWebKit features in
 # Qt Designer and the likes while grabbing QtWebKit from the external
 # package.
-%bcond_with package_webkit
+%bcond_without package_webkit
 %bcond_without qvfb
 %bcond_with openvg
 # (tpg) docs wiegth 128MiB
