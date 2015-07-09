@@ -9,28 +9,6 @@
      return true;
  }
  
---- qt-everywhere-opensource-src-4.8.6/src/scripttools/debugging/qscriptdebuggerconsole.cpp.omv~	2014-06-07 12:23:32.398552294 +0200
-+++ qt-everywhere-opensource-src-4.8.6/src/scripttools/debugging/qscriptdebuggerconsole.cpp	2014-06-07 12:23:48.706348418 +0200
-@@ -489,7 +489,7 @@ QScriptDebuggerConsoleCommandJob *QScrip
-     d->input += QLatin1Char('\n');
-     QScriptSyntaxCheckResult check = QScriptEngine::checkSyntax(d->input);
-     if (check.state() == QScriptSyntaxCheckResult::Intermediate)
--        return false;
-+        return 0;
-     d->input.chop(1); // remove the last \n
-     cmd = QString();
-     cmd.append(d->commandPrefix);
---- qt-everywhere-opensource-src-4.8.6/tools/designer/src/lib/shared/previewmanager.cpp.omv~	2014-06-07 12:42:58.045979696 +0200
-+++ qt-everywhere-opensource-src-4.8.6/tools/designer/src/lib/shared/previewmanager.cpp	2014-06-07 12:43:04.595897810 +0200
-@@ -817,7 +817,7 @@ QWidget *PreviewManager::raise(const QDe
- {
-     typedef PreviewManagerPrivate::PreviewDataList PreviewDataList;
-     if (d->m_previews.empty())
--        return false;
-+        return 0;
- 
-     // find matching window
-     const PreviewDataList::const_iterator cend =  d->m_previews.constEnd();
 --- qt-everywhere-opensource-src-4.8.6/src/gui/kernel/qx11embed_x11.cpp.omv~	2014-06-08 08:34:49.547537784 +0000
 +++ qt-everywhere-opensource-src-4.8.6/src/gui/kernel/qx11embed_x11.cpp	2014-06-08 08:35:20.753147660 +0000
 @@ -275,7 +275,7 @@ public:
