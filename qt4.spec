@@ -128,7 +128,6 @@ BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(gtk+-2.0)
-BuildRequires:	pkgconfig(lcms)
 BuildRequires:	pkgconfig(libpng)
 BuildRequires:	pkgconfig(libpulse)
 BuildRequires:	pkgconfig(libxml-2.0)
@@ -995,9 +994,6 @@ sed -e "s|^QMAKE_CC .*|QMAKE_CC = gcc|;s|^QMAKE_CXX .*|QMAKE_CXX = g++|" -i mksp
 %build
 export QTDIR=`/bin/pwd`
 export PATH=$QTDIR/bin:$PATH
-
-export CC=gcc
-export CXX=g++
 
 # Don't include headers or link with /usr/X11R6/{include,lib}
 perl -pi -e 's@/X11R6/@/@' mkspecs/linux-*/qmake.conf mkspecs/common/linux.conf
