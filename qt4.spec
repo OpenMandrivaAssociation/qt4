@@ -69,7 +69,7 @@
 Summary:	Qt GUI Toolkit
 Name:		qt4
 Version:	4.8.7
-Release:	3
+Release:	4
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 Group:		Development/KDE and Qt
@@ -976,12 +976,14 @@ for f in translations/*.ts ; do
   touch ${f%.ts}.qm
 done
 
+%global ldflags %{ldflags} -fuse-ld=bfd
+
 # QMAKE_STRIP need to be clear to allow mdv -debug package
 sed -e "s|^QMAKE_STRIP.*=.*|QMAKE_STRIP             =|" -i mkspecs/common/linux.conf
 # We use -g1 to override -gdwarf-4 -- the latter needs more
 # RAM during QtWebKit build than x86_32 can handle.
 sed -e "s|^QMAKE_CFLAGS_RELEASE .*$|QMAKE_CFLAGS_RELEASE    += %{optflags}  -fno-strict-aliasing -DPIC -fPIC -g1| " \
-    -e "s|^QMAKE_LFLAGS	.*$|QMAKE_LFLAGS		+= %{ldflags}|" \
+    -e "s|^QMAKE_LFLAGS .*|QMAKE_LFLAGS		+= %{ldflags} |" \
     -e "s|^QMAKE_LFLAGS_PLUGIN.*\+= |QMAKE_LFLAGS_PLUGIN += %(echo %ldflags|sed -e 's#-Wl,--no-undefined##') |" \
     -e 's|^QMAKE_CXXFLAGS .*|& -std=gnu++0x|' \
     -i mkspecs/common/gcc-base.conf mkspecs/common/gcc-base-unix.conf
@@ -998,6 +1000,11 @@ export PATH=$QTDIR/bin:$PATH
 
 # Don't include headers or link with /usr/X11R6/{include,lib}
 perl -pi -e 's@/X11R6/@/@' mkspecs/linux-*/qmake.conf mkspecs/common/linux.conf
+
+mkdir bfd
+ln -s %{_bindir}/ld.bfd bfd/ld
+export PATH=$PWD/bfd:$PATH
+%global ldflags %{ldflags} -fuse-ld=bfd
 
 #--------------------------------------------------------
 ./configure \
