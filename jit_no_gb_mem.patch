@@ -1,0 +1,29 @@
+diff -ru a/src/3rdparty/javascriptcore/JavaScriptCore/jit/ExecutableAllocatorFixedVMPool.cpp b/src/3rdparty/javascriptcore/JavaScriptCore/jit/ExecutableAllocatorFixedVMPool.cpp
+--- a/src/3rdparty/javascriptcore/JavaScriptCore/jit/ExecutableAllocatorFixedVMPool.cpp	2013-06-07 08:16:58.000000000 +0300
++++ b/src/3rdparty/javascriptcore/JavaScriptCore/jit/ExecutableAllocatorFixedVMPool.cpp	2013-07-16 10:24:09.589121125 +0300
+@@ -39,11 +39,9 @@
+ 
+ #if CPU(X86_64)
+     // These limits suitable on 64-bit platforms (particularly x86-64, where we require all jumps to have a 2Gb max range).
+-#ifdef QT_USE_ONEGB_VMALLOCATOR
+-    #define VM_POOL_SIZE (1024u * 1024u * 1024u) // 1Gb
+-#else
+-    #define VM_POOL_SIZE (2u * 1024u * 1024u * 1024u) // 2Gb
+-#endif
++    // On x86-64, where we require all jumps to have a 2Gb max range we'll use
++    // MAP_32BIT
++    #define VM_POOL_SIZE (32u * 1024u * 1024u) // 32Mb
+     #define COALESCE_LIMIT (16u * 1024u * 1024u) // 16Mb
+ #else
+     // These limits are hopefully sensible on embedded platforms.
+@@ -309,7 +307,7 @@
+         randomLocation += (1 << 24);
+         randomLocation <<= 21;
+ #endif
+-        m_base = mmap(reinterpret_cast<void*>(randomLocation), m_totalHeapSize, INITIAL_PROTECTION_FLAGS, MAP_PRIVATE | MAP_ANON | MAP_NORESERVE, VM_TAG_FOR_EXECUTABLEALLOCATOR_MEMORY, 0);
++        m_base = mmap(reinterpret_cast<void*>(randomLocation), m_totalHeapSize, INITIAL_PROTECTION_FLAGS, MAP_PRIVATE | MAP_ANON | MAP_NORESERVE | MAP_32BIT, VM_TAG_FOR_EXECUTABLEALLOCATOR_MEMORY, 0);
+         if (m_base == MAP_FAILED)
+             CRASH();
+ 
+Only in b/src/3rdparty/javascriptcore/JavaScriptCore/jit: ExecutableAllocatorFixedVMPool.cpp.orig
+Only in b/src/3rdparty/javascriptcore/JavaScriptCore/jit: ExecutableAllocatorFixedVMPool.cpp.rej
