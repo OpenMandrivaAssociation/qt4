@@ -69,7 +69,7 @@
 Summary:	Qt GUI Toolkit
 Name:		qt4
 Version:	4.8.7
-Release:	7
+Release:	8
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 Group:		Development/KDE and Qt
@@ -108,6 +108,7 @@ Patch15:	qt-everywhere-opensource-src-4.8.6-systemtrayicon.patch
 Patch16:	add_check_for_aarch64_32.patch
 Patch17:	qt-aarch64.patch
 Patch18:	jit_no_gb_mem.patch
+Patch20:	qt-x11-opensource-src-4.5.0-fix-qatomic-inline-asm.patch
 
 # upstream patches
 # backported from Qt5 (essentially)
