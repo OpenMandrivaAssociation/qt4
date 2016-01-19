@@ -1,3 +1,5 @@
+%define _disable_lto 1
+
 %define _disable_exceptions 1
 %define _default_patch_flags -s -l
 %define _default_patch_fuzz 2
@@ -999,6 +1001,11 @@ sed -e "s|^QMAKE_CC .*|QMAKE_CC = gcc|;s|^QMAKE_CXX .*|QMAKE_CXX = g++|" -i mksp
 %build
 export QTDIR=`/bin/pwd`
 export PATH=$QTDIR/bin:$PATH
+
+%ifarch %{ix86}
+export CC=gcc
+export CXX=g++
+%endif
 
 # Don't include headers or link with /usr/X11R6/{include,lib}
 perl -pi -e 's@/X11R6/@/@' mkspecs/linux-*/qmake.conf mkspecs/common/linux.conf
