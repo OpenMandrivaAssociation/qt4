@@ -1005,6 +1005,7 @@ export PATH=$QTDIR/bin:$PATH
 %ifarch %{ix86}
 export CC=gcc
 export CXX=g++
+export LD=g++
 %endif
 
 # Don't include headers or link with /usr/X11R6/{include,lib}
