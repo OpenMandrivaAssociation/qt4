@@ -117,6 +117,16 @@ Patch20:	qt-x11-opensource-src-4.5.0-fix-qatomic-inline-asm.patch
 # http://bugzilla.redhat.com/702493
 # https://bugreports.qt-project.org/browse/QTBUG-5545
 Patch102:	qt-everywhere-opensource-src-4.8.5-qgtkstyle_disable_gtk_theme_check.patch
+Patch103:	0001-adapt-upstream-pixman-to-qt-4.8.7.patch
+Patch104:	qt-everywhere-opensource-src-4.8.7-alsa-1.1.patch
+Patch105:	qt-everywhere-opensource-src-4.8.4-qmake_pkgconfig_requires_private.patch
+Patch106:	qt-everywhere-opensource-src-4.6.2-cups.patch
+Patch107:	qt-everywhere-opensource-src-4.6.3-glib_eventloop_nullcheck.patch
+Patch108:	qt-everywhere-opensource-src-4.8.0-QTBUG-22037.patch
+Patch109:	qt-everywhere-opensource-src-4.8.5-QTBUG-14467.patch
+Patch110:	qt-everywhere-opensource-src-4.8.5-QTBUG-21900.patch
+Patch111:	qt-everywhere-opensource-src-4.8.5-QTBUG-35459.patch
+Patch112:	qt-everywhere-opensource-src-4.8.5-QTBUG-4862.patch 
 
 BuildRequires:	binutils >= 2.18
 BuildRequires:	cups-devel
