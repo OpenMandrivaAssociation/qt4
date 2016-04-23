@@ -1008,7 +1008,7 @@ sed -e "s|^QMAKE_CC .*|QMAKE_CC = %{__cc}|;s|^QMAKE_CXX .*|QMAKE_CXX = %{__cxx}|
 export QTDIR=`/bin/pwd`
 export PATH=$QTDIR/bin:$PATH
 
-%ifarch %{ix86}
+%ifarch %{ix86} %arm
 export CC=gcc
 export CXX=g++
 export LD=g++
