@@ -1,0 +1,16 @@
+--- qt-everywhere-opensource-src-4.8.7/src/tools/moc/main.cpp.0123~	2017-03-12 11:46:23.102836849 +0100
++++ qt-everywhere-opensource-src-4.8.7/src/tools/moc/main.cpp	2017-03-12 11:48:10.084441687 +0100
+@@ -188,9 +188,12 @@ int runMoc(int _argc, char **_argv)
+     pp.macros["Q_MOC_RUN"];
+     pp.macros["__cplusplus"];
+ 
+-    // Workaround a bug while parsing the boost/type_traits/has_operator.hpp header. See QTBUG-22829
++    // Workaround bugs while parsing some boost headers. See QTBUG-22829
+     pp.macros["BOOST_TT_HAS_OPERATOR_HPP_INCLUDED"];
+     pp.macros["BOOST_LEXICAL_CAST_INCLUDED"];
++    pp.macros["BOOST_NEXT_PRIOR_HPP_INCLUDED"];
++    pp.macros["BOOST_TYPE_TRAITS_HPP"];
++    pp.macros["_SYS_SYSMACROS_H_OUTER"];
+ 
+     QByteArray filename;
+     QByteArray output;

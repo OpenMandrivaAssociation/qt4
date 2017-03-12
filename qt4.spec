@@ -71,7 +71,7 @@
 Summary:	Qt GUI Toolkit
 Name:		qt4
 Version:	4.8.7
-Release:	11
+Release:	12
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 Group:		Development/KDE and Qt
@@ -127,6 +127,15 @@ Patch109:	qt-everywhere-opensource-src-4.8.5-QTBUG-14467.patch
 Patch110:	qt-everywhere-opensource-src-4.8.5-QTBUG-21900.patch
 Patch111:	qt-everywhere-opensource-src-4.8.5-QTBUG-35459.patch
 Patch112:	qt-everywhere-opensource-src-4.8.5-QTBUG-4862.patch 
+
+# Stolen from Fedora
+Patch120:	http://pkgs.fedoraproject.org/cgit/rpms/qt.git/plain/qt-everywhere-opensource-src-4.8.7-QT_VERSION_CHECK.patch
+Patch121:	http://pkgs.fedoraproject.org/cgit/rpms/qt.git/plain/qt-cupsEnumDests.patch
+Patch122:	http://pkgs.fedoraproject.org/cgit/rpms/qt.git/plain/qt-everywhere-opensource-src-4.8.3-icu_no_debug.patch
+Patch123:	http://pkgs.fedoraproject.org/cgit/rpms/qt.git/plain/qt-everywhere-opensource-src-4.8.6-QTBUG-22829.patch
+Patch124:	http://pkgs.fedoraproject.org/cgit/rpms/qt.git/plain/qt-everywhere-opensource-src-4.8.6-system-clucene.patch
+Patch125:	http://pkgs.fedoraproject.org/cgit/rpms/qt.git/plain/qt-everywhere-opensource-src-4.8.7-gcc6.patch
+Patch126:	http://pkgs.fedoraproject.org/cgit/rpms/qt.git/plain/qt-x11-opensource-src-4.5.1-enable_ft_lcdfilter.patch
 
 BuildRequires:	binutils >= 2.18
 BuildRequires:	cups-devel
