@@ -111,6 +111,7 @@ Patch16:	add_check_for_aarch64_32.patch
 Patch17:	qt-aarch64.patch
 Patch18:	jit_no_gb_mem.patch
 Patch20:	qt-x11-opensource-src-4.5.0-fix-qatomic-inline-asm.patch
+Patch21:	qt4-webkit-clang-4.0.patch
 
 # upstream patches
 # backported from Qt5 (essentially)
