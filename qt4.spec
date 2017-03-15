@@ -140,6 +140,8 @@ Patch126:	http://pkgs.fedoraproject.org/cgit/rpms/qt.git/plain/qt-x11-opensource
 # Stolen from Debian
 # https://bugs.debian.org/cgi-bin/bugreport.cgi?att=1;bug=828522;filename=qt4-openssl-1.1.0pre-3.patch;msg=91
 Patch130:	qt4-openssl-1.1.patch
+# And make it actually work...
+Patch131:	qt4-openssl-1.1-fixup.patch
 
 BuildRequires:	binutils >= 2.18
 BuildRequires:	cups-devel
