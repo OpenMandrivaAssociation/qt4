@@ -113,6 +113,7 @@ Patch18:	jit_no_gb_mem.patch
 Patch20:	qt-x11-opensource-src-4.5.0-fix-qatomic-inline-asm.patch
 Patch21:	qt4-webkit-clang-4.0.patch
 Patch22:	qt4-assistant-buildfix.patch
+Patch23:	qt4-linguist-clang-4.0.patch
 
 # upstream patches
 # backported from Qt5 (essentially)
