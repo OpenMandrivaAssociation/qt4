@@ -112,6 +112,7 @@ Patch17:	qt-aarch64.patch
 Patch18:	jit_no_gb_mem.patch
 Patch20:	qt-x11-opensource-src-4.5.0-fix-qatomic-inline-asm.patch
 Patch21:	qt4-webkit-clang-4.0.patch
+Patch22:	qt4-assistant-buildfix.patch
 
 # upstream patches
 # backported from Qt5 (essentially)
@@ -134,7 +135,8 @@ Patch120:	http://pkgs.fedoraproject.org/cgit/rpms/qt.git/plain/qt-everywhere-ope
 Patch121:	http://pkgs.fedoraproject.org/cgit/rpms/qt.git/plain/qt-cupsEnumDests.patch
 Patch122:	http://pkgs.fedoraproject.org/cgit/rpms/qt.git/plain/qt-everywhere-opensource-src-4.8.3-icu_no_debug.patch
 Patch123:	http://pkgs.fedoraproject.org/cgit/rpms/qt.git/plain/qt-everywhere-opensource-src-4.8.6-QTBUG-22829.patch
-Patch124:	http://pkgs.fedoraproject.org/cgit/rpms/qt.git/plain/qt-everywhere-opensource-src-4.8.6-system-clucene.patch
+# FIXME this breaks the build, but would be a good idea if it worked
+#Patch124:	http://pkgs.fedoraproject.org/cgit/rpms/qt.git/plain/qt-everywhere-opensource-src-4.8.6-system-clucene.patch
 Patch125:	http://pkgs.fedoraproject.org/cgit/rpms/qt.git/plain/qt-everywhere-opensource-src-4.8.7-gcc6.patch
 Patch126:	http://pkgs.fedoraproject.org/cgit/rpms/qt.git/plain/qt-x11-opensource-src-4.5.1-enable_ft_lcdfilter.patch
 
