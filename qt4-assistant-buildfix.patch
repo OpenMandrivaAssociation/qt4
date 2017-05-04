@@ -1,0 +1,29 @@
+--- qt-everywhere-opensource-src-4.8.7/tools/assistant/tools/assistant/helpviewer_p.h.omv~	2017-03-15 04:31:09.360548857 +0100
++++ qt-everywhere-opensource-src-4.8.7/tools/assistant/tools/assistant/helpviewer_p.h	2017-03-15 04:35:23.246652853 +0100
+@@ -59,7 +59,7 @@ class HelpViewer::HelpViewerPrivate : pu
+ 
+ public:
+ #ifdef QT_NO_WEBKIT
+-    HelpViewerPrivate(int zoom)
++    HelpViewerPrivate(int zoom=1)
+         : zoomCount(zoom)
+         , forceFont(false)
+         , lastAnchor(QString())
+--- qt-everywhere-opensource-src-4.8.7/tools/assistant/tools/assistant/helpviewer_qwv.cpp.omv~	2017-03-15 04:29:04.883482248 +0100
++++ qt-everywhere-opensource-src-4.8.7/tools/assistant/tools/assistant/helpviewer_qwv.cpp	2017-03-15 04:36:20.709325370 +0100
+@@ -60,6 +60,10 @@
+ #include <QtNetwork/QNetworkReply>
+ #include <QtNetwork/QNetworkRequest>
+ 
++#if defined(QT_NO_WEBKIT)
++#include "helpviewer_qtb.cpp"
++#else
++
+ QT_BEGIN_NAMESPACE
+ 
+ // -- HelpNetworkReply
+@@ -486,3 +490,4 @@ void HelpViewer::contextMenuEvent(QConte
+ }
+ 
+ QT_END_NAMESPACE
++#endif

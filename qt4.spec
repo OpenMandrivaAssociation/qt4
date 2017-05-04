@@ -71,7 +71,7 @@
 Summary:	Qt GUI Toolkit
 Name:		qt4
 Version:	4.8.7
-Release:	11
+Release:	12
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 Group:		Development/KDE and Qt
@@ -111,6 +111,9 @@ Patch16:	add_check_for_aarch64_32.patch
 Patch17:	qt-aarch64.patch
 Patch18:	jit_no_gb_mem.patch
 Patch20:	qt-x11-opensource-src-4.5.0-fix-qatomic-inline-asm.patch
+Patch21:	qt4-webkit-clang-4.0.patch
+Patch22:	qt4-assistant-buildfix.patch
+Patch23:	qt4-linguist-clang-4.0.patch
 
 # upstream patches
 # backported from Qt5 (essentially)
@@ -127,6 +130,22 @@ Patch109:	qt-everywhere-opensource-src-4.8.5-QTBUG-14467.patch
 Patch110:	qt-everywhere-opensource-src-4.8.5-QTBUG-21900.patch
 Patch111:	qt-everywhere-opensource-src-4.8.5-QTBUG-35459.patch
 Patch112:	qt-everywhere-opensource-src-4.8.5-QTBUG-4862.patch 
+
+# Stolen from Fedora
+Patch120:	http://pkgs.fedoraproject.org/cgit/rpms/qt.git/plain/qt-everywhere-opensource-src-4.8.7-QT_VERSION_CHECK.patch
+Patch121:	http://pkgs.fedoraproject.org/cgit/rpms/qt.git/plain/qt-cupsEnumDests.patch
+Patch122:	http://pkgs.fedoraproject.org/cgit/rpms/qt.git/plain/qt-everywhere-opensource-src-4.8.3-icu_no_debug.patch
+Patch123:	http://pkgs.fedoraproject.org/cgit/rpms/qt.git/plain/qt-everywhere-opensource-src-4.8.6-QTBUG-22829.patch
+# FIXME this breaks the build, but would be a good idea if it worked
+#Patch124:	http://pkgs.fedoraproject.org/cgit/rpms/qt.git/plain/qt-everywhere-opensource-src-4.8.6-system-clucene.patch
+Patch125:	http://pkgs.fedoraproject.org/cgit/rpms/qt.git/plain/qt-everywhere-opensource-src-4.8.7-gcc6.patch
+Patch126:	http://pkgs.fedoraproject.org/cgit/rpms/qt.git/plain/qt-x11-opensource-src-4.5.1-enable_ft_lcdfilter.patch
+
+# Stolen from Debian
+# https://bugs.debian.org/cgi-bin/bugreport.cgi?att=1;bug=828522;filename=qt4-openssl-1.1.0pre-3.patch;msg=91
+Patch130:	qt4-openssl-1.1.patch
+# And make it actually work...
+Patch131:	qt4-openssl-1.1-fixup.patch
 
 BuildRequires:	binutils >= 2.18
 BuildRequires:	cups-devel
@@ -1009,9 +1028,9 @@ export QTDIR=`/bin/pwd`
 export PATH=$QTDIR/bin:$PATH
 
 %ifarch %{ix86} %arm
-export CC=gcc
-export CXX=g++
-export LD=g++
+#export CC=gcc
+#export CXX=g++
+#export LD=g++
 %endif
 
 # Don't include headers or link with /usr/X11R6/{include,lib}

@@ -1,0 +1,11 @@
+--- qt-everywhere-opensource-src-4.8.7/tools/linguist/linguist/messagemodel.cpp.omv~	2017-03-15 04:39:32.669876811 +0100
++++ qt-everywhere-opensource-src-4.8.7/tools/linguist/linguist/messagemodel.cpp	2017-03-15 04:39:51.257445101 +0100
+@@ -183,7 +183,7 @@ static int calcMergeScore(const DataMode
+         if (ContextItem *c = one->findContext(oc->context())) {
+             for (int j = 0; j < oc->messageCount(); ++j) {
+                 MessageItem *m = oc->messageItem(j);
+-                if (c->findMessage(m->text(), m->comment()) >= 0)
++                if (c->findMessage(m->text(), m->comment()))
+                     ++inBoth;
+             }
+         }

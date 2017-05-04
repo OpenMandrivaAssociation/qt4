@@ -1,9 +1,10 @@
 --- qt-everywhere-opensource-src-4.8.1/src/3rdparty/webkit/Source/WebKit.pri~	2012-03-14 15:01:29.000000000 +0100
 +++ qt-everywhere-opensource-src-4.8.1/src/3rdparty/webkit/Source/WebKit.pri	2012-04-27 00:26:09.019979938 +0200
-@@ -1,4 +1,6 @@
+@@ -1,4 +1,7 @@
  # Include file to make it easy to include WebKit into Qt projects
 +#
 +QMAKE_CXXFLAGS -= -std=gnu++0x
++QMAKE_CXXFLAGS += -std=gnu++98
  
  contains(QT_CONFIG, qpa)|contains(QT_CONFIG, embedded): CONFIG += embedded
  
