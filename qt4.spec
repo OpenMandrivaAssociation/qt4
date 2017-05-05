@@ -141,11 +141,13 @@ Patch123:	http://pkgs.fedoraproject.org/cgit/rpms/qt.git/plain/qt-everywhere-ope
 Patch125:	http://pkgs.fedoraproject.org/cgit/rpms/qt.git/plain/qt-everywhere-opensource-src-4.8.7-gcc6.patch
 Patch126:	http://pkgs.fedoraproject.org/cgit/rpms/qt.git/plain/qt-x11-opensource-src-4.5.1-enable_ft_lcdfilter.patch
 
+%if %mdvver > 3000000
 # Stolen from Debian
 # https://bugs.debian.org/cgi-bin/bugreport.cgi?att=1;bug=828522;filename=qt4-openssl-1.1.0pre-3.patch;msg=91
 Patch130:	qt4-openssl-1.1.patch
 # And make it actually work...
 Patch131:	qt4-openssl-1.1-fixup.patch
+%endif
 
 BuildRequires:	binutils >= 2.18
 BuildRequires:	cups-devel
