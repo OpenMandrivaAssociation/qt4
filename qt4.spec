@@ -71,7 +71,7 @@
 Summary:	Qt GUI Toolkit
 Name:		qt4
 Version:	4.8.7
-Release:	12
+Release:	13
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 Group:		Development/KDE and Qt
