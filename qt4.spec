@@ -165,7 +165,6 @@ BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(gtk+-2.0)
 BuildRequires:	pkgconfig(libpng)
-BuildRequires:	pkgconfig(libpulse)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(libxslt)
 BuildRequires:	pkgconfig(ncurses)
@@ -231,7 +230,7 @@ Summary:	Qt%{major} Config and Language Files
 Configuration and language files for Qt.
 
 %files common
-%attr(0755,root,root) %{_sysconfdir}/profile.d/60qt4.sh
+%attr(0755,root,root) %{_sysconfdir}/profile.d/65qt4.sh
 %dir %{_qt_bindir}
 %dir %{_qt_datadir}
 %dir %{_qt_plugindir}
@@ -1211,7 +1210,7 @@ mkdir -p %{buildroot}%{_sysconfdir}/rpm/macros.d
 install -m 0644 %{SOURCE2} %{buildroot}%{_sysconfdir}/rpm/macros.d
 
 # Profiles
-cat > %{buildroot}%{_sysconfdir}/profile.d/60qt4.sh << EOF
+cat > %{buildroot}%{_sysconfdir}/profile.d/65qt4.sh << EOF
 #!/bin/bash
 
 # Qt4 is the main Qt on system
