@@ -140,6 +140,8 @@ Patch123:	http://pkgs.fedoraproject.org/cgit/rpms/qt.git/plain/qt-everywhere-ope
 #Patch124:	http://pkgs.fedoraproject.org/cgit/rpms/qt.git/plain/qt-everywhere-opensource-src-4.8.6-system-clucene.patch
 Patch125:	http://pkgs.fedoraproject.org/cgit/rpms/qt.git/plain/qt-everywhere-opensource-src-4.8.7-gcc6.patch
 Patch126:	http://pkgs.fedoraproject.org/cgit/rpms/qt.git/plain/qt-x11-opensource-src-4.5.1-enable_ft_lcdfilter.patch
+Patch127:	http://pkgs.fedoraproject.org/cgit/rpms/qt.git/plain/qt-everywhere-opensource-src-4.8.7-icu59.patch
+Patch128:	http://pkgs.fedoraproject.org/cgit/rpms/qt.git/plain/qqt-everywhere-opensource-src-4.8.7-gcc8_qtscript.patch
 
 %if %mdvver > 3000000
 # Stolen from Debian
@@ -1042,6 +1044,7 @@ ln -s %{_bindir}/ld.bfd bfd/ld
 export PATH=$PWD/bfd:$PATH
 %global ldflags %{ldflags} -fuse-ld=bfd
 
+export CXXFLAGS="$CXXFLAGS -std=gnu++98 -Wno-deprecated"
 #--------------------------------------------------------
 ./configure \
     -prefix %{_qt_datadir} \
