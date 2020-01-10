@@ -1002,7 +1002,7 @@ Programs examples made with Qt %{version}.
 #--------------------------------------------------------------------
 %prep
 %setup -q -n qt-everywhere-opensource-src-%{version}
-%apply_patches
+%autopatch -p1
 
 # delete bundled copy
 #rm -rf src/3rdparty/clucene
