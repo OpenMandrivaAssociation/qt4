@@ -75,7 +75,7 @@ Release:	13
 Epoch:		4
 License:	LGPLv2 with exceptions or GPLv3 with exceptions
 Group:		Development/KDE and Qt
-Url:		http://qt.nokia.com/
+Url:		https://qt.nokia.com/
 Source0:	http://download.qt-project.org/official_releases/qt/4.8/%{version}/qt-everywhere-opensource-src-%{version}.tar.gz
 Source2:	qt4.macros
 Source3:	mandriva-designer-qt4.desktop
