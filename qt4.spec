@@ -151,6 +151,11 @@ Patch130:	qt4-openssl-1.1.patch
 Patch131:	qt4-openssl-1.1-fixup.patch
 %endif
 
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	binutils >= 2.18
 BuildRequires:	cups-devel
 BuildRequires:	diffutils
